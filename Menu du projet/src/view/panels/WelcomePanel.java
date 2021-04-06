@@ -1,11 +1,9 @@
 package view.panels;
 
-import com.sun.deploy.panel.JavaPanel;
-
 import javax.swing.*;
 import java.awt.*;
 
-public class WelcomePanel extends JavaPanel {
+public class WelcomePanel extends JPanel {
     private JLabel text;
 
     public WelcomePanel() {
