@@ -1,4 +1,5 @@
 package view.panels;
+import view.panels.optionsFlightPanels.AddFlightPanel;
 import view.windows.MenuWindow;
 
 import javax.swing.*;

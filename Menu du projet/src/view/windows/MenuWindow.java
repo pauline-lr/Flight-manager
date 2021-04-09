@@ -1,21 +1,24 @@
 package view.windows;
 
-import view.panels.AddFlightPanel;
-import view.panels.WelcomePanel;
+import view.panels.*;
+import view.panels.optionsFlightPanels.AddFlightPanel;
+import view.panels.optionsFlightPanels.ModifyFlightPanel;
+import view.panels.searchPanels.DateFlightPanel;
+import view.panels.searchPanels.SearchPilotPanel;
+import view.panels.searchPanels.SeatReservationPanel;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import javax.swing.*;
 
 
 public class MenuWindow extends JFrame{
     private Container frameContainer;
-    private MenuWindow panel;
     private JMenuBar menuBar;
     private JMenu flight, linstingFlight, search, application;
     private JMenuItem exit;
     private JMenuItem addFlight, modifyFlight, deleteFlight;
-    private JMenuItem dateFlight, listingPassenger, searchPilot;
+    private JMenuItem dateFlight, seatReservation, searchPilot;
 
     public MenuWindow(){
         setTitle("Gestionnaire de vols");
@@ -23,7 +26,14 @@ public class MenuWindow extends JFrame{
         frameContainer = this.getContentPane();
         this.addWindowListener(new ExitButtonListener());
 
+        initMenuBar();
 
+        this.setLayout(new BorderLayout());
+        frameContainer.add(new WelcomePanel(), BorderLayout.CENTER);
+        this.setVisible(true);
+    }
+
+    public void initMenuBar(){
         menuBar = new JMenuBar();
         setJMenuBar(menuBar);
 
@@ -37,39 +47,45 @@ public class MenuWindow extends JFrame{
         menuBar.add(linstingFlight);
         menuBar.add(search);
 
+        initOptionsApplication();
+
+        initOptionsFlight();
+
+        initOptionsSearch();
+    }
+
+    public void initOptionsApplication(){
         exit = new JMenuItem("Quitter");
         exit.addActionListener(new ExitListener());
         application.add(exit);
-        // Items for flight
+    }
+
+    public void initOptionsFlight(){
         addFlight = new JMenuItem("Ajouter un vol");
         addFlight.addActionListener(new AddFlightListener());
         flight.add(addFlight);
 
         modifyFlight = new JMenuItem("Modifier un vol");
-        //modifyFlight.addActionListener(new ModifyFlightListener());
+        modifyFlight.addActionListener(new ModifyFlightListener());
         flight.add(modifyFlight);
 
         deleteFlight = new JMenuItem("Supprimer un vol");
         //deleteFlight.addActionListener(new DeletelightListener());
         flight.add(deleteFlight);
+    }
 
-        // Items for search
+    public void initOptionsSearch(){
         dateFlight = new JMenuItem("de vols par date");
-        //dateFlight.addActionListener(new DateFlightListener());
+        dateFlight.addActionListener(new DateFlightListener());
         search.add(dateFlight);
 
-        listingPassenger = new JMenuItem("de passagers");
-        //listingPassenger.addActionListener(new ListingPassengerListener());
-        search.add(listingPassenger);
+        seatReservation = new JMenuItem("de passagers");
+        seatReservation.addActionListener(new SeatReservationListener());
+        search.add(seatReservation);
 
         searchPilot = new JMenuItem("de pilotes");
-        //searchPilot.addActionListener(new SearchPilotFlightListener());
+        searchPilot.addActionListener(new SearchPilotFlightListener());
         search.add(searchPilot);
-
-
-        this.setLayout(new BorderLayout());
-        frameContainer.add(new WelcomePanel(), BorderLayout.CENTER);
-        this.setVisible(true);
     }
 
     public Container getCont() {
@@ -99,10 +115,48 @@ public class MenuWindow extends JFrame{
             MenuWindow.this.setVisible(true);
         }
     }
-/*
+
     private class ModifyFlightListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent evt){
+            frameContainer.removeAll();
+            frameContainer.add(new ModifyFlightPanel(MenuWindow.this), BorderLayout.CENTER);
+            frameContainer.repaint();
+            MenuWindow.this.setVisible(true);
+        }
     }
 
+    private class DateFlightListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent evt){
+            frameContainer.removeAll();
+            frameContainer.add(new DateFlightPanel(MenuWindow.this), BorderLayout.CENTER);
+            frameContainer.repaint();
+            MenuWindow.this.setVisible(true);
+        }
+    }
+
+    private class SeatReservationListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent evt){
+            frameContainer.removeAll();
+            frameContainer.add(new SeatReservationPanel(MenuWindow.this), BorderLayout.CENTER);
+            frameContainer.repaint();
+            MenuWindow.this.setVisible(true);
+        }
+    }
+
+    private class SearchPilotFlightListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent evt){
+            frameContainer.removeAll();
+            frameContainer.add(new SearchPilotPanel(MenuWindow.this), BorderLayout.CENTER);
+            frameContainer.repaint();
+            MenuWindow.this.setVisible(true);
+        }
+    }
+
+/*
     private class DeletelightListener implements ActionListener {
     }*/
 }
