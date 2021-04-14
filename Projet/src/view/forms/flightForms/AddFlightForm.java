@@ -11,7 +11,7 @@ public class AddFlightForm extends JPanel {
     private JTextField textNumber, textMealDescription;
     private JSpinner flightTimeHour, stopTime, spinner;
     private JCheckBox mealOnBoard, halt;
-    private JLabel number,flightTime, departure, arrival, mealDescription, stop, plane, airport, pilot;
+    private JLabel number,flightTime, departure, arrival, mealDescription, stop, plane, pilot;
     private SpinnerNumberModel flightTimeModel, stopTimeModel;
     private SpinnerDateModel spinnerModel;
     private Date date;

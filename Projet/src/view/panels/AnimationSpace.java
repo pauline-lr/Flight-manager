@@ -6,10 +6,11 @@ import javax.swing.*;
 import java.awt.*;
 
 public class AnimationSpace extends JPanel {
-    // public static final  int B_WIDTH = 350;
-    public static final int B_HEIGHT = 350;
-    public static final int INITIAL_X = -40;
-    public static final int INITIAL_Y = -40;
+    public static final  int PANEL_WIDTH = 500;
+    public static final int PANEL_HEIGHT = 350;
+    public static final int POS_INIT_X = -0;
+    public static final int POS_INIT_Y = 0;
+
 
     private ImageIcon planeIcon;
     private Image planeImg;
@@ -23,8 +24,8 @@ public class AnimationSpace extends JPanel {
         new ThreadMovement(this).start();
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
-        x = INITIAL_X;
-        y = INITIAL_Y;
+        x = POS_INIT_X;
+        y = POS_INIT_Y;
     }
 
 
@@ -38,12 +39,11 @@ public class AnimationSpace extends JPanel {
     }
 
     public void cycle() {
-        x++;
-        y++;
 
-        if (y > B_HEIGHT) {
-            y = INITIAL_Y;
-            x = INITIAL_X;
+        x++;
+
+        if (x > PANEL_WIDTH) {
+            x = POS_INIT_X;
         }
     }
         /*private void cycle() {
@@ -53,9 +53,9 @@ public class AnimationSpace extends JPanel {
             }
 
 
-            if(y == B_HEIGHT + 1){
-                x = B_WIDTH+40;
-                y = B_HEIGHT+40;
+            if(y == PANEL_HEIGHT + 1){
+                x = PANEL_WIDTH+40;
+                y = PANEL_HEIGHT+40;
                 isUp = true;
             }
 
@@ -64,7 +64,7 @@ public class AnimationSpace extends JPanel {
                 y--;
             }
 
-            if(y == INITIAL_Y){
+            if(y == POS_INIT_Y){
                 isUp = false;
             }
         }*/
