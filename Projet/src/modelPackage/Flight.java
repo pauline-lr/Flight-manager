@@ -3,7 +3,7 @@ package modelPackage;
 import java.util.GregorianCalendar;
 
 public class Flight {
-    private Integer number;
+    private String number;
     private Integer flightTime;
     private GregorianCalendar departureTime;
     private Boolean isMealOnBoard;
@@ -14,7 +14,7 @@ public class Flight {
     private String planeID;
 
 
-    public Flight(Integer number, Integer flightTime, GregorianCalendar departureTime, Boolean isMealOnBoard, String mealDescription, String departureAirportID, String arrivalAirportID, String pilotID, String planeID) {
+    public Flight(String number, Integer flightTime, GregorianCalendar departureTime, Boolean isMealOnBoard, String mealDescription, String departureAirportID, String arrivalAirportID, String pilotID, String planeID) {
         this.number = number;
         this.flightTime = flightTime;
         this.departureTime = departureTime;
@@ -26,7 +26,7 @@ public class Flight {
         this.planeID = planeID;
     }
 
-    public Integer getNumber() {
+    public String getNumber() {
         return number;
     }
 

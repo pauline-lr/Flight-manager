@@ -3,18 +3,14 @@ package dataAccesPackage;
 import exceptionPackage.AllFlightException;
 import modelPackage.Flight;
 
-import java.net.ConnectException;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public class FlightDBAccess {
-    private Flight flight;
-
-    public ArrayList<Flight> getAllBooks( ) throws AllFlightException, SQLException {
+    public ArrayList<Flight> getAllFlight( ) throws AllFlightException, SQLException {
         // Essayer d’accéder à la base de données via
         Connection connection = SingletonConnexion.getInstance();
         // Essayer de lire les livres dans la table Book
@@ -24,15 +20,34 @@ public class FlightDBAccess {
                 "and arrivalAirportID = ? and pilotId = ? and planeID = ?";
 
         PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setString(1, "Numéro");
-        statement.setInt(2, 60);
-        java.sql.Date sqlDate =  new java.sql.Date(flight.getDepartureTime().getTimeInMillis());
-        GregorianCalendar calendar = new GregorianCalendar();
-        calendar.setTime(sqlDate);
-        statement.setDate(3, sqlDate);
-        statement.setBoolean(4,true);
-        // etc
 
+        for (Flight flight : getAllFlight()) {
+            statement.setString(1, flight.getNumber());
+
+            // attention facultatif
+            statement.setInt(2, flight.getFlightTime());
+
+            java.sql.Date sqlDate =  new java.sql.Date(flight.getDepartureTime().getTimeInMillis());
+            GregorianCalendar calendar = new GregorianCalendar();
+            calendar.setTime(sqlDate);
+            statement.setDate(3, sqlDate);
+
+            statement.setBoolean(4,flight.getMealOnBoard());
+
+            // attention facultatif
+            statement.setString(5,flight.getMealDescription());
+
+            statement.setString(6, flight.getDepartureAirportID());
+
+            statement.setString(7, flight.getArrivalAirportID());
+
+            statement.setString(8, flight.getPilotID());
+
+            statement.setString(9, flight.getPlaneID());
+        }
+
+
+        connection.close( );
         //Contient la requête SQL à exécuter
         return null;
     }
