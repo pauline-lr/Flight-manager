@@ -3,7 +3,7 @@ package businessPackage;
 import viewPackage.panels.menuWindowPanels.AnimationSpace;
 
 public class ThreadMovement extends Thread {
-    public final int DELAY = 20;
+    public final int DELAY = 10;
 
     private AnimationSpace animationSpace;
 

@@ -14,7 +14,9 @@ public class Flight {
     private String planeID;
 
 
-    public Flight(String number, Integer flightTime, GregorianCalendar departureTime, Boolean isMealOnBoard, String mealDescription, String departureAirportID, String arrivalAirportID, String pilotID, String planeID) {
+    public Flight(String number, Integer flightTime, GregorianCalendar departureTime, Boolean isMealOnBoard,
+                  String mealDescription, String departureAirportID, String arrivalAirportID, String pilotID,
+                  String planeID) {
         this.number = number;
         this.flightTime = flightTime;
         this.departureTime = departureTime;
@@ -24,6 +26,12 @@ public class Flight {
         this.arrivalAirportID = arrivalAirportID;
         this.pilotID = pilotID;
         this.planeID = planeID;
+    }
+
+    public Flight(String number, GregorianCalendar departureTime, Boolean isMealOnBoard, String departureAirportID,
+                  String arrivalAirportID, String pilotID, String planeID) {
+        this(number, null, departureTime, isMealOnBoard, null, departureAirportID,
+                arrivalAirportID, pilotID, planeID);
     }
 
     public String getNumber() {

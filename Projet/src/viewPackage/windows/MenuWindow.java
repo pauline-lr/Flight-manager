@@ -39,6 +39,7 @@ public class MenuWindow extends JFrame{
         this.setVisible(true);
     }
 
+
     public void initMenuBar(){
         menuBar = new JMenuBar();
         setJMenuBar(menuBar);
