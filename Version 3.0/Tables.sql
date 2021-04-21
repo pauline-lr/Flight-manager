@@ -25,55 +25,62 @@ CREATE TABLE pilot (
 );
 
 CREATE TABLE plane (
+    plane_id VARCHAR(10),
     model VARCHAR(7),
-    plane_number INT,
+    number INT,
     brand VARCHAR(30) NOT NULL,
-
-    CONSTRAINT plane_pk PRIMARY KEY (model, plane_number)
+    
+	CONSTRAINT plane_id UNIQUE (model, number),
+    CONSTRAINT plane_pk PRIMARY KEY (plane_id)
 );
 
 CREATE TABLE airport (
-    identifier CHAR(3),
-    full_name VARCHAR(30),
+    code CHAR(3),
+    name VARCHAR(30),
     country VARCHAR(30),
 
-    CONSTRAINT airport_pk PRIMARY KEY (identifier)
+    CONSTRAINT airport_pk PRIMARY KEY (code)
 );
 
 CREATE TABLE gate (
+    gate_id CHAR(3),
     terminal CHAR(1),
-    gate_number CHAR(2),
+    number CHAR(2),
     airport VARCHAR(50),
-
-    CONSTRAINT gate_pk PRIMARY KEY (terminal, gate_number, airport),
-    CONSTRAINT airport_fk FOREIGN KEY (airport) REFERENCES airport (identifier)
+	
+    CONSTRAINT gate_id UNIQUE (terminal, number),
+    CONSTRAINT gate_pk PRIMARY KEY (gate_id, airport),
+    CONSTRAINT airport_fk FOREIGN KEY (airport) REFERENCES airport (code)
 );
 
 CREATE TABLE flight (
-	flight_number CHAR(6),
+	number CHAR(6),
     departure_time DATE NOT NULL,
     arrival_time DATE NOT NULL,
     is_meal_on_board BOOLEAN NOT NULL,
-    meal_description TEXT,
+    meal_description VARCHAR(400),
+    departure_airport VARCHAR(50),
     departure_gate VARCHAR(50),
+    arrival_airport VARCHAR(50),
     arrival_gate VARCHAR(50),
     pilot VARCHAR(50),
     plane VARCHAR(50),
     
-    CONSTRAINT flight_pk PRIMARY KEY (flight_number),
-    CONSTRAINT departure_gate_fk FOREIGN KEY (departure_gate) REFERENCES gate (terminal, gate_number, airport),
-    CONSTRAINT arrival_gate_fk FOREIGN KEY (arrival_gate) REFERENCES gate (terminal, gate_number, airport),
+    CONSTRAINT flight_pk PRIMARY KEY (number),
+    CONSTRAINT departure_gate_fk FOREIGN KEY (departure_gate, departure_airport) REFERENCES gate (gate_id, airport),
+    CONSTRAINT arrival_gate_fk FOREIGN KEY (arrival_gate, arrival_airport) REFERENCES gate (gate_id, airport),
     CONSTRAINT pilot_fk FOREIGN KEY (pilot) REFERENCES pilot (licence_number),
-    CONSTRAINT plane_fk FOREIGN KEY (plane) REFERENCES plane (model, plane_number)
+    CONSTRAINT plane_fk FOREIGN KEY (plane) REFERENCES plane (plane_id)
 );
 
 CREATE TABLE class (
-    full_name VARCHAR(30),
+    name VARCHAR(30),
 
-    CONSTRAINT class_pk PRIMARY KEY (full_name)
+    CONSTRAINT class_pk PRIMARY KEY (name)
 );
 
 CREATE TABLE seat (
+    seat_id VARCHAR(4),
     seat_row INT,
     seat_column CHAR(1),
     is_on_window_side BOOLEAN NOT NULL,
@@ -81,8 +88,9 @@ CREATE TABLE seat (
     flight VARCHAR(50),
     class VARCHAR(50),
     
-    CONSTRAINT seat_pk PRIMARY KEY (seat_row, seat_column, flight),
+    CONSTRAINT seat_id UNIQUE (seat_row, seat_column),
+    CONSTRAINT seat_pk PRIMARY KEY (seat_id, flight),
 	CONSTRAINT passenger_fk FOREIGN KEY (passenger) REFERENCES passenger (passport_number),
-	CONSTRAINT flight_fk FOREIGN KEY (flight) REFERENCES flight (flight_number),
-	CONSTRAINT class_fk FOREIGN KEY (class) REFERENCES class (full_name)
+	CONSTRAINT flight_fk FOREIGN KEY (flight) REFERENCES flight (number),
+	CONSTRAINT class_fk FOREIGN KEY (class) REFERENCES class (name)
 );
