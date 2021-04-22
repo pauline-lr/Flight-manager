@@ -59,13 +59,13 @@ public class FlightDBAccess {
 
             statement.setString(7, flight.getPlaneID());
 
-            allFlight(flight);
+            //allFlight(flight);
         }
         // Exécuter + Récupérer le nombre de lignes modifiées
         return statement.executeUpdate();
     }
 
-    public void allFlight(Flight flight){
+    /*public void allFlight(Flight flight){
         // Exécuter le select sur la table book
         String sqlInstruction = "select * from book";
         statement = connection.prepareStatement(sqlInstruction);
@@ -87,5 +87,5 @@ public class FlightDBAccess {
             }
     …      // Faire de même avec chaque colonne facultative
             allBooks.add(book);
-        }
+        }*/
 }
