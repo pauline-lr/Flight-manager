@@ -8,12 +8,8 @@ public class SingletonConnexion {
     public static Connection getInstance(){
         if (uniqueConnexion == null) {
             try {
-                Connection connection =
-                        DriverManager.getConnection("jdbc:mysql://localhost:3306/airline_database",
-                                "root",
-                                "B0ni1999") ;
-
-                String requeteSQL = "select * from Etudiant";
+                Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/airline_database", "root", "LoréaSmith") ;
+                String requeteSQL = "select * from pilot";
                 PreparedStatement prepStat = connection.prepareStatement(requeteSQL);
                 ResultSet donnees = prepStat.executeQuery();
                 while(donnees.next()){
