@@ -96,13 +96,13 @@ CREATE TABLE seat (
     is_on_window_side BOOLEAN NOT NULL,
     passenger VARCHAR(50),
     flight VARCHAR(50),
-    class VARCHAR(50) NOT NULL,
+    seat_class VARCHAR(50) NOT NULL,
     
     CONSTRAINT seat_id UNIQUE (seat_row, seat_column, flight),
     CONSTRAINT seat_pk PRIMARY KEY (seat_id),
 	CONSTRAINT passenger_fk FOREIGN KEY (passenger) REFERENCES passenger (passport_number),
 	CONSTRAINT flight_fk FOREIGN KEY (flight) REFERENCES flight (number),
-	CONSTRAINT class_fk FOREIGN KEY (class) REFERENCES class (class_id)
+	CONSTRAINT seat_class_fk FOREIGN KEY (seat_class) REFERENCES class (class_id)
 );
 
 INSERT INTO pilot
