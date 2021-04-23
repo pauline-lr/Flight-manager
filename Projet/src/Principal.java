@@ -1,4 +1,4 @@
-import userInterface.windows.MenuWindow;
+import view.windows.MenuWindow;
 
 public class Principal {
     public static void main(String[] args) {

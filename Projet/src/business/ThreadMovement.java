@@ -1,6 +1,6 @@
 package business;
 
-import userInterface.panels.menuWindowPanels.AnimationSpace;
+import view.panels.menuWindowPanels.AnimationSpace;
 
 public class ThreadMovement extends Thread {
     public final int DELAY = 10;
