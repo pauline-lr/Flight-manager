@@ -8,7 +8,7 @@ public class SingletonConnection {
     public static Connection getInstance() {
         if (uniqueConnection == null) {
             try {
-                uniqueConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/airline", "root", "LoréaSmith");
+                Connection uniqueConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/airline", "root", "LoréaSmith");
             }
             catch (SQLException exception) {
                 System.out.println("Erreur : " + exception.getMessage());
