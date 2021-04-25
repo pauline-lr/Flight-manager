@@ -1,5 +1,5 @@
 package exception;
 
-public class AllPilotsException extends Exception{
+public class AllPilotsException extends Exception {
 
 }
