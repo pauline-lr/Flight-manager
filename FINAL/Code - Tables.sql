@@ -36,12 +36,10 @@ CREATE TABLE pilot (
 );
 
 CREATE TABLE plane (
-    plane_id VARCHAR(10),
-    model VARCHAR(7),
-    number INT,
+    plane_id INT AUTO_INCREMENT,
+    model VARCHAR(7) NOT NULL,
     brand VARCHAR(30) NOT NULL,
     
-	CONSTRAINT plane_id UNIQUE (model, number),
     CONSTRAINT plane_pk PRIMARY KEY (plane_id)
 );
 
@@ -73,7 +71,7 @@ CREATE TABLE flight (
     departure_gate VARCHAR(50) NOT NULL,
     arrival_gate VARCHAR(50) NOT NULL,
     pilot VARCHAR(50) NOT NULL,
-    plane VARCHAR(50) NOT NULL,
+    plane INT NOT NULL,
     
     CONSTRAINT flight_pk PRIMARY KEY (number),
     CONSTRAINT departure_gate_fk FOREIGN KEY (departure_gate) REFERENCES gate (gate_id),
@@ -83,7 +81,7 @@ CREATE TABLE flight (
 );
 
 CREATE TABLE class (
-    class_id CHAR(1),
+    class_id INT AUTO_INCREMENT,
     name VARCHAR(20) NOT NULL,
 
     CONSTRAINT class_pk PRIMARY KEY (class_id)
@@ -96,7 +94,7 @@ CREATE TABLE seat (
     is_on_window_side BOOLEAN NOT NULL,
     passenger VARCHAR(50),
     flight VARCHAR(50),
-    seat_class VARCHAR(50) NOT NULL,
+    seat_class INT NOT NULL,
     
     CONSTRAINT seat_id UNIQUE (seat_row, seat_column, flight),
     CONSTRAINT seat_pk PRIMARY KEY (seat_id),
@@ -117,21 +115,21 @@ VALUES
     ('SLT7787', 'Samuel', 'Scholtes', '0485996321', 'samuel.scholtes@henallux.be', '52:47:31')
 ;
 
-INSERT INTO class
+INSERT INTO class (name)
 VALUES
-    ('P', 'Première'),
-    ('B', 'Affaire'),
-    ('E', 'Économique')
+    ('Première'),
+    ('Affaire'),
+    ('Économique')
 ;
 
-INSERT INTO plane
+INSERT INTO plane (model, brand)
 VALUES
-    ( , 'A380', 1, 'Airbus'),
-    ( , 'A380', 2, 'Airbus'),
-    ( , 'A380', 3, 'Airbus'),
-    ( , 'A330', 1, 'Airbus'),
-    ( , 'A330', 2, 'Airbus'),
-    ( , '737', 1, 'Boeing'),
-    ( , '737', 2, 'Boeing'),
-    ( , '727', 1, 'Boeing')
+    ('A380', 'Airbus'),
+    ('A380', 'Airbus'),
+    ('A380', 'Airbus'),
+    ('A330', 'Airbus'),
+    ('A330', 'Airbus'),
+    ('737', 'Boeing'),
+    ('737', 'Boeing'),
+    ('727', 'Boeing')
 ;
