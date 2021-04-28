@@ -20,8 +20,36 @@ public class AirlineDBAccess {
         statement.setDate(2, endDateSQL);
         ResultSet data = statement.executeQuery();
 
+        Flight flight;
+        GregorianCalendar departureTime = new GregorianCalendar();
+        GregorianCalendar arrivalTime = new GregorianCalendar();
+        String mealDescription;
+        while (data.next()) {
+            departureTime.setTime(data.getDate("departure_time"));
+            arrivalTime.setTime(data.getDate("arrival_time"));
+
+            flight = new Flight(
+                data.getString("number"),
+                departureTime,
+                arrivalTime,
+                data.getBoolean("is_meal_on_board"),
+                data.getString("pilot"),
+                data.getString("departure_gate"),
+                data.getString("arrival_gate"),
+                data.getInt("plane")
+            );
+
+            mealDescription = data.getString("meal_description");
+            if (!data.wasNull()) {
+                flight.setMealDescription(mealDescription);
+            }
+
+            flights.add(flight);
+        }
+
+        connection.close();
         return flights;
     }
 
-    
+
 }

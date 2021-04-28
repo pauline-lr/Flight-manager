@@ -4,12 +4,12 @@ public class Seat {
     private Integer seatRow;            // Max 3 positive digits
     private Character seatColumn;       // 1 letter
     private Boolean isOnWindowSide;
-    private Passenger passenger;        // Can be null
-    private Flight flight;
-    private Class seatClass;
+    private String passenger;        // Can be null
+    private String flight;
+    private Integer seatClass;
 
     //region Constructors
-    public Seat(Integer seatRow, Character seatColumn, Boolean isOnWindowSide, Passenger passenger, Flight flight, Class seatClass) {
+    public Seat(Integer seatRow, Character seatColumn, Boolean isOnWindowSide, String passenger, String flight, Integer seatClass) {
         setSeatRow(seatRow);
         setSeatColumn(seatColumn);
         setOnWindowSide(isOnWindowSide);
@@ -17,7 +17,7 @@ public class Seat {
         setFlight(flight);
         setSeatClass(seatClass);
     }
-    public Seat(Integer seatRow, Character seatColumn, Boolean isOnWindowSide, Flight flight, Class seatClass) {
+    public Seat(Integer seatRow, Character seatColumn, Boolean isOnWindowSide, String flight, Integer seatClass) {
         this(seatRow, seatColumn, isOnWindowSide, null, flight, seatClass);
     }
     //endregion
@@ -32,13 +32,13 @@ public class Seat {
     private void setOnWindowSide(Boolean onWindowSide) {
         isOnWindowSide = onWindowSide;
     }
-    private void setPassenger(Passenger passenger) {
+    private void setPassenger(String passenger) {
         this.passenger = passenger;
     }
-    private void setFlight(Flight flight) {
+    private void setFlight(String flight) {
         this.flight = flight;
     }
-    private void setSeatClass(Class seatClass) {
+    private void setSeatClass(Integer seatClass) {
         this.seatClass = seatClass;
     }
     //endregion

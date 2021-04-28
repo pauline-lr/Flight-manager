@@ -3,10 +3,10 @@ package model;
 public class Gate {
     private Character terminal;     // 1 character
     private Integer number;         // Max 2 positive digits
-    private Airport airport;
+    private String airport;
 
     //region Constructors
-    public Gate(Character terminal, Integer number, Airport airport) {
+    public Gate(Character terminal, Integer number, String airport) {
         setTerminal(terminal);
         setNumber(number);
         setAirport(airport);
@@ -20,7 +20,7 @@ public class Gate {
     public void setNumber(Integer number) {
         this.number = number;
     }
-    public void setAirport(Airport airport) {
+    public void setAirport(String airport) {
         this.airport = airport;
     }
     //endregion
