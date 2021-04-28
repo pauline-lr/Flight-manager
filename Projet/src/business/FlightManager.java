@@ -1,12 +1,12 @@
 package business;
 
-import exception.AllPilotsException;
+import exception.FlightException;
 import model.Flight;
 
 import java.util.ArrayList;
 
 public class FlightManager {
-    public ArrayList<Flight> getAllFlight( ) throws AllPilotsException {
+    public ArrayList<Flight> getAllFlight( ) throws FlightException {
 
         return null;
     }

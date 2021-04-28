@@ -8,13 +8,13 @@ public class Flight {
     private GregorianCalendar arrivalTime;      // JJ/MM/AAAA HH:MM ( > today)
     private Boolean isMealOnBoard;
     private String mealDescription;             // Max 400 characters - can be null
-    private Pilot pilot;
-    private Gate departureGate;
-    private Gate arrivalGate;
-    private Plane plane;
+    private String pilot;
+    private String departureGate;
+    private String arrivalGate;
+    private Integer plane;
 
     //region Constructors
-    public Flight(String number, GregorianCalendar departureTime, GregorianCalendar arrivalTime, Boolean isMealOnBoard, String mealDescription, Pilot pilot, Gate departureGate, Gate arrivalGate, Plane plane) {
+    public Flight(String number, GregorianCalendar departureTime, GregorianCalendar arrivalTime, Boolean isMealOnBoard, String mealDescription, String pilot, String departureGate, String arrivalGate, Integer plane) {
         setNumber(number);
         setDepartureTime(departureTime);
         setArrivalTime(arrivalTime);
@@ -25,7 +25,7 @@ public class Flight {
         setArrivalGate(arrivalGate);
         setPlane(plane);
     }
-    public Flight(String number, GregorianCalendar departureTime, GregorianCalendar arrivalTime, Boolean isMealOnBoard, Pilot pilot, Gate departureGate, Gate arrivalGate, Plane plane) {
+    public Flight(String number, GregorianCalendar departureTime, GregorianCalendar arrivalTime, Boolean isMealOnBoard, String pilot, String departureGate, String arrivalGate, Integer plane) {
         this(number, departureTime, arrivalTime, isMealOnBoard, null, pilot, departureGate, arrivalGate, plane);
     }
     //endregion
@@ -46,16 +46,16 @@ public class Flight {
     public void setMealDescription(String mealDescription) {
         this.mealDescription = mealDescription;
     }
-    private void setPilot(Pilot pilot) {
+    private void setPilot(String pilot) {
         this.pilot = pilot;
     }
-    private void setDepartureGate(Gate departureGate) {
+    private void setDepartureGate(String departureGate) {
         this.departureGate = departureGate;
     }
-    private void setArrivalGate(Gate arrivalGate) {
+    private void setArrivalGate(String arrivalGate) {
         this.arrivalGate = arrivalGate;
     }
-    private void setPlane(Plane plane) {
+    private void setPlane(Integer plane) {
         this.plane = plane;
     }
     //endregion
