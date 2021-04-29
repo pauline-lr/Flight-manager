@@ -1,16 +1,18 @@
 package dataAccess;
 
-import exception.FlightException;
 import model.Flight;
+import model.Pilot;
 
 import java.sql.*;
 import java.util.*;
 
+// Importer customized exceptions
+
 public class AirlineDBAccess {
-    public static ArrayList<Flight> getAllFlightsBetweenDates(GregorianCalendar startDate, GregorianCalendar endDate) throws FlightException, SQLException {
-        ArrayList<Flight> flights = new ArrayList<Flight>();
-        java.sql.Date startDateSQL = new java.sql.Date(startDate.getTimeInMillis( ));
-        java.sql.Date endDateSQL = new java.sql.Date(endDate.getTimeInMillis( ));
+    public static ArrayList<Flight> getAllFlightsBetweenDates(GregorianCalendar startDate, GregorianCalendar endDate) throws SQLException {
+        ArrayList<Flight> flights = new ArrayList<>();
+        java.sql.Date startDateSQL = new java.sql.Date(startDate.getTimeInMillis());
+        java.sql.Date endDateSQL = new java.sql.Date(endDate.getTimeInMillis());
 
         Connection connection = SingletonConnection.getInstance();
 
@@ -51,5 +53,29 @@ public class AirlineDBAccess {
         return flights;
     }
 
+    public static ArrayList<Pilot> getAllPilots() throws SQLException {
+        ArrayList<Pilot> pilots = new ArrayList<Pilot>();
 
+        Connection connection = SingletonConnection.getInstance();
+        Statement statement = connection.createStatement();
+        ResultSet data = statement.executeQuery("SELECT * FROM pilot");
+        GregorianCalendar flyingTime = new GregorianCalendar();
+        Pilot pilot;
+
+        while (data.next()) {
+            flyingTime.setTime(data.getTime("flying_time"));
+            pilot = new Pilot(
+                    data.getString("first_name"),
+                    data.getString("last_name"),
+                    data.getString("phone_number"),
+                    data.getString("email_address"),
+                    data.getString("licence_number"),
+                    flyingTime
+            );
+            pilots.add(pilot);
+        }
+
+        connection.close();
+        return pilots;
+    }
 }
