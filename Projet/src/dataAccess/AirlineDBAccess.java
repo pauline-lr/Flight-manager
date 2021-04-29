@@ -78,4 +78,10 @@ public class AirlineDBAccess {
         connection.close();
         return pilots;
     }
+
+    public static void deleteFlight(Flight flightToDelete) throws SQLException {
+        Connection connection = SingletonConnection.getInstance();
+
+        connection.close();
+    }
 }
