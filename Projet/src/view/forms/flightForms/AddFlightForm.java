@@ -28,7 +28,7 @@ public class AddFlightForm extends JPanel {
     }
 
     public void initForm(){
-        // number
+    // number
         numberLabel = new JLabel("Numéro de vol : ");
         numberLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(numberLabel);
@@ -38,8 +38,8 @@ public class AddFlightForm extends JPanel {
         //numberTextField.setBounds(128,28,86,20);
         //numberTextField.setColumns(1);
         this.add(numberTextField);
-// NEW LINE
-        // departureDate
+
+    // departureDate
         departureDateLabel = new JLabel("Date et heure de départ : ");
         departureDateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(departureDateLabel);
@@ -49,9 +49,9 @@ public class AddFlightForm extends JPanel {
         spinner = new JSpinner(spinnerDateModel);
         JSpinner.DateEditor departureDaySpinner = new JSpinner.DateEditor(spinner);
         spinner.setEditor(departureDaySpinner);
-        this.add(departureDaySpinner);;
-// NEW LINE
-        // arrivalDate
+        this.add(departureDaySpinner);
+
+    // arrivalDate
         arrivalDateLabel = new JLabel("Date et heure d'arrivée : ");
         arrivalDateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(arrivalDateLabel);
@@ -63,8 +63,8 @@ public class AddFlightForm extends JPanel {
         JSpinner.DateEditor arrivalDaySpinner = new JSpinner.DateEditor(spinner);
         spinner.setEditor(arrivalDaySpinner);
         this.add(arrivalDaySpinner);
-// NEW LINE
-        // departureAirport
+
+    // departureAirport
         departureAirportLabel = new JLabel("Aéroport de départ : ");
         departureAirportLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(departureAirportLabel);
@@ -72,7 +72,7 @@ public class AddFlightForm extends JPanel {
         departureAirportComboBox = new JComboBox();
         this.add(departureAirportComboBox);
 
-        // departureGate
+    // departureGate
         departureTerminalLabel = new JLabel("Terminal : ");
         departureTerminalLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(departureTerminalLabel);
@@ -89,8 +89,8 @@ public class AddFlightForm extends JPanel {
         spinnerNumberModel = new SpinnerNumberModel(0,0,999,1);
         departureGateSpinner = new JSpinner(spinnerNumberModel);
         this.add(departureGateSpinner);
-// NEW LINE
-        // arrivalAirport
+
+    // arrivalAirport
         arrivalAirportLabel = new JLabel("Aéroport d'arrivée : ");
         arrivalAirportLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(arrivalAirportLabel);
@@ -98,7 +98,7 @@ public class AddFlightForm extends JPanel {
         arrivalAirportComboBox = new JComboBox();
         this.add(arrivalAirportComboBox);
 
-        // arrivalGate
+    // arrivalGate
         arrivalTerminalLabel = new JLabel("Terminal : ");
         arrivalTerminalLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(arrivalTerminalLabel);
@@ -115,16 +115,16 @@ public class AddFlightForm extends JPanel {
         spinnerNumberModel = new SpinnerNumberModel(0,0,999,1);
         arrivalGateSpinner = new JSpinner(spinnerNumberModel);
         this.add(arrivalGateSpinner);
-// NEW LINE
-        // plane
+
+    // plane
         planeLabel = new JLabel("Avion : ");
         planeLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(planeLabel);
 
         planeComboBox = new JComboBox();
         this.add(planeComboBox);
-// NEW LINE
-        // pilot
+
+    // pilot
         pilotLabel = new JLabel("Pilote : ");
         pilotLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(pilotLabel);
@@ -132,18 +132,17 @@ public class AddFlightForm extends JPanel {
         pilotComboBox = new JComboBox();
         this.add(pilotComboBox);
 
-        // isMealOnBoard
+    // isMealOnBoard
         isMealOnBoardCheckBox = new JCheckBox("Repas à bord");
         isMealOnBoardCheckBox.addItemListener(new MealOnBoardListener());
         isMealOnBoardCheckBox.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(isMealOnBoardCheckBox);
-// NEW LINE
 
         empty = new JLabel();
         empty.setHorizontalAlignment(SwingConstants.HORIZONTAL);
         add(empty);
 
-        // mealDescription
+    // mealDescription
         mealDescriptionLabel = new JLabel("Description du repas : ");
         mealDescriptionLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         add(mealDescriptionLabel);
