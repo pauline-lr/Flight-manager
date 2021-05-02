@@ -10,19 +10,24 @@ import java.util.*;
 // Import customized exceptions
 
 public class AirlineDBAccess {
+    private static Connection connection;
+
     //region Search functions
     public static ArrayList<Flight> getAllFlightsBetweenDates(GregorianCalendar startDate, GregorianCalendar endDate) throws SQLException {
         ArrayList<Flight> flights;
         java.sql.Date startDateSQL = new java.sql.Date(startDate.getTimeInMillis());
         java.sql.Date endDateSQL = new java.sql.Date(endDate.getTimeInMillis());
 
-        Connection connection = SingletonConnection.getInstance();
+        connection = SingletonConnection.getInstance();
 
-        String sql = "SELECT * FROM flight WHERE departure_time BETWEEN ? AND ?";
-        PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setDate(1, startDateSQL);
-        statement.setDate(2, endDateSQL);
-        ResultSet data = statement.executeQuery();
+        String sql =
+                "SELECT * FROM flight " +
+                "WHERE departure_time BETWEEN ? AND ? " +
+                "ORDER BY departure_time";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setDate(1, startDateSQL);
+        preparedStatement.setDate(2, endDateSQL);
+        ResultSet data = preparedStatement.executeQuery();
 
         flights = flightResultSetIntoArrayList(data);
 
@@ -35,10 +40,10 @@ public class AirlineDBAccess {
     public static ArrayList<Flight> getAllFlights() throws SQLException {
         ArrayList<Flight> flights;
 
-        Connection connection = SingletonConnection.getInstance();
+        connection = SingletonConnection.getInstance();
 
         Statement statement = connection.createStatement();
-        ResultSet data = statement.executeQuery("SELECT * FROM flight");
+        ResultSet data = statement.executeQuery("SELECT * FROM flight ORDER BY departure_time");
 
         flights = flightResultSetIntoArrayList(data);
 
@@ -48,10 +53,10 @@ public class AirlineDBAccess {
     public static ArrayList<Pilot> getAllPilots() throws SQLException {
         ArrayList<Pilot> pilots;
 
-        Connection connection = SingletonConnection.getInstance();
+        connection = SingletonConnection.getInstance();
 
         Statement statement = connection.createStatement();
-        ResultSet data = statement.executeQuery("SELECT * FROM pilot");
+        ResultSet data = statement.executeQuery("SELECT * FROM pilot ORDER BY first_name, last_name");
 
         pilots = pilotResultSetIntoArrayList(data);
 
@@ -61,10 +66,10 @@ public class AirlineDBAccess {
     public static ArrayList<Plane> getAllPlanes() throws SQLException {
         ArrayList<Plane> planes;
 
-        Connection connection = SingletonConnection.getInstance();
+        connection = SingletonConnection.getInstance();
 
         Statement statement = connection.createStatement();
-        ResultSet data = statement.executeQuery("SELECT * FROM plane");
+        ResultSet data = statement.executeQuery("SELECT * FROM plane ORDER BY model, brand");
 
         planes = planeResultSetIntoArrayList(data);
 
@@ -74,18 +79,37 @@ public class AirlineDBAccess {
     //endregion
 
     //region Manage functions
-    public static void deleteFlight(Flight flightToDelete) throws SQLException {
-        Connection connection = SingletonConnection.getInstance();
-
-        String sql = "DELETE FROM flight WHERE number = ?";
-        PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setString(1, flightToDelete.getNumber());
-        statement.executeUpdate();
+    public static void addFlight(Flight flightToAdd) throws SQLException {
+        connection = SingletonConnection.getInstance();
 
         connection.close();
     }
-    public static void modifyFlight(){
+    public static void deleteFlight(Flight flightToDelete) throws SQLException {
+        connection = SingletonConnection.getInstance();
 
+        String sql =
+                "DELETE FROM flight " +
+                "WHERE number = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1, flightToDelete.getNumber());
+        preparedStatement.executeUpdate();
+
+        connection.close();
+    }
+    public static void modifyFlight(Flight flightToUpdate, String originalNumber) throws SQLException {
+        connection = SingletonConnection.getInstance();
+
+        String sql =
+                "UPDATE flight " +
+                "SET number = ?, departure_time = ?, arrival_time = ?, is_meal_on_board = ?, " +
+                "meal_description = ?, departure_gate = ?, arrival_gate = ?, pilot = ?, plane = ? " +
+                "WHERE number = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1, flightToUpdate.getNumber());
+        preparedStatement.setDate(2, new java.sql.Date(flightToUpdate.getDepartureTime().getTimeInMillis()));
+        preparedStatement.setDate(3, new java.sql.Date(flightToUpdate.getArrivalTime().getTimeInMillis()));
+
+        connection.close();
     }
     //endregion
 

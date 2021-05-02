@@ -1,5 +1,7 @@
 package view.forms.flightForms;
 
+import dataAccess.AirlineDBAccess;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -33,7 +35,7 @@ public class AddFlightForm extends JPanel {
         numberLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(numberLabel);
 
-        numberTextField = new JTextField();
+        numberTextField = new JTextField("Numéro");
         numberTextField.setHorizontalAlignment(SwingConstants.LEFT);
         //numberTextField.setBounds(128,28,86,20);
         //numberTextField.setColumns(1);

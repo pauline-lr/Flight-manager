@@ -64,5 +64,29 @@ public class Flight {
     public String getNumber() {
         return number;
     }
+    public GregorianCalendar getDepartureTime() {
+        return departureTime;
+    }
+    public GregorianCalendar getArrivalTime() {
+        return arrivalTime;
+    }
+    public Boolean getMealOnBoard() {
+        return isMealOnBoard;
+    }
+    public String getMealDescription() {
+        return mealDescription;
+    }
+    public String getPilot() {
+        return pilot;
+    }
+    public String getDepartureGate() {
+        return departureGate;
+    }
+    public String getArrivalGate() {
+        return arrivalGate;
+    }
+    public Integer getPlane() {
+        return plane;
+    }
     //endregion
 }
