@@ -78,7 +78,6 @@ public class AddFlightForm extends JPanel {
         this.add(departureTerminalLabel);
 
         departureTerminalTextField = new JTextField();
-        departureTerminalTextField.setEnabled(false);
         departureTerminalTextField.setHorizontalAlignment(SwingConstants.LEFT);
         this.add(departureTerminalTextField);
 
@@ -104,7 +103,6 @@ public class AddFlightForm extends JPanel {
         this.add(arrivalTerminalLabel);
 
         arrivalTerminalTextField = new JTextField();
-        arrivalTerminalTextField.setEnabled(false);
         arrivalTerminalTextField.setHorizontalAlignment(SwingConstants.LEFT);
         this.add(arrivalTerminalTextField);
 
@@ -155,10 +153,10 @@ public class AddFlightForm extends JPanel {
 
     private class MealOnBoardListener implements ItemListener {
         @Override
-        public void itemStateChanged(ItemEvent evt){
-            if(evt.getStateChange() == ItemEvent.SELECTED){
+        public void itemStateChanged(ItemEvent evt) {
+            if (evt.getStateChange() == ItemEvent.SELECTED) {
                 mealDescriptionTextField.setEnabled(true);
-            }else{
+            } else {
                 mealDescriptionTextField.setEnabled(false);
             }
         }
