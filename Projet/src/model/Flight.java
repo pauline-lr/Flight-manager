@@ -61,5 +61,8 @@ public class Flight {
     //endregion
 
     //region Getters
+    public String getNumber() {
+        return number;
+    }
     //endregion
 }

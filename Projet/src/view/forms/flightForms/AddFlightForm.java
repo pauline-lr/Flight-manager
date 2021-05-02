@@ -2,18 +2,21 @@ package view.forms.flightForms;
 
 import javax.swing.*;
 import java.awt.event.*;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.*;
+
+// Est ce que c'est possible de faire apparaitre ou disparaitre la description du repas en fonction de si on coche s'il y a un repas ou non ?
+// Est ce que c'est possible de mettre des retours a la ligne la ou j'ai mis des commentaires pour voir ce que ca donne ?
 
 public class AddFlightForm extends JPanel {
-    private JTextField textNumber, textMealDescription;
-    private JSpinner flightTimeHour, stopTime, spinner;
-    private JCheckBox mealOnBoard, halt;
-    private JLabel number,flightTime, departure, departureAirport, arrivalAirport, mealDescription, stop, plane, pilot;
-    private SpinnerNumberModel flightTimeModel, stopTimeModel;
-    private SpinnerDateModel spinnerModel;
+    private JTextField numberTextField, mealDescriptionTextField, departureTerminalTextField, arrivalTerminalTextField;
+    private JSpinner spinner, departureGateSpinner, arrivalGateSpinner;
+    private JCheckBox isMealOnBoardCheckBox;
+    private JLabel numberLabel, departureDateLabel, arrivalDateLabel, departureAirportLabel, departureTerminalLabel,
+            departureGateLabel, arrivalAirportLabel, arrivalTerminalLabel, arrivalGateLabel, mealDescriptionLabel, planeLabel, pilotLabel;
+    private SpinnerNumberModel spinnerNumberModel;
+    private SpinnerDateModel spinnerDateModel;
     private Date date;
-    private JComboBox typePlane, pilotName, departureAirportName, arrivalAirportName;
+    private JComboBox planeComboBox, pilotComboBox, departureAirportComboBox, arrivalAirportComboBox;
 
     public AddFlightForm(){
         //this.setLayout(new GridLayout(15, 1, 2, 2));
@@ -22,98 +25,141 @@ public class AddFlightForm extends JPanel {
     }
 
     public void initForm(){
-        number = new JLabel("Numéro : ");
-        number.setHorizontalAlignment(SwingConstants.RIGHT);
-        this.add(number);
-        textNumber = new JTextField();
-        textNumber.setHorizontalAlignment(SwingConstants.RIGHT);
-        textNumber.setBounds(128,28,86,20);
-        textNumber.setColumns(1);
-        this.add(textNumber);
+        // number
+        numberLabel = new JLabel("Numéro de vol : ");
+        numberLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        this.add(numberLabel);
 
-        flightTime = new JLabel("Durée du vol (en minutes) : ");
-        flightTime.setHorizontalAlignment(SwingConstants.RIGHT);
-        this.add(flightTime);
-
-        flightTimeModel = new SpinnerNumberModel(0,0,300,1);
-        flightTimeHour = new JSpinner(flightTimeModel);
-        flightTimeHour.setBounds(128,28,86,20);
-        add(flightTimeHour);
-
-        departure = new JLabel("Départ : ");
-        departure.setHorizontalAlignment(SwingConstants.RIGHT);
-        this.add(departure);
+        numberTextField = new JTextField();
+        numberTextField.setHorizontalAlignment(SwingConstants.RIGHT);
+        numberTextField.setBounds(128,28,86,20);
+        numberTextField.setColumns(1);
+        this.add(numberTextField);
+// NEW LINE
+        // departureDate
+        departureDateLabel = new JLabel("Date et heure de départ : ");
+        departureDateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        this.add(departureDateLabel);
 
         date = new Date();
-        spinnerModel = new SpinnerDateModel(date, null, null, Calendar.DATE);
-        spinner = new JSpinner(spinnerModel);
-        JSpinner.DateEditor departureDate = new JSpinner.DateEditor(spinner, "dd-MM-YYYY");
-        spinner.setEditor(departureDate);
-        add(departureDate);
+        spinnerDateModel = new SpinnerDateModel(date, null, null, Calendar.DATE);
+        spinner = new JSpinner(spinnerDateModel);
+        JSpinner.DateEditor departureDaySpinner = new JSpinner.DateEditor(spinner, "dd/MM/YYYY");
+        spinner.setEditor(departureDaySpinner);
+        this.add(departureDaySpinner);
 
-        spinnerModel = new SpinnerDateModel(date, null, null, Calendar.MINUTE);
-        spinner = new JSpinner(spinnerModel);
-        JSpinner.DateEditor departureTime = new JSpinner.DateEditor(spinner, "HH:mm");
-        spinner.setEditor(departureTime);
-        add(departureTime);
+        spinnerDateModel = new SpinnerDateModel(date, null, null, Calendar.MINUTE);
+        spinner = new JSpinner(spinnerDateModel);
+        JSpinner.DateEditor departureTimeSpinner = new JSpinner.DateEditor(spinner, "HH:mm");
+        spinner.setEditor(departureTimeSpinner);
+        this.add(departureTimeSpinner);
+// NEW LINE
+        // arrivalDate
+        arrivalDateLabel = new JLabel("Date et heure d'arrivée : ");
+        arrivalDateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        this.add(arrivalDateLabel);
 
-        halt = new JCheckBox("\nEscale ");
-        halt.addItemListener(new HaltListener());;
-        halt.setHorizontalAlignment(SwingConstants.RIGHT);
-        add(halt);
+        date = new Date();
+        spinnerDateModel = new SpinnerDateModel(date, null, null, Calendar.DATE);
+        spinner = new JSpinner(spinnerDateModel);
+        JSpinner.DateEditor arrivalDaySpinner = new JSpinner.DateEditor(spinner, "dd/MM/YYYY");
+        spinner.setEditor(arrivalDaySpinner);
+        this.add(arrivalDaySpinner);
 
-        stop = new JLabel("Durée de l'escale : ");
-        stop.setHorizontalAlignment(SwingConstants.RIGHT);
-        add(stop);
+        spinnerDateModel = new SpinnerDateModel(date, null, null, Calendar.MINUTE);
+        spinner = new JSpinner(spinnerDateModel);
+        JSpinner.DateEditor arrivalTimeSpinner = new JSpinner.DateEditor(spinner, "HH:mm");
+        spinner.setEditor(arrivalTimeSpinner);
+        this.add(arrivalTimeSpinner);
+// NEW LINE
+        // departureAirport
+        departureAirportLabel = new JLabel("Aéroport de départ : ");
+        departureAirportLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        this.add(departureAirportLabel);
 
-        stopTimeModel = new SpinnerNumberModel(0,0,300,1);
-        stopTime = new JSpinner(stopTimeModel);
-        add(stopTime);
+        departureAirportComboBox = new JComboBox();
+        this.add(departureAirportComboBox);
 
-        departureAirport = new JLabel("Aéroport de Départ : ");
-        departureAirport.setHorizontalAlignment(SwingConstants.RIGHT);
-        add(departureAirport);
-        departureAirportName = new JComboBox();
-        this.add(departureAirportName);
+        // departureGate
+        departureTerminalLabel = new JLabel("Terminal : ");
+        departureTerminalLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        this.add(departureTerminalLabel);
 
-        arrivalAirport = new JLabel("Aéroport d'arrivée : ");
-        arrivalAirport.setHorizontalAlignment(SwingConstants.RIGHT);
-        add(arrivalAirport);
-        arrivalAirportName = new JComboBox();
-        this.add(arrivalAirportName);
+        departureTerminalTextField = new JTextField();
+        departureTerminalTextField.setEnabled(false);
+        departureTerminalTextField.setHorizontalAlignment(SwingConstants.RIGHT);
+        this.add(departureTerminalTextField);
 
-        mealOnBoard = new JCheckBox("\nRepas à bord ");
-        mealOnBoard.addItemListener(new MealOnBoardListener());
-        mealOnBoard.setHorizontalAlignment(SwingConstants.RIGHT);
-        add(mealOnBoard);
+        departureGateLabel = new JLabel("Porte : ");
+        departureGateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        this.add(departureGateLabel);
 
-        mealDescription = new JLabel("Description du repas : ");
-        mealDescription.setHorizontalAlignment(SwingConstants.RIGHT);
-        add(mealDescription);
+        spinnerNumberModel = new SpinnerNumberModel(0,0,999,1);
+        departureGateSpinner = new JSpinner(spinnerNumberModel);
+        this.add(departureGateSpinner);
+// NEW LINE
+        // arrivalAirport
+        arrivalAirportLabel = new JLabel("Aéroport d'arrivée : ");
+        arrivalAirportLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        this.add(arrivalAirportLabel);
 
-        textMealDescription = new JTextField();
-        textMealDescription.setEnabled(false);
-        textMealDescription.setHorizontalAlignment(SwingConstants.RIGHT);
-        add(textMealDescription);
+        arrivalAirportComboBox = new JComboBox();
+        this.add(arrivalAirportComboBox);
 
+        // arrivalGate
+        arrivalTerminalLabel = new JLabel("Terminal : ");
+        arrivalTerminalLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        this.add(arrivalTerminalLabel);
 
+        arrivalTerminalTextField = new JTextField();
+        arrivalTerminalTextField.setEnabled(false);
+        arrivalTerminalTextField.setHorizontalAlignment(SwingConstants.RIGHT);
+        this.add(arrivalTerminalTextField);
 
-        plane = new JLabel("Avion");
-        plane.setHorizontalAlignment(SwingConstants.RIGHT);
-        add(plane);
-        typePlane = new JComboBox();
-        this.add(typePlane);
+        arrivalGateLabel = new JLabel("Porte : ");
+        arrivalGateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        this.add(arrivalGateLabel);
 
-        pilot = new JLabel("Pilote");
-        pilot.setHorizontalAlignment(SwingConstants.RIGHT);
-        add(pilot);
-        pilotName = new JComboBox();
-        this.add(pilotName);
+        spinnerNumberModel = new SpinnerNumberModel(0,0,999,1);
+        arrivalGateSpinner = new JSpinner(spinnerNumberModel);
+        this.add(arrivalGateSpinner);
+// NEW LINE
+        // plane
+        planeLabel = new JLabel("Avion : ");
+        planeLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        this.add(planeLabel);
+
+        planeComboBox = new JComboBox();
+        this.add(planeComboBox);
+// NEW LINE
+        // pilot
+        pilotLabel = new JLabel("Pilote : ");
+        pilotLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        this.add(pilotLabel);
+
+        pilotComboBox = new JComboBox();
+        this.add(pilotComboBox);
+
+        // isMealOnBoard
+        isMealOnBoardCheckBox = new JCheckBox("Repas à bord");
+        isMealOnBoardCheckBox.addItemListener(new MealOnBoardListener());
+        isMealOnBoardCheckBox.setHorizontalAlignment(SwingConstants.RIGHT);
+        this.add(isMealOnBoardCheckBox);
+// NEW LINE
+        // mealDescription
+        mealDescriptionLabel = new JLabel("Description du repas : ");
+        mealDescriptionLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        add(mealDescriptionLabel);
+
+        mealDescriptionTextField = new JTextField();
+        mealDescriptionTextField.setEnabled(false);
+        mealDescriptionTextField.setHorizontalAlignment(SwingConstants.RIGHT);
+        add(mealDescriptionTextField);
     }
 
     private class MealOnBoardListener implements ItemListener {
         public void actionPerformed(ActionEvent arg0) {
-            if(textNumber.getText().isEmpty()||(textNumber.getText().isEmpty()))
+            if(numberTextField.getText().isEmpty()||(numberTextField.getText().isEmpty()))
                 JOptionPane.showMessageDialog(null, "Data Missing");
             else
                 JOptionPane.showMessageDialog(null, "Data Submitted");
@@ -121,20 +167,9 @@ public class AddFlightForm extends JPanel {
         @Override
         public void itemStateChanged(ItemEvent evt){
             if(evt.getStateChange() == ItemEvent.SELECTED){
-                textMealDescription.setEnabled(true);
+                mealDescriptionTextField.setEnabled(true);
             }else{
-                textMealDescription.setEnabled(false);
-            }
-        }
-    }
-
-    private class HaltListener implements ItemListener {
-        @Override
-        public void itemStateChanged(ItemEvent evt){
-            if(evt.getStateChange() == ItemEvent.SELECTED){
-                stopTime.setEnabled(true);
-            }else{
-                stopTime.setEnabled(false);
+                mealDescriptionTextField.setEnabled(false);
             }
         }
     }
