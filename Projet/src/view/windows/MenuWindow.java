@@ -2,6 +2,7 @@ package view.windows;
 
 import view.panels.menuBarPanels.AllFlightsPanel;
 import view.panels.menuBarPanels.optionsFlightPanels.AddFlightPanel;
+import view.panels.menuBarPanels.optionsFlightPanels.DeleteFlightPanel;
 import view.panels.menuBarPanels.optionsFlightPanels.ModifyFlightPanel;
 import view.panels.menuBarPanels.searchPanels.DateFlightPanel;
 import view.panels.menuBarPanels.searchPanels.SearchPilotPanel;
@@ -86,7 +87,7 @@ public class MenuWindow extends JFrame{
         flight.add(modifyFlight);
 
         deleteFlight = new JMenuItem("Supprimer un vol");
-        //deleteFlight.addActionListener(new DeletelightListener());
+        deleteFlight.addActionListener(new DeletelightListener());
         flight.add(deleteFlight);
     }
     
@@ -188,7 +189,15 @@ public class MenuWindow extends JFrame{
         }
     }
 
-/*
     private class DeletelightListener implements ActionListener {
-    }*/
+        @Override
+        public void actionPerformed(ActionEvent evt){
+            frameContainer.removeAll();
+            frameContainer.add(new DeleteFlightPanel(MenuWindow.this), BorderLayout.CENTER);
+            frameContainer.repaint();
+            MenuWindow.this.setVisible(true);
+        }
+    }
+
+
 }

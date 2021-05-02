@@ -1,7 +1,10 @@
 package view.forms.flightForms;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 // Est ce que c'est possible de faire apparaitre ou disparaitre la description du repas en fonction de si on coche s'il y a un repas ou non ?
@@ -12,14 +15,14 @@ public class AddFlightForm extends JPanel {
     private JSpinner spinner, departureGateSpinner, arrivalGateSpinner;
     private JCheckBox isMealOnBoardCheckBox;
     private JLabel numberLabel, departureDateLabel, arrivalDateLabel, departureAirportLabel, departureTerminalLabel,
-            departureGateLabel, arrivalAirportLabel, arrivalTerminalLabel, arrivalGateLabel, mealDescriptionLabel, planeLabel, pilotLabel;
+            departureGateLabel, arrivalAirportLabel, arrivalTerminalLabel, arrivalGateLabel, mealDescriptionLabel, planeLabel, pilotLabel, empty;
     private SpinnerNumberModel spinnerNumberModel;
     private SpinnerDateModel spinnerDateModel;
     private Date date;
     private JComboBox planeComboBox, pilotComboBox, departureAirportComboBox, arrivalAirportComboBox;
 
     public AddFlightForm(){
-        //this.setLayout(new GridLayout(15, 1, 2, 2));
+        this.setLayout(new GridLayout(15, 1, 3, 3));
 
         initForm();
     }
@@ -31,9 +34,9 @@ public class AddFlightForm extends JPanel {
         this.add(numberLabel);
 
         numberTextField = new JTextField();
-        numberTextField.setHorizontalAlignment(SwingConstants.RIGHT);
-        numberTextField.setBounds(128,28,86,20);
-        numberTextField.setColumns(1);
+        numberTextField.setHorizontalAlignment(SwingConstants.LEFT);
+        //numberTextField.setBounds(128,28,86,20);
+        //numberTextField.setColumns(1);
         this.add(numberTextField);
 // NEW LINE
         // departureDate
@@ -44,15 +47,9 @@ public class AddFlightForm extends JPanel {
         date = new Date();
         spinnerDateModel = new SpinnerDateModel(date, null, null, Calendar.DATE);
         spinner = new JSpinner(spinnerDateModel);
-        JSpinner.DateEditor departureDaySpinner = new JSpinner.DateEditor(spinner, "dd/MM/YYYY");
+        JSpinner.DateEditor departureDaySpinner = new JSpinner.DateEditor(spinner);
         spinner.setEditor(departureDaySpinner);
-        this.add(departureDaySpinner);
-
-        spinnerDateModel = new SpinnerDateModel(date, null, null, Calendar.MINUTE);
-        spinner = new JSpinner(spinnerDateModel);
-        JSpinner.DateEditor departureTimeSpinner = new JSpinner.DateEditor(spinner, "HH:mm");
-        spinner.setEditor(departureTimeSpinner);
-        this.add(departureTimeSpinner);
+        this.add(departureDaySpinner);;
 // NEW LINE
         // arrivalDate
         arrivalDateLabel = new JLabel("Date et heure d'arrivée : ");
@@ -60,17 +57,12 @@ public class AddFlightForm extends JPanel {
         this.add(arrivalDateLabel);
 
         date = new Date();
+
         spinnerDateModel = new SpinnerDateModel(date, null, null, Calendar.DATE);
         spinner = new JSpinner(spinnerDateModel);
-        JSpinner.DateEditor arrivalDaySpinner = new JSpinner.DateEditor(spinner, "dd/MM/YYYY");
+        JSpinner.DateEditor arrivalDaySpinner = new JSpinner.DateEditor(spinner);
         spinner.setEditor(arrivalDaySpinner);
         this.add(arrivalDaySpinner);
-
-        spinnerDateModel = new SpinnerDateModel(date, null, null, Calendar.MINUTE);
-        spinner = new JSpinner(spinnerDateModel);
-        JSpinner.DateEditor arrivalTimeSpinner = new JSpinner.DateEditor(spinner, "HH:mm");
-        spinner.setEditor(arrivalTimeSpinner);
-        this.add(arrivalTimeSpinner);
 // NEW LINE
         // departureAirport
         departureAirportLabel = new JLabel("Aéroport de départ : ");
@@ -87,7 +79,7 @@ public class AddFlightForm extends JPanel {
 
         departureTerminalTextField = new JTextField();
         departureTerminalTextField.setEnabled(false);
-        departureTerminalTextField.setHorizontalAlignment(SwingConstants.RIGHT);
+        departureTerminalTextField.setHorizontalAlignment(SwingConstants.LEFT);
         this.add(departureTerminalTextField);
 
         departureGateLabel = new JLabel("Porte : ");
@@ -113,7 +105,7 @@ public class AddFlightForm extends JPanel {
 
         arrivalTerminalTextField = new JTextField();
         arrivalTerminalTextField.setEnabled(false);
-        arrivalTerminalTextField.setHorizontalAlignment(SwingConstants.RIGHT);
+        arrivalTerminalTextField.setHorizontalAlignment(SwingConstants.LEFT);
         this.add(arrivalTerminalTextField);
 
         arrivalGateLabel = new JLabel("Porte : ");
@@ -146,6 +138,11 @@ public class AddFlightForm extends JPanel {
         isMealOnBoardCheckBox.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(isMealOnBoardCheckBox);
 // NEW LINE
+
+        empty = new JLabel();
+        empty.setHorizontalAlignment(SwingConstants.HORIZONTAL);
+        add(empty);
+
         // mealDescription
         mealDescriptionLabel = new JLabel("Description du repas : ");
         mealDescriptionLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -153,17 +150,11 @@ public class AddFlightForm extends JPanel {
 
         mealDescriptionTextField = new JTextField();
         mealDescriptionTextField.setEnabled(false);
-        mealDescriptionTextField.setHorizontalAlignment(SwingConstants.RIGHT);
+        mealDescriptionTextField.setHorizontalAlignment(SwingConstants.LEFT);
         add(mealDescriptionTextField);
     }
 
     private class MealOnBoardListener implements ItemListener {
-        public void actionPerformed(ActionEvent arg0) {
-            if(numberTextField.getText().isEmpty()||(numberTextField.getText().isEmpty()))
-                JOptionPane.showMessageDialog(null, "Data Missing");
-            else
-                JOptionPane.showMessageDialog(null, "Data Submitted");
-        }
         @Override
         public void itemStateChanged(ItemEvent evt){
             if(evt.getStateChange() == ItemEvent.SELECTED){
