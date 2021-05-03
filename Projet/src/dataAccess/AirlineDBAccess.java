@@ -1,5 +1,6 @@
 package dataAccess;
 
+import model.Airport;
 import model.Flight;
 import model.Pilot;
 import model.Plane;
@@ -62,6 +63,19 @@ public class AirlineDBAccess {
 
         connection.close();
         return pilots;
+    }
+    public static ArrayList<Airport> getAllAirports() throws SQLException {
+        ArrayList<Airport> airports;
+
+        connection = SingletonConnection.getInstance();
+
+        Statement statement = connection.createStatement();
+        ResultSet data = statement.executeQuery("SELECT * FROM airport ORDER BY name");
+
+        airports = airportResultSetIntoArrayList(data);
+
+        connection.close();
+        return airports;
     }
     public static ArrayList<Plane> getAllPlanes() throws SQLException {
         ArrayList<Plane> planes;
@@ -171,6 +185,22 @@ public class AirlineDBAccess {
 
         return pilots;
     }
+    private static ArrayList<Airport> airportResultSetIntoArrayList(ResultSet data) throws SQLException {
+        ArrayList<Airport> airports = new ArrayList<>();
+        Airport airport;
+
+        while (data.next()) {
+            airport = new Airport(
+                    data.getString("code"),
+                    data.getString("name"),
+                    data.getString("country")
+            );
+
+            airports.add(airport);
+        }
+
+        return airports;
+    }
     private static ArrayList<Plane> planeResultSetIntoArrayList(ResultSet data) throws SQLException {
         ArrayList<Plane> planes = new ArrayList<>();
         Plane plane;
@@ -183,6 +213,7 @@ public class AirlineDBAccess {
 
             planes.add(plane);
         }
+
         return planes;
     }
     private static PreparedStatement preparedFlightStatement(Connection connection, String sql, Flight flight) throws SQLException {
