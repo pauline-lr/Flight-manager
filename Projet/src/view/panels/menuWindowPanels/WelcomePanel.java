@@ -7,7 +7,6 @@ public class WelcomePanel extends JPanel {
     private JLabel text;
 
     public WelcomePanel() {
-        //this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         text = new JLabel("<html>" +
                 "<center><h1>Bienvenue sur le gestionnaire de vols</h1>" +
                 "<h4>Réalisé par Pauline Loréa et Jonathan Smith</h4></center>" +
