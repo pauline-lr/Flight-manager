@@ -35,7 +35,7 @@ public class AddFlightForm extends JPanel {
         numberLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(numberLabel);
 
-        numberTextField = new JTextField("Numéro");
+        numberTextField = new JTextField();
         numberTextField.setHorizontalAlignment(SwingConstants.LEFT);
         //numberTextField.setBounds(128,28,86,20);
         //numberTextField.setColumns(1);
