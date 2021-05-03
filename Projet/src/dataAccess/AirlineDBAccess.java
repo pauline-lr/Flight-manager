@@ -4,6 +4,7 @@ import model.Airport;
 import model.Flight;
 import model.Pilot;
 import model.Plane;
+import model.Class;
 
 import java.sql.*;
 import java.util.*;
@@ -89,6 +90,18 @@ public class AirlineDBAccess {
 
         connection.close();
         return planes;
+    }
+    public static ArrayList<Class> getAllClasses() throws SQLException {
+        ArrayList<Class> classes;
+
+        connection = SingletonConnection.getInstance();
+
+        Statement statement = connection.createStatement();
+        ResultSet data = statement.executeQuery("SELECT * FROM class ORDER BY name");
+
+        classes = classResultSetIntoArrayList(data);
+
+        return classes;
     }
     //endregion
 
@@ -215,6 +228,20 @@ public class AirlineDBAccess {
         }
 
         return planes;
+    }
+    private static ArrayList<Class> classResultSetIntoArrayList(ResultSet data) throws SQLException {
+        ArrayList<Class> classes = new ArrayList<>();
+        Class classe;
+
+        while (data.next()) {
+            classe = new Class(
+                    data.getString("name")
+            );
+
+            classes.add(classe);
+        }
+
+        return classes;
     }
     private static PreparedStatement preparedFlightStatement(Connection connection, String sql, Flight flight) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
