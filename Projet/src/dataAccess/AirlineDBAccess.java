@@ -82,16 +82,10 @@ public class AirlineDBAccess {
     public static void addFlight(Flight flightToAdd) throws SQLException {
         connection = SingletonConnection.getInstance();
 
-        connection.close();
-    }
-    public static void deleteFlight(Flight flightToDelete) throws SQLException {
-        connection = SingletonConnection.getInstance();
-
         String sql =
-                "DELETE FROM flight " +
-                "WHERE number = ?";
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setString(1, flightToDelete.getNumber());
+                "INSERT INTO flight " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        PreparedStatement preparedStatement = preparedFlightStatement(connection, sql, flightToAdd);
         preparedStatement.executeUpdate();
 
         connection.close();
@@ -104,10 +98,21 @@ public class AirlineDBAccess {
                 "SET number = ?, departure_time = ?, arrival_time = ?, is_meal_on_board = ?, " +
                 "meal_description = ?, departure_gate = ?, arrival_gate = ?, pilot = ?, plane = ? " +
                 "WHERE number = ?";
+        PreparedStatement preparedStatement = preparedFlightStatement(connection, sql, flightToUpdate);
+        preparedStatement.setString(10, originalNumber);
+        preparedStatement.executeUpdate();
+
+        connection.close();
+    }
+    public static void deleteFlight(Flight flightToDelete) throws SQLException {
+        connection = SingletonConnection.getInstance();
+
+        String sql =
+                "DELETE FROM flight " +
+                        "WHERE number = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setString(1, flightToUpdate.getNumber());
-        preparedStatement.setDate(2, new java.sql.Date(flightToUpdate.getDepartureTime().getTimeInMillis()));
-        preparedStatement.setDate(3, new java.sql.Date(flightToUpdate.getArrivalTime().getTimeInMillis()));
+        preparedStatement.setString(1, flightToDelete.getNumber());
+        preparedStatement.executeUpdate();
 
         connection.close();
     }
@@ -179,6 +184,23 @@ public class AirlineDBAccess {
             planes.add(plane);
         }
         return planes;
+    }
+    private static PreparedStatement preparedFlightStatement(Connection connection, String sql, Flight flight) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1, flight.getNumber());
+        preparedStatement.setDate(2, new java.sql.Date(flight.getDepartureTime().getTimeInMillis()));
+        preparedStatement.setDate(3, new java.sql.Date(flight.getArrivalTime().getTimeInMillis()));
+        preparedStatement.setBoolean(4, flight.getMealOnBoard());
+        if (flight.getMealDescription() == null) {
+            preparedStatement.setNull(5, Types.VARCHAR);
+        } else {
+            preparedStatement.setString(5, flight.getMealDescription());
+        }
+        preparedStatement.setString(6, flight.getDepartureGate());
+        preparedStatement.setString(7, flight.getArrivalGate());
+        preparedStatement.setString(8, flight.getPilot());
+        preparedStatement.setInt(9, flight.getPlane());
+        return preparedStatement;
     }
     //endregion
 }
