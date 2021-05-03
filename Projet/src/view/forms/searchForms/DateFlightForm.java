@@ -25,7 +25,7 @@ public class DateFlightForm extends JPanel {
         date = new Date();
         spinnerModel = new SpinnerDateModel(date, null, null, Calendar.DATE);
         spinner = new javax.swing.JSpinner(spinnerModel);
-        JSpinner.DateEditor startDate = new JSpinner.DateEditor(spinner, "dd-MM-YYYY");
+        JSpinner.DateEditor startDate = new JSpinner.DateEditor(spinner, "dd/MM/YYYY");
         spinner.setEditor(startDate);
         add(startDate);
 
@@ -35,7 +35,7 @@ public class DateFlightForm extends JPanel {
 
         spinnerModel = new SpinnerDateModel(date, null, null, Calendar.DATE);
         spinner = new javax.swing.JSpinner(spinnerModel);
-        JSpinner.DateEditor endDate = new JSpinner.DateEditor(spinner, "dd-MM-YYYY");
+        JSpinner.DateEditor endDate = new JSpinner.DateEditor(spinner, "dd/MM/YYYY");
         spinner.setEditor(endDate);
         add(endDate);
     }
