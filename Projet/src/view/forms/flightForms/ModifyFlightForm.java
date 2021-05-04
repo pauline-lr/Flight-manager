@@ -6,35 +6,33 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class ModifyFlightForm extends JPanel {
-    private JLabel flight;
-    private JComboBox numberFlight;
     private JTextField mealDescriptionTextField, departureTerminalTextField, arrivalTerminalTextField;
     private JSpinner spinner, departureGateSpinner, arrivalGateSpinner;
     private JCheckBox isMealOnBoardCheckBox;
-    private JLabel departureDateLabel, arrivalDateLabel, departureAirportLabel, departureTerminalLabel,
-            departureGateLabel, arrivalAirportLabel, arrivalTerminalLabel, arrivalGateLabel, mealDescriptionLabel, planeLabel, pilotLabel, empty;
+    private JLabel flightLabel, departureDateLabel, arrivalDateLabel, departureAirportLabel, departureTerminalLabel,
+            departureGateLabel, arrivalAirportLabel, arrivalTerminalLabel, arrivalGateLabel, mealDescriptionLabel, planeLabel, pilotLabel, emptyLabel;
     private SpinnerNumberModel spinnerNumberModel;
     private SpinnerDateModel spinnerDateModel;
     private Date date;
-    private JComboBox planeComboBox, pilotComboBox, departureAirportComboBox, arrivalAirportComboBox;
+    private JComboBox flightComboBox, planeComboBox, pilotComboBox, departureAirportComboBox, arrivalAirportComboBox;
 
 
     public ModifyFlightForm(){
         this.setLayout(new GridLayout(15, 1, 3, 3));
 
-        flight = new JLabel("Choisissez le vol à modifier ");
-        flight.setHorizontalAlignment(SwingConstants.RIGHT);
-        this.add(flight);
+        flightLabel = new JLabel("Vol à modifier : ");
+        flightLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        this.add(flightLabel);
 
-        numberFlight = new JComboBox();
-        this.add(numberFlight);
+        flightComboBox = new JComboBox();
+        this.add(flightComboBox);
 
-        empty = new JLabel();
-        empty.setHorizontalAlignment(SwingConstants.HORIZONTAL);
-        add(empty);
-        empty = new JLabel();
-        empty.setHorizontalAlignment(SwingConstants.HORIZONTAL);
-        add(empty);
+        emptyLabel = new JLabel();
+        emptyLabel.setHorizontalAlignment(SwingConstants.HORIZONTAL);
+        add(emptyLabel);
+        emptyLabel = new JLabel();
+        emptyLabel.setHorizontalAlignment(SwingConstants.HORIZONTAL);
+        add(emptyLabel);
 
         // faire apparaitre dans les cases du formulaire les données de la ligne de la tbale vol choisie
         // departureDate
@@ -137,9 +135,9 @@ public class ModifyFlightForm extends JPanel {
         this.add(isMealOnBoardCheckBox);
 // NEW LINE
 
-        empty = new JLabel();
-        empty.setHorizontalAlignment(SwingConstants.HORIZONTAL);
-        add(empty);
+        emptyLabel = new JLabel();
+        emptyLabel.setHorizontalAlignment(SwingConstants.HORIZONTAL);
+        add(emptyLabel);
 
         // mealDescription
         mealDescriptionLabel = new JLabel("Description du repas : ");
@@ -150,6 +148,5 @@ public class ModifyFlightForm extends JPanel {
         mealDescriptionTextField.setEnabled(false);
         mealDescriptionTextField.setHorizontalAlignment(SwingConstants.LEFT);
         add(mealDescriptionTextField);
-
     }
 }

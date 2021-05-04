@@ -1,12 +1,8 @@
 package view.forms.flightForms;
 
-import dataAccess.AirlineDBAccess;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 // Est ce que c'est possible de faire apparaitre ou disparaitre la description du repas en fonction de si on coche s'il y a un repas ou non ?
@@ -17,7 +13,7 @@ public class AddFlightForm extends JPanel {
     private JSpinner spinner, departureGateSpinner, arrivalGateSpinner;
     private JCheckBox isMealOnBoardCheckBox;
     private JLabel numberLabel, departureDateLabel, arrivalDateLabel, departureAirportLabel, departureTerminalLabel,
-            departureGateLabel, arrivalAirportLabel, arrivalTerminalLabel, arrivalGateLabel, mealDescriptionLabel, planeLabel, pilotLabel, empty;
+            departureGateLabel, arrivalAirportLabel, arrivalTerminalLabel, arrivalGateLabel, mealDescriptionLabel, planeLabel, pilotLabel, emptyLabel;
     private SpinnerNumberModel spinnerNumberModel;
     private SpinnerDateModel spinnerDateModel;
     private Date date;
@@ -138,9 +134,9 @@ public class AddFlightForm extends JPanel {
         isMealOnBoardCheckBox.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(isMealOnBoardCheckBox);
 
-        empty = new JLabel();
-        empty.setHorizontalAlignment(SwingConstants.HORIZONTAL);
-        add(empty);
+        emptyLabel = new JLabel();
+        emptyLabel.setHorizontalAlignment(SwingConstants.HORIZONTAL);
+        add(emptyLabel);
 
     // mealDescription
         mealDescriptionLabel = new JLabel("Description du repas : ");

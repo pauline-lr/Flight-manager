@@ -4,17 +4,17 @@ import javax.swing.*;
 import java.awt.*;
 
 public class DeleteFlightForm extends JPanel {
-    private JLabel flight;
-    private JComboBox numberFlight;
+    private JLabel flightLabel;
+    private JComboBox flightComboBox;
 
     public DeleteFlightForm(){
         this.setLayout(new GridLayout(15, 1, 3, 3));
 
-        flight = new JLabel("Choisissez le vol à supprimer ");
-        flight.setHorizontalAlignment(SwingConstants.CENTER);
-        this.add(flight);
+        flightLabel = new JLabel("Vol à supprimer : ");
+        flightLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        this.add(flightLabel);
 
-        numberFlight = new JComboBox();
-        this.add(numberFlight);
+        flightComboBox = new JComboBox();
+        this.add(flightComboBox);
     }
 }
