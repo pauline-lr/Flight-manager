@@ -133,3 +133,24 @@ VALUES
     ('737', 'Boeing'),
     ('727', 'Boeing')
 ;
+
+INSERT INTO airport
+VALUES
+    ('LHR', 'Londres Heathrow', 'Angleterre'),
+    ('LAX', 'Los Angeles', 'Californie'),
+    ('JFK', 'John F. Kennedy', 'New-York'),
+    ('CDG', 'Paris-Charles-de-Gaulle', 'France'),
+    ('BRU', 'Bruxelles-National', 'Belgique'),
+    ('FCO', 'Léonard-de-Vinci de Rome Fiumicino', 'Italie'),
+    ('HND', 'Tokyo-Haneda', 'Japon'),
+    ('GIG', 'Rio de Janeiro/Galeão', 'Brésil')
+;
+
+INSERT INTO passenger
+VALUES
+    ('EF4854263', 'Pauline', 'Loréa', '0458595663', 'etu40989@student.henallux.be', '1999-06-13'),
+    ('EF7856324', 'Jonathan', 'Smith', '0474855596', 'etu42989@student.henallux.be', '1999-06-13'),
+    ('EF3568956', 'Bruce', 'Wayne', '0412458699', 'etu40489@student.henallux.be', '1999-06-13'),
+    ('EF1774626', 'Nathan', 'Drake', '0428969565', 'etu40949@student.henallux.be', '1999-06-13'),
+    ('EF7474256', 'Edward', 'Snowden', '0445896323', 'etu40982@student.henallux.be', '1999-06-13')
+;

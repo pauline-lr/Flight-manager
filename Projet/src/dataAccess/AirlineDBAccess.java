@@ -29,6 +29,7 @@ public class AirlineDBAccess {
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setDate(1, startDateSQL);
         preparedStatement.setDate(2, endDateSQL);
+
         ResultSet data = preparedStatement.executeQuery();
 
         flights = flightResultSetIntoArrayList(data);
@@ -37,6 +38,24 @@ public class AirlineDBAccess {
         return flights;
     }
     //endregion
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     //region List functions
     public static ArrayList<Flight> getAllFlights() throws SQLException {

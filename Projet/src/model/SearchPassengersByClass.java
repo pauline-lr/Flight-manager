@@ -18,7 +18,38 @@ public class SearchPassengersByClass {
     private String arrivalAirportName;
     private String arrivalAirportCountry;
 
+    public SearchPassengersByClass(String passengerPassportNumber, String passengerFirstName, String passengerLastName, Integer seatRow, Character seatColumn, String flightNumber, GregorianCalendar flightDepartureTime, GregorianCalendar flightArrivalTime, String departureAirportCode, String departureAirportName, String departureAirportCountry, String arrivalAirportCode, String arrivalAirportName, String arrivalAirportCountry) {
+        setPassengerPassportNumber(passengerPassportNumber);
+        setPassengerFirstName(passengerFirstName);
+        setPassengerLastName(passengerLastName);
+        setSeatRow(seatRow);
+        setSeatColumn(seatColumn);
+        setFlightNumber(flightNumber);
+        setFlightDepartureTime(flightDepartureTime);
+        setFlightArrivalTime(flightArrivalTime);
+        setDepartureAirportCode(departureAirportCode);
+        setDepartureAirportName(departureAirportName);
+        setDepartureAirportCountry(departureAirportCountry);
+        setArrivalAirportCode(arrivalAirportCode);
+        setArrivalAirportName(arrivalAirportName);
+        setArrivalAirportCountry(arrivalAirportCountry);
+    }
 
+    public void setPassengerPassportNumber(String passengerPassportNumber) {
+        this.passengerPassportNumber = passengerPassportNumber;
+    }
+    public void setPassengerFirstName(String passengerFirstName) {
+        this.passengerFirstName = passengerFirstName;
+    }
+    public void setPassengerLastName(String passengerLastName) {
+        this.passengerLastName = passengerLastName;
+    }
+    public void setSeatRow(Integer seatRow) {
+        this.seatRow = seatRow;
+    }
+    public void setSeatColumn(Character seatColumn) {
+        this.seatColumn = seatColumn;
+    }
     public void setFlightNumber(String flightNumber) {
         this.flightNumber = flightNumber;
     }
