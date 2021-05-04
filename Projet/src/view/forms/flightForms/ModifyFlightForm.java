@@ -46,7 +46,7 @@ public class ModifyFlightForm extends JPanel {
         JSpinner.DateEditor departureDaySpinner = new JSpinner.DateEditor(spinner);
         spinner.setEditor(departureDaySpinner);
         this.add(departureDaySpinner);
-// NEW LINE
+
         // arrivalDate
         arrivalDateLabel = new JLabel("Date et heure d'arrivée : ");
         arrivalDateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -59,7 +59,7 @@ public class ModifyFlightForm extends JPanel {
         JSpinner.DateEditor arrivalDaySpinner = new JSpinner.DateEditor(spinner);
         spinner.setEditor(arrivalDaySpinner);
         this.add(arrivalDaySpinner);
-// NEW LINE
+
         // departureAirport
         departureAirportLabel = new JLabel("Aéroport de départ : ");
         departureAirportLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -74,7 +74,6 @@ public class ModifyFlightForm extends JPanel {
         this.add(departureTerminalLabel);
 
         departureTerminalTextField = new JTextField();
-        departureTerminalTextField.setEnabled(false);
         departureTerminalTextField.setHorizontalAlignment(SwingConstants.LEFT);
         this.add(departureTerminalTextField);
 
@@ -85,7 +84,7 @@ public class ModifyFlightForm extends JPanel {
         spinnerNumberModel = new SpinnerNumberModel(0,0,999,1);
         departureGateSpinner = new JSpinner(spinnerNumberModel);
         this.add(departureGateSpinner);
-// NEW LINE
+
         // arrivalAirport
         arrivalAirportLabel = new JLabel("Aéroport d'arrivée : ");
         arrivalAirportLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -100,7 +99,6 @@ public class ModifyFlightForm extends JPanel {
         this.add(arrivalTerminalLabel);
 
         arrivalTerminalTextField = new JTextField();
-        arrivalTerminalTextField.setEnabled(false);
         arrivalTerminalTextField.setHorizontalAlignment(SwingConstants.LEFT);
         this.add(arrivalTerminalTextField);
 
@@ -111,7 +109,7 @@ public class ModifyFlightForm extends JPanel {
         spinnerNumberModel = new SpinnerNumberModel(0,0,999,1);
         arrivalGateSpinner = new JSpinner(spinnerNumberModel);
         this.add(arrivalGateSpinner);
-// NEW LINE
+
         // plane
         planeLabel = new JLabel("Avion : ");
         planeLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -119,7 +117,7 @@ public class ModifyFlightForm extends JPanel {
 
         planeComboBox = new JComboBox();
         this.add(planeComboBox);
-// NEW LINE
+
         // pilot
         pilotLabel = new JLabel("Pilote : ");
         pilotLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -133,7 +131,6 @@ public class ModifyFlightForm extends JPanel {
         //isMealOnBoardCheckBox.addItemListener(new AddFlightForm.MealOnBoardListener());
         isMealOnBoardCheckBox.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(isMealOnBoardCheckBox);
-// NEW LINE
 
         emptyLabel = new JLabel();
         emptyLabel.setHorizontalAlignment(SwingConstants.HORIZONTAL);
