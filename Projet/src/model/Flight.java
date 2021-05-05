@@ -1,6 +1,12 @@
 package model;
 
+import exception.NumberFlightException;
+
 import java.util.GregorianCalendar;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+// est-ce qu'il ne manquerait pas terminal ?
 
 public class Flight {
     private String number;                      // 6 characters = 2 letters then 4 positive digits
@@ -14,7 +20,8 @@ public class Flight {
     private Plane plane;
 
     //region Constructors
-    public Flight(String number, GregorianCalendar departureTime, GregorianCalendar arrivalTime, Boolean isMealOnBoard, String mealDescription, Pilot pilot, Gate departureGate, Gate arrivalGate, Plane plane) {
+    public Flight(String number, GregorianCalendar departureTime, GregorianCalendar arrivalTime, Boolean isMealOnBoard, String mealDescription, Pilot pilot, Gate departureGate, Gate arrivalGate, Plane plane)
+            throws NumberFlightException {
         setNumber(number);
         setDepartureTime(departureTime);
         setArrivalTime(arrivalTime);
@@ -25,15 +32,24 @@ public class Flight {
         setArrivalGate(arrivalGate);
         setPlane(plane);
     }
-    public Flight(String number, GregorianCalendar departureTime, GregorianCalendar arrivalTime, Boolean isMealOnBoard, Pilot pilot, Gate departureGate, Gate arrivalGate, Plane plane) {
+    public Flight(String number, GregorianCalendar departureTime, GregorianCalendar arrivalTime, Boolean isMealOnBoard, Pilot pilot, Gate departureGate, Gate arrivalGate, Plane plane)
+            throws NumberFlightException {
         this(number, departureTime, arrivalTime, isMealOnBoard, null, pilot, departureGate, arrivalGate, plane);
     }
     //endregion
 
+
     //region Setters
-    private void setNumber(String number) {
-        this.number = number;
+    private void setNumber(String number) throws NumberFlightException {
+            String patternNumberFlight = "\\b[A-z][A-z]\\d{4}$";
+            Pattern r = Pattern.compile(patternNumberFlight);
+            Matcher m = r.matcher(number);
+            if (m.find())
+                this.number = number;
+            else
+                throw new NumberFlightException(number);
     }
+
     private void setDepartureTime(GregorianCalendar departureTime) {
         this.departureTime = departureTime;
     }

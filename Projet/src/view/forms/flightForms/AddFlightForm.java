@@ -1,15 +1,22 @@
 package view.forms.flightForms;
 
+import exception.NumberFlightException;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 // Est ce que c'est possible de faire apparaitre ou disparaitre la description du repas en fonction de si on coche s'il y a un repas ou non ?
 // Est ce que c'est possible de mettre des retours a la ligne la ou j'ai mis des commentaires pour voir ce que ca donne ?
 
 public class AddFlightForm extends JPanel {
-    private JTextField numberTextField, mealDescriptionTextField, departureTerminalTextField, arrivalTerminalTextField;
+    private JTextField numberTextField;
+    private JTextField mealDescriptionTextField;
+    private JTextField departureTerminalTextField;
+    private JTextField arrivalTerminalTextField;
     private JSpinner spinner, departureGateSpinner, arrivalGateSpinner;
     private JCheckBox isMealOnBoardCheckBox;
     private JLabel numberLabel, departureDateLabel, arrivalDateLabel, departureAirportLabel, departureTerminalLabel,
@@ -36,6 +43,9 @@ public class AddFlightForm extends JPanel {
         //numberTextField.setBounds(128,28,86,20);
         //numberTextField.setColumns(1);
         this.add(numberTextField);
+
+
+
 
     // departureDate
         departureDateLabel = new JLabel("Date et heure de départ : ");
