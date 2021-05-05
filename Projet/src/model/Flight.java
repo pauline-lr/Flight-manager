@@ -1,12 +1,12 @@
 package model;
 
+import exception.MealDescriptionException;
 import exception.NumberFlightException;
 
 import java.util.GregorianCalendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-// est-ce qu'il ne manquerait pas terminal ?
 
 public class Flight {
     private String number;                      // 6 characters = 2 letters then 4 positive digits
@@ -21,7 +21,7 @@ public class Flight {
 
     //region Constructors
     public Flight(String number, GregorianCalendar departureTime, GregorianCalendar arrivalTime, Boolean isMealOnBoard, String mealDescription, Pilot pilot, Gate departureGate, Gate arrivalGate, Plane plane)
-            throws NumberFlightException {
+            throws NumberFlightException, MealDescriptionException {
         setNumber(number);
         setDepartureTime(departureTime);
         setArrivalTime(arrivalTime);
@@ -33,7 +33,7 @@ public class Flight {
         setPlane(plane);
     }
     public Flight(String number, GregorianCalendar departureTime, GregorianCalendar arrivalTime, Boolean isMealOnBoard, Pilot pilot, Gate departureGate, Gate arrivalGate, Plane plane)
-            throws NumberFlightException {
+            throws NumberFlightException, MealDescriptionException {
         this(number, departureTime, arrivalTime, isMealOnBoard, null, pilot, departureGate, arrivalGate, plane);
     }
     //endregion
@@ -59,8 +59,11 @@ public class Flight {
     private void setMealOnBoard(Boolean mealOnBoard) {
         isMealOnBoard = mealOnBoard;
     }
-    public void setMealDescription(String mealDescription) {
-        this.mealDescription = mealDescription;
+    public void setMealDescription(String mealDescription) throws MealDescriptionException {
+        if(mealDescription.length() <= 400)
+            this.mealDescription = mealDescription;
+        else
+            throw new MealDescriptionException(mealDescription);
     }
     private void setPilot(Pilot pilot) {
         this.pilot = pilot;
