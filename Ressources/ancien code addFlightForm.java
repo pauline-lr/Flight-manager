@@ -56,8 +56,6 @@ public class AddFlightForm extends JPanel {
         arrivalDateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(arrivalDateLabel);
 
-
-
         date = new Date();
 
         spinnerDateModel = new SpinnerDateModel(date, null, null, Calendar.DATE);

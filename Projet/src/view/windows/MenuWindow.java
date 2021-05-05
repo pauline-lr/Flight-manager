@@ -35,8 +35,10 @@ public class MenuWindow extends JFrame{
 
         initAnimation();
 
-        this.setLayout(new BorderLayout());
-        frameContainer.add(new WelcomePanel(), BorderLayout.CENTER);
+
+        BorderLayout border = new BorderLayout();
+        this.setLayout(border);
+        frameContainer.add(new WelcomePanel(), border.PAGE_START);
         this.setVisible(true);
     }
 
