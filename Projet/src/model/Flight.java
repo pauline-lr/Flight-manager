@@ -7,20 +7,19 @@ import java.util.GregorianCalendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
 public class Flight {
     private String number;                      // 6 characters = 2 letters then 4 positive digits
     private GregorianCalendar departureTime;    // JJ/MM/AAAA HH:MM ( > today)
     private GregorianCalendar arrivalTime;      // JJ/MM/AAAA HH:MM ( > today)
     private Boolean isMealOnBoard;
     private String mealDescription;             // Max 400 characters - can be null
-    private Pilot pilot;
-    private Gate departureGate;
-    private Gate arrivalGate;
-    private Plane plane;
+    private String pilot;
+    private String departureGate;
+    private String arrivalGate;
+    private Integer plane;
 
     //region Constructors
-    public Flight(String number, GregorianCalendar departureTime, GregorianCalendar arrivalTime, Boolean isMealOnBoard, String mealDescription, Pilot pilot, Gate departureGate, Gate arrivalGate, Plane plane)
+    public Flight(String number, GregorianCalendar departureTime, GregorianCalendar arrivalTime, Boolean isMealOnBoard, String mealDescription, String pilot, String departureGate, String arrivalGate, Integer plane)
             throws NumberFlightException, MealDescriptionException {
         setNumber(number);
         setDepartureTime(departureTime);
@@ -32,7 +31,7 @@ public class Flight {
         setArrivalGate(arrivalGate);
         setPlane(plane);
     }
-    public Flight(String number, GregorianCalendar departureTime, GregorianCalendar arrivalTime, Boolean isMealOnBoard, Pilot pilot, Gate departureGate, Gate arrivalGate, Plane plane)
+    public Flight(String number, GregorianCalendar departureTime, GregorianCalendar arrivalTime, Boolean isMealOnBoard, String pilot, String departureGate, String arrivalGate, Integer plane)
             throws NumberFlightException, MealDescriptionException {
         this(number, departureTime, arrivalTime, isMealOnBoard, null, pilot, departureGate, arrivalGate, plane);
     }
@@ -49,7 +48,6 @@ public class Flight {
             else
                 throw new NumberFlightException(number);
     }
-
     private void setDepartureTime(GregorianCalendar departureTime) {
         this.departureTime = departureTime;
     }
@@ -65,16 +63,16 @@ public class Flight {
         else
             throw new MealDescriptionException(mealDescription);
     }
-    private void setPilot(Pilot pilot) {
+    private void setPilot(String pilot) {
         this.pilot = pilot;
     }
-    private void setDepartureGate(Gate departureGate) {
+    private void setDepartureGate(String departureGate) {
         this.departureGate = departureGate;
     }
-    private void setArrivalGate(Gate arrivalGate) {
+    private void setArrivalGate(String arrivalGate) {
         this.arrivalGate = arrivalGate;
     }
-    private void setPlane(Plane plane) {
+    private void setPlane(Integer plane) {
         this.plane = plane;
     }
     //endregion
@@ -95,16 +93,16 @@ public class Flight {
     public String getMealDescription() {
         return mealDescription;
     }
-    public Pilot getPilot() {
+    public String getPilot() {
         return pilot;
     }
-    public Gate getDepartureGate() {
+    public String getDepartureGate() {
         return departureGate;
     }
-    public Gate getArrivalGate() {
+    public String getArrivalGate() {
         return arrivalGate;
     }
-    public Plane getPlane() {
+    public Integer getPlane() {
         return plane;
     }
     //endregion
