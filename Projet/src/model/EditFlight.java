@@ -2,7 +2,7 @@ package model;
 
 import java.util.GregorianCalendar;
 
-public class AddFlight {
+public class EditFlight {
     private String number;
     private GregorianCalendar departureTime;
     private GregorianCalendar arrivalTime;
@@ -17,7 +17,7 @@ public class AddFlight {
     private Boolean isMealOnBoard;
     private String mealDescription;
 
-    public AddFlight(String number, GregorianCalendar departureTime, GregorianCalendar arrivalTime, String departureAirportCode, String departureGateTerminal, Integer departureGateNumber, String arrivalAirportCode, String arrivalGateTerminal, Integer arrivalGateNumber, Integer plane, String pilot, Boolean isMealOnBoard, String mealDescription) {
+    public EditFlight(String number, GregorianCalendar departureTime, GregorianCalendar arrivalTime, String departureAirportCode, String departureGateTerminal, Integer departureGateNumber, String arrivalAirportCode, String arrivalGateTerminal, Integer arrivalGateNumber, Integer plane, String pilot, Boolean isMealOnBoard, String mealDescription) {
         setNumber(number);
         setDepartureTime(departureTime);
         setArrivalTime(arrivalTime);

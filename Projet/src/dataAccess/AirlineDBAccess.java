@@ -9,7 +9,7 @@ import java.sql.*;
 public class AirlineDBAccess {
     private static Connection connection;
 
-    public static void addFlight(AddFlight flightToAdd) throws SQLException {
+    public static void addFlight(EditFlight flightToAdd) throws SQLException {
         connection = SingletonConnection.getInstance();
 
         String departureGateId = addGate(flightToAdd.getDepartureGateTerminal(), flightToAdd.getDepartureGateNumber(), flightToAdd.getDepartureAirportCode());
@@ -62,6 +62,8 @@ public class AirlineDBAccess {
 
         return gateId;
     }
+
+    
 
 /*
     //region Search functions
