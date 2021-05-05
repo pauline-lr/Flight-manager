@@ -10,31 +10,82 @@ import model.Class;
 import java.sql.*;
 import java.util.*;
 
-//             !!!                     Import customized exceptions
-
 public class AirlineDBAccess {
     //region Search functions
-    /*
-    public static ArrayList<Flight> getAllFlightsBetweenDates(GregorianCalendar startDate, GregorianCalendar endDate) throws SQLException, MealDescriptionException, NumberFlightException {
-        ArrayList<Flight> flights;
+    public static ArrayList<SearchFlightsByDate> getAllFlightsBetweenDates(GregorianCalendar startDate, GregorianCalendar endDate) throws SQLException {
+        ArrayList<SearchFlightsByDate> flights = new ArrayList<>();
         java.sql.Date startDateSQL = new java.sql.Date(startDate.getTimeInMillis());
         java.sql.Date endDateSQL = new java.sql.Date(endDate.getTimeInMillis());
+        SearchFlightsByDate flight;
+        GregorianCalendar flightDepartureTime = new GregorianCalendar();
+        GregorianCalendar flightArrivalTime = new GregorianCalendar();
 
         String sql =
-                "SELECT * FROM flight " +
-                "WHERE departure_time BETWEEN ? AND ? " +
-                "ORDER BY departure_time";
+                "SELECT " +
+                    "fli.number AS flightNumber, fli.departure_time AS flightDepartureTime, fli.arrival_time AS flightArrivalTime, " +
+                    "depGate.terminal AS departureGateTerminal, depGate.number AS departureGateNumber, " +
+                    "depAir.code AS departureAirportCode, depAir.name AS departureAirportName, depAir.country AS departureAirportCountry, " +
+                    "arrGate.terminal AS arrivalGateTerminal, arrGate.number AS arrivalGateNumber, " +
+                    "arrAir.code AS arrivalAirportCode, arrAir.name AS arrivalAirportName, arrAir.country AS arrivalAirportCountry, " +
+                    "pla.plane_id AS planeId, pla.model AS planeModel, pla.brand AS planeBrand, " +
+                    "pil.licence_number AS pilotLicenceNumber, pil.first_name AS pilotFirstName, pil.last_name AS pilotLastName " +
+                "FROM " +
+                    "flight fli, " +
+                    "gate depGate, " +
+                    "airport depAir, " +
+                    "gate arrGate, " +
+                    "airport arrAir, " +
+                    "plane pla, " +
+                    "pilot pil " +
+                "WHERE " +
+                    "fli.departure_gate = depGate.gate_id AND " +
+                    "depGate.airport = depAir.code AND " +
+                    "fli.arrival_gate = arrGate.gate_id AND " +
+                    "arrGate.airport = arrAir.code AND " +
+                    "fli.plane = pla.plane_id AND " +
+                    "fli.pilot = pil.licence_number AND " +
+                    "fli.departure_time BETWEEN ? AND ? " +
+                "ORDER BY " +
+                    "fli.departure_time;"
+                ;
         PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sql);
         preparedStatement.setDate(1, startDateSQL);
         preparedStatement.setDate(2, endDateSQL);
 
         ResultSet data = preparedStatement.executeQuery();
 
-        flights = flightResultSetIntoArrayList(data);
+        while (data.next()) {
+            flightDepartureTime.setTime(data.getDate("flightDepartureTime"));
+            flightArrivalTime.setTime(data.getDate("flightArrivalTime"));
+
+            flight = new SearchFlightsByDate(
+                    data.getString("flightNumber"),
+                    flightDepartureTime,
+                    flightArrivalTime,
+                    data.getString("departureGateTerminal"),
+                    data.getInt("departureGateNumber"),
+                    data.getString("departureAirportCode"),
+                    data.getString("departureAirportName"),
+                    data.getString("departureAirportCountry"),
+                    data.getString("arrivalGateTerminal"),
+                    data.getInt("arrivalGateNumber"),
+                    data.getString("arrivalAirportCode"),
+                    data.getString("arrivalAirportName"),
+                    data.getString("arrivalAirportCountry"),
+                    data.getInt("planeId"),
+                    data.getString("planeModel"),
+                    data.getString("planeBrand"),
+                    data.getString("pilotLicenceNumber"),
+                    data.getString("pilotFirstName"),
+                    data.getString("pilotLastName")
+            );
+
+            flights.add(flight);
+        }
 
         return flights;
     }
-     */
+
     //endregion
 
     //region List functions

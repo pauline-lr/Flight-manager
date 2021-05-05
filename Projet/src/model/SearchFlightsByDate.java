@@ -6,12 +6,12 @@ public class SearchFlightsByDate {
     private String flightNumber;
     private GregorianCalendar flightDepartureTime;
     private GregorianCalendar flightArrivalTime;
-    private Character departureGateTerminal;
+    private String departureGateTerminal;
     private Integer departureGateNumber;
     private String departureAirportCode;
     private String departureAirportName;
     private String departureAirportCountry;
-    private Character arrivalGateTerminal;
+    private String arrivalGateTerminal;
     private Integer arrivalGateNumber;
     private String arrivalAirportCode;
     private String arrivalAirportName;
@@ -23,7 +23,7 @@ public class SearchFlightsByDate {
     private String pilotFirstName;
     private String pilotLastName;
 
-    public SearchFlightsByDate(String flightNumber, GregorianCalendar flightDepartureTime, GregorianCalendar flightArrivalTime, Character departureGateTerminal, Integer departureGateNumber, String departureAirportCode, String departureAirportName, String departureAirportCountry, Character arrivalGateTerminal, Integer arrivalGateNumber, String arrivalAirportCode, String arrivalAirportName, String arrivalAirportCountry, Integer planeId, String planeModel, String planeBrand, String pilotLicenceNumber, String pilotFirstName, String pilotLastName) {
+    public SearchFlightsByDate(String flightNumber, GregorianCalendar flightDepartureTime, GregorianCalendar flightArrivalTime, String departureGateTerminal, Integer departureGateNumber, String departureAirportCode, String departureAirportName, String departureAirportCountry, String arrivalGateTerminal, Integer arrivalGateNumber, String arrivalAirportCode, String arrivalAirportName, String arrivalAirportCountry, Integer planeId, String planeModel, String planeBrand, String pilotLicenceNumber, String pilotFirstName, String pilotLastName) {
         setFlightNumber(flightNumber);
         setFlightDepartureTime(flightDepartureTime);
         setFlightArrivalTime(flightArrivalTime);
@@ -55,7 +55,7 @@ public class SearchFlightsByDate {
     public void setFlightArrivalTime(GregorianCalendar flightArrivalTime) {
         this.flightArrivalTime = flightArrivalTime;
     }
-    public void setDepartureGateTerminal(Character departureGateTerminal) {
+    public void setDepartureGateTerminal(String departureGateTerminal) {
         this.departureGateTerminal = departureGateTerminal;
     }
     public void setDepartureGateNumber(Integer departureGateNumber) {
@@ -70,7 +70,7 @@ public class SearchFlightsByDate {
     public void setDepartureAirportCountry(String departureAirportCountry) {
         this.departureAirportCountry = departureAirportCountry;
     }
-    public void setArrivalGateTerminal(Character arrivalGateTerminal) {
+    public void setArrivalGateTerminal(String arrivalGateTerminal) {
         this.arrivalGateTerminal = arrivalGateTerminal;
     }
     public void setArrivalGateNumber(Integer arrivalGateNumber) {

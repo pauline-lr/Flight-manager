@@ -7,7 +7,7 @@ public class SearchPassengersByClass {
     private String passengerFirstName;
     private String passengerLastName;
     private Integer seatRow;
-    private Character seatColumn;
+    private String seatColumn;
     private String flightNumber;
     private GregorianCalendar flightDepartureTime;
     private GregorianCalendar flightArrivalTime;
@@ -18,7 +18,7 @@ public class SearchPassengersByClass {
     private String arrivalAirportName;
     private String arrivalAirportCountry;
 
-    public SearchPassengersByClass(String passengerPassportNumber, String passengerFirstName, String passengerLastName, Integer seatRow, Character seatColumn, String flightNumber, GregorianCalendar flightDepartureTime, GregorianCalendar flightArrivalTime, String departureAirportCode, String departureAirportName, String departureAirportCountry, String arrivalAirportCode, String arrivalAirportName, String arrivalAirportCountry) {
+    public SearchPassengersByClass(String passengerPassportNumber, String passengerFirstName, String passengerLastName, Integer seatRow, String seatColumn, String flightNumber, GregorianCalendar flightDepartureTime, GregorianCalendar flightArrivalTime, String departureAirportCode, String departureAirportName, String departureAirportCountry, String arrivalAirportCode, String arrivalAirportName, String arrivalAirportCountry) {
         setPassengerPassportNumber(passengerPassportNumber);
         setPassengerFirstName(passengerFirstName);
         setPassengerLastName(passengerLastName);
@@ -47,7 +47,7 @@ public class SearchPassengersByClass {
     public void setSeatRow(Integer seatRow) {
         this.seatRow = seatRow;
     }
-    public void setSeatColumn(Character seatColumn) {
+    public void setSeatColumn(String seatColumn) {
         this.seatColumn = seatColumn;
     }
     public void setFlightNumber(String flightNumber) {
