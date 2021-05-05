@@ -1,11 +1,11 @@
-DROP TABLE seat;
-DROP TABLE class;
-DROP TABLE flight;
-DROP TABLE passenger;
-DROP TABLE pilot;
-DROP TABLE gate;
-DROP TABLE airport;
-DROP TABLE plane;
+-- DROP TABLE seat;
+-- DROP TABLE class;
+-- DROP TABLE flight;
+-- DROP TABLE passenger;
+-- DROP TABLE pilot;
+-- DROP TABLE gate;
+-- DROP TABLE airport;
+-- DROP TABLE plane;
 
 #AirlineDataBase
 
@@ -115,6 +115,15 @@ VALUES
     ('SLT7787', 'Samuel', 'Scholtes', '0485996321', 'samuel.scholtes@henallux.be', '52:47:31')
 ;
 
+INSERT INTO passenger
+VALUES
+    ('EF4854263', 'Pauline', 'Loréa', '0458595663', 'etu40989@student.henallux.be', '1999-06-13'),
+    ('EF7856324', 'Jonathan', 'Smith', '0474855596', 'etu42989@student.henallux.be', '1999-06-13'),
+    ('EF3568956', 'Bruce', 'Wayne', '0412458699', 'etu40489@student.henallux.be', '1999-06-13'),
+    ('EF1774626', 'Nathan', 'Drake', '0428969565', 'etu40949@student.henallux.be', '1999-06-13'),
+    ('EF7474256', 'Edward', 'Snowden', '0445896323', 'etu40982@student.henallux.be', '1999-06-13')
+;
+
 INSERT INTO class (name)
 VALUES
     ('Première'),
@@ -132,4 +141,38 @@ VALUES
     ('737', 'Boeing'),
     ('737', 'Boeing'),
     ('727', 'Boeing')
+;
+
+INSERT INTO airport
+VALUES
+    ('LHR', 'Londres Heathrow', 'Angleterre'),
+    ('LAX', 'Los Angeles', 'Californie'),
+    ('JFK', 'John F. Kennedy', 'New-York'),
+    ('CDG', 'Paris-Charles-de-Gaulle', 'France'),
+    ('BRU', 'Bruxelles-National', 'Belgique'),
+    ('FCO', 'Léonard-de-Vinci de Rome Fiumicino', 'Italie'),
+    ('HND', 'Tokyo-Haneda', 'Japon'),
+    ('GIG', 'Rio de Janeiro/Galeão', 'Brésil')
+;
+
+INSERT INTO gate
+VALUES
+    ('A13', 'A', 13, 'LHR'),
+    ('B24', 'B', 24, 'JFK'),
+    ('A11', 'A', 11, 'LHR'),
+    ('B1', 'B', 1, 'BRU')
+;
+
+INSERT INTO flight
+VALUES
+	('987346', '2033-07-05', '2033-07-05', true, 'Choux rouge avec des brocolis et une banane en dessert', 'A13', 'B24', 'DRW1563', 1),
+    ('744325', '2021-08-05', '2021-08-06', false, null, 'B1', 'A11', 'DBS1562', 3),
+    ('871124', '2022-02-05', '2033-02-06', false, null, 'B24', 'B1', 'BTD4596', 5)
+;
+
+INSERT INTO seat
+VALUES
+    ('13F', 13, 'F', true, 'EF4854263', '987346', 1),
+    ('25A', 25, 'A', true, 'EF7856324', '744325', 3),
+    ('1', 1, 'B', false, 'EF3568956', '744325', 3)
 ;

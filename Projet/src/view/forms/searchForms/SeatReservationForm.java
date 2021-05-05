@@ -14,7 +14,7 @@ public class SeatReservationForm extends JPanel {
     }
 
     public void initForm() {
-        seatCategory = new JLabel("Catégorie du siège");
+        seatCategory = new JLabel("Catégorie du siège : ");
         seatCategory.setHorizontalAlignment(SwingConstants.RIGHT);
         add(seatCategory);
         seatCategorySelect = new JComboBox();

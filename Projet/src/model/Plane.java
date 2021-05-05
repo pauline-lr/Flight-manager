@@ -6,7 +6,7 @@ public class Plane {
 
     //region Constructors
     public Plane(String model, String brand) {
-        setModel(model);;
+        setModel(model);
         setBrand(brand);
     }
     //endregion

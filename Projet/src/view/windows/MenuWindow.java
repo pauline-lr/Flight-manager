@@ -47,9 +47,9 @@ public class MenuWindow extends JFrame{
         menuBar = new JMenuBar();
         setJMenuBar(menuBar);
 
-        flight = new JMenu("Vols");
-        listingFlight = new JMenu("Lister ...");
-        search = new JMenu("Recherche...");
+        flight = new JMenu("Editer");
+        listingFlight = new JMenu("Lister");
+        search = new JMenu("Rechercher");
         application = new JMenu("Application");
 
         menuBar.add(application);
@@ -94,21 +94,21 @@ public class MenuWindow extends JFrame{
     }
     
     public void initListing(){
-        listingFlightItem = new JMenuItem("vols");
+        listingFlightItem = new JMenuItem("Vols à venir");
         listingFlightItem.addActionListener(new ListingFlightListener());
         listingFlight.add(listingFlightItem);
     }
 
     public void initOptionsSearch(){
-        dateFlight = new JMenuItem("de vols par date");
+        dateFlight = new JMenuItem("Vols entre deux dates");
         dateFlight.addActionListener(new DateFlightListener());
         search.add(dateFlight);
 
-        seatReservation = new JMenuItem("de passagers");
+        seatReservation = new JMenuItem("Passagers d'une classe");
         seatReservation.addActionListener(new SeatReservationListener());
         search.add(seatReservation);
 
-        searchPilot = new JMenuItem("de pilotes");
+        searchPilot = new JMenuItem("Vols d'un pilote");
         searchPilot.addActionListener(new SearchPilotFlightListener());
         search.add(searchPilot);
     }
