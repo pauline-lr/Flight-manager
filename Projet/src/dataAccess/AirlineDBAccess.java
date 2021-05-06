@@ -1,155 +1,138 @@
 package dataAccess;
 
+import exception.CodeException;
+import exception.MealDescriptionException;
+import exception.NameException;
+import exception.NumberFlightException;
 import model.*;
+import model.Class;
 
 import java.sql.*;
-
-//             !!!                     Import customized exceptions
+import java.util.*;
 
 public class AirlineDBAccess {
-    private static Connection connection;
-
-    public static void addFlight(EditFlight flightToAdd) throws SQLException {
-        connection = SingletonConnection.getInstance();
-
-        String departureGateId = addGate(flightToAdd.getDepartureGateTerminal(), flightToAdd.getDepartureGateNumber(), flightToAdd.getDepartureAirportCode());
-        String arrivalGateId = addGate(flightToAdd.getArrivalGateTerminal(), flightToAdd.getArrivalGateNumber(), flightToAdd.getArrivalAirportCode());
-
-        String sql =
-            "INSERT INTO flight " +
-            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-
-        preparedStatement.setString(1,  flightToAdd.getNumber());
-        preparedStatement.setDate(2, new java.sql.Date(flightToAdd.getDepartureTime().getTimeInMillis()));
-        preparedStatement.setDate(3, new java.sql.Date(flightToAdd.getArrivalTime().getTimeInMillis()));
-        preparedStatement.setBoolean(4, flightToAdd.getMealOnBoard());
-        if (flightToAdd.getMealDescription() == null) {
-            preparedStatement.setNull(5, Types.VARCHAR);
-        } else {
-            preparedStatement.setString(5, flightToAdd.getMealDescription());
-        }
-        preparedStatement.setString(6, departureGateId);
-        preparedStatement.setString(7, arrivalGateId);
-        preparedStatement.setString(8, flightToAdd.getPilot());
-        preparedStatement.setInt(9, flightToAdd.getPlane());
-
-        preparedStatement.executeUpdate();
-
-        connection.close();
-    }
-
-    private static String addGate(String gateTerminal, Integer gateNumber, String airport) throws SQLException {
-        connection = SingletonConnection.getInstance();
-
-        String sql =
-                "INSERT INTO gate " +
-                "VALUES (?, ?, ?, ?)";
-
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-
-        String gateId = String.valueOf(gateTerminal) + gateNumber;
-
-        preparedStatement.setString(1,  gateId);
-        preparedStatement.setString(2, gateTerminal);
-        preparedStatement.setInt(3,  gateNumber);
-        preparedStatement.setString(4,  airport);
-
-        preparedStatement.executeUpdate();
-
-        connection.close();
-
-        return gateId;
-    }
-
-    
-
-/*
     //region Search functions
-    public static ArrayList<Flight> getAllFlightsBetweenDates(GregorianCalendar startDate, GregorianCalendar endDate) throws SQLException {
-        ArrayList<Flight> flights;
+    public static ArrayList<SearchFlightsByDate> getAllFlightsBetweenDates(GregorianCalendar startDate, GregorianCalendar endDate) throws SQLException {
+        ArrayList<SearchFlightsByDate> flights = new ArrayList<>();
         java.sql.Date startDateSQL = new java.sql.Date(startDate.getTimeInMillis());
         java.sql.Date endDateSQL = new java.sql.Date(endDate.getTimeInMillis());
-
-        connection = SingletonConnection.getInstance();
+        SearchFlightsByDate flight;
+        GregorianCalendar flightDepartureTime = new GregorianCalendar();
+        GregorianCalendar flightArrivalTime = new GregorianCalendar();
 
         String sql =
-                "SELECT * FROM flight " +
-                "WHERE departure_time BETWEEN ? AND ? " +
-                "ORDER BY departure_time";
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                "SELECT " +
+                    "fli.number AS flightNumber, fli.departure_time AS flightDepartureTime, fli.arrival_time AS flightArrivalTime, " +
+                    "depGate.terminal AS departureGateTerminal, depGate.number AS departureGateNumber, " +
+                    "depAir.code AS departureAirportCode, depAir.name AS departureAirportName, depAir.country AS departureAirportCountry, " +
+                    "arrGate.terminal AS arrivalGateTerminal, arrGate.number AS arrivalGateNumber, " +
+                    "arrAir.code AS arrivalAirportCode, arrAir.name AS arrivalAirportName, arrAir.country AS arrivalAirportCountry, " +
+                    "pla.plane_id AS planeId, pla.model AS planeModel, pla.brand AS planeBrand, " +
+                    "pil.licence_number AS pilotLicenceNumber, pil.first_name AS pilotFirstName, pil.last_name AS pilotLastName " +
+                "FROM " +
+                    "flight fli, " +
+                    "gate depGate, " +
+                    "airport depAir, " +
+                    "gate arrGate, " +
+                    "airport arrAir, " +
+                    "plane pla, " +
+                    "pilot pil " +
+                "WHERE " +
+                    "fli.departure_gate = depGate.gate_id AND " +
+                    "depGate.airport = depAir.code AND " +
+                    "fli.arrival_gate = arrGate.gate_id AND " +
+                    "arrGate.airport = arrAir.code AND " +
+                    "fli.plane = pla.plane_id AND " +
+                    "fli.pilot = pil.licence_number AND " +
+                    "fli.departure_time BETWEEN ? AND ? " +
+                "ORDER BY " +
+                    "fli.departure_time;"
+                ;
+        PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sql);
         preparedStatement.setDate(1, startDateSQL);
         preparedStatement.setDate(2, endDateSQL);
 
         ResultSet data = preparedStatement.executeQuery();
 
-        flights = flightResultSetIntoArrayList(data);
+        while (data.next()) {
+            flightDepartureTime.setTime(data.getDate("flightDepartureTime"));
+            flightArrivalTime.setTime(data.getDate("flightArrivalTime"));
 
-        connection.close();
+            flight = new SearchFlightsByDate(
+                    data.getString("flightNumber"),
+                    flightDepartureTime,
+                    flightArrivalTime,
+                    data.getString("departureGateTerminal"),
+                    data.getInt("departureGateNumber"),
+                    data.getString("departureAirportCode"),
+                    data.getString("departureAirportName"),
+                    data.getString("departureAirportCountry"),
+                    data.getString("arrivalGateTerminal"),
+                    data.getInt("arrivalGateNumber"),
+                    data.getString("arrivalAirportCode"),
+                    data.getString("arrivalAirportName"),
+                    data.getString("arrivalAirportCountry"),
+                    data.getInt("planeId"),
+                    data.getString("planeModel"),
+                    data.getString("planeBrand"),
+                    data.getString("pilotLicenceNumber"),
+                    data.getString("pilotFirstName"),
+                    data.getString("pilotLastName")
+            );
+
+            flights.add(flight);
+        }
+
         return flights;
     }
+
     //endregion
 
     //region List functions
-    public static ArrayList<Flight> getAllFlights() throws SQLException {
+    public static ArrayList<Flight> getAllFlights() throws SQLException, MealDescriptionException, NumberFlightException {
         ArrayList<Flight> flights;
 
-        connection = SingletonConnection.getInstance();
-
-        Statement statement = connection.createStatement();
+        Statement statement = SingletonConnection.getInstance().createStatement();
         ResultSet data = statement.executeQuery("SELECT * FROM flight ORDER BY departure_time");
 
         flights = flightResultSetIntoArrayList(data);
 
-        connection.close();
         return flights;
     }
     public static ArrayList<Pilot> getAllPilots() throws SQLException {
         ArrayList<Pilot> pilots;
 
-        connection = SingletonConnection.getInstance();
-
-        Statement statement = connection.createStatement();
+        Statement statement = SingletonConnection.getInstance().createStatement();
         ResultSet data = statement.executeQuery("SELECT * FROM pilot ORDER BY first_name, last_name");
 
         pilots = pilotResultSetIntoArrayList(data);
 
-        connection.close();
         return pilots;
     }
-    public static ArrayList<Airport> getAllAirports() throws SQLException {
+    public static ArrayList<Airport> getAllAirports() throws SQLException, CodeException, NameException {
         ArrayList<Airport> airports;
 
-        connection = SingletonConnection.getInstance();
-
-        Statement statement = connection.createStatement();
+        Statement statement = SingletonConnection.getInstance().createStatement();
         ResultSet data = statement.executeQuery("SELECT * FROM airport ORDER BY name");
 
         airports = airportResultSetIntoArrayList(data);
 
-        connection.close();
         return airports;
     }
     public static ArrayList<Plane> getAllPlanes() throws SQLException {
         ArrayList<Plane> planes;
 
-        connection = SingletonConnection.getInstance();
-
-        Statement statement = connection.createStatement();
+        Statement statement = SingletonConnection.getInstance().createStatement();
         ResultSet data = statement.executeQuery("SELECT * FROM plane ORDER BY model, brand");
 
         planes = planeResultSetIntoArrayList(data);
 
-        connection.close();
         return planes;
     }
     public static ArrayList<Class> getAllClasses() throws SQLException {
         ArrayList<Class> classes;
 
-        connection = SingletonConnection.getInstance();
-
-        Statement statement = connection.createStatement();
+        Statement statement = SingletonConnection.getInstance().createStatement();
         ResultSet data = statement.executeQuery("SELECT * FROM class ORDER BY name");
 
         classes = classResultSetIntoArrayList(data);
@@ -159,36 +142,40 @@ public class AirlineDBAccess {
     //endregion
 
     //region Manage functions
-    public static void modifyFlight(Flight flightToUpdate, String originalNumber) throws SQLException {
-        connection = SingletonConnection.getInstance();
+    public static void addFlight(Flight flightToAdd) throws SQLException {
+        String sql =
+                "INSERT INTO flight " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
+        PreparedStatement preparedStatement = preparedFlightStatement(sql, flightToAdd);
+
+        preparedStatement.executeUpdate();
+    }
+    public static void modifyFlight(Flight flightToUpdate, String originalNumber) throws SQLException {
         String sql =
                 "UPDATE flight " +
                 "SET number = ?, departure_time = ?, arrival_time = ?, is_meal_on_board = ?, " +
                 "meal_description = ?, departure_gate = ?, arrival_gate = ?, pilot = ?, plane = ? " +
                 "WHERE number = ?";
-        PreparedStatement preparedStatement = preparedFlightStatement(connection, sql, flightToUpdate);
-        preparedStatement.setString(10, originalNumber);
-        preparedStatement.executeUpdate();
 
-        connection.close();
+        PreparedStatement preparedStatement = preparedFlightStatement(sql, flightToUpdate);
+        preparedStatement.setString(10, originalNumber);
+
+        preparedStatement.executeUpdate();
     }
     public static void deleteFlight(Flight flightToDelete) throws SQLException {
-        connection = SingletonConnection.getInstance();
-
         String sql =
                 "DELETE FROM flight " +
-                        "WHERE number = ?";
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                "WHERE number = ?";
+        PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sql);
         preparedStatement.setString(1, flightToDelete.getNumber());
-        preparedStatement.executeUpdate();
 
-        connection.close();
+        preparedStatement.executeUpdate();
     }
     //endregion
 
     //region Tool functions
-    private static ArrayList<Flight> flightResultSetIntoArrayList(ResultSet data) throws SQLException {
+    private static ArrayList<Flight> flightResultSetIntoArrayList(ResultSet data) throws SQLException, MealDescriptionException, NumberFlightException {
         ArrayList<Flight> flights = new ArrayList<>();
         Flight flight;
         GregorianCalendar departureTime = new GregorianCalendar();
@@ -240,7 +227,7 @@ public class AirlineDBAccess {
 
         return pilots;
     }
-    private static ArrayList<Airport> airportResultSetIntoArrayList(ResultSet data) throws SQLException {
+    private static ArrayList<Airport> airportResultSetIntoArrayList(ResultSet data) throws SQLException, CodeException, NameException {
         ArrayList<Airport> airports = new ArrayList<>();
         Airport airport;
 
@@ -285,6 +272,24 @@ public class AirlineDBAccess {
 
         return classes;
     }
+    private static PreparedStatement preparedFlightStatement(String sql, Flight flight) throws SQLException {
+        PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sql);
+
+        preparedStatement.setString(1,  flight.getNumber());
+        preparedStatement.setDate(2, new java.sql.Date(flight.getDepartureTime().getTimeInMillis()));
+        preparedStatement.setDate(3, new java.sql.Date(flight.getArrivalTime().getTimeInMillis()));
+        preparedStatement.setBoolean(4, flight.getMealOnBoard());
+        if (flight.getMealDescription() == null) {
+            preparedStatement.setNull(5, Types.VARCHAR);
+        } else {
+            preparedStatement.setString(5, flight.getMealDescription());
+        }
+        preparedStatement.setString(6, flight.getDepartureGate());
+        preparedStatement.setString(7, flight.getArrivalGate());
+        preparedStatement.setString(8, flight.getPilot());
+        preparedStatement.setInt(9, flight.getPlane());
+
+        return preparedStatement;
+    }
     //endregion
- */
 }
