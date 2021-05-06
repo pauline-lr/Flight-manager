@@ -7,7 +7,6 @@ import java.awt.*;
 
 public class AnimationSpace extends JPanel {
     public static final  int PANEL_WIDTH = 500;
-    //public static final int PANEL_HEIGHT = 350;
     public static final int POS_INIT_X = -10;
     public static final int POS_INIT_Y = 0;
 
