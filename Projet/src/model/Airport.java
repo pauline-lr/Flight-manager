@@ -1,8 +1,6 @@
 package model;
 
-import exception.CodeException;
-import exception.NameException;
-import exception.TerminalException;
+import exception.AiportException;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -14,7 +12,7 @@ public class Airport {
 
     //region Constructors
     public Airport(String code, String name, String country)
-            throws CodeException, NameException {
+            throws AiportException.CodeException, AiportException.NameAirportException {
         setCode(code);
         setName(name);
         setCountry(country);
@@ -22,26 +20,26 @@ public class Airport {
     //endregion
 
     //region Setters
-    private void setCode(String code) throws CodeException {
+    private void setCode(String code) throws AiportException.CodeException {
         String patternCode = "^\\w{3}$";
         Pattern r = Pattern.compile(patternCode);
         Matcher m = r.matcher(code);
         if (m.find())
             this.code = code;
         else
-            throw new CodeException(code);
+            throw new AiportException.CodeException(code);
     }
-    private void setName(String name) throws NameException {
+    private void setName(String name) throws AiportException.NameAirportException {
         if(name.length() <= 50)
             this.name = name;
         else
-            throw new NameException(name);
+            throw new AiportException.NameAirportException(name);
     }
-    private void setCountry(String country) throws NameException {
+    private void setCountry(String country) throws AiportException.NameAirportException {
         if(name.length() <= 50)
             this.name = name;
         else
-            throw new NameException(name);
+            throw new AiportException.NameAirportException(name);
     }
     //endregion
 

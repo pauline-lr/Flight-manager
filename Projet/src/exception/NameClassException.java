@@ -1,9 +1,9 @@
 package exception;
 
-public class NameException extends Exception{
+public class NameClassException extends Exception{
     private String wrongName;
 
-    public NameException (String wrongName) {
+    public NameClassException(String wrongName) {
         this.wrongName = wrongName;
     }
 

@@ -1,8 +1,12 @@
 package model;
 
-import exception.MealDescriptionException;
-import exception.NumberFlightException;
+import exception.FlightException;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -19,9 +23,11 @@ public class Flight {
     private Integer plane;
 
     //region Constructors
-    public Flight(String number, GregorianCalendar departureTime, GregorianCalendar arrivalTime, Boolean isMealOnBoard, String mealDescription, String pilot, String departureGate, String arrivalGate, Integer plane)
-            throws NumberFlightException, MealDescriptionException {
+    public Flight(String number, GregorianCalendar departureTime,
+            GregorianCalendar arrivalTime, Boolean isMealOnBoard, String mealDescription, String pilot, String departureGate, String arrivalGate, Integer plane)
+            throws FlightException.NumberFlightException, FlightException.MealDescriptionException{
         setNumber(number);
+        // GregorianCalendar(int year, int month, int dayOfMonth, int hourOfDay, int minute) cf. doc java
         setDepartureTime(departureTime);
         setArrivalTime(arrivalTime);
         setMealOnBoard(isMealOnBoard);
@@ -31,37 +37,54 @@ public class Flight {
         setArrivalGate(arrivalGate);
         setPlane(plane);
     }
-    public Flight(String number, GregorianCalendar departureTime, GregorianCalendar arrivalTime, Boolean isMealOnBoard, String pilot, String departureGate, String arrivalGate, Integer plane)
-            throws NumberFlightException, MealDescriptionException {
+
+    public Flight(String number,  GregorianCalendar departureTime,
+                  GregorianCalendar arrivalTime, Boolean isMealOnBoard, String pilot, String departureGate, String arrivalGate, Integer plane)
+            throws FlightException.NumberFlightException, FlightException.MealDescriptionException {
         this(number, departureTime, arrivalTime, isMealOnBoard, null, pilot, departureGate, arrivalGate, plane);
     }
+
+
     //endregion
 
 
     //region Setters
-    private void setNumber(String number) throws NumberFlightException {
+    private void setNumber(String number) throws FlightException.NumberFlightException {
             String patternNumberFlight = "\\b[A-z][A-z]\\d{4}$";
             Pattern r = Pattern.compile(patternNumberFlight);
             Matcher m = r.matcher(number);
             if (m.find())
                 this.number = number;
             else
-                throw new NumberFlightException(number);
+                throw new FlightException.NumberFlightException(number);
     }
+
     private void setDepartureTime(GregorianCalendar departureTime) {
-        this.departureTime = departureTime;
+        Calendar calendar = Calendar.getInstance();
+
+        if(departureTime.YEAR >= calendar.get(Calendar.YEAR)) {
+            this.departureTime = departureTime;
+        }else{
+            try {
+                throw new FlightException.DepartureDateException(departureTime);
+            } catch (FlightException.DepartureDateException e) {
+                e.printStackTrace();
+            }
+        }
     }
+
     private void setArrivalTime(GregorianCalendar arrivalTime) {
         this.arrivalTime = arrivalTime;
     }
+
     private void setMealOnBoard(Boolean mealOnBoard) {
         isMealOnBoard = mealOnBoard;
     }
-    public void setMealDescription(String mealDescription) throws MealDescriptionException {
+    public void setMealDescription(String mealDescription) throws FlightException.MealDescriptionException {
         if(mealDescription.length() <= 400)
             this.mealDescription = mealDescription;
         else
-            throw new MealDescriptionException(mealDescription);
+            throw new FlightException.MealDescriptionException(mealDescription);
     }
     private void setPilot(String pilot) {
         this.pilot = pilot;

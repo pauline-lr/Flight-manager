@@ -1,5 +1,7 @@
 package model;
 
+import exception.PassengerException;
+
 import java.util.GregorianCalendar;
 
 public class Passenger extends Person {
@@ -7,16 +9,20 @@ public class Passenger extends Person {
     private GregorianCalendar birthdate;    // JJ/MM/AAAA ( < 1 week before today)
 
     //region Constructors
-    public Passenger(String firstName, String lastName, String phoneNumber, String emailAddress, String passportNumber, GregorianCalendar birthdate) {
-        super(firstName, lastName, phoneNumber, emailAddress);
+    public Passenger(String firstpassportNumber, String lastpassportNumber, String phoneNumber, String emailAddress, String passportNumber, GregorianCalendar birthdate)
+            throws PassengerException.PassportNumberException {
+        super(firstpassportNumber, lastpassportNumber, phoneNumber, emailAddress);
         setPassportNumber(passportNumber);
         setBirthdate(birthdate);
     }
     //endregion
 
     //region Setters
-    private void setPassportNumber(String passportNumber) {
-        this.passportNumber = passportNumber;
+    private void setPassportNumber(String passportNumber) throws PassengerException.PassportNumberException {
+        if(passportNumber.length() <= 9)
+            this.passportNumber = passportNumber;
+        else
+            throw new PassengerException.PassportNumberException(passportNumber);
     }
     private void setBirthdate(GregorianCalendar birthdate) {
         this.birthdate = birthdate;
