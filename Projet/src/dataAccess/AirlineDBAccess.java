@@ -83,7 +83,16 @@ public class AirlineDBAccess {
 
         return flights;
     }
-
+    public static ArrayList<SearchPassengersByClass> getAllPassangersOfAClass(Class seatClass)
+            throws SQLException {
+        ArrayList<SearchPassengersByClass> passengers = new ArrayList<>();
+        return null;
+    }
+    public static ArrayList<SearchFlightsByPilot> getAllFlightsOfAPilot(Pilot pilot)
+            throws SQLException {
+        ArrayList<SearchFlightsByPilot> flights = new ArrayList<>();
+        return null;
+    }
     //endregion
 
     //region List functions
@@ -232,7 +241,6 @@ public class AirlineDBAccess {
 
         return pilots;
     }
-
     private static ArrayList<Airport> airportResultSetIntoArrayList(ResultSet data)
             throws SQLException, AiportException.CodeException, AiportException.NameAirportException, AiportException.CountryException {
         ArrayList<Airport> airports = new ArrayList<>();
