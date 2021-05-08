@@ -6,6 +6,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Gate {
+    public final static String REGEX_TERMINAL = "^[A-Z]$";
+    public final static String REGEX_NUMBER = "^\\d{2}$";
+
     private Character terminal;     // 1 character
     private Integer number;         // Max 2 positive digits
     private String airport;
@@ -21,8 +24,7 @@ public class Gate {
 
     //region Setters
     public void setTerminal(Character terminal) throws FlightException.TerminalException {
-        String patternTerminal = "\\b[A-Z]$";
-        Pattern r = Pattern.compile(patternTerminal);
+        Pattern r = Pattern.compile(REGEX_TERMINAL);
         Matcher m = r.matcher(String.valueOf(terminal));
         if (m.find())
             this.terminal = terminal;
@@ -30,8 +32,7 @@ public class Gate {
             throw new FlightException.TerminalException(terminal);
     }
     public void setNumber(Integer number) throws FlightException.NumberGateException {
-        String patternNumber = "^\\d{2}$";
-        Pattern r = Pattern.compile(patternNumber);
+        Pattern r = Pattern.compile(REGEX_NUMBER);
         Matcher m = r.matcher(String.valueOf(number));
         if (m.find())
             this.number = number;

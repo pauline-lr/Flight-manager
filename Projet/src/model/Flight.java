@@ -2,16 +2,16 @@ package model;
 
 import exception.FlightException;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.time.format.DateTimeParseException;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Flight {
+    public final static String REGEX_NUMBER = "^[A-z][A-z]\\d{4}$";
+    public final static int MEAL_DESCRIPTION_LENTGH = 400;
+
     private String number;                      // 6 characters = 2 letters then 4 positive digits
     private GregorianCalendar departureTime;    // JJ/MM/AAAA HH:MM ( > today)
     private GregorianCalendar arrivalTime;      // JJ/MM/AAAA HH:MM ( > today)
@@ -21,6 +21,7 @@ public class Flight {
     private String departureGate;
     private String arrivalGate;
     private Integer plane;
+    private Date currentDate;
 
     //region Constructors
     public Flight(String number, GregorianCalendar departureTime,
@@ -36,6 +37,7 @@ public class Flight {
         setDepartureGate(departureGate);
         setArrivalGate(arrivalGate);
         setPlane(plane);
+        currentDate = new Date(System.currentTimeMillis());
     }
 
     public Flight(String number,  GregorianCalendar departureTime,
@@ -50,8 +52,7 @@ public class Flight {
 
     //region Setters
     private void setNumber(String number) throws FlightException.NumberFlightException {
-            String patternNumberFlight = "\\b[A-z][A-z]\\d{4}$";
-            Pattern r = Pattern.compile(patternNumberFlight);
+            Pattern r = Pattern.compile(REGEX_NUMBER);
             Matcher m = r.matcher(number);
             if (m.find())
                 this.number = number;
@@ -60,28 +61,39 @@ public class Flight {
     }
 
     private void setDepartureTime(GregorianCalendar departureTime) {
-        Calendar calendar = Calendar.getInstance();
-
-        if(departureTime.YEAR >= calendar.get(Calendar.YEAR)) {
+        if(departureTime.after(currentDate)) {
             this.departureTime = departureTime;
         }else{
             try {
                 throw new FlightException.DepartureDateException(departureTime);
             } catch (FlightException.DepartureDateException e) {
                 e.printStackTrace();
+            }catch (DateTimeParseException e ) {
+                e.printStackTrace();
             }
         }
     }
 
     private void setArrivalTime(GregorianCalendar arrivalTime) {
-        this.arrivalTime = arrivalTime;
+        if(arrivalTime.after(currentDate)) {
+            this.arrivalTime = arrivalTime;
+        }else{
+            try {
+                throw new FlightException.ArrivalDateException(arrivalTime);
+            } catch (FlightException.ArrivalDateException e) {
+                e.printStackTrace();
+            }catch (DateTimeParseException e ) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void setMealOnBoard(Boolean mealOnBoard) {
         isMealOnBoard = mealOnBoard;
     }
+
     public void setMealDescription(String mealDescription) throws FlightException.MealDescriptionException {
-        if(mealDescription.length() <= 400)
+        if(mealDescription.length() <= MEAL_DESCRIPTION_LENTGH)
             this.mealDescription = mealDescription;
         else
             throw new FlightException.MealDescriptionException(mealDescription);

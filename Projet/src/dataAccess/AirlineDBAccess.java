@@ -1,8 +1,6 @@
 package dataAccess;
 
-import exception.AiportException;
-import exception.FlightException;
-import exception.NameClassException;
+import exception.*;
 import model.*;
 import model.Class;
 
@@ -11,7 +9,8 @@ import java.util.*;
 
 public class AirlineDBAccess {
     //region Search functions
-    public static ArrayList<SearchFlightsByDate> getAllFlightsBetweenDates(GregorianCalendar startDate, GregorianCalendar endDate) throws SQLException {
+    public static ArrayList<SearchFlightsByDate> getAllFlightsBetweenDates(GregorianCalendar startDate, GregorianCalendar endDate)
+            throws SQLException {
         ArrayList<SearchFlightsByDate> flights = new ArrayList<>();
         java.sql.Date startDateSQL = new java.sql.Date(startDate.getTimeInMillis());
         java.sql.Date endDateSQL = new java.sql.Date(endDate.getTimeInMillis());
@@ -88,7 +87,8 @@ public class AirlineDBAccess {
     //endregion
 
     //region List functions
-    public static ArrayList<Flight> getAllFlights() throws SQLException, FlightException.MealDescriptionException, FlightException.NumberFlightException {
+    public static ArrayList<Flight> getAllFlights()
+            throws SQLException, FlightException.MealDescriptionException, FlightException.NumberFlightException {
         ArrayList<Flight> flights;
 
         Statement statement = SingletonConnection.getInstance().createStatement();
@@ -98,7 +98,10 @@ public class AirlineDBAccess {
 
         return flights;
     }
-    public static ArrayList<Pilot> getAllPilots() throws SQLException {
+    public static ArrayList<Pilot> getAllPilots()
+            throws SQLException, PersonException.PhoneNumberException, PersonException.FirstNameException,
+            PersonException.LastNameException, PersonException.EmailException, PilotException.LicenceNumberException,
+            PilotException.FlyingFlightException {
         ArrayList<Pilot> pilots;
 
         Statement statement = SingletonConnection.getInstance().createStatement();
@@ -108,7 +111,8 @@ public class AirlineDBAccess {
 
         return pilots;
     }
-    public static ArrayList<Airport> getAllAirports() throws SQLException, AiportException.CodeException, AiportException.NameAirportException {
+    public static ArrayList<Airport> getAllAirports()
+            throws SQLException, AiportException.CodeException, AiportException.NameAirportException, AiportException.CountryException {
         ArrayList<Airport> airports;
 
         Statement statement = SingletonConnection.getInstance().createStatement();
@@ -118,7 +122,7 @@ public class AirlineDBAccess {
 
         return airports;
     }
-    public static ArrayList<Plane> getAllPlanes() throws SQLException {
+    public static ArrayList<Plane> getAllPlanes() throws SQLException, PlaneException.ModelException, PlaneException.BrandException {
         ArrayList<Plane> planes;
 
         Statement statement = SingletonConnection.getInstance().createStatement();
@@ -206,7 +210,9 @@ public class AirlineDBAccess {
 
         return flights;
     }
-    private static ArrayList<Pilot> pilotResultSetIntoArrayList(ResultSet data) throws SQLException {
+    private static ArrayList<Pilot> pilotResultSetIntoArrayList(ResultSet data)
+            throws SQLException, PersonException.PhoneNumberException, PersonException.FirstNameException, PersonException.LastNameException,
+            PersonException.EmailException, PilotException.LicenceNumberException, PilotException.FlyingFlightException {
         ArrayList<Pilot> pilots = new ArrayList<>();
         Pilot pilot;
         GregorianCalendar flyingTime = new GregorianCalendar();
@@ -226,7 +232,9 @@ public class AirlineDBAccess {
 
         return pilots;
     }
-    private static ArrayList<Airport> airportResultSetIntoArrayList(ResultSet data) throws SQLException, AiportException.CodeException, AiportException.NameAirportException {
+
+    private static ArrayList<Airport> airportResultSetIntoArrayList(ResultSet data)
+            throws SQLException, AiportException.CodeException, AiportException.NameAirportException, AiportException.CountryException {
         ArrayList<Airport> airports = new ArrayList<>();
         Airport airport;
 
@@ -242,7 +250,8 @@ public class AirlineDBAccess {
 
         return airports;
     }
-    private static ArrayList<Plane> planeResultSetIntoArrayList(ResultSet data) throws SQLException {
+    private static ArrayList<Plane> planeResultSetIntoArrayList(ResultSet data)
+            throws SQLException, PlaneException.ModelException, PlaneException.BrandException {
         ArrayList<Plane> planes = new ArrayList<>();
         Plane plane;
 

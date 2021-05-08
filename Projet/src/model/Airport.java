@@ -6,13 +6,17 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Airport {
+    public final static String REGEX_CODE = "^\\w{3}$";
+    public final static int LENGTH_NAME = 50;
+    public final static int LENGTH_COUNTRY = 50;
+
     private String code;        // 3 letters
     private String name;        // Max 50 characters
     private String country;     // Max 50 characters
 
     //region Constructors
     public Airport(String code, String name, String country)
-            throws AiportException.CodeException, AiportException.NameAirportException {
+            throws AiportException.CodeException, AiportException.NameAirportException, AiportException.CountryException {
         setCode(code);
         setName(name);
         setCountry(country);
@@ -21,25 +25,26 @@ public class Airport {
 
     //region Setters
     private void setCode(String code) throws AiportException.CodeException {
-        String patternCode = "^\\w{3}$";
-        Pattern r = Pattern.compile(patternCode);
+        Pattern r = Pattern.compile(REGEX_CODE);
         Matcher m = r.matcher(code);
         if (m.find())
             this.code = code;
         else
             throw new AiportException.CodeException(code);
     }
+
     private void setName(String name) throws AiportException.NameAirportException {
-        if(name.length() <= 50)
+        if(name.length() <= LENGTH_NAME)
             this.name = name;
         else
             throw new AiportException.NameAirportException(name);
     }
-    private void setCountry(String country) throws AiportException.NameAirportException {
-        if(name.length() <= 50)
-            this.name = name;
+
+    private void setCountry(String country) throws AiportException.CountryException {
+        if(country.length() <= LENGTH_COUNTRY)
+            this.country = country;
         else
-            throw new AiportException.NameAirportException(name);
+            throw new AiportException.CountryException(country);
     }
     //endregion
 

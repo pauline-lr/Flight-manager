@@ -63,4 +63,17 @@ public class FlightException extends Exception {
         }
 
     }
+
+    public static class ArrivalDateException extends Exception{
+        private GregorianCalendar wrongArrivalDate;
+
+        public ArrivalDateException (GregorianCalendar wrongArrivalDate) {
+            this.wrongArrivalDate = wrongArrivalDate;
+        }
+
+        public String getMessage( ) {
+            return  "The proposed " + wrongArrivalDate + " value for the arrival date is invalid !";
+        }
+
+    }
 }

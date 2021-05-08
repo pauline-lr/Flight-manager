@@ -14,15 +14,15 @@ public class ThreadMovement extends Thread {
 
     @Override
     public void run() {
-        long beforeTime, timeDiff, sleep;
+        long currentTimeSystem, timeDiff, sleep;
 
-        beforeTime = System.currentTimeMillis();
+        currentTimeSystem = System.currentTimeMillis();
 
         while (true) {
             animationSpace.cycle();
             animationSpace.repaint();
 
-            timeDiff = System.currentTimeMillis() - beforeTime;
+            timeDiff = System.currentTimeMillis() - currentTimeSystem;
             sleep = DELAY - timeDiff;
 
             if (sleep < 0) {
@@ -37,7 +37,7 @@ public class ThreadMovement extends Thread {
                 e.printStackTrace();
             }
 
-            beforeTime = System.currentTimeMillis();
+            currentTimeSystem = System.currentTimeMillis();
         }
     }
 }
