@@ -14,19 +14,15 @@ public class ModifyFlightPanel extends JPanel {
     private FlightForm flightForm;
     public ModifyFlightPanel(MenuWindow menuWindow) {
         this.setLayout(new BorderLayout());
-        //this.add(new ModifyFlightForm(), BorderLayout.CENTER);
-        this.modifyFlightForm = new ModifyFlightForm();
-        modifyFlightForm.setLayout(new BorderLayout());
-        modifyFlightForm.setBounds(0,120,500,100);
-        this.add(modifyFlightForm);
+        this.add(new ModifyFlightForm(), BorderLayout.PAGE_START);
 
 
-        //this.add(new FlightForm(), BorderLayout.CENTER);
+        this.add(new FlightForm(), BorderLayout.LINE_START);
 
-        this.flightForm = new FlightForm();
+        /*this.flightForm = new FlightForm();
         flightForm.setLayout(new BorderLayout());
         flightForm.setBounds(140,0,500,800);
-        this.add(flightForm);
+        this.add(flightForm);*/
 
         this.add(new ButtonsPanel(menuWindow), BorderLayout.SOUTH);
     }

@@ -27,7 +27,7 @@ public class MenuWindow extends JFrame{
 
     public MenuWindow(){
         setTitle("Gestionnaire de vols");
-        setBounds(100,100,500,500);
+        setBounds(100,100,600,600);
         frameContainer = this.getContentPane();
         this.addWindowListener(new ExitButtonListener());
 

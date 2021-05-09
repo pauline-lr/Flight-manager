@@ -11,7 +11,7 @@ public class ModifyFlightForm extends JPanel {
 
 
     public ModifyFlightForm(){
-        this.setLayout(new GridLayout(15, 1, 3, 3));
+        this.setLayout(new GridLayout(4, 1, 3, 3));
 
         flightLabel = new JLabel("Vol à modifier : ");
         flightLabel.setHorizontalAlignment(SwingConstants.RIGHT);
