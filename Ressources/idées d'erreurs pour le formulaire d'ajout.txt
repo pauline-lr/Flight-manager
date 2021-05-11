@@ -1,6 +1,6 @@
 AJOUT D'UN VOL 
 	Numéro de vol
-		combi de 2 lettres et 4 chiffres (pas d'espaces, de point, de tiret, etc ) 
+		combi de 2 lettres et 4 chiffres (pas d'espaces, de point, de tiret, etc) 
 	
 			Regex pour le numéro d'un vol 
 			\b[A-z][A-z]\d{4}$
