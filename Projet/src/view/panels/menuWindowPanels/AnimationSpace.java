@@ -1,6 +1,6 @@
 package view.panels.menuWindowPanels;
 
-import business.ThreadMovement;
+import thread.ThreadMovement;
 
 import javax.swing.*;
 import java.awt.*;

@@ -10,78 +10,85 @@ import java.util.*;
 public class AirlineDBAccess {
     //region Search functions
     public static ArrayList<SearchFlightsByDate> getAllFlightsBetweenDates(GregorianCalendar startDate, GregorianCalendar endDate)
-            throws SQLException {
-        ArrayList<SearchFlightsByDate> flights = new ArrayList<>();
-        java.sql.Date startDateSQL = new java.sql.Date(startDate.getTimeInMillis());
-        java.sql.Date endDateSQL = new java.sql.Date(endDate.getTimeInMillis());
-        SearchFlightsByDate flight;
-        GregorianCalendar flightDepartureTime = new GregorianCalendar();
-        GregorianCalendar flightArrivalTime = new GregorianCalendar();
+            throws SQLException, DataAccessException {
+        try{
+            ArrayList<SearchFlightsByDate> flights = new ArrayList<>();
+            java.sql.Date startDateSQL = new java.sql.Date(startDate.getTimeInMillis());
+            java.sql.Date endDateSQL = new java.sql.Date(endDate.getTimeInMillis());
+            SearchFlightsByDate flight;
+            GregorianCalendar flightDepartureTime = new GregorianCalendar();
+            GregorianCalendar flightArrivalTime = new GregorianCalendar();
 
-        String sql =
-                "SELECT " +
-                    "fli.number AS flightNumber, fli.departure_time AS flightDepartureTime, fli.arrival_time AS flightArrivalTime, " +
-                    "depGate.terminal AS departureGateTerminal, depGate.number AS departureGateNumber, " +
-                    "depAir.code AS departureAirportCode, depAir.name AS departureAirportName, depAir.country AS departureAirportCountry, " +
-                    "arrGate.terminal AS arrivalGateTerminal, arrGate.number AS arrivalGateNumber, " +
-                    "arrAir.code AS arrivalAirportCode, arrAir.name AS arrivalAirportName, arrAir.country AS arrivalAirportCountry, " +
-                    "pla.plane_id AS planeId, pla.model AS planeModel, pla.brand AS planeBrand, " +
-                    "pil.licence_number AS pilotLicenceNumber, pil.first_name AS pilotFirstName, pil.last_name AS pilotLastName " +
-                "FROM " +
-                    "flight fli, " +
-                    "gate depGate, " +
-                    "airport depAir, " +
-                    "gate arrGate, " +
-                    "airport arrAir, " +
-                    "plane pla, " +
-                    "pilot pil " +
-                "WHERE " +
-                    "fli.departure_gate = depGate.gate_id AND " +
-                    "depGate.airport = depAir.code AND " +
-                    "fli.arrival_gate = arrGate.gate_id AND " +
-                    "arrGate.airport = arrAir.code AND " +
-                    "fli.plane = pla.plane_id AND " +
-                    "fli.pilot = pil.licence_number AND " +
-                    "fli.departure_time BETWEEN ? AND ? " +
-                "ORDER BY " +
-                    "fli.departure_time;"
-                ;
-        PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sql);
-        preparedStatement.setDate(1, startDateSQL);
-        preparedStatement.setDate(2, endDateSQL);
+            String sql =
+                    "SELECT " +
+                        "fli.number AS flightNumber, fli.departure_time AS flightDepartureTime, fli.arrival_time AS flightArrivalTime, " +
+                        "depGate.terminal AS departureGateTerminal, depGate.number AS departureGateNumber, " +
+                        "depAir.code AS departureAirportCode, depAir.name AS departureAirportName, depAir.country AS departureAirportCountry, " +
+                        "arrGate.terminal AS arrivalGateTerminal, arrGate.number AS arrivalGateNumber, " +
+                        "arrAir.code AS arrivalAirportCode, arrAir.name AS arrivalAirportName, arrAir.country AS arrivalAirportCountry, " +
+                        "pla.plane_id AS planeId, pla.model AS planeModel, pla.brand AS planeBrand, " +
+                        "pil.licence_number AS pilotLicenceNumber, pil.first_name AS pilotFirstName, pil.last_name AS pilotLastName " +
+                    "FROM " +
+                        "flight fli, " +
+                        "gate depGate, " +
+                        "airport depAir, " +
+                        "gate arrGate, " +
+                        "airport arrAir, " +
+                        "plane pla, " +
+                        "pilot pil " +
+                    "WHERE " +
+                        "fli.departure_gate = depGate.gate_id AND " +
+                        "depGate.airport = depAir.code AND " +
+                        "fli.arrival_gate = arrGate.gate_id AND " +
+                        "arrGate.airport = arrAir.code AND " +
+                        "fli.plane = pla.plane_id AND " +
+                        "fli.pilot = pil.licence_number AND " +
+                        "fli.departure_time BETWEEN ? AND ? " +
+                    "ORDER BY " +
+                        "fli.departure_time;"
+                    ;
+            PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sql);
+            preparedStatement.setDate(1, startDateSQL);
+            preparedStatement.setDate(2, endDateSQL);
 
-        ResultSet data = preparedStatement.executeQuery();
+            ResultSet data = preparedStatement.executeQuery();
 
-        while (data.next()) {
-            flightDepartureTime.setTime(data.getDate("flightDepartureTime"));
-            flightArrivalTime.setTime(data.getDate("flightArrivalTime"));
+            while (data.next()) {
+                flightDepartureTime.setTime(data.getDate("flightDepartureTime"));
+                flightArrivalTime.setTime(data.getDate("flightArrivalTime"));
 
-            flight = new SearchFlightsByDate(
-                    data.getString("flightNumber"),
-                    flightDepartureTime,
-                    flightArrivalTime,
-                    data.getString("departureGateTerminal"),
-                    data.getInt("departureGateNumber"),
-                    data.getString("departureAirportCode"),
-                    data.getString("departureAirportName"),
-                    data.getString("departureAirportCountry"),
-                    data.getString("arrivalGateTerminal"),
-                    data.getInt("arrivalGateNumber"),
-                    data.getString("arrivalAirportCode"),
-                    data.getString("arrivalAirportName"),
-                    data.getString("arrivalAirportCountry"),
-                    data.getInt("planeId"),
-                    data.getString("planeModel"),
-                    data.getString("planeBrand"),
-                    data.getString("pilotLicenceNumber"),
-                    data.getString("pilotFirstName"),
-                    data.getString("pilotLastName")
-            );
+                flight = new SearchFlightsByDate(
+                        data.getString("flightNumber"),
+                        flightDepartureTime,
+                        flightArrivalTime,
+                        data.getString("departureGateTerminal"),
+                        data.getInt("departureGateNumber"),
+                        data.getString("departureAirportCode"),
+                        data.getString("departureAirportName"),
+                        data.getString("departureAirportCountry"),
+                        data.getString("arrivalGateTerminal"),
+                        data.getInt("arrivalGateNumber"),
+                        data.getString("arrivalAirportCode"),
+                        data.getString("arrivalAirportName"),
+                        data.getString("arrivalAirportCountry"),
+                        data.getInt("planeId"),
+                        data.getString("planeModel"),
+                        data.getString("planeBrand"),
+                        data.getString("pilotLicenceNumber"),
+                        data.getString("pilotFirstName"),
+                        data.getString("pilotLastName")
+                );
 
-            flights.add(flight);
+                flights.add(flight);
         }
+            return flights;
 
-        return flights;
+        }catch (DBConnectionException exception){
+            throw new DataAccessException();
+        } catch (SQLException exception) {
+            exception.getMessage();
+        }
+        return null;
     }
     public static ArrayList<SearchPassengersByClass> getAllPassangersOfAClass(Class seatClass)
             throws SQLException {
@@ -97,7 +104,7 @@ public class AirlineDBAccess {
 
     //region List functions
     public static ArrayList<Flight> getAllFlights()
-            throws SQLException, FlightException.MealDescriptionException, FlightException.NumberFlightException {
+            throws SQLException, FlightException.MealDescriptionException, FlightException.NumberFlightException, DBConnectionException {
         ArrayList<Flight> flights;
 
         Statement statement = SingletonConnection.getInstance().createStatement();
@@ -110,7 +117,7 @@ public class AirlineDBAccess {
     public static ArrayList<Pilot> getAllPilots()
             throws SQLException, PersonException.PhoneNumberException, PersonException.FirstNameException,
             PersonException.LastNameException, PersonException.EmailException, PilotException.LicenceNumberException,
-            PilotException.FlyingFlightException {
+            PilotException.FlyingFlightException, DBConnectionException {
         ArrayList<Pilot> pilots;
 
         Statement statement = SingletonConnection.getInstance().createStatement();
@@ -121,7 +128,7 @@ public class AirlineDBAccess {
         return pilots;
     }
     public static ArrayList<Airport> getAllAirports()
-            throws SQLException, AiportException.CodeException, AiportException.NameAirportException, AiportException.CountryException {
+            throws SQLException, AiportException.CodeException, AiportException.NameAirportException, AiportException.CountryException, DBConnectionException {
         ArrayList<Airport> airports;
 
         Statement statement = SingletonConnection.getInstance().createStatement();
@@ -131,7 +138,7 @@ public class AirlineDBAccess {
 
         return airports;
     }
-    public static ArrayList<Plane> getAllPlanes() throws SQLException, PlaneException.ModelException, PlaneException.BrandException {
+    public static ArrayList<Plane> getAllPlanes() throws SQLException, PlaneException.ModelException, PlaneException.BrandException, DBConnectionException {
         ArrayList<Plane> planes;
 
         Statement statement = SingletonConnection.getInstance().createStatement();
@@ -141,7 +148,7 @@ public class AirlineDBAccess {
 
         return planes;
     }
-    public static ArrayList<Class> getAllClasses() throws SQLException, NameClassException {
+    public static ArrayList<Class> getAllClasses() throws SQLException, NameClassException, DBConnectionException {
         ArrayList<Class> classes;
 
         Statement statement = SingletonConnection.getInstance().createStatement();
@@ -154,7 +161,7 @@ public class AirlineDBAccess {
     //endregion
 
     //region Manage functions
-    public static void addFlight(Flight flightToAdd) throws SQLException {
+    public static void addFlight(Flight flightToAdd) throws SQLException, DBConnectionException {
         String sql =
                 "INSERT INTO flight " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -163,7 +170,7 @@ public class AirlineDBAccess {
 
         preparedStatement.executeUpdate();
     }
-    public static void modifyFlight(Flight flightToUpdate, String originalNumber) throws SQLException {
+    public static void modifyFlight(Flight flightToUpdate, String originalNumber) throws SQLException, DBConnectionException {
         String sql =
                 "UPDATE flight " +
                 "SET number = ?, departure_time = ?, arrival_time = ?, is_meal_on_board = ?, " +
@@ -175,7 +182,7 @@ public class AirlineDBAccess {
 
         preparedStatement.executeUpdate();
     }
-    public static void deleteFlight(Flight flightToDelete) throws SQLException {
+    public static void deleteFlight(Flight flightToDelete) throws SQLException, DBConnectionException {
         String sql =
                 "DELETE FROM flight " +
                 "WHERE number = ?";
@@ -288,7 +295,7 @@ public class AirlineDBAccess {
 
         return classes;
     }
-    private static PreparedStatement preparedFlightStatement(String sql, Flight flight) throws SQLException {
+    private static PreparedStatement preparedFlightStatement(String sql, Flight flight) throws SQLException, DBConnectionException {
         PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sql);
 
         preparedStatement.setString(1,  flight.getNumber());
@@ -306,6 +313,12 @@ public class AirlineDBAccess {
         preparedStatement.setInt(9, flight.getPlane());
 
         return preparedStatement;
+    }
+
+
+    // fermer la connexion
+    public void closeConnection() throws DBCloseException {
+        SingletonConnection.closeConnection();
     }
     //endregion
 }

@@ -1,9 +1,11 @@
 package view.forms.flightForms;
 
+import exception.FlightException;
+
 import javax.swing.*;
+import javax.swing.text.BadLocationException;
 import java.awt.*;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.awt.event.*;
 
 public class FlightForm extends JPanel {
     private JTextField mealDescriptionTextField, departureTerminalTextField, arrivalTerminalTextField;
@@ -30,6 +32,8 @@ public class FlightForm extends JPanel {
 
         departureDay = new JComboBox();
         this.add(departureDay);
+        //----
+        departureDay.addFocusListener(new DepartureDayListener());
         departureMonth = new JComboBox();
         this.add(departureMonth);
         departureYear = new JComboBox();
@@ -61,7 +65,7 @@ public class FlightForm extends JPanel {
         this.add(departureTerminalLabel);
 
         departureTerminalTextField = new JTextField();
-        departureTerminalTextField.setEnabled(false);
+       // departureTerminalTextField.setEnabled(false);
         departureTerminalTextField.setHorizontalAlignment(SwingConstants.LEFT);
         this.add(departureTerminalTextField);
 
@@ -263,7 +267,32 @@ public class FlightForm extends JPanel {
         }
     }
 
-    /*private class NumberListener implements FocusListener{
+    private class DepartureDayListener implements FocusListener {
+        @Override
+        public void focusGained(FocusEvent e) {
 
-    }*/
+        }
+
+        @Override
+        public void focusLost(FocusEvent e) {
+        }
+    }
+
+    private class DepartureTerminalListener implements FocusListener {
+        @Override
+        public void focusGained(FocusEvent e) {
+            
+        }
+
+        @Override
+        public void focusLost(FocusEvent e) {
+            try{
+
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        }
+    }
+
+
 }

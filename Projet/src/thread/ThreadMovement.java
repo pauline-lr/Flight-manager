@@ -1,4 +1,4 @@
-package business;
+package thread;
 
 import view.panels.menuWindowPanels.AnimationSpace;
 
