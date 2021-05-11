@@ -61,5 +61,15 @@ public class Person {
     //endregion
 
     //region Getters
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+
     //endregion
 }

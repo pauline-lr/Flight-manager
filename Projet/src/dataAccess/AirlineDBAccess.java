@@ -272,6 +272,7 @@ public class AirlineDBAccess {
 
         while (data.next()) {
             plane = new Plane(
+                    data.getInt("num"),
                     data.getString("model"),
                     data.getString("brand")
             );
@@ -287,6 +288,7 @@ public class AirlineDBAccess {
 
         while (data.next()) {
             classe = new Class(
+                    data.getInt("num"),
                     data.getString("name")
             );
 
@@ -310,7 +312,7 @@ public class AirlineDBAccess {
         preparedStatement.setString(6, flight.getDepartureGate());
         preparedStatement.setString(7, flight.getArrivalGate());
         preparedStatement.setString(8, flight.getPilot());
-        preparedStatement.setInt(9, flight.getPlane());
+        preparedStatement.setInt(9, flight.getNumberPlane());
 
         return preparedStatement;
     }

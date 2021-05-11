@@ -43,5 +43,11 @@ public class Pilot extends Person {
     //endregion
 
     //region Getters
+
+    public String getName() {
+        return getFirstName() + " " + getLastName();
+    }
+
+
     //endregion
 }

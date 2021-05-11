@@ -9,13 +9,15 @@ public class Gate {
     public final static String REGEX_TERMINAL = "^[A-Z]$";
     public final static String REGEX_NUMBER = "^\\d{2}$";
 
+    private Integer gateID;
     private Character terminal;     // 1 character
     private Integer number;         // Max 2 positive digits
     private String airport;
 
     //region Constructors
-    public Gate(Character terminal, Integer number, String airport)
+    public Gate(Integer gateID, Character terminal, Integer number, String airport)
             throws FlightException.TerminalException, FlightException.NumberGateException {
+        setGateID(gateID);
         setTerminal(terminal);
         setNumber(number);
         setAirport(airport);
@@ -23,6 +25,12 @@ public class Gate {
     //endregion
 
     //region Setters
+
+
+    public void setGateID(Integer gateID) {
+        this.gateID = gateID;
+    }
+
     public void setTerminal(Character terminal) throws FlightException.TerminalException {
         Pattern r = Pattern.compile(REGEX_TERMINAL);
         Matcher m = r.matcher(String.valueOf(terminal));

@@ -1,6 +1,6 @@
 package view.windows;
 
-import view.panels.menuBarPanels.AllFlightsPanel;
+import view.panels.menuBarPanels.listingPanels.AllFlightsPanel;
 import view.panels.menuBarPanels.optionsFlightPanels.AddFlightPanel;
 import view.panels.menuBarPanels.optionsFlightPanels.DeleteFlightPanel;
 import view.panels.menuBarPanels.optionsFlightPanels.ModifyFlightPanel;

@@ -8,6 +8,7 @@ import java.util.GregorianCalendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+// NB : j'ai changé les types d'objets qui étaient en String par leur objet car j'en avais besoin pour le getters 
 public class Flight {
     public final static String REGEX_NUMBER = "^[A-z][A-z]\\d{4}$";
     public final static int MEAL_DESCRIPTION_LENTGH = 400;
@@ -17,15 +18,15 @@ public class Flight {
     private GregorianCalendar arrivalTime;      // JJ/MM/AAAA HH:MM ( > today)
     private Boolean isMealOnBoard;
     private String mealDescription;             // Max 400 characters - can be null
-    private String pilot;
+    private Pilot pilot;
     private String departureGate;
     private String arrivalGate;
-    private Integer plane;
+    private Plane  plane;
     private Date currentDate;
 
     //region Constructors
     public Flight(String number, GregorianCalendar departureTime,
-            GregorianCalendar arrivalTime, Boolean isMealOnBoard, String mealDescription, String pilot, String departureGate, String arrivalGate, Integer plane)
+            GregorianCalendar arrivalTime, Boolean isMealOnBoard, String mealDescription, Pilot pilot, String departureGate, String arrivalGate, Plane  plane)
             throws FlightException.NumberFlightException, FlightException.MealDescriptionException{
         setNumber(number);
         // GregorianCalendar(int year, int month, int dayOfMonth, int hourOfDay, int minute) cf. doc java
@@ -40,8 +41,8 @@ public class Flight {
         currentDate = new Date(System.currentTimeMillis());
     }
 
-    public Flight(String number,  GregorianCalendar departureTime,
-                  GregorianCalendar arrivalTime, Boolean isMealOnBoard, String pilot, String departureGate, String arrivalGate, Integer plane)
+    public Flight(String number, GregorianCalendar departureTime,
+                  GregorianCalendar arrivalTime, Boolean isMealOnBoard, Pilot pilot, String departureGate, String arrivalGate, Plane plane)
             throws FlightException.NumberFlightException, FlightException.MealDescriptionException {
         this(number, departureTime, arrivalTime, isMealOnBoard, null, pilot, departureGate, arrivalGate, plane);
     }
@@ -98,7 +99,7 @@ public class Flight {
         else
             throw new FlightException.MealDescriptionException(mealDescription);
     }
-    private void setPilot(String pilot) {
+    private void setPilot(Pilot pilot) {
         this.pilot = pilot;
     }
     private void setDepartureGate(String departureGate) {
@@ -107,7 +108,7 @@ public class Flight {
     private void setArrivalGate(String arrivalGate) {
         this.arrivalGate = arrivalGate;
     }
-    private void setPlane(Integer plane) {
+    private void setPlane(Plane  plane) {
         this.plane = plane;
     }
     //endregion
@@ -129,7 +130,7 @@ public class Flight {
         return mealDescription;
     }
     public String getPilot() {
-        return pilot;
+        return pilot.getName();
     }
     public String getDepartureGate() {
         return departureGate;
@@ -137,7 +138,12 @@ public class Flight {
     public String getArrivalGate() {
         return arrivalGate;
     }
-    public Integer getPlane() {
+
+    public Integer getNumberPlane(){
+        return plane.getPlaneId();
+    }
+
+    public Plane getPlane() {
         return plane;
     }
     //endregion
