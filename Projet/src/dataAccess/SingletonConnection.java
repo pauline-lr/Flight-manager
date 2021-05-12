@@ -3,7 +3,6 @@ package dataAccess;
 import exception.DBCloseException;
 import exception.DBConnectionException;
 
-import javax.swing.*;
 import java.sql.*;
 
 public class SingletonConnection {

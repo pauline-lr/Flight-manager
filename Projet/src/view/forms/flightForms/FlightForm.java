@@ -1,11 +1,6 @@
 package view.forms.flightForms;
 
-import controller.ApplicationController;
-import exception.FlightException;
-import model.Flight;
-
 import javax.swing.*;
-import javax.swing.text.BadLocationException;
 import java.awt.*;
 import java.awt.event.*;
 
