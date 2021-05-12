@@ -1,6 +1,8 @@
 package view.forms.flightForms;
 
+import controller.ApplicationController;
 import exception.FlightException;
+import model.Flight;
 
 import javax.swing.*;
 import javax.swing.text.BadLocationException;
@@ -120,7 +122,7 @@ public class FlightForm extends JPanel {
         this.add(arrivalTerminalLabel);
 
         arrivalTerminalTextField = new JTextField();
-        arrivalTerminalTextField.setEnabled(false);
+        //arrivalTerminalTextField.setEnabled(false);
         arrivalTerminalTextField.setHorizontalAlignment(SwingConstants.LEFT);
         this.add(arrivalTerminalTextField);
 

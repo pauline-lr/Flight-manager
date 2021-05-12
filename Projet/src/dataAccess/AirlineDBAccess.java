@@ -210,10 +210,12 @@ public class AirlineDBAccess {
                     departureTime,
                     arrivalTime,
                     data.getBoolean("is_meal_on_board"),
-                    data.getString("pilot"),
+                    //data.getString("pilot"),
+                    null,
                     data.getString("departure_gate"),
                     data.getString("arrival_gate"),
-                    data.getInt("plane")
+                   null
+                    // data.getInt("plane")
             );
 
             mealDescription = data.getString("meal_description");

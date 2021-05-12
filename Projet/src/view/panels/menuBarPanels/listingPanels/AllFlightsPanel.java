@@ -1,6 +1,5 @@
 package view.panels.menuBarPanels.listingPanels;
 
-import controller.ApplicationController;
 import model.Flight;
 import view.windows.MenuWindow;
 
