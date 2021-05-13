@@ -122,7 +122,7 @@ public class AirlineDBAccess implements DAO {
         ArrayList<String> pilots = new ArrayList<>();
 
         Statement statement = SingletonConnection.getInstance().createStatement();
-        ResultSet data = statement.executeQuery("SELECT * FROM pilot ORDER BY first_name, last_name");
+        ResultSet data = statement.executeQuery("SELECT * FROM pilot ORDER BY licence_number");
 
         while (data.next()) {
             pilots.add(data.getString("licence_number") + " - " + data.getString("last_name") + " " +data.getString("first_name"));
@@ -135,7 +135,7 @@ public class AirlineDBAccess implements DAO {
         ArrayList<String> airports = new ArrayList<>();
 
         Statement statement = SingletonConnection.getInstance().createStatement();
-        ResultSet data = statement.executeQuery("SELECT * FROM airport ORDER BY name");
+        ResultSet data = statement.executeQuery("SELECT * FROM airport ORDER BY code");
 
         while (data.next()) {
             airports.add(data.getString("code") + " - " + data.getString("name") + " - " + data.getString("country"));
@@ -147,7 +147,7 @@ public class AirlineDBAccess implements DAO {
         ArrayList<String> planes = new ArrayList<>();
 
         Statement statement = SingletonConnection.getInstance().createStatement();
-        ResultSet data = statement.executeQuery("SELECT * FROM plane ORDER BY model, brand");
+        ResultSet data = statement.executeQuery("SELECT * FROM plane ORDER BY plane_id");
 
         while (data.next()) {
             planes.add(data.getInt("plane_id") + " - " + data.getString("brand") + " " + data.getString("model"));
