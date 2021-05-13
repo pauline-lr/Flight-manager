@@ -19,7 +19,6 @@ public class Class {
     public void setClassID(Integer classID) {
         this.classID = classID;
     }
-
     private void setName(String name) throws NameClassException {
         if(name.length() <= NAME_LENGTH)
             this.name = name;
@@ -29,5 +28,8 @@ public class Class {
     //endregion
 
     //region Getters
+    public String getName() {
+        return name;
+    }
     //endregion
 }

@@ -12,42 +12,55 @@ public class AirlineDBAccess implements DAO {
     //region Search
     public ArrayList<SearchFlightsByDate> getAllFlightsBetweenDates(GregorianCalendar startDate, GregorianCalendar endDate)
             throws SQLException, DataAccessException {
-        try{
-            ArrayList<SearchFlightsByDate> flights = new ArrayList<>();
-            java.sql.Date startDateSQL = new java.sql.Date(startDate.getTimeInMillis());
-            java.sql.Date endDateSQL = new java.sql.Date(endDate.getTimeInMillis());
-            SearchFlightsByDate flight;
-            GregorianCalendar flightDepartureTime = new GregorianCalendar();
-            GregorianCalendar flightArrivalTime = new GregorianCalendar();
+        ArrayList<SearchFlightsByDate> flights = new ArrayList<>();
+        java.sql.Date startDateSQL = new java.sql.Date(startDate.getTimeInMillis());
+        java.sql.Date endDateSQL = new java.sql.Date(endDate.getTimeInMillis());
+        SearchFlightsByDate flight;
+        GregorianCalendar flightDepartureTime = new GregorianCalendar();
+        GregorianCalendar flightArrivalTime = new GregorianCalendar();
 
-            String sql =
-                    "SELECT " +
-                        "fli.number AS flightNumber, fli.departure_time AS flightDepartureTime, fli.arrival_time AS flightArrivalTime, " +
-                        "depGate.terminal AS departureGateTerminal, depGate.number AS departureGateNumber, " +
-                        "depAir.code AS departureAirportCode, depAir.name AS departureAirportName, depAir.country AS departureAirportCountry, " +
-                        "arrGate.terminal AS arrivalGateTerminal, arrGate.number AS arrivalGateNumber, " +
-                        "arrAir.code AS arrivalAirportCode, arrAir.name AS arrivalAirportName, arrAir.country AS arrivalAirportCountry, " +
-                        "pla.plane_id AS planeId, pla.model AS planeModel, pla.brand AS planeBrand, " +
-                        "pil.licence_number AS pilotLicenceNumber, pil.first_name AS pilotFirstName, pil.last_name AS pilotLastName " +
-                    "FROM " +
-                        "flight fli, " +
-                        "gate depGate, " +
-                        "airport depAir, " +
-                        "gate arrGate, " +
-                        "airport arrAir, " +
-                        "plane pla, " +
-                        "pilot pil " +
-                    "WHERE " +
-                        "fli.departure_gate = depGate.gate_id AND " +
-                        "depGate.airport = depAir.code AND " +
-                        "fli.arrival_gate = arrGate.gate_id AND " +
-                        "arrGate.airport = arrAir.code AND " +
-                        "fli.plane = pla.plane_id AND " +
-                        "fli.pilot = pil.licence_number AND " +
-                        "fli.departure_time BETWEEN ? AND ? " +
-                    "ORDER BY " +
-                        "fli.departure_time;"
-                    ;
+        String sql =
+            "SELECT " +
+                "fli.number AS flightNumber, " +
+                "fli.departure_time AS flightDepartureTime, " +
+                "fli.arrival_time AS flightArrivalTime, " +
+                "depGate.terminal AS departureGateTerminal, " +
+                "depGate.number AS departureGateNumber, " +
+                "depAir.code AS departureAirportCode, " +
+                "depAir.name AS departureAirportName, " +
+                "depAir.country AS departureAirportCountry, " +
+                "arrGate.terminal AS arrivalGateTerminal, " +
+                "arrGate.number AS arrivalGateNumber, " +
+                "arrAir.code AS arrivalAirportCode, " +
+                "arrAir.name AS arrivalAirportName, " +
+                "arrAir.country AS arrivalAirportCountry, " +
+                "pla.plane_id AS planeId, " +
+                "pla.model AS planeModel, " +
+                "pla.brand AS planeBrand, " +
+                "pil.licence_number AS pilotLicenceNumber, " +
+                "pil.first_name AS pilotFirstName, " +
+                "pil.last_name AS pilotLastName " +
+            "FROM " +
+                "flight fli, " +
+                "gate depGate, " +
+                "airport depAir, " +
+                "gate arrGate, " +
+                "airport arrAir, " +
+                "plane pla, " +
+                "pilot pil " +
+            "WHERE " +
+                "fli.departure_gate = depGate.gate_id AND " +
+                "depGate.airport = depAir.code AND " +
+                "fli.arrival_gate = arrGate.gate_id AND " +
+                "arrGate.airport = arrAir.code AND " +
+                "fli.plane = pla.plane_id AND " +
+                "fli.pilot = pil.licence_number AND " +
+                "fli.departure_time BETWEEN ? AND ? " +
+            "ORDER BY " +
+                "fli.departure_time;"
+        ;
+
+        try {
             PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sql);
             preparedStatement.setDate(1, startDateSQL);
             preparedStatement.setDate(2, endDateSQL);
@@ -59,42 +72,118 @@ public class AirlineDBAccess implements DAO {
                 flightArrivalTime.setTime(data.getDate("flightArrivalTime"));
 
                 flight = new SearchFlightsByDate(
-                        data.getString("flightNumber"),
-                        flightDepartureTime,
-                        flightArrivalTime,
-                        data.getString("departureGateTerminal"),
-                        data.getInt("departureGateNumber"),
-                        data.getString("departureAirportCode"),
-                        data.getString("departureAirportName"),
-                        data.getString("departureAirportCountry"),
-                        data.getString("arrivalGateTerminal"),
-                        data.getInt("arrivalGateNumber"),
-                        data.getString("arrivalAirportCode"),
-                        data.getString("arrivalAirportName"),
-                        data.getString("arrivalAirportCountry"),
-                        data.getInt("planeId"),
-                        data.getString("planeModel"),
-                        data.getString("planeBrand"),
-                        data.getString("pilotLicenceNumber"),
-                        data.getString("pilotFirstName"),
-                        data.getString("pilotLastName")
+                    data.getString("flightNumber"),
+                    flightDepartureTime,
+                    flightArrivalTime,
+                    data.getString("departureGateTerminal"),
+                    data.getInt("departureGateNumber"),
+                    data.getString("departureAirportCode"),
+                    data.getString("departureAirportName"),
+                    data.getString("departureAirportCountry"),
+                    data.getString("arrivalGateTerminal"),
+                    data.getInt("arrivalGateNumber"),
+                    data.getString("arrivalAirportCode"),
+                    data.getString("arrivalAirportName"),
+                    data.getString("arrivalAirportCountry"),
+                    data.getInt("planeId"),
+                    data.getString("planeModel"),
+                    data.getString("planeBrand"),
+                    data.getString("pilotLicenceNumber"),
+                    data.getString("pilotFirstName"),
+                    data.getString("pilotLastName")
                 );
 
                 flights.add(flight);
-        }
-            return flights;
+            }
 
         } catch (DBConnectionException exception){
             throw new DataAccessException();
         } catch (SQLException exception) {
             exception.getMessage();
         }
-        return null;
+
+        return flights;
     }
     public ArrayList<SearchPassengersByClass> getAllPassengersOfAClass(Class seatClass)
             throws SQLException {
         ArrayList<SearchPassengersByClass> passengers = new ArrayList<>();
-        return null;
+        SearchPassengersByClass passenger;
+        GregorianCalendar flightDepartureTime = new GregorianCalendar();
+        GregorianCalendar flightArrivalTime = new GregorianCalendar();
+
+        String sql =
+            "SELECT " +
+                "pas.passport_number AS passengerPassportNumber, " +
+                "pas.first_name AS passengerFirstName, " +
+                "pas.last_name AS passengerLastName, " +
+                "sea.seat_row AS seatRow," +
+                "sea.seat_column AS seatColumn, " +
+                "fli.number AS flightNumber, " +
+                "fli.departure_time AS flightDepartureTime, " +
+                "fli.arrival_time AS flightArrivalTime, " +
+                "depAir.code AS departureAirportCode, " +
+                "depAir.name AS departureAirportName, " +
+                "depAir.country AS departureAirportCountry, " +
+                "arrAir.code AS arrivalAirportCode, " +
+                "arrAir.name AS arrivalAirportName, " +
+                "arrAir.country AS arrivalAirportCountry " +
+            "FROM " +
+                "passenger pas, " +
+                "seat sea, " +
+                "class cla, " +
+                "flight fli, " +
+                "gate depGate, " +
+                "airport depAir, " +
+                "gate arrGate, " +
+                "airport arrAir " +
+            "WHERE " +
+                "sea.flight = fli.number AND " +
+                "sea.passenger = pas.passport_number AND " +
+                "sea.seat_class = cla.class_id AND " +
+                "fli.departure_gate = depGate.gate_id AND " +
+                "depGate.airport = depAir.code AND " +
+                "fli.arrival_gate = arrGate.gate_id AND " +
+                "arrGate.airport = arrAir.code AND " +
+                "cla.name = ? " +
+            "ORDER BY " +
+                "pas.last_name, pas.first_name;"
+        ;
+
+        try {
+            PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sql);
+            preparedStatement.setString(1, seatClass.getName());
+
+            ResultSet data = preparedStatement.executeQuery();
+
+            while (data.next()) {
+                flightDepartureTime.setTime(data.getDate("flightDepartureTime"));
+                flightArrivalTime.setTime(data.getDate("flightArrivalTime"));
+
+                passenger = new SearchPassengersByClass(
+                    data.getString("passengerPassportNumber"),
+                    data.getString("passengerFirstName"),
+                    data.getString("passengerLastName"),
+                    data.getInt("seatRow"),
+                    data.getString("seatColumn"),
+                    data.getString("flightNumber"),
+                    flightDepartureTime,
+                    flightArrivalTime,
+                    data.getString("departureAirportCode"),
+                    data.getString("departureAirportName"),
+                    data.getString("departureAirportCountry"),
+                    data.getString("arrivalAirportCode"),
+                    data.getString("arrivalAirportName"),
+                    data.getString("arrivalAirportCountry")
+                );
+
+                passengers.add(passenger);
+            }
+
+        } catch (DBConnectionException exception) {
+
+        }
+
+        return passengers;
     }
     public ArrayList<SearchFlightsByPilot> getAllFlightsOfAPilot(Pilot pilot)
             throws SQLException {

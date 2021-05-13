@@ -60,13 +60,14 @@ public class FlightForm extends JPanel {
         departureAirportComboBox = new JComboBox();
         try {
             departureAirportComboBox = new JComboBox(controller.getAllAirports().toArray());
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception exception) {
+            JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
         this.add(departureAirportComboBox);
 
         addEmptyLabel();
         addEmptyLabel();
+
         // departureGate
         departureTerminalLabel = new JLabel("Terminal : ");
         departureTerminalLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -80,12 +81,14 @@ public class FlightForm extends JPanel {
         this.add(departureGateLabel);
 
         departureGateSpinner = new JComboBox();
-        /*try {
+        /*
+        try {
             //Pas d'accès à gate ? '
             //departureGateSpinner = new JComboBox(controller.);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-        }*/
+        } catch (Exception exception) {
+            JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
+        */
         this.add(departureGateSpinner);
 
 
@@ -122,8 +125,8 @@ public class FlightForm extends JPanel {
         arrivalAirportComboBox = new JComboBox();
         try {
             arrivalAirportComboBox = new JComboBox(controller.getAllAirports().toArray());
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception exception) {
+            JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
         this.add(arrivalAirportComboBox);
 
@@ -154,8 +157,8 @@ public class FlightForm extends JPanel {
         planeComboBox = new JComboBox();
         try {
             planeComboBox = new JComboBox(controller.getAllPlanes().toArray());
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception exception) {
+            JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
         this.add(planeComboBox);
 // NEW LINE
@@ -167,8 +170,8 @@ public class FlightForm extends JPanel {
         pilotComboBox = new JComboBox();
         try {
             pilotComboBox = new JComboBox(controller.getAllPilots().toArray());
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception exception) {
+            JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
         this.add(pilotComboBox);
 
