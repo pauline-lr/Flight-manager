@@ -37,7 +37,7 @@ public class Passenger extends Person {
     private void setBirthdate(GregorianCalendar birthdate) {
         this.birthdate = birthdate;
         /*
-        if (birthdate.before(currentDate)) {
+        if (birthdate.compareTo(currentDate) < 0) {
             this.birthdate = birthdate;
         } else {
             try {

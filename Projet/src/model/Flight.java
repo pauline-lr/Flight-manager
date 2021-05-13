@@ -3,7 +3,6 @@ package model;
 import exception.FlightException;
 
 import java.time.format.DateTimeParseException;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -22,7 +21,7 @@ public class Flight {
     private String departureGate;
     private String arrivalGate;
     private Integer plane;
-    private Date currentDate;
+    private GregorianCalendar currentDate;
 
     //region Constructors
     public Flight(String number, GregorianCalendar departureTime,
@@ -38,7 +37,7 @@ public class Flight {
         setDepartureGate(departureGate);
         setArrivalGate(arrivalGate);
         setPlane(plane);
-        currentDate = new Date(System.currentTimeMillis());
+        currentDate = new GregorianCalendar();
     }
 
     public Flight(String number, GregorianCalendar departureTime,
@@ -62,7 +61,7 @@ public class Flight {
     }
 
     private void setDepartureTime(GregorianCalendar departureTime) {
-        if(departureTime.after(currentDate)) {
+        if(departureTime.compareTo(currentDate) > 0) {
             this.departureTime = departureTime;
         }else{
             try {
@@ -74,7 +73,7 @@ public class Flight {
     }
 
     private void setArrivalTime(GregorianCalendar arrivalTime) {
-        if(arrivalTime.after(currentDate)) {
+        if(arrivalTime.compareTo(currentDate) > 0) {
             this.arrivalTime = arrivalTime;
         }else{
             try {
