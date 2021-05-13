@@ -1,10 +1,15 @@
 package view.forms.flightForms;
 
+import controller.ApplicationController;
+import model.Pilot;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
 public class FlightForm extends JPanel {
+    private ApplicationController controller;
+
     private JTextField mealDescriptionTextField;
     private JCheckBox isMealOnBoardCheckBox;
     private JLabel  departureDateLabel, departureHourLabel, arrivalDateLabel, arrivalHourLabel, departureAirportLabel, departureTerminalLabel,
@@ -30,8 +35,6 @@ public class FlightForm extends JPanel {
 
         departureDay = new JComboBox();
         this.add(departureDay);
-        //----
-        departureDay.addFocusListener(new DepartureDayListener());
         departureMonth = new JComboBox();
         this.add(departureMonth);
         departureYear = new JComboBox();
@@ -47,12 +50,18 @@ public class FlightForm extends JPanel {
         this.add(departureMinute);
 
         addEmptyLabel();
+
         // departureAirport
         departureAirportLabel = new JLabel("Aéroport de départ : ");
         departureAirportLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(departureAirportLabel);
 
         departureAirportComboBox = new JComboBox();
+        try {
+            departureAirportComboBox = new JComboBox(controller.getAllAirports().toArray());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
         this.add(departureAirportComboBox);
 
         addEmptyLabel();
@@ -70,6 +79,12 @@ public class FlightForm extends JPanel {
         this.add(departureGateLabel);
 
         departureGateSpinner = new JComboBox();
+        /*try {
+            //Pas d'accès à gate ? '
+            //departureGateSpinner = new JComboBox(controller.);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        }*/
         this.add(departureGateSpinner);
 
 
@@ -104,6 +119,11 @@ public class FlightForm extends JPanel {
         this.add(arrivalAirportLabel);
 
         arrivalAirportComboBox = new JComboBox();
+        try {
+            arrivalAirportComboBox = new JComboBox(controller.getAllAirports().toArray());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
         this.add(arrivalAirportComboBox);
 
         addEmptyLabel();
@@ -131,6 +151,11 @@ public class FlightForm extends JPanel {
         this.add(planeLabel);
 
         planeComboBox = new JComboBox();
+        try {
+            planeComboBox = new JComboBox(controller.getAllPlanes().toArray());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
         this.add(planeComboBox);
 // NEW LINE
         // pilot
@@ -139,6 +164,11 @@ public class FlightForm extends JPanel {
         this.add(pilotLabel);
 
         pilotComboBox = new JComboBox();
+        try {
+            pilotComboBox = new JComboBox(controller.getAllPilots().toArray());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
         this.add(pilotComboBox);
 
         // isMealOnBoard
@@ -256,32 +286,11 @@ public class FlightForm extends JPanel {
         }
     }
 
-    private class DepartureDayListener implements FocusListener {
+    private class ValidationListener implements ActionListener{
         @Override
-        public void focusGained(FocusEvent e) {
+        public void actionPerformed(ActionEvent evt){
 
-        }
-
-        @Override
-        public void focusLost(FocusEvent e) {
         }
     }
-
-    private class DepartureTerminalListener implements FocusListener {
-        @Override
-        public void focusGained(FocusEvent e) {
-            
-        }
-
-        @Override
-        public void focusLost(FocusEvent e) {
-            try{
-
-            } catch (Exception exception) {
-                exception.printStackTrace();
-            }
-        }
-    }
-
 
 }
