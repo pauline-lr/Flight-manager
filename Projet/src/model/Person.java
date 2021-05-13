@@ -28,14 +28,14 @@ public class Person {
 
     //region Setters
     private void setFirstName(String firstName) throws PersonException.FirstNameException {
-        if(firstName.length() >= LENGTH_FIRST_NAME)
+        if(firstName.length() <= LENGTH_FIRST_NAME)
             this.firstName = firstName;
         else
             throw new PersonException.FirstNameException(firstName);
     }
 
     private void setLastName(String lastName) throws PersonException.LastNameException {
-        if(lastName.length() >= LENGTH_LAST_NAME)
+        if(lastName.length() <= LENGTH_LAST_NAME)
             this.lastName = lastName;
         else
             throw new PersonException.LastNameException(lastName);

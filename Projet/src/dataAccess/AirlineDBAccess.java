@@ -283,7 +283,7 @@ public class AirlineDBAccess implements DAO {
 
         while (data.next()) {
             plane = new Plane(
-                    data.getInt("num"),
+                    data.getInt("plane_id"),
                     data.getString("model"),
                     data.getString("brand")
             );

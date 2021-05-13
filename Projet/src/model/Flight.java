@@ -67,9 +67,7 @@ public class Flight {
         }else{
             try {
                 throw new FlightException.DepartureDateException(departureTime);
-            } catch (FlightException.DepartureDateException e) {
-                e.printStackTrace();
-            }catch (DateTimeParseException e ) {
+            } catch (FlightException.DepartureDateException | DateTimeParseException e) {
                 e.printStackTrace();
             }
         }
@@ -81,9 +79,7 @@ public class Flight {
         }else{
             try {
                 throw new FlightException.ArrivalDateException(arrivalTime);
-            } catch (FlightException.ArrivalDateException e) {
-                e.printStackTrace();
-            }catch (DateTimeParseException e ) {
+            } catch (FlightException.ArrivalDateException | DateTimeParseException e) {
                 e.printStackTrace();
             }
         }

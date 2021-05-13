@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class FlightForm extends JPanel {
-    private ApplicationController controller;
+    private ApplicationController controller = new ApplicationController();
 
     private JTextField mealDescriptionTextField;
     private JCheckBox isMealOnBoardCheckBox;
@@ -59,7 +59,7 @@ public class FlightForm extends JPanel {
 
         departureAirportComboBox = new JComboBox();
         try {
-            departureAirportComboBox = new JComboBox(controller.getAllAirports().toArray(new Airport[0]));
+            departureAirportComboBox = new JComboBox(controller.getAllAirports().toArray());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
