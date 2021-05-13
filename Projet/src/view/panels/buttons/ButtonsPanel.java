@@ -1,4 +1,4 @@
-package view.panels;
+package view.panels.buttons;
 import view.panels.menuBarPanels.optionsFlightPanels.AddFlightPanel;
 import view.panels.menuWindowPanels.WelcomePanel;
 import view.windows.MenuWindow;
@@ -10,21 +10,19 @@ import java.awt.event.ActionListener;
 
 public class ButtonsPanel extends JPanel {
     private MenuWindow menuWindow;
-    private JButton retour, validation, réinit;
+    private JButton retour, réinit;
 
     public ButtonsPanel(MenuWindow menuWindow){
         this.menuWindow = menuWindow;
         this.setLayout(new FlowLayout());
         retour = new JButton("Retour");
-        validation = new JButton("Validation");
+
         réinit = new JButton("Réinitialiser");
 
         retour.addActionListener(new RetourListener());
-        validation.addActionListener(new ValidationListener());
         réinit.addActionListener(new RéinitListener());
 
         this.add(retour);
-        this.add(validation);
         this.add(réinit);
     }
 
@@ -40,12 +38,12 @@ public class ButtonsPanel extends JPanel {
     }
 
     // bouton de validation
-    private class ValidationListener implements ActionListener{
+    /*private class ValidationListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent evt){
 
         }
-    }
+    }*/
 
     // bouton de réinitialisation
     private class RéinitListener implements ActionListener{

@@ -1,7 +1,7 @@
 package view.panels.menuBarPanels.searchPanels;
 
 import view.forms.searchForms.DateFlightForm;
-import view.panels.ButtonsPanel;
+import view.panels.buttons.ButtonsPanel;
 import view.windows.MenuWindow;
 
 import javax.swing.*;

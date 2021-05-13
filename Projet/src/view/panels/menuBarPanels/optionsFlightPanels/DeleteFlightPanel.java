@@ -1,7 +1,7 @@
 package view.panels.menuBarPanels.optionsFlightPanels;
 
 import view.forms.flightForms.DeleteFlightForm;
-import view.panels.ButtonsPanel;
+import view.panels.buttons.ButtonsPanel;
 import view.windows.MenuWindow;
 
 import javax.swing.*;
