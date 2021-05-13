@@ -3,13 +3,14 @@ package dataAccess;
 import exception.*;
 import model.*;
 import model.Class;
+import pattern.DAO;
 
 import java.sql.*;
 import java.util.*;
 
-public class AirlineDBAccess {
+public class AirlineDBAccess implements DAO {
     //region Search
-    public static ArrayList<SearchFlightsByDate> getAllFlightsBetweenDates(GregorianCalendar startDate, GregorianCalendar endDate)
+    public ArrayList<SearchFlightsByDate> getAllFlightsBetweenDates(GregorianCalendar startDate, GregorianCalendar endDate)
             throws SQLException, DataAccessException {
         try{
             ArrayList<SearchFlightsByDate> flights = new ArrayList<>();
@@ -90,12 +91,12 @@ public class AirlineDBAccess {
         }
         return null;
     }
-    public static ArrayList<SearchPassengersByClass> getAllPassengersOfAClass(Class seatClass)
+    public ArrayList<SearchPassengersByClass> getAllPassengersOfAClass(Class seatClass)
             throws SQLException {
         ArrayList<SearchPassengersByClass> passengers = new ArrayList<>();
         return null;
     }
-    public static ArrayList<SearchFlightsByPilot> getAllFlightsOfAPilot(Pilot pilot)
+    public ArrayList<SearchFlightsByPilot> getAllFlightsOfAPilot(Pilot pilot)
             throws SQLException {
         ArrayList<SearchFlightsByPilot> flights = new ArrayList<>();
         return null;
@@ -103,7 +104,7 @@ public class AirlineDBAccess {
     //endregion
 
     //region Get
-    public static ArrayList<Flight> getAllFlights()
+    public ArrayList<Flight> getAllFlights()
             throws SQLException, FlightException.MealDescriptionException, FlightException.NumberFlightException, DBConnectionException {
         ArrayList<Flight> flights;
 
@@ -114,7 +115,7 @@ public class AirlineDBAccess {
 
         return flights;
     }
-    public static ArrayList<Pilot> getAllPilots()
+    public ArrayList<Pilot> getAllPilots()
             throws SQLException, PersonException.PhoneNumberException, PersonException.FirstNameException,
             PersonException.LastNameException, PersonException.EmailException, PilotException.LicenceNumberException,
             PilotException.FlyingFlightException, DBConnectionException {
@@ -127,7 +128,7 @@ public class AirlineDBAccess {
 
         return pilots;
     }
-    public static ArrayList<Airport> getAllAirports()
+    public ArrayList<Airport> getAllAirports()
             throws SQLException, AiportException.CodeException, AiportException.NameAirportException, AiportException.CountryException, DBConnectionException {
         ArrayList<Airport> airports;
 
@@ -138,7 +139,7 @@ public class AirlineDBAccess {
 
         return airports;
     }
-    public static ArrayList<Plane> getAllPlanes() throws SQLException, PlaneException.ModelException, PlaneException.BrandException, DBConnectionException {
+    public ArrayList<Plane> getAllPlanes() throws SQLException, PlaneException.ModelException, PlaneException.BrandException, DBConnectionException {
         ArrayList<Plane> planes;
 
         Statement statement = SingletonConnection.getInstance().createStatement();
@@ -148,7 +149,7 @@ public class AirlineDBAccess {
 
         return planes;
     }
-    public static ArrayList<Class> getAllClasses() throws SQLException, NameClassException, DBConnectionException {
+    public ArrayList<Class> getAllClasses() throws SQLException, NameClassException, DBConnectionException {
         ArrayList<Class> classes;
 
         Statement statement = SingletonConnection.getInstance().createStatement();
@@ -161,7 +162,7 @@ public class AirlineDBAccess {
     //endregion
 
     //region Edit
-    public static void addFlight(Flight flightToAdd) throws SQLException, DBConnectionException {
+    public void addFlight(Flight flightToAdd) throws SQLException, DBConnectionException {
         String sql =
                 "INSERT INTO flight " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -170,7 +171,7 @@ public class AirlineDBAccess {
 
         preparedStatement.executeUpdate();
     }
-    public static void modifyFlight(Flight flightToUpdate, String originalNumber) throws SQLException, DBConnectionException {
+    public void modifyFlight(Flight flightToUpdate, String originalNumber) throws SQLException, DBConnectionException {
         String sql =
                 "UPDATE flight " +
                 "SET number = ?, departure_time = ?, arrival_time = ?, is_meal_on_board = ?, " +
@@ -182,7 +183,7 @@ public class AirlineDBAccess {
 
         preparedStatement.executeUpdate();
     }
-    public static void deleteFlight(Flight flightToDelete) throws SQLException, DBConnectionException {
+    public void deleteFlight(Flight flightToDelete) throws SQLException, DBConnectionException {
         String sql =
                 "DELETE FROM flight " +
                 "WHERE number = ?";

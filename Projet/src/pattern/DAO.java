@@ -39,6 +39,7 @@ public interface DAO {
     //endregion
 
     //region Tools
+    /*
     ArrayList<Flight> flightResultSetIntoArrayList(ResultSet data) throws SQLException, FlightException.MealDescriptionException, FlightException.NumberFlightException;
     ArrayList<Pilot> pilotResultSetIntoArrayList(ResultSet data)
             throws SQLException, PersonException.PhoneNumberException, PersonException.FirstNameException, PersonException.LastNameException,
@@ -49,6 +50,7 @@ public interface DAO {
             throws SQLException, PlaneException.ModelException, PlaneException.BrandException;
     ArrayList<model.Class> classResultSetIntoArrayList(ResultSet data) throws SQLException, NameClassException;
     PreparedStatement preparedFlightStatement(String sql, Flight flight) throws SQLException, DBConnectionException;
+    */
     //endregion
 
     //region Close
