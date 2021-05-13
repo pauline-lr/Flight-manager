@@ -5,15 +5,16 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class FlightForm extends JPanel {
-    private JTextField mealDescriptionTextField, departureTerminalTextField, arrivalTerminalTextField;
-    private JSpinner departureGateSpinner, arrivalGateSpinner;
+    private JTextField mealDescriptionTextField;
     private JCheckBox isMealOnBoardCheckBox;
     private JLabel  departureDateLabel, departureHourLabel, arrivalDateLabel, arrivalHourLabel, departureAirportLabel, departureTerminalLabel,
             departureGateLabel, arrivalAirportLabel, arrivalTerminalLabel, arrivalGateLabel, mealDescriptionLabel, planeLabel, pilotLabel, empty;
-    private SpinnerNumberModel spinnerNumberModel;
     private JComboBox departureDay, departureMonth, departureYear, departureHour, departureMinute;
     private JComboBox arrivalDay, arrivalMonth, arrivalYear, arrivalHour, arrivalMinute;
+    private JComboBox departureGateSpinner;
+    private JComboBox arrivalGateSpinner;
     private JComboBox planeComboBox, pilotComboBox, departureAirportComboBox, arrivalAirportComboBox;
+    private JComboBox departureTerminalComboBox, arrivalTerminalComboBox;
 
     public FlightForm(){
         setLayout(new GridLayout(10, 4));
@@ -61,17 +62,14 @@ public class FlightForm extends JPanel {
         departureTerminalLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(departureTerminalLabel);
 
-        departureTerminalTextField = new JTextField();
-       // departureTerminalTextField.setEnabled(false);
-        departureTerminalTextField.setHorizontalAlignment(SwingConstants.LEFT);
-        this.add(departureTerminalTextField);
+        departureTerminalComboBox = new JComboBox();
+        this.add(departureTerminalComboBox);
 
         departureGateLabel = new JLabel("Porte : ");
         departureGateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(departureGateLabel);
 
-        spinnerNumberModel = new SpinnerNumberModel(0,0,999,1);
-        departureGateSpinner = new JSpinner(spinnerNumberModel);
+        departureGateSpinner = new JComboBox();
         this.add(departureGateSpinner);
 
 
@@ -116,17 +114,15 @@ public class FlightForm extends JPanel {
         arrivalTerminalLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(arrivalTerminalLabel);
 
-        arrivalTerminalTextField = new JTextField();
-        //arrivalTerminalTextField.setEnabled(false);
-        arrivalTerminalTextField.setHorizontalAlignment(SwingConstants.LEFT);
-        this.add(arrivalTerminalTextField);
+        arrivalTerminalComboBox = new JComboBox();
+        this.add(arrivalTerminalComboBox);
 
         arrivalGateLabel = new JLabel("Porte : ");
         arrivalGateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(arrivalGateLabel);
 
-        spinnerNumberModel = new SpinnerNumberModel(0,0,999,1);
-        arrivalGateSpinner = new JSpinner(spinnerNumberModel);
+
+        arrivalGateSpinner = new JComboBox();
         this.add(arrivalGateSpinner);
 // NEW LINE
         // plane
@@ -173,28 +169,24 @@ public class FlightForm extends JPanel {
         return mealDescriptionTextField;
     }
 
-    public JTextField getDepartureTerminalTextField() {
-        return departureTerminalTextField;
+    public JComboBox getDepartureTerminalComboBox() {
+        return departureTerminalComboBox;
     }
 
-    public JTextField getArrivalTerminalTextField() {
-        return arrivalTerminalTextField;
+    public JComboBox getArrivalTerminalComboBox() {
+        return arrivalTerminalComboBox;
     }
 
-    public JSpinner getDepartureGateSpinner() {
+    public JComboBox getDepartureGateSpinner() {
         return departureGateSpinner;
     }
 
-    public JSpinner getArrivalGateSpinner() {
+    public JComboBox getArrivalGateSpinner() {
         return arrivalGateSpinner;
     }
 
     public JCheckBox getIsMealOnBoardCheckBox() {
         return isMealOnBoardCheckBox;
-    }
-
-    public SpinnerNumberModel getSpinnerNumberModel() {
-        return spinnerNumberModel;
     }
 
     public JComboBox getDepartureDay() {
