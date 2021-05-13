@@ -20,10 +20,6 @@ public class FlightManager {
         this.dao = dao;
     }
 
-    public void closeConnection() throws DBCloseException {
-        dao.closeConnection();
-    }
-
     //region Search
     public ArrayList<SearchFlightsByDate> getAllFlightsBetweenDates(GregorianCalendar startDate, GregorianCalendar endDate)
             throws SQLException, DataAccessException {
@@ -71,6 +67,12 @@ public class FlightManager {
     }
     public void deleteFlight(Flight flightToDelete) throws SQLException, DBConnectionException {
         dao.deleteFlight(flightToDelete);
+    }
+    //endregion
+
+    //region Connection
+    public void closeConnection() throws DBCloseException {
+        dao.closeConnection();
     }
     //endregion
 

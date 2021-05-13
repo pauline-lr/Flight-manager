@@ -194,6 +194,12 @@ public class AirlineDBAccess implements DAO {
     }
     //endregion
 
+    //region Connection
+    public void closeConnection() throws DBCloseException {
+        SingletonConnection.closeConnection();
+    }
+    //endregion
+
     //region Tools
     private static ArrayList<Flight> flightResultSetIntoArrayList(ResultSet data) throws SQLException, FlightException.MealDescriptionException, FlightException.NumberFlightException {
         ArrayList<Flight> flights = new ArrayList<>();
@@ -316,12 +322,6 @@ public class AirlineDBAccess implements DAO {
         preparedStatement.setInt(9, flight.getNumberPlane());
 
         return preparedStatement;
-    }
-    //endregion
-
-    //region Close
-    public void closeConnection() throws DBCloseException {
-        SingletonConnection.closeConnection();
     }
     //endregion
 }

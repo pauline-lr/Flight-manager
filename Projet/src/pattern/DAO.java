@@ -38,6 +38,10 @@ public interface DAO {
     void deleteFlight(Flight flightToDelete) throws SQLException, DBConnectionException;
     //endregion
 
+    //region Connection
+    void closeConnection() throws DBCloseException;
+    //endregion
+
     //region Tools
     /*
     ArrayList<Flight> flightResultSetIntoArrayList(ResultSet data) throws SQLException, FlightException.MealDescriptionException, FlightException.NumberFlightException;
@@ -51,9 +55,5 @@ public interface DAO {
     ArrayList<model.Class> classResultSetIntoArrayList(ResultSet data) throws SQLException, NameClassException;
     PreparedStatement preparedFlightStatement(String sql, Flight flight) throws SQLException, DBConnectionException;
     */
-    //endregion
-
-    //region Close
-    void closeConnection() throws DBCloseException;
     //endregion
 }
