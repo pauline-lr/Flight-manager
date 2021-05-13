@@ -49,5 +49,10 @@ public class Airport {
     //endregion
 
     //region Getters
+
+    public String getName() {
+        return name;
+    }
+
     //endregion
 }

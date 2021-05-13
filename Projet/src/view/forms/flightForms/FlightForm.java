@@ -1,6 +1,7 @@
 package view.forms.flightForms;
 
 import controller.ApplicationController;
+import model.Airport;
 import model.Pilot;
 
 import javax.swing.*;
@@ -58,7 +59,7 @@ public class FlightForm extends JPanel {
 
         departureAirportComboBox = new JComboBox();
         try {
-            departureAirportComboBox = new JComboBox(controller.getAllAirports().toArray());
+            departureAirportComboBox = new JComboBox(controller.getAllAirports().toArray(new Airport[0]));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
