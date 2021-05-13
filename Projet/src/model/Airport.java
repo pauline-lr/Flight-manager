@@ -6,9 +6,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Airport {
-    public final static String REGEX_CODE = "^\\w{3}$";
-    public final static int LENGTH_NAME = 50;
-    public final static int LENGTH_COUNTRY = 50;
+    private final static String REGEX_CODE = "^\\w{3}$";
+    private final static int LENGTH_NAME = 50;
+    private final static int LENGTH_COUNTRY = 50;
 
     private String code;        // 3 letters
     private String name;        // Max 50 characters

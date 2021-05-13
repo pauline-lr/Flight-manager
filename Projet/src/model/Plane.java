@@ -3,8 +3,8 @@ package model;
 import exception.PlaneException;
 
 public class Plane {
-    public final static int MODEL_LENGTH = 7;
-    public final static int BRAND_LENGTH = 30;
+    private final static int MODEL_LENGTH = 7;
+    private final static int BRAND_LENGTH = 30;
 
     private Integer planeId;
     private String model;       // Max 7 characters

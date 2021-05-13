@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class Passenger extends Person {
-    public final static int PASSPORT_LENGTH = 9;
+    private final static int PASSPORT_LENGTH = 9;
 
     private String passportNumber;          // 9 characters
     private GregorianCalendar birthdate;    // JJ/MM/AAAA ( < 1 week before today)

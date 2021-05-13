@@ -6,10 +6,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Person {
-    public final static int LENGTH_FIRST_NAME = 30;
-    public final static int LENGTH_LAST_NAME = 30;
-    public final static String REGEX_PHONE_NUMBER = "^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$";
-    public final static String REGEX_EMAIL = "[^@ \\t\\r\\n]+@[^@ \\t\\r\\n]+\\.[^@ \\t\\r\\n]+";
+    private final static int LENGTH_FIRST_NAME = 30;
+    private final static int LENGTH_LAST_NAME = 30;
+    private final static String REGEX_PHONE_NUMBER = "^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$";
+    private final static String REGEX_EMAIL = "[^@ \\t\\r\\n]+@[^@ \\t\\r\\n]+\\.[^@ \\t\\r\\n]+";
 
     private String firstName;       // Max 30 letters
     private String lastName;        // Max 30 letters
