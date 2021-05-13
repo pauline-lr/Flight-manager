@@ -52,6 +52,6 @@ public interface DAO {
     //endregion
 
     //region Close
-    // void closeConnection() throws DBCloseException;
+    void closeConnection() throws DBCloseException;
     //endregion
 }

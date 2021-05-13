@@ -2,6 +2,7 @@ package controller;
 
 import business.FlightManager;
 import dataAccess.AirlineDBAccess;
+import exception.DBCloseException;
 import exception.FlightException;
 import model.Flight;
 import pattern.DAO;
@@ -17,7 +18,7 @@ public class ApplicationController {
 
 
 
-    public void closeConnection() {
+    public void closeConnection() throws DBCloseException {
         flightManager.closeConnection();
     }
 

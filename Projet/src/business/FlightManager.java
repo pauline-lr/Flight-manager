@@ -1,6 +1,7 @@
 package business;
 
 import dataAccess.AirlineDBAccess;
+import exception.DBCloseException;
 import pattern.DAO;
 
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ public class FlightManager {
         this.dao = dao;
     }
 
-    public void closeConnection() {
+    public void closeConnection() throws DBCloseException {
         dao.closeConnection();
     }
 
