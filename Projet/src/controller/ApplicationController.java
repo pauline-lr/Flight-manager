@@ -47,7 +47,7 @@ public class ApplicationController {
             PilotException.FlyingFlightException, DBConnectionException {
         return flightManager.getAllPilots();
     }
-    public ArrayList<Airport> getAllAirports()
+    public ArrayList<String> getAllAirports()
             throws SQLException, AiportException.CodeException, AiportException.NameAirportException, AiportException.CountryException, DBConnectionException {
         return flightManager.getAllAirports();
     }

@@ -84,7 +84,7 @@ public class AirlineDBAccess implements DAO {
         }
             return flights;
 
-        }catch (DBConnectionException exception){
+        } catch (DBConnectionException exception){
             throw new DataAccessException();
         } catch (SQLException exception) {
             exception.getMessage();
@@ -128,14 +128,17 @@ public class AirlineDBAccess implements DAO {
 
         return pilots;
     }
-    public ArrayList<Airport> getAllAirports()
+    public ArrayList<String> getAllAirports()
             throws SQLException, AiportException.CodeException, AiportException.NameAirportException, AiportException.CountryException, DBConnectionException {
-        ArrayList<Airport> airports;
+        ArrayList<String> airports = new ArrayList<>();
+        String airport;
 
         Statement statement = SingletonConnection.getInstance().createStatement();
         ResultSet data = statement.executeQuery("SELECT * FROM airport ORDER BY name");
 
-        airports = airportResultSetIntoArrayList(data);
+        while (data.next()) {
+            airports.add(data.getString("code") + " - " + data.getString("name") + " - " + data.getString("country"));
+        }
 
         return airports;
     }
@@ -255,7 +258,7 @@ public class AirlineDBAccess implements DAO {
 
         return pilots;
     }
-    private static ArrayList<Airport> airportResultSetIntoArrayList(ResultSet data)
+    /*private static ArrayList<Airport> airportResultSetIntoArrayList(ResultSet data)
             throws SQLException, AiportException.CodeException, AiportException.NameAirportException, AiportException.CountryException {
         ArrayList<Airport> airports = new ArrayList<>();
         Airport airport;
@@ -272,6 +275,7 @@ public class AirlineDBAccess implements DAO {
 
         return airports;
     }
+     */
     private static ArrayList<Plane> planeResultSetIntoArrayList(ResultSet data)
             throws SQLException, PlaneException.ModelException, PlaneException.BrandException {
         ArrayList<Plane> planes = new ArrayList<>();
