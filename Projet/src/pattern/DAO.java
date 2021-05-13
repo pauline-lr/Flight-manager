@@ -22,13 +22,13 @@ public interface DAO {
     //region Get
     ArrayList<Flight> getAllFlights()
             throws SQLException, FlightException.MealDescriptionException, FlightException.NumberFlightException, DBConnectionException;
-    ArrayList<Pilot> getAllPilots()
+    ArrayList<String> getAllPilots()
             throws SQLException, PersonException.PhoneNumberException, PersonException.FirstNameException,
             PersonException.LastNameException, PersonException.EmailException, PilotException.LicenceNumberException,
             PilotException.FlyingFlightException, DBConnectionException;
     ArrayList<String> getAllAirports()
             throws SQLException, AiportException.CodeException, AiportException.NameAirportException, AiportException.CountryException, DBConnectionException;
-    ArrayList<Plane> getAllPlanes() throws SQLException, PlaneException.ModelException, PlaneException.BrandException, DBConnectionException;
+    ArrayList<String> getAllPlanes() throws SQLException, PlaneException.ModelException, PlaneException.BrandException, DBConnectionException;
     ArrayList<model.Class> getAllClasses() throws SQLException, NameClassException, DBConnectionException;
     //endregion
 

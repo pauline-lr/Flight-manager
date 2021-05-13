@@ -40,7 +40,7 @@ public class FlightManager {
             throws SQLException, FlightException.MealDescriptionException, FlightException.NumberFlightException, DBConnectionException {
         return dao.getAllFlights();
     }
-    public ArrayList<Pilot> getAllPilots()
+    public ArrayList<String> getAllPilots()
             throws SQLException, PersonException.PhoneNumberException, PersonException.FirstNameException,
             PersonException.LastNameException, PersonException.EmailException, PilotException.LicenceNumberException,
             PilotException.FlyingFlightException, DBConnectionException {
@@ -50,7 +50,7 @@ public class FlightManager {
             throws SQLException, AiportException.CodeException, AiportException.NameAirportException, AiportException.CountryException, DBConnectionException {
         return dao.getAllAirports();
     }
-    public ArrayList<Plane> getAllPlanes() throws SQLException, PlaneException.ModelException, PlaneException.BrandException, DBConnectionException {
+    public ArrayList<String> getAllPlanes() throws SQLException, PlaneException.ModelException, PlaneException.BrandException, DBConnectionException {
         return dao.getAllPlanes();
     }
     public ArrayList<model.Class> getAllClasses() throws SQLException, NameClassException, DBConnectionException {

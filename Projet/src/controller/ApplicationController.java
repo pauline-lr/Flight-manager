@@ -1,10 +1,8 @@
 package controller;
 
 import business.FlightManager;
-import dataAccess.AirlineDBAccess;
 import exception.*;
 import model.*;
-import pattern.DAO;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -41,7 +39,7 @@ public class ApplicationController {
             throws SQLException, FlightException.MealDescriptionException, FlightException.NumberFlightException, DBConnectionException {
         return flightManager.getAllFlights();
     }
-    public ArrayList<Pilot> getAllPilots()
+    public ArrayList<String> getAllPilots()
             throws SQLException, PersonException.PhoneNumberException, PersonException.FirstNameException,
             PersonException.LastNameException, PersonException.EmailException, PilotException.LicenceNumberException,
             PilotException.FlyingFlightException, DBConnectionException {
@@ -51,7 +49,7 @@ public class ApplicationController {
             throws SQLException, AiportException.CodeException, AiportException.NameAirportException, AiportException.CountryException, DBConnectionException {
         return flightManager.getAllAirports();
     }
-    public ArrayList<Plane> getAllPlanes() throws SQLException, PlaneException.ModelException, PlaneException.BrandException, DBConnectionException {
+    public ArrayList<String> getAllPlanes() throws SQLException, PlaneException.ModelException, PlaneException.BrandException, DBConnectionException {
         return flightManager.getAllPlanes();
     }
     public ArrayList<model.Class> getAllClasses() throws SQLException, NameClassException, DBConnectionException {

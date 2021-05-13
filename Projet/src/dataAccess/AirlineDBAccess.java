@@ -115,23 +115,24 @@ public class AirlineDBAccess implements DAO {
 
         return flights;
     }
-    public ArrayList<Pilot> getAllPilots()
+    public ArrayList<String> getAllPilots()
             throws SQLException, PersonException.PhoneNumberException, PersonException.FirstNameException,
             PersonException.LastNameException, PersonException.EmailException, PilotException.LicenceNumberException,
             PilotException.FlyingFlightException, DBConnectionException {
-        ArrayList<Pilot> pilots;
+        ArrayList<String> pilots = new ArrayList<>();
 
         Statement statement = SingletonConnection.getInstance().createStatement();
         ResultSet data = statement.executeQuery("SELECT * FROM pilot ORDER BY first_name, last_name");
 
-        pilots = pilotResultSetIntoArrayList(data);
+        while (data.next()) {
+            pilots.add(data.getString("licence_number") + " - " + data.getString("last_name") + " " +data.getString("first_name"));
+        }
 
         return pilots;
     }
     public ArrayList<String> getAllAirports()
             throws SQLException, AiportException.CodeException, AiportException.NameAirportException, AiportException.CountryException, DBConnectionException {
         ArrayList<String> airports = new ArrayList<>();
-        String airport;
 
         Statement statement = SingletonConnection.getInstance().createStatement();
         ResultSet data = statement.executeQuery("SELECT * FROM airport ORDER BY name");
@@ -142,13 +143,15 @@ public class AirlineDBAccess implements DAO {
 
         return airports;
     }
-    public ArrayList<Plane> getAllPlanes() throws SQLException, PlaneException.ModelException, PlaneException.BrandException, DBConnectionException {
-        ArrayList<Plane> planes;
+    public ArrayList<String> getAllPlanes() throws SQLException, PlaneException.ModelException, PlaneException.BrandException, DBConnectionException {
+        ArrayList<String> planes = new ArrayList<>();
 
         Statement statement = SingletonConnection.getInstance().createStatement();
         ResultSet data = statement.executeQuery("SELECT * FROM plane ORDER BY model, brand");
 
-        planes = planeResultSetIntoArrayList(data);
+        while (data.next()) {
+            planes.add(data.getInt("plane_id") + " - " + data.getString("brand") + " " + data.getString("model"));
+        }
 
         return planes;
     }
@@ -236,6 +239,7 @@ public class AirlineDBAccess implements DAO {
 
         return flights;
     }
+    /*
     private static ArrayList<Pilot> pilotResultSetIntoArrayList(ResultSet data)
             throws SQLException, PersonException.PhoneNumberException, PersonException.FirstNameException, PersonException.LastNameException,
             PersonException.EmailException, PilotException.LicenceNumberException, PilotException.FlyingFlightException {
@@ -258,7 +262,7 @@ public class AirlineDBAccess implements DAO {
 
         return pilots;
     }
-    /*private static ArrayList<Airport> airportResultSetIntoArrayList(ResultSet data)
+    private static ArrayList<Airport> airportResultSetIntoArrayList(ResultSet data)
             throws SQLException, AiportException.CodeException, AiportException.NameAirportException, AiportException.CountryException {
         ArrayList<Airport> airports = new ArrayList<>();
         Airport airport;
@@ -275,7 +279,6 @@ public class AirlineDBAccess implements DAO {
 
         return airports;
     }
-     */
     private static ArrayList<Plane> planeResultSetIntoArrayList(ResultSet data)
             throws SQLException, PlaneException.ModelException, PlaneException.BrandException {
         ArrayList<Plane> planes = new ArrayList<>();
@@ -293,6 +296,7 @@ public class AirlineDBAccess implements DAO {
 
         return planes;
     }
+    */
     private static ArrayList<Class> classResultSetIntoArrayList(ResultSet data) throws SQLException, NameClassException {
         ArrayList<Class> classes = new ArrayList<>();
         Class classe;
