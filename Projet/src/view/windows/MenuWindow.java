@@ -1,5 +1,7 @@
 package view.windows;
 
+import controller.ApplicationController;
+import exception.DBCloseException;
 import view.panels.menuBarPanels.listingPanels.AllFlightsPanel;
 import view.panels.menuBarPanels.optionsFlightPanels.AddFlightPanel;
 import view.panels.menuBarPanels.optionsFlightPanels.DeleteFlightPanel;
@@ -14,6 +16,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+// Attention close dans ExitListener et ExitButtonListener
 
 public class MenuWindow extends JFrame{
     private Container frameContainer;
@@ -120,6 +123,12 @@ public class MenuWindow extends JFrame{
     private class ExitButtonListener extends WindowAdapter {
         @Override
         public void windowClosing(WindowEvent evt){
+            ApplicationController controller = new ApplicationController();
+            try {
+                controller.closeConnection();
+            } catch (DBCloseException exception) {
+                exception.printStackTrace();
+            }
             System.exit(0);
         }
     }
@@ -127,6 +136,12 @@ public class MenuWindow extends JFrame{
     private class ExitListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent evt){
+            ApplicationController controller = new ApplicationController();
+            try {
+                controller.closeConnection();
+            } catch (DBCloseException exception) {
+                exception.printStackTrace();
+            }
             System.exit(0);
         }
     }
