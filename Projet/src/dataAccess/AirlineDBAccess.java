@@ -8,7 +8,7 @@ import java.sql.*;
 import java.util.*;
 
 public class AirlineDBAccess {
-    //region Search functions
+    //region Search
     public static ArrayList<SearchFlightsByDate> getAllFlightsBetweenDates(GregorianCalendar startDate, GregorianCalendar endDate)
             throws SQLException, DataAccessException {
         try{
@@ -90,7 +90,7 @@ public class AirlineDBAccess {
         }
         return null;
     }
-    public static ArrayList<SearchPassengersByClass> getAllPassangersOfAClass(Class seatClass)
+    public static ArrayList<SearchPassengersByClass> getAllPassengersOfAClass(Class seatClass)
             throws SQLException {
         ArrayList<SearchPassengersByClass> passengers = new ArrayList<>();
         return null;
@@ -102,7 +102,7 @@ public class AirlineDBAccess {
     }
     //endregion
 
-    //region List functions
+    //region Get
     public static ArrayList<Flight> getAllFlights()
             throws SQLException, FlightException.MealDescriptionException, FlightException.NumberFlightException, DBConnectionException {
         ArrayList<Flight> flights;
@@ -160,7 +160,7 @@ public class AirlineDBAccess {
     }
     //endregion
 
-    //region Manage functions
+    //region Edit
     public static void addFlight(Flight flightToAdd) throws SQLException, DBConnectionException {
         String sql =
                 "INSERT INTO flight " +
@@ -193,7 +193,7 @@ public class AirlineDBAccess {
     }
     //endregion
 
-    //region Tool functions
+    //region Tools
     private static ArrayList<Flight> flightResultSetIntoArrayList(ResultSet data) throws SQLException, FlightException.MealDescriptionException, FlightException.NumberFlightException {
         ArrayList<Flight> flights = new ArrayList<>();
         Flight flight;
@@ -316,9 +316,9 @@ public class AirlineDBAccess {
 
         return preparedStatement;
     }
+    //endregion
 
-
-    // fermer la connexion
+    //region Close
     public void closeConnection() throws DBCloseException {
         SingletonConnection.closeConnection();
     }
