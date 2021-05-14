@@ -22,11 +22,12 @@ public class ModifyFlightPanel extends JPanel {
     private FlightForm flightForm;
 
     public ModifyFlightPanel(MenuWindow menuWindow) {
+        this.flightForm = new FlightForm();
         this.menuWindow = menuWindow;
         this.setLayout(new BorderLayout());
         this.add(new ModifyFlightForm(), BorderLayout.PAGE_START);
-        this.add(new FlightForm(), BorderLayout.LINE_START);
-        //this.add(new ButtonsPanel(menuWindow), BorderLayout.SOUTH);
+        this.add(flightForm, BorderLayout.LINE_START);
+        this.add(new ButtonsPanel(menuWindow, "Modification", flightForm), BorderLayout.SOUTH);
     }
 
     // bouton de validation

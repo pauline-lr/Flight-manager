@@ -11,6 +11,6 @@ public class SearchPilotPanel extends JPanel {
     public SearchPilotPanel(MenuWindow menuWindow) {
         this.setLayout(new BorderLayout());
         this.add(new SearchPilotForm(), BorderLayout.CENTER);
-        this.add(new ButtonsPanel(menuWindow), BorderLayout.SOUTH);
+        this.add(new ButtonsPanel(menuWindow, "SearchPilot", null), BorderLayout.SOUTH);
     }
 }
