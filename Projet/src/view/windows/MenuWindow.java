@@ -1,7 +1,7 @@
 package view.windows;
 
 import controller.ApplicationController;
-import exception.DBCloseException;
+import exception.DataBaseCloseException;
 import view.panels.menuBarPanels.listingPanels.AllFlightsPanel;
 import view.panels.menuBarPanels.optionsFlightPanels.AddFlightPanel;
 import view.panels.menuBarPanels.optionsFlightPanels.DeleteFlightPanel;
@@ -37,7 +37,6 @@ public class MenuWindow extends JFrame{
         initMenuBar();
 
         initAnimation();
-
 
         BorderLayout border = new BorderLayout();
         this.setLayout(border);
@@ -126,7 +125,7 @@ public class MenuWindow extends JFrame{
             ApplicationController controller = new ApplicationController();
             try {
                 controller.closeConnection();
-            } catch (DBCloseException exception) {
+            } catch (DataBaseCloseException exception) {
                 exception.printStackTrace();
             }
             System.exit(0);
@@ -139,7 +138,7 @@ public class MenuWindow extends JFrame{
             ApplicationController controller = new ApplicationController();
             try {
                 controller.closeConnection();
-            } catch (DBCloseException exception) {
+            } catch (DataBaseCloseException exception) {
                 exception.printStackTrace();
             }
             System.exit(0);

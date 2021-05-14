@@ -8,10 +8,10 @@ import pattern.DAO;
 import java.sql.*;
 import java.util.*;
 
-public class AirlineDBAccess implements DAO {
+public class AirlineDataBaseAccess implements DAO {
     //region Search
     public ArrayList<SearchFlightsByDate> getAllFlightsBetweenDates(GregorianCalendar startDate, GregorianCalendar endDate)
-            throws SQLException, DataAccessException {
+            throws DataBaseAccessException {
         ArrayList<SearchFlightsByDate> flights = new ArrayList<>();
         java.sql.Date startDateSQL = new java.sql.Date(startDate.getTimeInMillis());
         java.sql.Date endDateSQL = new java.sql.Date(endDate.getTimeInMillis());
@@ -96,8 +96,8 @@ public class AirlineDBAccess implements DAO {
                 flights.add(flight);
             }
 
-        } catch (DBConnectionException exception){
-            throw new DataAccessException();
+        } catch (DataBaseConnectionException exception){
+            throw new DataBaseAccessException();
         } catch (SQLException exception) {
             exception.getMessage();
         }
@@ -105,7 +105,7 @@ public class AirlineDBAccess implements DAO {
         return flights;
     }
     public ArrayList<SearchPassengersByClass> getAllPassengersOfAClass(Class seatClass)
-            throws SQLException {
+            throws DataBaseAccessException {
         ArrayList<SearchPassengersByClass> passengers = new ArrayList<>();
         SearchPassengersByClass passenger;
         GregorianCalendar flightDepartureTime = new GregorianCalendar();
@@ -179,22 +179,94 @@ public class AirlineDBAccess implements DAO {
                 passengers.add(passenger);
             }
 
-        } catch (DBConnectionException exception) {
-
+        } catch (DataBaseConnectionException exception){
+            throw new DataBaseAccessException();
+        } catch (SQLException exception) {
+            exception.getMessage();
         }
 
         return passengers;
     }
     public ArrayList<SearchFlightsByPilot> getAllFlightsOfAPilot(Pilot pilot)
-            throws SQLException {
+            throws SQLException, DataBaseAccessException {
         ArrayList<SearchFlightsByPilot> flights = new ArrayList<>();
-        return null;
+        SearchFlightsByPilot flight;
+        GregorianCalendar flightDepartureTime = new GregorianCalendar();
+        GregorianCalendar flightArrivalTime = new GregorianCalendar();
+
+        String sql =
+            "SELECT " +
+                "fli.number AS flightNumber, " +
+                "fli.departure_time AS flightDepartureTime, " +
+                "fli.arrival_time AS flightArrivalTime, " +
+                "pla.plane_id AS planeId, " +
+                "pla.model AS planeModel, " +
+                "pla.brand AS planeBrand, " +
+                "depAir.code AS departureAirportCode, " +
+                "depAir.name AS departureAirportName, " +
+                "depAir.country AS departureAirportCountry, " +
+                "arrAir.code AS arrivalAirportCode, " +
+                "arrAir.name AS arrivalAirportName, " +
+                "arrAir.country AS arrivalAirportCountry " +
+            "FROM " +
+                "flight fli, " +
+                "plane pla, " +
+                "pilot pil, " +
+                "gate depGate, " +
+                "airport depAir, " +
+                "gate arrGate, " +
+                "airport arrAir " +
+            "WHERE " +
+                "fli.plane = pla.plane_id AND " +
+                "fli.pilot = pil.licence_number AND " +
+                "fli.departure_gate = depGate.gate_id AND " +
+                "depGate.airport = depAir.code AND " +
+                "fli.arrival_gate = arrGate.gate_id AND " +
+                "arrGate.airport = arrAir.code AND " +
+                "pil.last_name = ? " +
+            "ORDER BY " +
+                "departure_time;";
+        try {
+            PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sql);
+            preparedStatement.setString(1, pilot.getLicenceNumber());
+
+            ResultSet data = preparedStatement.executeQuery();
+
+            while (data.next()) {
+                flightDepartureTime.setTime(data.getDate("flightDepartureTime"));
+                flightArrivalTime.setTime(data.getDate("flightArrivalTime"));
+
+                flight = new SearchFlightsByPilot(
+                        data.getString("flightNumber"),
+                        flightDepartureTime,
+                        flightArrivalTime,
+                        data.getInt("planeId"),
+                        data.getString("planeModel"),
+                        data.getString("planeBrand"),
+                        data.getString("departureAirportCode"),
+                        data.getString("departureAirportName"),
+                        data.getString("departureAirportCountry"),
+                        data.getString("arrivalAirportCode"),
+                        data.getString("arrivalAirportName"),
+                        data.getString("arrivalAirportCountry")
+                );
+
+                flights.add(flight);
+            }
+
+        } catch (DataBaseConnectionException exception){
+            throw new DataBaseAccessException();
+        } catch (SQLException exception) {
+            exception.getMessage();
+        }
+
+        return flights;
     }
     //endregion
 
     //region Get
     public ArrayList<Flight> getAllFlights()
-            throws SQLException, FlightException.MealDescriptionException, FlightException.NumberFlightException, DBConnectionException {
+            throws SQLException, FlightException.MealDescriptionException, FlightException.NumberFlightException, DataBaseConnectionException {
         ArrayList<Flight> flights;
 
         Statement statement = SingletonConnection.getInstance().createStatement();
@@ -207,7 +279,7 @@ public class AirlineDBAccess implements DAO {
     public ArrayList<String> getAllPilots()
             throws SQLException, PersonException.PhoneNumberException, PersonException.FirstNameException,
             PersonException.LastNameException, PersonException.EmailException, PilotException.LicenceNumberException,
-            PilotException.FlyingFlightException, DBConnectionException {
+            PilotException.FlyingFlightException, DataBaseConnectionException {
         ArrayList<String> pilots = new ArrayList<>();
 
         Statement statement = SingletonConnection.getInstance().createStatement();
@@ -220,7 +292,7 @@ public class AirlineDBAccess implements DAO {
         return pilots;
     }
     public ArrayList<String> getAllAirports()
-            throws SQLException, AiportException.CodeException, AiportException.NameAirportException, AiportException.CountryException, DBConnectionException {
+            throws SQLException, AiportException.CodeException, AiportException.NameAirportException, AiportException.CountryException, DataBaseConnectionException {
         ArrayList<String> airports = new ArrayList<>();
 
         Statement statement = SingletonConnection.getInstance().createStatement();
@@ -232,7 +304,7 @@ public class AirlineDBAccess implements DAO {
 
         return airports;
     }
-    public ArrayList<String> getAllPlanes() throws SQLException, PlaneException.ModelException, PlaneException.BrandException, DBConnectionException {
+    public ArrayList<String> getAllPlanes() throws SQLException, PlaneException.ModelException, PlaneException.BrandException, DataBaseConnectionException {
         ArrayList<String> planes = new ArrayList<>();
 
         Statement statement = SingletonConnection.getInstance().createStatement();
@@ -244,7 +316,7 @@ public class AirlineDBAccess implements DAO {
 
         return planes;
     }
-    public ArrayList<Class> getAllClasses() throws SQLException, NameClassException, DBConnectionException {
+    public ArrayList<Class> getAllClasses() throws SQLException, NameClassException, DataBaseConnectionException {
         ArrayList<Class> classes;
 
         Statement statement = SingletonConnection.getInstance().createStatement();
@@ -257,7 +329,7 @@ public class AirlineDBAccess implements DAO {
     //endregion
 
     //region Edit
-    public void addFlight(Flight flightToAdd) throws SQLException, DBConnectionException {
+    public void addFlight(Flight flightToAdd) throws SQLException, DataBaseConnectionException {
         String sql =
                 "INSERT INTO flight " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -266,7 +338,7 @@ public class AirlineDBAccess implements DAO {
 
         preparedStatement.executeUpdate();
     }
-    public void modifyFlight(Flight flightToUpdate, String originalNumber) throws SQLException, DBConnectionException {
+    public void modifyFlight(Flight flightToUpdate, String originalNumber) throws SQLException, DataBaseConnectionException {
         String sql =
                 "UPDATE flight " +
                 "SET number = ?, departure_time = ?, arrival_time = ?, is_meal_on_board = ?, " +
@@ -278,7 +350,7 @@ public class AirlineDBAccess implements DAO {
 
         preparedStatement.executeUpdate();
     }
-    public void deleteFlight(Flight flightToDelete) throws SQLException, DBConnectionException {
+    public void deleteFlight(Flight flightToDelete) throws SQLException, DataBaseConnectionException {
         String sql =
                 "DELETE FROM flight " +
                 "WHERE number = ?";
@@ -290,7 +362,7 @@ public class AirlineDBAccess implements DAO {
     //endregion
 
     //region Connection
-    public void closeConnection() throws DBCloseException {
+    public void closeConnection() throws DataBaseCloseException {
         SingletonConnection.closeConnection();
     }
     //endregion
@@ -328,64 +400,6 @@ public class AirlineDBAccess implements DAO {
 
         return flights;
     }
-    /*
-    private static ArrayList<Pilot> pilotResultSetIntoArrayList(ResultSet data)
-            throws SQLException, PersonException.PhoneNumberException, PersonException.FirstNameException, PersonException.LastNameException,
-            PersonException.EmailException, PilotException.LicenceNumberException, PilotException.FlyingFlightException {
-        ArrayList<Pilot> pilots = new ArrayList<>();
-        Pilot pilot;
-        GregorianCalendar flyingTime = new GregorianCalendar();
-
-        while (data.next()) {
-            flyingTime.setTime(data.getTime("flying_time"));
-            pilot = new Pilot(
-                    data.getString("first_name"),
-                    data.getString("last_name"),
-                    data.getString("phone_number"),
-                    data.getString("email_address"),
-                    data.getString("licence_number"),
-                    flyingTime
-            );
-            pilots.add(pilot);
-        }
-
-        return pilots;
-    }
-    private static ArrayList<Airport> airportResultSetIntoArrayList(ResultSet data)
-            throws SQLException, AiportException.CodeException, AiportException.NameAirportException, AiportException.CountryException {
-        ArrayList<Airport> airports = new ArrayList<>();
-        Airport airport;
-
-        while (data.next()) {
-            airport = new Airport(
-                    data.getString("code"),
-                    data.getString("name"),
-                    data.getString("country")
-            );
-
-            airports.add(airport);
-        }
-
-        return airports;
-    }
-    private static ArrayList<Plane> planeResultSetIntoArrayList(ResultSet data)
-            throws SQLException, PlaneException.ModelException, PlaneException.BrandException {
-        ArrayList<Plane> planes = new ArrayList<>();
-        Plane plane;
-
-        while (data.next()) {
-            plane = new Plane(
-                    data.getInt("plane_id"),
-                    data.getString("model"),
-                    data.getString("brand")
-            );
-
-            planes.add(plane);
-        }
-
-        return planes;
-    }
-    */
     private static ArrayList<Class> classResultSetIntoArrayList(ResultSet data) throws SQLException, NameClassException {
         ArrayList<Class> classes = new ArrayList<>();
         Class classe;
@@ -401,7 +415,7 @@ public class AirlineDBAccess implements DAO {
 
         return classes;
     }
-    private static PreparedStatement preparedFlightStatement(String sql, Flight flight) throws SQLException, DBConnectionException {
+    private static PreparedStatement preparedFlightStatement(String sql, Flight flight) throws SQLException, DataBaseConnectionException {
         PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sql);
 
         preparedStatement.setString(1,  flight.getNumber());

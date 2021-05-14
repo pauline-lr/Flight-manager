@@ -21,56 +21,56 @@ public class ApplicationController {
 
     //region Search
     public ArrayList<SearchFlightsByDate> getAllFlightsBetweenDates(GregorianCalendar startDate, GregorianCalendar endDate)
-            throws SQLException, DataAccessException {
+            throws SQLException, DataBaseAccessException {
         return flightManager.getAllFlightsBetweenDates(startDate,endDate);
     }
     public ArrayList<SearchPassengersByClass> getAllPassengersOfAClass(model.Class seatClass)
-            throws SQLException {
+            throws SQLException, DataBaseAccessException {
         return flightManager.getAllPassengersOfAClass(seatClass);
     }
     public ArrayList<SearchFlightsByPilot> getAllFlightsOfAPilot(Pilot pilot)
-            throws SQLException {
+            throws SQLException, DataBaseAccessException {
         return flightManager.getAllFlightsOfAPilot(pilot);
     }
     //endregion
 
     //region Get
     public ArrayList<Flight> getAllFlights()
-            throws SQLException, FlightException.MealDescriptionException, FlightException.NumberFlightException, DBConnectionException {
+            throws SQLException, FlightException.MealDescriptionException, FlightException.NumberFlightException, DataBaseConnectionException {
         return flightManager.getAllFlights();
     }
     public ArrayList<String> getAllPilots()
             throws SQLException, PersonException.PhoneNumberException, PersonException.FirstNameException,
             PersonException.LastNameException, PersonException.EmailException, PilotException.LicenceNumberException,
-            PilotException.FlyingFlightException, DBConnectionException {
+            PilotException.FlyingFlightException, DataBaseConnectionException {
         return flightManager.getAllPilots();
     }
     public ArrayList<String> getAllAirports()
-            throws SQLException, AiportException.CodeException, AiportException.NameAirportException, AiportException.CountryException, DBConnectionException {
+            throws SQLException, AiportException.CodeException, AiportException.NameAirportException, AiportException.CountryException, DataBaseConnectionException {
         return flightManager.getAllAirports();
     }
-    public ArrayList<String> getAllPlanes() throws SQLException, PlaneException.ModelException, PlaneException.BrandException, DBConnectionException {
+    public ArrayList<String> getAllPlanes() throws SQLException, PlaneException.ModelException, PlaneException.BrandException, DataBaseConnectionException {
         return flightManager.getAllPlanes();
     }
-    public ArrayList<model.Class> getAllClasses() throws SQLException, NameClassException, DBConnectionException {
+    public ArrayList<model.Class> getAllClasses() throws SQLException, NameClassException, DataBaseConnectionException {
         return flightManager.getAllClasses();
     }
     //endregion
 
     //region Edit
-    public void addFlight(Flight flightToAdd) throws SQLException, DBConnectionException {
+    public void addFlight(Flight flightToAdd) throws SQLException, DataBaseConnectionException {
         flightManager.addFlight(flightToAdd);
     }
-    public void modifyFlight(Flight flightToUpdate, String originalNumber) throws SQLException, DBConnectionException {
+    public void modifyFlight(Flight flightToUpdate, String originalNumber) throws SQLException, DataBaseConnectionException {
         flightManager.modifyFlight(flightToUpdate, originalNumber);
     }
-    public void deleteFlight(Flight flightToDelete) throws SQLException, DBConnectionException {
+    public void deleteFlight(Flight flightToDelete) throws SQLException, DataBaseConnectionException {
         flightManager.deleteFlight(flightToDelete);
     }
     //endregion
 
     //region Connection
-    public void closeConnection() throws DBCloseException {
+    public void closeConnection() throws DataBaseCloseException {
         flightManager.closeConnection();
     }
     //endregion

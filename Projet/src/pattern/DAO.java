@@ -12,34 +12,34 @@ import java.util.GregorianCalendar;
 public interface DAO {
     //region Search
     ArrayList<SearchFlightsByDate> getAllFlightsBetweenDates(GregorianCalendar startDate, GregorianCalendar endDate)
-            throws SQLException, DataAccessException;
+            throws SQLException, DataBaseAccessException;
     ArrayList<SearchPassengersByClass> getAllPassengersOfAClass(model.Class seatClass)
-            throws SQLException;
+            throws SQLException, DataBaseAccessException;
     ArrayList<SearchFlightsByPilot> getAllFlightsOfAPilot(Pilot pilot)
-            throws SQLException;
+            throws SQLException, DataBaseAccessException;
     //endregion
 
     //region Get
     ArrayList<Flight> getAllFlights()
-            throws SQLException, FlightException.MealDescriptionException, FlightException.NumberFlightException, DBConnectionException;
+            throws SQLException, FlightException.MealDescriptionException, FlightException.NumberFlightException, DataBaseConnectionException;
     ArrayList<String> getAllPilots()
             throws SQLException, PersonException.PhoneNumberException, PersonException.FirstNameException,
             PersonException.LastNameException, PersonException.EmailException, PilotException.LicenceNumberException,
-            PilotException.FlyingFlightException, DBConnectionException;
+            PilotException.FlyingFlightException, DataBaseConnectionException;
     ArrayList<String> getAllAirports()
-            throws SQLException, AiportException.CodeException, AiportException.NameAirportException, AiportException.CountryException, DBConnectionException;
-    ArrayList<String> getAllPlanes() throws SQLException, PlaneException.ModelException, PlaneException.BrandException, DBConnectionException;
-    ArrayList<model.Class> getAllClasses() throws SQLException, NameClassException, DBConnectionException;
+            throws SQLException, AiportException.CodeException, AiportException.NameAirportException, AiportException.CountryException, DataBaseConnectionException;
+    ArrayList<String> getAllPlanes() throws SQLException, PlaneException.ModelException, PlaneException.BrandException, DataBaseConnectionException;
+    ArrayList<model.Class> getAllClasses() throws SQLException, NameClassException, DataBaseConnectionException;
     //endregion
 
     //region Edit
-    void addFlight(Flight flightToAdd) throws SQLException, DBConnectionException;
-    void modifyFlight(Flight flightToUpdate, String originalNumber) throws SQLException, DBConnectionException;
-    void deleteFlight(Flight flightToDelete) throws SQLException, DBConnectionException;
+    void addFlight(Flight flightToAdd) throws SQLException, DataBaseConnectionException;
+    void modifyFlight(Flight flightToUpdate, String originalNumber) throws SQLException, DataBaseConnectionException;
+    void deleteFlight(Flight flightToDelete) throws SQLException, DataBaseConnectionException;
     //endregion
 
     //region Connection
-    void closeConnection() throws DBCloseException;
+    void closeConnection() throws DataBaseCloseException;
     //endregion
 
     //region Tools
@@ -53,7 +53,7 @@ public interface DAO {
     ArrayList<Plane> planeResultSetIntoArrayList(ResultSet data)
             throws SQLException, PlaneException.ModelException, PlaneException.BrandException;
     ArrayList<model.Class> classResultSetIntoArrayList(ResultSet data) throws SQLException, NameClassException;
-    PreparedStatement preparedFlightStatement(String sql, Flight flight) throws SQLException, DBConnectionException;
+    PreparedStatement preparedFlightStatement(String sql, Flight flight) throws SQLException, DataBaseConnectionException;
     */
     //endregion
 }
