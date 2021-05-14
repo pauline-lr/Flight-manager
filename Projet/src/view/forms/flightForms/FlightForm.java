@@ -292,11 +292,10 @@ public class FlightForm extends JPanel {
     }
 
     public Flight getFlight() throws FlightException.NumberFlightException, FlightException.MealDescriptionException {
-        String number = "";
         GregorianCalendar departureDate = new GregorianCalendar(departureYear.getSelectedIndex(), departureMonth.getSelectedIndex(), departureDay.getSelectedIndex(), departureHour.getSelectedIndex(), departureMinute.getSelectedIndex());
         GregorianCalendar arrivalDate = new GregorianCalendar(arrivalYear.getSelectedIndex(), arrivalMonth.getSelectedIndex(), arrivalDay.getSelectedIndex(), arrivalHour.getSelectedIndex(), arrivalMinute.getSelectedIndex());
 
-        Flight flight = new Flight(number, departureDate, arrivalDate, isMealOnBoardCheckBox.isSelected(), mealDescriptionLabel.getText(), pilotComboBox.getSelectedItem().toString(),
+        Flight flight = new Flight(numberTextField.getText(), departureDate, arrivalDate, isMealOnBoardCheckBox.isSelected(), mealDescriptionLabel.getText(), pilotComboBox.getSelectedItem().toString(),
                 departureGateSpinner.getSelectedItem().toString(), arrivalGateSpinner.getSelectedItem().toString(), Integer.parseInt(planeComboBox.getSelectedItem().toString()));
         return flight;
     }
