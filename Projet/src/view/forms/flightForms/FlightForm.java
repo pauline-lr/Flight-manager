@@ -103,9 +103,6 @@ public class FlightForm extends JPanel {
         */
         this.add(departureGateSpinner);
 
-
-
-// NEW LINE
         // arrivalDate
         arrivalDateLabel = new JLabel("Date d'arrivée : ");
         arrivalDateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -126,9 +123,9 @@ public class FlightForm extends JPanel {
         this.add(arrivalHour);
         arrivalMinute = new JComboBox();
         this.add(arrivalMinute);
-// NEW LINE
+
         addEmptyLabel();
-// NEW LINE
+
         // arrivalAirport
         arrivalAirportLabel = new JLabel("Aéroport d'arrivée : ");
         arrivalAirportLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -160,7 +157,7 @@ public class FlightForm extends JPanel {
 
         arrivalGateSpinner = new JComboBox();
         this.add(arrivalGateSpinner);
-// NEW LINE
+
         // plane
         planeLabel = new JLabel("Avion : ");
         planeLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -173,7 +170,7 @@ public class FlightForm extends JPanel {
             JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
         this.add(planeComboBox);
-// NEW LINE
+
         // pilot
         pilotLabel = new JLabel("Pilote : ");
         pilotLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -192,7 +189,7 @@ public class FlightForm extends JPanel {
         isMealOnBoardCheckBox.addItemListener(new MealOnBoardListener());
         isMealOnBoardCheckBox.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(isMealOnBoardCheckBox);
-// NEW LINe
+
         addEmptyLabel();
         // mealDescription
         mealDescriptionLabel = new JLabel("Description du repas : ");
