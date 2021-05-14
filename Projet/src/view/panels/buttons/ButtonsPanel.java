@@ -1,4 +1,5 @@
 package view.panels.buttons;
+
 import controller.ApplicationController;
 import exception.DataBaseConnectionException;
 import exception.FlightException;
@@ -14,14 +15,13 @@ import view.windows.MenuWindow;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.sql.SQLException;
+import java.awt.event.*;
+import java.sql.*;
 
 public class ButtonsPanel extends JPanel {
     private static MenuWindow menuWindow;
     private String typeAction;
-    private ApplicationController controller;
+    private ApplicationController controller = new ApplicationController();
     FlightForm flightForm;
     private JButton retour, validation, réinit;
 
