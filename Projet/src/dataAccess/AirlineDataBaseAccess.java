@@ -350,6 +350,20 @@ public class AirlineDataBaseAccess implements DAO {
 
         preparedStatement.executeUpdate();
     }
+
+    @Override
+    public void modifyFlight(Flight flightToUpdate) throws SQLException, DataBaseConnectionException {
+        String sql =
+                "UPDATE flight " +
+                        "SET number = ?, departure_time = ?, arrival_time = ?, is_meal_on_board = ?, " +
+                        "meal_description = ?, departure_gate = ?, arrival_gate = ?, pilot = ?, plane = ? " +
+                        "WHERE number = ?";
+
+        PreparedStatement preparedStatement = preparedFlightStatement(sql, flightToUpdate);
+
+        preparedStatement.executeUpdate();
+    }
+
     public void deleteFlight(Flight flightToDelete) throws SQLException, DataBaseConnectionException {
         String sql =
                 "DELETE FROM flight " +
