@@ -11,6 +11,6 @@ public class SeatReservationPanel extends JPanel {
     public SeatReservationPanel(MenuWindow menuWindow) {
         this.setLayout(new BorderLayout());
         this.add(new SeatReservationForm(), BorderLayout.CENTER);
-        this.add(new ButtonsPanel(menuWindow), BorderLayout.SOUTH);
+        this.add(new ButtonsPanel(menuWindow, "SeatReservationSearch", null), BorderLayout.SOUTH);
     }
 }
