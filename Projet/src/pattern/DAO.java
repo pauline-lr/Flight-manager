@@ -35,6 +35,7 @@ public interface DAO {
     //region Edit
     void addFlight(Flight flightToAdd) throws SQLException, DataBaseConnectionException;
     void modifyFlight(Flight flightToUpdate, String originalNumber) throws SQLException, DataBaseConnectionException;
+    public void modifyFlight(Flight flightToUpdate) throws SQLException, DataBaseConnectionException;
     void deleteFlight(Flight flightToDelete) throws SQLException, DataBaseConnectionException;
     //endregion
 

@@ -64,6 +64,9 @@ public class ApplicationController {
     public void modifyFlight(Flight flightToUpdate, String originalNumber) throws SQLException, DataBaseConnectionException {
         flightManager.modifyFlight(flightToUpdate, originalNumber);
     }
+    public void modifyFlight(Flight flightToUpdate) throws SQLException, DataBaseConnectionException {
+        flightManager.modifyFlight(flightToUpdate);
+    }
     public void deleteFlight(Flight flightToDelete) throws SQLException, DataBaseConnectionException {
         flightManager.deleteFlight(flightToDelete);
     }
