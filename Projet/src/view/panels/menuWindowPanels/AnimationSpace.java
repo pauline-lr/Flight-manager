@@ -10,11 +10,9 @@ public class AnimationSpace extends JPanel {
     public static final int POS_INIT_X = -10;
     public static final int POS_INIT_Y = 0;
 
-
     private ImageIcon planeIcon;
     private Image planeImg;
     private static int x, y;
-
 
     public AnimationSpace() {
         planeIcon = new ImageIcon("src/resources/plane.png");
@@ -26,8 +24,6 @@ public class AnimationSpace extends JPanel {
         x = POS_INIT_X;
         y = POS_INIT_Y;
     }
-
-
 
     @Override
     public void paintComponent(Graphics g) {
