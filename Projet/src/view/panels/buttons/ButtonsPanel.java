@@ -10,24 +10,26 @@ import java.awt.event.ActionListener;
 
 public class ButtonsPanel extends JPanel {
     private MenuWindow menuWindow;
-    private JButton retour, réinit;
+    private JButton retour, validation, réinit;
 
     public ButtonsPanel(MenuWindow menuWindow){
         this.menuWindow = menuWindow;
         this.setLayout(new FlowLayout());
         retour = new JButton("Retour");
-
+        validation =  new JButton("Validation");
         réinit = new JButton("Réinitialiser");
 
         retour.addActionListener(new RetourListener());
+        validation.addActionListener(new ValidationListener());
         réinit.addActionListener(new RéinitListener());
 
         this.add(retour);
+        this.add(validation);
         this.add(réinit);
     }
 
     // bouton retour
-    private class RetourListener implements ActionListener {
+    public class RetourListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent evt){
             menuWindow.getCont().removeAll();
@@ -38,12 +40,12 @@ public class ButtonsPanel extends JPanel {
     }
 
     // bouton de validation
-    /*private class ValidationListener implements ActionListener{
+    private class ValidationListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent evt){
 
         }
-    }*/
+    }
 
     // bouton de réinitialisation
     private class RéinitListener implements ActionListener{
