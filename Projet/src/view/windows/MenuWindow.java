@@ -2,6 +2,7 @@ package view.windows;
 
 import controller.ApplicationController;
 import exception.DataBaseCloseException;
+import exception.DataBaseConnectionException;
 import view.panels.menuBarPanels.listingPanels.AllFlightsPanel;
 import view.panels.menuBarPanels.optionsFlightPanels.AddFlightPanel;
 import view.panels.menuBarPanels.optionsFlightPanels.DeleteFlightPanel;
@@ -15,6 +16,7 @@ import view.panels.menuWindowPanels.WelcomePanel;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.SQLException;
 
 // Attention close dans ExitListener et ExitButtonListener
 
@@ -179,7 +181,11 @@ public class MenuWindow extends JFrame{
         @Override
         public void actionPerformed(ActionEvent evt){
             frameContainer.removeAll();
-            frameContainer.add(new SeatReservationPanel(MenuWindow.this), BorderLayout.CENTER);
+            try {
+                frameContainer.add(new SeatReservationPanel(MenuWindow.this), BorderLayout.CENTER);
+            } catch (SQLException | DataBaseConnectionException throwables) {
+                throwables.printStackTrace();
+            }
             frameContainer.repaint();
             MenuWindow.this.setVisible(true);
         }
@@ -189,7 +195,11 @@ public class MenuWindow extends JFrame{
         @Override
         public void actionPerformed(ActionEvent evt){
             frameContainer.removeAll();
-            frameContainer.add(new SearchPilotPanel(MenuWindow.this), BorderLayout.CENTER);
+            try {
+                frameContainer.add(new SearchPilotPanel(MenuWindow.this), BorderLayout.CENTER);
+            } catch (SQLException | DataBaseConnectionException throwables) {
+                throwables.printStackTrace();
+            }
             frameContainer.repaint();
             MenuWindow.this.setVisible(true);
         }

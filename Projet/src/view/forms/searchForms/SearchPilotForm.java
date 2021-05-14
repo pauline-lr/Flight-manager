@@ -1,23 +1,28 @@
 package view.forms.searchForms;
 
+import controller.ApplicationController;
+import exception.DataBaseConnectionException;
+
 import javax.swing.*;
 import java.awt.*;
+import java.sql.SQLException;
 
 public class SearchPilotForm extends JPanel {
+    private ApplicationController controller = new ApplicationController();
     private JLabel pilotName;
     private JComboBox pilotNameSelect;
 
-    public SearchPilotForm(){
+    public SearchPilotForm() throws SQLException, DataBaseConnectionException {
         this.setLayout(new GridLayout(8, 2, 5, 5));
 
         initForm();
     }
 
-    public void initForm() {
-        pilotName = new JLabel("Nom du pilote : ");
+    public void initForm() throws SQLException, DataBaseConnectionException {
+        pilotName = new JLabel("Pilote : ");
         pilotName.setHorizontalAlignment(SwingConstants.RIGHT);
         add(pilotName);
-        pilotNameSelect = new JComboBox();
+        pilotNameSelect = new JComboBox(controller.getAllPilotsLicenceNumber().toArray());
         this.add(pilotNameSelect);
     }
 }

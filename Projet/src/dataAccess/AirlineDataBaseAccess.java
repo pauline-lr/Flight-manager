@@ -328,7 +328,8 @@ public class AirlineDataBaseAccess implements DAO {
     //endregion
 
     //region Edit
-    public void addFlight(Flight flightToAdd) throws SQLException, DataBaseConnectionException {
+    public void addFlight(Flight flightToAdd)
+            throws SQLException, DataBaseConnectionException {
         String sql =
                 "INSERT INTO flight " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -337,7 +338,8 @@ public class AirlineDataBaseAccess implements DAO {
 
         preparedStatement.executeUpdate();
     }
-    public void modifyFlight(Flight flightToUpdate, String originalNumber) throws SQLException, DataBaseConnectionException {
+    public void modifyFlight(Flight flightToUpdate, String originalNumber)
+            throws SQLException, DataBaseConnectionException {
         String sql =
                 "UPDATE flight " +
                 "SET number = ?, departure_time = ?, arrival_time = ?, is_meal_on_board = ?, " +
@@ -349,21 +351,13 @@ public class AirlineDataBaseAccess implements DAO {
 
         preparedStatement.executeUpdate();
     }
-
     @Override
-    public void modifyFlight(Flight flightToUpdate) throws SQLException, DataBaseConnectionException {
-        String sql =
-                "UPDATE flight " +
-                        "SET number = ?, departure_time = ?, arrival_time = ?, is_meal_on_board = ?, " +
-                        "meal_description = ?, departure_gate = ?, arrival_gate = ?, pilot = ?, plane = ? " +
-                        "WHERE number = ?";
-
-        PreparedStatement preparedStatement = preparedFlightStatement(sql, flightToUpdate);
-
-        preparedStatement.executeUpdate();
+    public void modifyFlight(Flight flightToUpdate)
+            throws SQLException, DataBaseConnectionException {
+        modifyFlight(flightToUpdate, flightToUpdate.getNumber());
     }
-
-    public void deleteFlight(Flight flightToDelete) throws SQLException, DataBaseConnectionException {
+    public void deleteFlight(Flight flightToDelete)
+            throws SQLException, DataBaseConnectionException {
         String sql =
                 "DELETE FROM flight " +
                 "WHERE number = ?";
@@ -375,12 +369,33 @@ public class AirlineDataBaseAccess implements DAO {
     //endregion
 
     //region Connection
-    public void closeConnection() throws DataBaseCloseException {
+    public void closeConnection()
+            throws DataBaseCloseException {
         SingletonConnection.closeConnection();
     }
     //endregion
 
     //region Tools
+    private static PreparedStatement preparedFlightStatement(String sql, Flight flight) throws SQLException, DataBaseConnectionException {
+        PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sql);
+
+        preparedStatement.setString(1,  flight.getNumber());
+        preparedStatement.setDate(2, new java.sql.Date(flight.getDepartureTime().getTimeInMillis()));
+        preparedStatement.setDate(3, new java.sql.Date(flight.getArrivalTime().getTimeInMillis()));
+        preparedStatement.setBoolean(4, flight.getMealOnBoard());
+        if (flight.getMealDescription() == null) {
+            preparedStatement.setNull(5, Types.VARCHAR);
+        } else {
+            preparedStatement.setString(5, flight.getMealDescription());
+        }
+        preparedStatement.setString(6, flight.getDepartureGate());
+        preparedStatement.setString(7, flight.getArrivalGate());
+        preparedStatement.setString(8, flight.getPilot());
+        preparedStatement.setInt(9, flight.getNumberPlane());
+
+        return preparedStatement;
+    }
+    /*
     private static ArrayList<Flight> flightResultSetIntoArrayList(ResultSet data) throws SQLException, FlightException.MealDescriptionException, FlightException.NumberFlightException {
         ArrayList<Flight> flights = new ArrayList<>();
         Flight flight;
@@ -428,24 +443,6 @@ public class AirlineDataBaseAccess implements DAO {
 
         return classes;
     }
-    private static PreparedStatement preparedFlightStatement(String sql, Flight flight) throws SQLException, DataBaseConnectionException {
-        PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sql);
-
-        preparedStatement.setString(1,  flight.getNumber());
-        preparedStatement.setDate(2, new java.sql.Date(flight.getDepartureTime().getTimeInMillis()));
-        preparedStatement.setDate(3, new java.sql.Date(flight.getArrivalTime().getTimeInMillis()));
-        preparedStatement.setBoolean(4, flight.getMealOnBoard());
-        if (flight.getMealDescription() == null) {
-            preparedStatement.setNull(5, Types.VARCHAR);
-        } else {
-            preparedStatement.setString(5, flight.getMealDescription());
-        }
-        preparedStatement.setString(6, flight.getDepartureGate());
-        preparedStatement.setString(7, flight.getArrivalGate());
-        preparedStatement.setString(8, flight.getPilot());
-        preparedStatement.setInt(9, flight.getNumberPlane());
-
-        return preparedStatement;
-    }
+    */
     //endregion
 }

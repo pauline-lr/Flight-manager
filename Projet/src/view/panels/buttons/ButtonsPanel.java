@@ -37,7 +37,7 @@ public class ButtonsPanel extends JPanel {
 
         retour.addActionListener(new RetourListener());
         validation.addActionListener(new ValidationListener());
-        réinit.addActionListener(new RéinitListener());
+        réinit.addActionListener(new ResetListener());
 
         this.add(retour);
         this.add(validation);
@@ -72,27 +72,25 @@ public class ButtonsPanel extends JPanel {
                 }
 
                 takeOut();
-            } catch (FlightException.NumberFlightException e) {
-                e.printStackTrace();
-            } catch (FlightException.MealDescriptionException e) {
-                e.printStackTrace();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            } catch (DataBaseConnectionException e) {
+            } catch (FlightException.NumberFlightException | FlightException.MealDescriptionException | SQLException | DataBaseConnectionException e) {
                 e.printStackTrace();
             }
         }
     }
 
     // bouton de réinitialisation
-    private class RéinitListener implements ActionListener{
+    private class ResetListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent evt){
-            takeOut();
+            try {
+                takeOut();
+            } catch (SQLException | DataBaseConnectionException throwables) {
+                throwables.printStackTrace();
+            }
         }
     }
 
-    public void takeOut() {
+    public void takeOut() throws SQLException, DataBaseConnectionException {
         menuWindow.getCont().removeAll();
 
         if(typeAction.equals("Addition"))
