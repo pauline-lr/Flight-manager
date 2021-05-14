@@ -1,6 +1,6 @@
 package controller;
 
-import business.FlightManager;
+import business.*;
 import exception.*;
 import model.*;
 
@@ -15,65 +15,70 @@ public class ApplicationController {
         setFlightManager(new FlightManager());
     }
 
-    public void setFlightManager(FlightManager flightManager) {
+    private void setFlightManager(FlightManager flightManager) {
         this.flightManager = flightManager;
     }
 
     //region Search
     public ArrayList<SearchFlightsByDate> getAllFlightsBetweenDates(GregorianCalendar startDate, GregorianCalendar endDate)
-            throws SQLException, DataBaseAccessException {
+            throws DataBaseAccessException {
         return flightManager.getAllFlightsBetweenDates(startDate,endDate);
     }
     public ArrayList<SearchPassengersByClass> getAllPassengersOfAClass(model.Class seatClass)
-            throws SQLException, DataBaseAccessException {
+            throws DataBaseAccessException {
         return flightManager.getAllPassengersOfAClass(seatClass);
     }
     public ArrayList<SearchFlightsByPilot> getAllFlightsOfAPilot(Pilot pilot)
-            throws SQLException, DataBaseAccessException {
+            throws DataBaseAccessException {
         return flightManager.getAllFlightsOfAPilot(pilot);
     }
     //endregion
 
     //region Get
-    public ArrayList<Flight> getAllFlights()
-            throws SQLException, FlightException.MealDescriptionException, FlightException.NumberFlightException, DataBaseConnectionException {
-        return flightManager.getAllFlights();
+    public ArrayList<String> getAllFlightsNumber()
+            throws SQLException, DataBaseConnectionException {
+        return flightManager.getAllFlightsNumber();
     }
-    public ArrayList<String> getAllPilots()
-            throws SQLException, PersonException.PhoneNumberException, PersonException.FirstNameException,
-            PersonException.LastNameException, PersonException.EmailException, PilotException.LicenceNumberException,
-            PilotException.FlyingFlightException, DataBaseConnectionException {
-        return flightManager.getAllPilots();
+    public ArrayList<String> getAllPilotsLicenceNumber()
+            throws SQLException, DataBaseConnectionException {
+        return flightManager.getAllPilotsLicenceNumber();
     }
-    public ArrayList<String> getAllAirports()
-            throws SQLException, AiportException.CodeException, AiportException.NameAirportException, AiportException.CountryException, DataBaseConnectionException {
-        return flightManager.getAllAirports();
+    public ArrayList<String> getAllAirportsCode()
+            throws SQLException, DataBaseConnectionException {
+        return flightManager.getAllAirportsCode();
     }
-    public ArrayList<String> getAllPlanes() throws SQLException, PlaneException.ModelException, PlaneException.BrandException, DataBaseConnectionException {
-        return flightManager.getAllPlanes();
+    public ArrayList<Integer> getAllPlanesID()
+            throws SQLException, DataBaseConnectionException {
+        return flightManager.getAllPlanesID();
     }
-    public ArrayList<model.Class> getAllClasses() throws SQLException, NameClassException, DataBaseConnectionException {
-        return flightManager.getAllClasses();
+    public ArrayList<String> getAllClassesName()
+            throws SQLException, DataBaseConnectionException {
+        return flightManager.getAllClassesName();
     }
     //endregion
 
     //region Edit
-    public void addFlight(Flight flightToAdd) throws SQLException, DataBaseConnectionException {
+    public void addFlight(Flight flightToAdd)
+            throws SQLException, DataBaseConnectionException {
         flightManager.addFlight(flightToAdd);
     }
-    public void modifyFlight(Flight flightToUpdate, String originalNumber) throws SQLException, DataBaseConnectionException {
+    public void modifyFlight(Flight flightToUpdate, String originalNumber)
+            throws SQLException, DataBaseConnectionException {
         flightManager.modifyFlight(flightToUpdate, originalNumber);
     }
-    public void modifyFlight(Flight flightToUpdate) throws SQLException, DataBaseConnectionException {
+    public void modifyFlight(Flight flightToUpdate)
+            throws SQLException, DataBaseConnectionException {
         flightManager.modifyFlight(flightToUpdate);
     }
-    public void deleteFlight(Flight flightToDelete) throws SQLException, DataBaseConnectionException {
+    public void deleteFlight(Flight flightToDelete)
+            throws SQLException, DataBaseConnectionException {
         flightManager.deleteFlight(flightToDelete);
     }
     //endregion
 
     //region Connection
-    public void closeConnection() throws DataBaseCloseException {
+    public void closeConnection()
+            throws DataBaseCloseException {
         flightManager.closeConnection();
     }
     //endregion

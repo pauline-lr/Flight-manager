@@ -12,35 +12,40 @@ import java.util.GregorianCalendar;
 public interface DAO {
     //region Search
     ArrayList<SearchFlightsByDate> getAllFlightsBetweenDates(GregorianCalendar startDate, GregorianCalendar endDate)
-            throws SQLException, DataBaseAccessException;
+            throws DataBaseAccessException;
     ArrayList<SearchPassengersByClass> getAllPassengersOfAClass(model.Class seatClass)
-            throws SQLException, DataBaseAccessException;
+            throws DataBaseAccessException;
     ArrayList<SearchFlightsByPilot> getAllFlightsOfAPilot(Pilot pilot)
-            throws SQLException, DataBaseAccessException;
+            throws DataBaseAccessException;
     //endregion
 
     //region Get
-    ArrayList<Flight> getAllFlights()
-            throws SQLException, FlightException.MealDescriptionException, FlightException.NumberFlightException, DataBaseConnectionException;
-    ArrayList<String> getAllPilots()
-            throws SQLException, PersonException.PhoneNumberException, PersonException.FirstNameException,
-            PersonException.LastNameException, PersonException.EmailException, PilotException.LicenceNumberException,
-            PilotException.FlyingFlightException, DataBaseConnectionException;
-    ArrayList<String> getAllAirports()
-            throws SQLException, AiportException.CodeException, AiportException.NameAirportException, AiportException.CountryException, DataBaseConnectionException;
-    ArrayList<String> getAllPlanes() throws SQLException, PlaneException.ModelException, PlaneException.BrandException, DataBaseConnectionException;
-    ArrayList<model.Class> getAllClasses() throws SQLException, NameClassException, DataBaseConnectionException;
+    ArrayList<String> getAllFlightsNumber()
+            throws SQLException, DataBaseConnectionException;
+    ArrayList<String> getAllPilotsLicenceNumber()
+            throws SQLException, DataBaseConnectionException;
+    ArrayList<String> getAllAirportsCode()
+            throws SQLException, DataBaseConnectionException;
+    ArrayList<Integer> getAllPlanesID()
+            throws SQLException, DataBaseConnectionException;
+    ArrayList<String> getAllClassesName()
+            throws SQLException, DataBaseConnectionException;
     //endregion
 
     //region Edit
-    void addFlight(Flight flightToAdd) throws SQLException, DataBaseConnectionException;
-    void modifyFlight(Flight flightToUpdate, String originalNumber) throws SQLException, DataBaseConnectionException;
-    public void modifyFlight(Flight flightToUpdate) throws SQLException, DataBaseConnectionException;
-    void deleteFlight(Flight flightToDelete) throws SQLException, DataBaseConnectionException;
+    void addFlight(Flight flightToAdd)
+            throws SQLException, DataBaseConnectionException;
+    void modifyFlight(Flight flightToUpdate, String originalNumber)
+            throws SQLException, DataBaseConnectionException;
+    public void modifyFlight(Flight flightToUpdate)
+            throws SQLException, DataBaseConnectionException;
+    void deleteFlight(Flight flightToDelete)
+            throws SQLException, DataBaseConnectionException;
     //endregion
 
     //region Connection
-    void closeConnection() throws DataBaseCloseException;
+    void closeConnection()
+            throws DataBaseCloseException;
     //endregion
 
     //region Tools

@@ -3,7 +3,7 @@ package dataAccess;
 import exception.*;
 import model.*;
 import model.Class;
-import pattern.DAO;
+import pattern.*;
 
 import java.sql.*;
 import java.util.*;
@@ -188,7 +188,7 @@ public class AirlineDataBaseAccess implements DAO {
         return passengers;
     }
     public ArrayList<SearchFlightsByPilot> getAllFlightsOfAPilot(Pilot pilot)
-            throws SQLException, DataBaseAccessException {
+            throws DataBaseAccessException {
         ArrayList<SearchFlightsByPilot> flights = new ArrayList<>();
         SearchFlightsByPilot flight;
         GregorianCalendar flightDepartureTime = new GregorianCalendar();
@@ -265,66 +265,65 @@ public class AirlineDataBaseAccess implements DAO {
     //endregion
 
     //region Get
-    public ArrayList<Flight> getAllFlights()
-            throws SQLException, FlightException.MealDescriptionException, FlightException.NumberFlightException, DataBaseConnectionException {
-        ArrayList<Flight> flights;
-
+    public ArrayList<String> getAllFlightsNumber()
+            throws SQLException, DataBaseConnectionException {
+        ArrayList<String> flightNumbers = new ArrayList();
         Statement statement = SingletonConnection.getInstance().createStatement();
-        ResultSet data = statement.executeQuery("SELECT * FROM flight ORDER BY departure_time");
+        ResultSet data = statement.executeQuery("SELECT number FROM flight ORDER BY number");
 
-        flights = flightResultSetIntoArrayList(data);
-
-        return flights;
-    }
-    public ArrayList<String> getAllPilots()
-            throws SQLException, PersonException.PhoneNumberException, PersonException.FirstNameException,
-            PersonException.LastNameException, PersonException.EmailException, PilotException.LicenceNumberException,
-            PilotException.FlyingFlightException, DataBaseConnectionException {
-        ArrayList<String> pilots = new ArrayList<>();
-
-        Statement statement = SingletonConnection.getInstance().createStatement();
-        ResultSet data = statement.executeQuery("SELECT * FROM pilot ORDER BY licence_number");
-
-        while (data.next()) {
-            pilots.add(data.getString("licence_number") + " - " + data.getString("last_name") + " " +data.getString("first_name"));
+        while(data.next()) {
+            flightNumbers.add(data.getString("number"));
         }
 
-        return pilots;
+        return flightNumbers;
     }
-    public ArrayList<String> getAllAirports()
-            throws SQLException, AiportException.CodeException, AiportException.NameAirportException, AiportException.CountryException, DataBaseConnectionException {
-        ArrayList<String> airports = new ArrayList<>();
-
+    public ArrayList<String> getAllPilotsLicenceNumber()
+            throws SQLException, DataBaseConnectionException {
+        ArrayList<String> pilotLicenceNumbers = new ArrayList();
         Statement statement = SingletonConnection.getInstance().createStatement();
-        ResultSet data = statement.executeQuery("SELECT * FROM airport ORDER BY code");
+        ResultSet data = statement.executeQuery("SELECT licence_number FROM pilot ORDER BY licence_number");
 
-        while (data.next()) {
-            airports.add(data.getString("code") + " - " + data.getString("name") + " - " + data.getString("country"));
+        while(data.next()) {
+            pilotLicenceNumbers.add(data.getString("licence_number"));
         }
 
-        return airports;
+        return pilotLicenceNumbers;
     }
-    public ArrayList<String> getAllPlanes() throws SQLException, PlaneException.ModelException, PlaneException.BrandException, DataBaseConnectionException {
-        ArrayList<String> planes = new ArrayList<>();
-
+    public ArrayList<String> getAllAirportsCode()
+            throws SQLException, DataBaseConnectionException {
+        ArrayList<String> airportCodes = new ArrayList();
         Statement statement = SingletonConnection.getInstance().createStatement();
-        ResultSet data = statement.executeQuery("SELECT * FROM plane ORDER BY plane_id");
+        ResultSet data = statement.executeQuery("SELECT code FROM airport ORDER BY code");
 
-        while (data.next()) {
-            planes.add(data.getInt("plane_id") + " - " + data.getString("brand") + " " + data.getString("model"));
+        while(data.next()) {
+            airportCodes.add(data.getString("code"));
         }
 
-        return planes;
+        return airportCodes;
     }
-    public ArrayList<Class> getAllClasses() throws SQLException, NameClassException, DataBaseConnectionException {
-        ArrayList<Class> classes;
-
+    public ArrayList<Integer> getAllPlanesID()
+            throws SQLException, DataBaseConnectionException {
+        ArrayList<Integer> planeIDs = new ArrayList();
         Statement statement = SingletonConnection.getInstance().createStatement();
-        ResultSet data = statement.executeQuery("SELECT * FROM class ORDER BY name");
+        ResultSet data = statement.executeQuery("SELECT plane_id FROM plane ORDER BY plane_id");
 
-        classes = classResultSetIntoArrayList(data);
+        while(data.next()) {
+            planeIDs.add(data.getInt("plane_id"));
+        }
 
-        return classes;
+        return planeIDs;
+    }
+    public ArrayList<String> getAllClassesName()
+            throws SQLException, DataBaseConnectionException {
+        ArrayList<String> classeNames = new ArrayList();
+        Statement statement = SingletonConnection.getInstance().createStatement();
+        ResultSet data = statement.executeQuery("SELECT name FROM class ORDER BY class_id DESC");
+
+        while(data.next()) {
+            classeNames.add(data.getString("name"));
+        }
+
+        return classeNames;
     }
     //endregion
 
