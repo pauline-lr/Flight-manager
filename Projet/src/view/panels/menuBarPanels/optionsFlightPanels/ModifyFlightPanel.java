@@ -16,8 +16,6 @@ public class ModifyFlightPanel extends JPanel {
     public ModifyFlightPanel(MenuWindow menuWindow) {
         this.setLayout(new BorderLayout());
         this.add(new ModifyFlightForm(), BorderLayout.PAGE_START);
-
-
         this.add(new FlightForm(), BorderLayout.LINE_START);
         this.add(new ButtonsPanel(menuWindow), BorderLayout.SOUTH);
     }

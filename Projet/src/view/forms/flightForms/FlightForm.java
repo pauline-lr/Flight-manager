@@ -1,19 +1,20 @@
 package view.forms.flightForms;
 
 import controller.ApplicationController;
-import model.Airport;
-import model.Pilot;
+import exception.FlightException;
+import model.Flight;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.GregorianCalendar;
 
 public class FlightForm extends JPanel {
     private ApplicationController controller = new ApplicationController();
 
-    private JTextField mealDescriptionTextField;
+    private JTextField numberTextField, mealDescriptionTextField;
     private JCheckBox isMealOnBoardCheckBox;
-    private JLabel  departureDateLabel, departureHourLabel, arrivalDateLabel, arrivalHourLabel, departureAirportLabel, departureTerminalLabel,
+    private JLabel  numberLabel, departureDateLabel, departureHourLabel, arrivalDateLabel, arrivalHourLabel, departureAirportLabel, departureTerminalLabel,
             departureGateLabel, arrivalAirportLabel, arrivalTerminalLabel, arrivalGateLabel, mealDescriptionLabel, planeLabel, pilotLabel, empty;
     private JComboBox departureDay, departureMonth, departureYear, departureHour, departureMinute;
     private JComboBox arrivalDay, arrivalMonth, arrivalYear, arrivalHour, arrivalMinute;
@@ -29,6 +30,17 @@ public class FlightForm extends JPanel {
     }
 
     public void initForm(){
+        numberLabel = new JLabel("N° de vol : ");
+        numberLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        add(numberLabel);
+
+        numberTextField = new JTextField();
+        numberTextField.setHorizontalAlignment(SwingConstants.LEFT);
+        add(numberTextField);
+
+        addEmptyLabel();
+        addEmptyLabel();
+
         // departureDate
         departureDateLabel = new JLabel("Date de départ  : ");
         departureDateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -279,6 +291,16 @@ public class FlightForm extends JPanel {
         return arrivalAirportComboBox;
     }
 
+    public Flight getFlight() throws FlightException.NumberFlightException, FlightException.MealDescriptionException {
+        String number = "";
+        GregorianCalendar departureDate = new GregorianCalendar(departureYear.getSelectedIndex(), departureMonth.getSelectedIndex(), departureDay.getSelectedIndex(), departureHour.getSelectedIndex(), departureMinute.getSelectedIndex());
+        GregorianCalendar arrivalDate = new GregorianCalendar(arrivalYear.getSelectedIndex(), arrivalMonth.getSelectedIndex(), arrivalDay.getSelectedIndex(), arrivalHour.getSelectedIndex(), arrivalMinute.getSelectedIndex());
+
+        Flight flight = new Flight(number, departureDate, arrivalDate, isMealOnBoardCheckBox.isSelected(), mealDescriptionLabel.getText(), pilotComboBox.getSelectedItem().toString(),
+                departureGateSpinner.getSelectedItem().toString(), arrivalGateSpinner.getSelectedItem().toString(), Integer.parseInt(planeComboBox.getSelectedItem().toString()));
+        return flight;
+    }
+
     private class MealOnBoardListener implements ItemListener {
         @Override
         public void itemStateChanged(ItemEvent evt){
@@ -289,12 +311,4 @@ public class FlightForm extends JPanel {
             }
         }
     }
-
-    private class ValidationListener implements ActionListener{
-        @Override
-        public void actionPerformed(ActionEvent evt){
-
-        }
-    }
-
 }

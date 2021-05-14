@@ -1,5 +1,6 @@
 package view.panels.buttons;
 import view.panels.menuBarPanels.optionsFlightPanels.AddFlightPanel;
+import view.panels.menuBarPanels.optionsFlightPanels.ModifyFlightPanel;
 import view.panels.menuWindowPanels.WelcomePanel;
 import view.windows.MenuWindow;
 
@@ -29,7 +30,9 @@ public class ButtonsPanel extends JPanel {
     }
 
     // bouton retour
-    public class RetourListener implements ActionListener {
+    public static class RetourListener implements ActionListener {
+        private MenuWindow menuWindow;
+
         @Override
         public void actionPerformed(ActionEvent evt){
             menuWindow.getCont().removeAll();

@@ -214,6 +214,4 @@ public class MenuWindow extends JFrame{
             MenuWindow.this.setVisible(true);
         }
     }
-
-
 }
