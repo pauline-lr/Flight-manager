@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 
 // NB : j'ai changé les types d'objets qui étaient en String par leur objet car j'en avais besoin pour le getters 
 public class Flight {
-    private final static String REGEX_NUMBER = "^[A-z][A-z]\\d{4}$";
+    public final static String REGEX_NUMBER = "^[A-z][A-z]\\d{4}$";
     private final static int MEAL_DESCRIPTION_LENTGH = 400;
 
     private String number;                      // 6 characters = 2 letters then 4 positive digits
