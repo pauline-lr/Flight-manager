@@ -42,25 +42,16 @@ public class AddFlightPanel extends JPanel {
    /* private class ValidationListener(Flight flightForm) implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent evt){
-            Flight flight = flightForm.getFlight();
-            if(flight.getNumber().isEmpty()){
-                JOptionPane.showMessageDialog(null, "Veuillez compléter le champs \"N° de vol\"", "Erreur", JOptionPane.ERROR_MESSAGE);
-            }else{
-                if(!flight.getNumber().matches(Flight.REGEX_NUMBER)){
-                    JOptionPane.showMessageDialog(null, "Veuillez entrer un champs valide pour \"N° de vol\"", "Erreur", JOptionPane.ERROR_MESSAGE);
-                }else{
-                    //if(il se trouve déjà dans la base de donnée){
-                        JOptionPane.showMessageDialog(null, "Le numéro de vol existe déjà", "Erreur", JOptionPane.ERROR_MESSAGE);
-                    }else{
-                        try {
-                            controller.addFlight(flight);
-                            JOptionPane.showMessageDialog(null, "Vol ajouté", "Succès", JOptionPane.INFORMATION_MESSAGE);
-                            takeOut();
-                        } catch (Exception e) {
-                            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-                        }
-                    }
-                }
+          Flight flight = flightForm.getFlight();
+            try {
+                flight = flightForm.getFlight();
+                controller.addFlight(flight);
+                JOptionPane.showMessageDialog(null, "Vol ajouté", "Succès", JOptionPane.INFORMATION_MESSAGE);
+                takeOut();
+            } catch (FlightException.NumberFlightException e) {
+                e.printStackTrace();
+            } catch (FlightException.MealDescriptionException e) {
+                e.printStackTrace();
             }
         }
     }*/
