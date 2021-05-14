@@ -39,7 +39,7 @@ public class AddFlightPanel extends JPanel {
 
 
     // bouton de validation
-    private class ValidationListener(Flight flightForm) implements ActionListener{
+   /* private class ValidationListener(Flight flightForm) implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent evt){
             Flight flight = flightForm.getFlight();
@@ -49,7 +49,7 @@ public class AddFlightPanel extends JPanel {
                 if(!flight.getNumber().matches(Flight.REGEX_NUMBER)){
                     JOptionPane.showMessageDialog(null, "Veuillez entrer un champs valide pour \"N° de vol\"", "Erreur", JOptionPane.ERROR_MESSAGE);
                 }else{
-                    if(/*il se trouve déjà dans la base de donnée*/){
+                    //if(il se trouve déjà dans la base de donnée){
                         JOptionPane.showMessageDialog(null, "Le numéro de vol existe déjà", "Erreur", JOptionPane.ERROR_MESSAGE);
                     }else{
                         try {
@@ -63,10 +63,10 @@ public class AddFlightPanel extends JPanel {
                 }
             }
         }
-    }
+    }*/
 
     // bouton de réinitialisation
-    private class RéinitListener implements ActionListener{
+   /* private class RéinitListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent evt){
             takeOut();
@@ -78,7 +78,7 @@ public class AddFlightPanel extends JPanel {
         menuWindow.getCont().add(new AddFlightPanel(menuWindow),BorderLayout.CENTER);
         menuWindow.getCont().repaint();
         menuWindow.setVisible(true);
-    }
+    }*/
 
 
 }
