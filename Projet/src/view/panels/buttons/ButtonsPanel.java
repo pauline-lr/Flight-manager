@@ -25,14 +25,14 @@ public class ButtonsPanel extends JPanel {
     FlightForm flightForm;
     private JButton retour, validation, réinit;
 
-    public ButtonsPanel(MenuWindow menuWindow, String typeAction, FlightForm flightForm){
+    public ButtonsPanel(MenuWindow menuWindow, String typeAction, FlightForm flightForm, String titre){
         this.menuWindow = menuWindow;
         this.typeAction = typeAction;
         this.flightForm = flightForm;
         this.setLayout(new FlowLayout());
 
         retour = new JButton("Retour");
-        validation =  new JButton("Validation");
+        validation =  new JButton(titre);
         réinit = new JButton("Réinitialiser");
 
         retour.addActionListener(new RetourListener());

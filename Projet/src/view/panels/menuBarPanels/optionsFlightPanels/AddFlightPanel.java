@@ -16,6 +16,6 @@ public class AddFlightPanel extends JPanel {
         this.menuWindow = menuWindow;
         this.setLayout(new BorderLayout());
         this.add(flightForm, BorderLayout.CENTER);
-        this.add(new ButtonsPanel(menuWindow, "Addition", flightForm), BorderLayout.SOUTH);
+        this.add(new ButtonsPanel(menuWindow, "Addition", flightForm, "Ajouter"), BorderLayout.SOUTH);
     }
 }

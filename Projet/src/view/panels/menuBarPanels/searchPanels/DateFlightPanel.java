@@ -11,6 +11,6 @@ public class DateFlightPanel extends JPanel {
     public DateFlightPanel(MenuWindow menuWindow) {
         this.setLayout(new BorderLayout());
         this.add(new DateFlightForm(), BorderLayout.CENTER);
-        this.add(new ButtonsPanel(menuWindow, "DateFlightSearch", null), BorderLayout.SOUTH);
+        this.add(new ButtonsPanel(menuWindow, "DateFlightSearch", null, "Rechercher"), BorderLayout.SOUTH);
     }
 }
