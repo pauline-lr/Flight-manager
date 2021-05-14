@@ -11,6 +11,5 @@ public class DeleteFlightPanel extends JPanel {
     public DeleteFlightPanel(MenuWindow menuWindow) {
         this.setLayout(new BorderLayout());
         this.add(new DeleteFlightForm(), BorderLayout.CENTER);
-        this.add(new ButtonsPanel(menuWindow), BorderLayout.SOUTH);
     }
 }

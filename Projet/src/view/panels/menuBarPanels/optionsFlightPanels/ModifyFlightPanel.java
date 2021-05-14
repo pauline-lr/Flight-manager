@@ -19,14 +19,6 @@ public class ModifyFlightPanel extends JPanel {
 
 
         this.add(new FlightForm(), BorderLayout.LINE_START);
-
-        /*this.flightForm = new FlightForm();
-        flightForm.setLayout(new BorderLayout());
-        flightForm.setBounds(140,0,500,800);
-        this.add(flightForm);*/
-
-
-
         this.add(new ButtonsPanel(menuWindow), BorderLayout.SOUTH);
     }
 }
