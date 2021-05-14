@@ -60,13 +60,15 @@ public class ButtonsPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent evt){
             try {
-                Flight flight = flightForm.getFlight();
-                if(typeAction.equals("Addition")){
-                    controller.addFlight(flight);
-                    JOptionPane.showMessageDialog(null, "Vol ajouté", "Succès", JOptionPane.INFORMATION_MESSAGE);
-                }else if(typeAction.equals("Modification")){
-                    controller.modifyFlight(flight);
-                    JOptionPane.showMessageDialog(null, "Vol modifié", "Succès", JOptionPane.INFORMATION_MESSAGE);
+                if(flightForm != null) {
+                    Flight flight = flightForm.getFlight();
+                    if(typeAction.equals("Addition")){
+                        controller.addFlight(flight);
+                        JOptionPane.showMessageDialog(null, "Vol ajouté", "Succès", JOptionPane.INFORMATION_MESSAGE);
+                    }else if(typeAction.equals("Modification")){
+                        controller.modifyFlight(flight);
+                        JOptionPane.showMessageDialog(null, "Vol modifié", "Succès", JOptionPane.INFORMATION_MESSAGE);
+                    }
                 }
 
                 takeOut();
