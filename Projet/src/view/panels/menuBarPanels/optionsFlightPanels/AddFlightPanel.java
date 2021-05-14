@@ -19,6 +19,7 @@ public class AddFlightPanel extends JPanel {
         this.menuWindow = menuWindow;
         this.setLayout(new BorderLayout());
         this.add(new FlightForm(), BorderLayout.CENTER);
+     /*
         retour = new JButton("Retour");
         validation =  new JButton("Validation");
         réinit = new JButton("Réinitialiser");
@@ -29,7 +30,7 @@ public class AddFlightPanel extends JPanel {
 
         this.add(retour);
         this.add(validation);
-        this.add(réinit);
+        this.add(réinit);*/
         //this.add(new ButtonsPanel(menuWindow), BorderLayout.SOUTH);
 
     }
