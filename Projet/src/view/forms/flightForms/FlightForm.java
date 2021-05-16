@@ -21,12 +21,15 @@ public class FlightForm extends JPanel {
     private JCheckBox isMealOnBoardCheckBox;
     private JLabel  numberLabel, departureDateLabel, departureHourLabel, arrivalDateLabel, arrivalHourLabel, departureAirportLabel, departureTerminalLabel,
             departureGateLabel, arrivalAirportLabel, arrivalTerminalLabel, arrivalGateLabel, mealDescriptionLabel, planeLabel, pilotLabel, empty;
-    private JComboBox departureDay, departureMonth, departureYear, departureHour, departureMinute;
-    private JComboBox arrivalDay, arrivalMonth, arrivalYear, arrivalHour, arrivalMinute;
+    private JSpinner departureDay, departureMonth, departureYear, departureHour, departureMinute;
+    private JSpinner arrivalDay, arrivalMonth, arrivalYear, arrivalHour, arrivalMinute;
+    private SpinnerNumberModel departureDayModel, departureMonthModel, departureYearModel, departureHourModel, departureMinuteModel;
+    private SpinnerNumberModel arrivalDayModel, arrivalMonthModel, arrivalYearModel, arrivalHourModel, arrivalMinuteModel;
     private JComboBox departureGateSpinner;
     private JComboBox arrivalGateSpinner;
     private JComboBox planeComboBox, pilotComboBox, departureAirportComboBox, arrivalAirportComboBox;
     private JComboBox departureTerminalComboBox, arrivalTerminalComboBox;
+    private GregorianCalendar currentDate;
 
     public FlightForm(){
         setLayout(new GridLayout(10, 4));
@@ -45,28 +48,53 @@ public class FlightForm extends JPanel {
 
         addEmptyLabel();
         addEmptyLabel();
+        addEmptyLabel();
+
 
         // departureDate
         departureDateLabel = new JLabel("Date de départ  : ");
         departureDateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(departureDateLabel);
 
-        departureDay = new JComboBox();
+        //void flightDate(SpinnerNumberModel day, SpinnerNumberModel month, SpinnerNumberModel year, SpinnerNumberModel hour, SpinnerNumberModel minute)
+        departureDayModel = new SpinnerNumberModel(currentDate.get(Calendar.DAY_OF_MONTH),1,31,1);
+        departureDay = new JSpinner(departureDayModel);
+        add(departureDay);
+
+        departureMonthModel = new SpinnerNumberModel(currentDate.get(Calendar.MONTH)+1,1,12,1);
+        departureMonth = new JSpinner(departureMonthModel);
+        add(departureMonth);
+
+        departureYearModel = new SpinnerNumberModel(currentDate.get(Calendar.YEAR),2021,2023,1);
+        departureYear = new JSpinner(departureYearModel);
+        add(departureYear);
+        /*departureDay = new JComboBox();
         this.add(departureDay);
         departureMonth = new JComboBox();
         this.add(departureMonth);
         departureYear = new JComboBox();
-        this.add(departureYear);
+        this.add(departureYear);*/
+
+        addEmptyLabel();
 
         departureHourLabel = new JLabel("Heure de départ  : ");
         departureHourLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(departureHourLabel);
 
-        departureHour = new JComboBox();
+        departureHourModel = new SpinnerNumberModel(currentDate.get(Calendar.HOUR_OF_DAY),0,23,1);
+        departureHour = new JSpinner(departureHourModel);
+        add(departureHour);
+
+        departureMinuteModel = new SpinnerNumberModel(currentDate.get(Calendar.MINUTE),0,59,1);
+        departureMinute = new JSpinner(departureMinuteModel);
+        add(departureMinute);
+
+        /*departureHour = new JComboBox();
         this.add(departureHour);
         departureMinute = new JComboBox();
-        this.add(departureMinute);
+        this.add(departureMinute);*/
 
+        addEmptyLabel();
         addEmptyLabel();
 
         // departureAirport
@@ -82,6 +110,9 @@ public class FlightForm extends JPanel {
 
         addEmptyLabel();
         addEmptyLabel();
+        addEmptyLabel();
+        addEmptyLabel();
+
 
         // departureGate
         departureTerminalLabel = new JLabel("Terminal : ");
@@ -111,23 +142,35 @@ public class FlightForm extends JPanel {
         arrivalDateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(arrivalDateLabel);
 
-        arrivalDay = new JComboBox();
-        this.add(arrivalDay);
-        arrivalMonth = new JComboBox();
-        this.add(arrivalMonth);
-        arrivalYear = new JComboBox();
-        this.add(arrivalYear);
+        arrivalDayModel = new SpinnerNumberModel(currentDate.get(Calendar.DAY_OF_MONTH),1,31,1);
+        arrivalDay = new JSpinner(arrivalDayModel);
+        add(arrivalDay);
 
-        arrivalHourLabel = new JLabel("Heure de départ  : ");
+        arrivalMonthModel = new SpinnerNumberModel(currentDate.get(Calendar.MONTH)+1,1,12,1);
+        arrivalMonth = new JSpinner(arrivalMonthModel);
+        add(arrivalMonth);
+
+        arrivalYearModel = new SpinnerNumberModel(currentDate.get(Calendar.YEAR),2021,2023,1);
+        arrivalYear = new JSpinner(arrivalYearModel);
+        add(arrivalYear);
+
+        addEmptyLabel();
+
+        arrivalHourLabel = new JLabel("Heure d'arrivée  : ");
         arrivalHourLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(arrivalHourLabel);
 
-        arrivalHour = new JComboBox();
-        this.add(arrivalHour);
-        arrivalMinute = new JComboBox();
-        this.add(arrivalMinute);
+        arrivalHourModel = new SpinnerNumberModel(currentDate.get(Calendar.HOUR_OF_DAY),0,23,1);
+        arrivalHour = new JSpinner(arrivalHourModel);
+        add(arrivalHour);
+
+        arrivalMinuteModel = new SpinnerNumberModel(currentDate.get(Calendar.MINUTE),0,59,1);
+        arrivalMinute = new JSpinner(arrivalMinuteModel);
+        add(arrivalMinute);
 
         addEmptyLabel();
+        addEmptyLabel();
+
 
         // arrivalAirport
         arrivalAirportLabel = new JLabel("Aéroport d'arrivée : ");
@@ -142,6 +185,9 @@ public class FlightForm extends JPanel {
 
         addEmptyLabel();
         addEmptyLabel();
+        addEmptyLabel();
+        addEmptyLabel();
+
 
         // arrivalGate
         arrivalTerminalLabel = new JLabel("Terminal : ");
@@ -158,6 +204,12 @@ public class FlightForm extends JPanel {
 
         arrivalGateSpinner = new JComboBox();
         this.add(arrivalGateSpinner);
+
+        addEmptyLabel();
+        addEmptyLabel();
+        addEmptyLabel();
+        addEmptyLabel();
+        addEmptyLabel();
 
         // plane
         planeLabel = new JLabel("Avion : ");
@@ -180,6 +232,9 @@ public class FlightForm extends JPanel {
             JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
         this.add(pilotComboBox);
+
+        addEmptyLabel();
+
 
         // isMealOnBoard
         isMealOnBoardCheckBox = new JCheckBox("Repas à bord");
@@ -229,45 +284,6 @@ public class FlightForm extends JPanel {
         return isMealOnBoardCheckBox;
     }
 
-    public JComboBox getDepartureDay() {
-        return departureDay;
-    }
-
-    public JComboBox getDepartureMonth() {
-        return departureMonth;
-    }
-
-    public JComboBox getDepartureYear() {
-        return departureYear;
-    }
-
-    public JComboBox getDepartureHour() {
-        return departureHour;
-    }
-
-    public JComboBox getDepartureMinute() {
-        return departureMinute;
-    }
-
-    public JComboBox getArrivalDay() {
-        return arrivalDay;
-    }
-
-    public JComboBox getArrivalMonth() {
-        return arrivalMonth;
-    }
-
-    public JComboBox getArrivalYear() {
-        return arrivalYear;
-    }
-
-    public JComboBox getArrivalHour() {
-        return arrivalHour;
-    }
-
-    public JComboBox getArrivalMinute() {
-        return arrivalMinute;
-    }
 
     // !!!!!!!!!!!!!!!!!!!!!       Faire exception
     public String getId(String text) {
@@ -298,14 +314,17 @@ public class FlightForm extends JPanel {
     }
 
     public Flight getFlight() throws FlightException.NumberFlightException, FlightException.MealDescriptionException {
-        GregorianCalendar departureDate = new GregorianCalendar(departureYear.getSelectedIndex(), departureMonth.getSelectedIndex(), departureDay.getSelectedIndex(), departureHour.getSelectedIndex(), departureMinute.getSelectedIndex());
-        GregorianCalendar arrivalDate = new GregorianCalendar(arrivalYear.getSelectedIndex(), arrivalMonth.getSelectedIndex(), arrivalDay.getSelectedIndex(), arrivalHour.getSelectedIndex(), arrivalMinute.getSelectedIndex());
+        GregorianCalendar departureDate = new GregorianCalendar(Integer.parseInt(departureYear.getValue().toString()), Integer.parseInt(departureMonth.getValue().toString()), Integer.parseInt(departureDay.getValue().toString()),
+                Integer.parseInt(departureHour.getValue().toString()), Integer.parseInt(departureMinute.getValue().toString()));
+        GregorianCalendar arrivalDate = new GregorianCalendar(Integer.parseInt(arrivalYear.getValue().toString()), Integer.parseInt(arrivalMonth.getValue().toString()), Integer.parseInt(arrivalDay.getValue().toString()),
+                Integer.parseInt(arrivalHour.getValue().toString()), Integer.parseInt(arrivalMinute.getValue().toString()));
 
         Flight flight = new Flight(numberTextField.getText(), departureDate, arrivalDate, isMealOnBoardCheckBox.isSelected(),
                 mealDescriptionLabel.getText(), getPilotId(), Objects.requireNonNull(departureGateSpinner.getSelectedItem()).toString(),
                 Objects.requireNonNull(arrivalGateSpinner.getSelectedItem()).toString(), getPlaneId());
         return flight;
     }
+
 
     private class MealOnBoardListener implements ItemListener {
         @Override
