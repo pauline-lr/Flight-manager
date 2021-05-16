@@ -10,6 +10,9 @@ import java.awt.event.*;
 import java.util.*;
 
 public class FlightForm extends JPanel {
+    private static final int LENGTH_PILOT_ID = 7;
+    private static final int LENGTH_AIRPORT_ID = 3;
+
     private ApplicationController controller = new ApplicationController();
 
     private JTextField numberTextField, mealDescriptionTextField;
@@ -264,28 +267,48 @@ public class FlightForm extends JPanel {
         return arrivalMinute;
     }
 
-    public JComboBox getPlaneComboBox() {
-        return planeComboBox;
+    public Integer getPlaneId() {
+        String planeText = (String) planeComboBox.getSelectedItem();
+        String [] res = planeText.split(" ");
+        return Integer.parseInt(res[0]);
     }
 
-    public JComboBox getPilotComboBox() {
-        return pilotComboBox;
+    public String getPilotId() {
+        String pilotId = " ";
+        String pilotText = (String) pilotComboBox.getSelectedItem();
+        String [] res = pilotText.split(" ");
+        for (int i = 0; i < LENGTH_PILOT_ID; i++) {
+            pilotId += res[i];
+        }
+
+        return pilotId;
     }
 
-    public JComboBox getDepartureAirportComboBox() {
-        return departureAirportComboBox;
+    public String getDepartureAirportComboBox() {
+        return obtainAirportId(departureAirportComboBox);
     }
 
-    public JComboBox getArrivalAirportComboBox() {
-        return arrivalAirportComboBox;
+    public String getArrivalAirportComboBox() {
+        return obtainAirportId(arrivalAirportComboBox);
+    }
+
+    public String obtainAirportId(JComboBox airport){
+        String airport_Id = " ";
+        String airportText = (String) airport.getSelectedItem();
+        String [] res = airportText.split(" ");
+        for (int i = 0; i < LENGTH_AIRPORT_ID; i++) {
+            airport_Id += res[i];
+        }
+
+        return airport_Id;
     }
 
     public Flight getFlight() throws FlightException.NumberFlightException, FlightException.MealDescriptionException {
         GregorianCalendar departureDate = new GregorianCalendar(departureYear.getSelectedIndex(), departureMonth.getSelectedIndex(), departureDay.getSelectedIndex(), departureHour.getSelectedIndex(), departureMinute.getSelectedIndex());
         GregorianCalendar arrivalDate = new GregorianCalendar(arrivalYear.getSelectedIndex(), arrivalMonth.getSelectedIndex(), arrivalDay.getSelectedIndex(), arrivalHour.getSelectedIndex(), arrivalMinute.getSelectedIndex());
 
-        Flight flight = new Flight(numberTextField.getText(), departureDate, arrivalDate, isMealOnBoardCheckBox.isSelected(), mealDescriptionLabel.getText(), pilotComboBox.getSelectedItem().toString(),
-                departureGateSpinner.getSelectedItem().toString(), arrivalGateSpinner.getSelectedItem().toString(), Integer.parseInt(planeComboBox.getSelectedItem().toString()));
+        Flight flight = new Flight(numberTextField.getText(), departureDate, arrivalDate, isMealOnBoardCheckBox.isSelected(), mealDescriptionLabel.getText(), getPilotId(),
+                departureGateSpinner.getSelectedItem().toString(), arrivalGateSpinner.getSelectedItem().toString(), getPlaneId());
         return flight;
     }
 
