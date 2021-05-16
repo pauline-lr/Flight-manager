@@ -32,7 +32,7 @@ public class FlightForm extends JPanel {
 
     public FlightForm(){
         currentDate = new GregorianCalendar();
-        setLayout(new GridLayout(10, 4));
+        setLayout(new GridLayout(13, 4));
 
         initForm();
     }
