@@ -160,7 +160,8 @@ VALUES
     ('A13', 'A', 13, 'LHR'),
     ('B24', 'B', 24, 'JFK'),
     ('A11', 'A', 11, 'LHR'),
-    ('B1', 'B', 1, 'BRU')
+    ('B1', 'B', 1, 'BRU'),
+    ('B2', 'B', 2, 'BRU')
 ;
 
 INSERT INTO flight

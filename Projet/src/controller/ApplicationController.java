@@ -1,9 +1,12 @@
 package controller;
 
 import business.*;
+import dataAccess.SingletonConnection;
 import exception.*;
 import model.*;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -43,10 +46,6 @@ public class ApplicationController {
             throws SQLException, DataBaseConnectionException {
         return flightManager.getAllPilotsForComboBox();
     }
-    public String [] getAllAirportsForComboBox()
-            throws SQLException, DataBaseConnectionException {
-        return flightManager.getAllAirportsForComboBox();
-    }
     public String [] getAllPlanesForComboBox()
             throws SQLException, DataBaseConnectionException {
         return flightManager.getAllPlanesForComboBox();
@@ -54,6 +53,18 @@ public class ApplicationController {
     public String [] getAllClassesForComboBox()
             throws SQLException, DataBaseConnectionException {
         return flightManager.getAllClassesForComboBox();
+    }
+    public String [] getAllAirportsForComboBox()
+            throws SQLException, DataBaseConnectionException {
+        return flightManager.getAllAirportsForComboBox();
+    }
+    public String [] getAllTerminalsOfAnAirportForComboBox(String airportId)
+            throws SQLException, DataBaseConnectionException {
+        return flightManager.getAllTerminalsOfAnAirportForComboBox(airportId);
+    }
+    public String [] getAllGatesOfAnAirportAndTerminalForComboBox(String airportId, String terminalId)
+            throws SQLException, DataBaseConnectionException {
+        return flightManager.getAllGatesOfAnAirportAndTerminalForComboBox(airportId, terminalId);
     }
     //endregion
 

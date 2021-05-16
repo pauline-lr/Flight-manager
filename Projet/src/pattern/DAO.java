@@ -24,11 +24,15 @@ public interface DAO {
             throws SQLException, DataBaseConnectionException;
     String [] getAllPilotsForComboBox()
             throws SQLException, DataBaseConnectionException;
-    String [] getAllAirportsForComboBox()
-            throws SQLException, DataBaseConnectionException;
     String [] getAllPlanesForComboBox()
             throws SQLException, DataBaseConnectionException;
     String [] getAllClassesForComboBox()
+            throws SQLException, DataBaseConnectionException;
+    String [] getAllAirportsForComboBox()
+            throws SQLException, DataBaseConnectionException;
+    String [] getAllTerminalsOfAnAirportForComboBox(String airportId)
+            throws SQLException, DataBaseConnectionException;
+    String [] getAllGatesOfAnAirportAndTerminalForComboBox(String airportId, String terminalId)
             throws SQLException, DataBaseConnectionException;
     //endregion
 

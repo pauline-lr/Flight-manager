@@ -39,60 +39,54 @@ public class Flight {
         setPlane(plane);
         currentDate = new GregorianCalendar();
     }
-
     public Flight(String number, GregorianCalendar departureTime,
                   GregorianCalendar arrivalTime, Boolean isMealOnBoard, String pilot, String departureGate, String arrivalGate, Integer plane)
             throws FlightException.NumberFlightException, FlightException.MealDescriptionException {
         this(number, departureTime, arrivalTime, isMealOnBoard, null, pilot, departureGate, arrivalGate, plane);
     }
-
-
     //endregion
-
 
     //region Setters
     private void setNumber(String number) throws FlightException.NumberFlightException {
-            Pattern r = Pattern.compile(REGEX_NUMBER);
-            Matcher m = r.matcher(number);
-            if (m.find())
+            Pattern pattern = Pattern.compile(REGEX_NUMBER);
+            Matcher matcher = pattern.matcher(number);
+            if (matcher.find()) {
                 this.number = number;
-            else
+            } else {
                 throw new FlightException.NumberFlightException(number);
+            }
     }
-
     private void setDepartureTime(GregorianCalendar departureTime) {
-        if(departureTime.compareTo(currentDate) > 0) {
+        if (departureTime.compareTo(currentDate) > 0) {
             this.departureTime = departureTime;
-        }else{
+        } else {
             try {
                 throw new FlightException.DepartureDateException(departureTime);
-            } catch (FlightException.DepartureDateException | DateTimeParseException e) {
-                e.printStackTrace();
+            } catch (FlightException.DepartureDateException | DateTimeParseException exception) {
+                exception.printStackTrace();
             }
         }
     }
-
     private void setArrivalTime(GregorianCalendar arrivalTime) {
-        if(arrivalTime.compareTo(currentDate) > 0) {
+        if (arrivalTime.compareTo(currentDate) > 0) {
             this.arrivalTime = arrivalTime;
-        }else{
+        } else {
             try {
                 throw new FlightException.ArrivalDateException(arrivalTime);
-            } catch (FlightException.ArrivalDateException | DateTimeParseException e) {
-                e.printStackTrace();
+            } catch (FlightException.ArrivalDateException | DateTimeParseException exception) {
+                exception.printStackTrace();
             }
         }
     }
-
     private void setMealOnBoard(Boolean mealOnBoard) {
         isMealOnBoard = mealOnBoard;
     }
-
     public void setMealDescription(String mealDescription) throws FlightException.MealDescriptionException {
-        if(mealDescription.length() <= MEAL_DESCRIPTION_LENTGH)
+        if (mealDescription.length() <= MEAL_DESCRIPTION_LENTGH) {
             this.mealDescription = mealDescription;
-        else
+        } else {
             throw new FlightException.MealDescriptionException(mealDescription);
+        }
     }
     private void setPilot(String pilot) {
         this.pilot = pilot;
@@ -134,11 +128,9 @@ public class Flight {
     public String getArrivalGate() {
         return arrivalGate;
     }
-
     public Integer getNumberPlane(){
         return plane;
     }
-
     public Integer getPlane() {
         return plane;
     }

@@ -151,7 +151,11 @@ public class MenuWindow extends JFrame{
         @Override
         public void actionPerformed(ActionEvent evt){
             frameContainer.removeAll();
-            frameContainer.add(new AddFlightPanel(MenuWindow.this), BorderLayout.CENTER);
+            try {
+                frameContainer.add(new AddFlightPanel(MenuWindow.this), BorderLayout.CENTER);
+            } catch (SQLException | DataBaseConnectionException throwables) {
+                throwables.printStackTrace();
+            }
             frameContainer.repaint();
             MenuWindow.this.setVisible(true);
         }
@@ -161,7 +165,11 @@ public class MenuWindow extends JFrame{
         @Override
         public void actionPerformed(ActionEvent evt){
             frameContainer.removeAll();
-            frameContainer.add(new ModifyFlightPanel(MenuWindow.this), BorderLayout.CENTER);
+            try {
+                frameContainer.add(new ModifyFlightPanel(MenuWindow.this), BorderLayout.CENTER);
+            } catch (SQLException | DataBaseConnectionException throwables) {
+                throwables.printStackTrace();
+            }
             frameContainer.repaint();
             MenuWindow.this.setVisible(true);
         }

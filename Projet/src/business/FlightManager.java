@@ -5,6 +5,8 @@ import exception.*;
 import model.*;
 import pattern.*;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -44,10 +46,6 @@ public class FlightManager {
             throws SQLException, DataBaseConnectionException {
         return dao.getAllPilotsForComboBox();
     }
-    public String [] getAllAirportsForComboBox()
-            throws SQLException, DataBaseConnectionException {
-        return dao.getAllAirportsForComboBox();
-    }
     public String [] getAllPlanesForComboBox()
             throws SQLException, DataBaseConnectionException {
         return dao.getAllPlanesForComboBox();
@@ -55,6 +53,18 @@ public class FlightManager {
     public String [] getAllClassesForComboBox()
             throws SQLException, DataBaseConnectionException {
         return dao.getAllClassesForComboBox();
+    }
+    public String [] getAllAirportsForComboBox()
+            throws SQLException, DataBaseConnectionException {
+        return dao.getAllAirportsForComboBox();
+    }
+    public String [] getAllTerminalsOfAnAirportForComboBox(String airportId)
+            throws SQLException, DataBaseConnectionException {
+        return dao.getAllTerminalsOfAnAirportForComboBox(airportId);
+    }
+    public String [] getAllGatesOfAnAirportAndTerminalForComboBox(String airportId, String terminalId)
+            throws SQLException, DataBaseConnectionException {
+        return dao.getAllGatesOfAnAirportAndTerminalForComboBox(airportId, terminalId);
     }
     //endregion
 

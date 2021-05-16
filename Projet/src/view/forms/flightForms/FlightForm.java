@@ -7,6 +7,7 @@ import model.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.SQLException;
 import java.util.*;
 import java.util.regex.*;
 
@@ -30,14 +31,14 @@ public class FlightForm extends JPanel {
     private JComboBox departureTerminalComboBox, arrivalTerminalComboBox;
     private GregorianCalendar currentDate;
 
-    public FlightForm(){
+    public FlightForm() throws SQLException, DataBaseConnectionException {
         currentDate = new GregorianCalendar();
         setLayout(new GridLayout(13, 4));
 
         initForm();
     }
 
-    public void initForm(){
+    public void initForm() throws SQLException, DataBaseConnectionException {
         numberLabel = new JLabel("N° de vol : ");
         numberLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         add(numberLabel);
@@ -119,14 +120,14 @@ public class FlightForm extends JPanel {
         departureTerminalLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(departureTerminalLabel);
 
-        departureTerminalComboBox = new JComboBox();
+        departureTerminalComboBox = new JComboBox(controller.getAllTerminalsOfAnAirportForComboBox(getDepartureAirportId()));
         this.add(departureTerminalComboBox);
 
         departureGateLabel = new JLabel("Porte : ");
         departureGateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(departureGateLabel);
 
-        departureGateSpinner = new JComboBox();
+        departureGateSpinner = new JComboBox(controller.getAllGatesOfAnAirportAndTerminalForComboBox(getDepartureAirportId(), (String)getDepartureTerminalComboBox().getSelectedItem()));
         /*
         try {
             //Pas d'accès à gate ? '
@@ -194,7 +195,7 @@ public class FlightForm extends JPanel {
         arrivalTerminalLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(arrivalTerminalLabel);
 
-        arrivalTerminalComboBox = new JComboBox();
+        arrivalTerminalComboBox = new JComboBox(controller.getAllTerminalsOfAnAirportForComboBox(getArrivalAirportId()));
         this.add(arrivalTerminalComboBox);
 
         arrivalGateLabel = new JLabel("Porte : ");
@@ -202,7 +203,7 @@ public class FlightForm extends JPanel {
         this.add(arrivalGateLabel);
 
 
-        arrivalGateSpinner = new JComboBox();
+        arrivalGateSpinner = new JComboBox(controller.getAllGatesOfAnAirportAndTerminalForComboBox(getArrivalAirportId(), (String)getArrivalTerminalComboBox().getSelectedItem()));
         this.add(arrivalGateSpinner);
 
         addEmptyLabel();
@@ -319,10 +320,17 @@ public class FlightForm extends JPanel {
         GregorianCalendar arrivalDate = new GregorianCalendar(Integer.parseInt(arrivalYear.getValue().toString()), Integer.parseInt(arrivalMonth.getValue().toString()), Integer.parseInt(arrivalDay.getValue().toString()),
                 Integer.parseInt(arrivalHour.getValue().toString()), Integer.parseInt(arrivalMinute.getValue().toString()));
 
-        Flight flight = new Flight(numberTextField.getText(), departureDate, arrivalDate, isMealOnBoardCheckBox.isSelected(),
-                mealDescriptionLabel.getText(), getPilotId(), Objects.requireNonNull(departureGateSpinner.getSelectedItem()).toString(),
-                Objects.requireNonNull(arrivalGateSpinner.getSelectedItem()).toString(), getPlaneId());
-        return flight;
+        return new Flight(
+            numberTextField.getText(),
+            departureDate,
+            arrivalDate,
+            isMealOnBoardCheckBox.isSelected(),
+            mealDescriptionLabel.getText(),
+            getPilotId(),
+            Objects.requireNonNull(departureGateSpinner.getSelectedItem()).toString(),
+            Objects.requireNonNull(arrivalGateSpinner.getSelectedItem()).toString(),
+            getPlaneId())
+        ;
     }
 
 

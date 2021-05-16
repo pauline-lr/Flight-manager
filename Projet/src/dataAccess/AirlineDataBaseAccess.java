@@ -289,18 +289,6 @@ public class AirlineDataBaseAccess implements DAO {
 
         return pilotLicenceNumbers.toArray(new String[0]);
     }
-    public String [] getAllAirportsForComboBox()
-            throws SQLException, DataBaseConnectionException {
-        ArrayList<String> airportCodes = new ArrayList<>();
-        Statement statement = SingletonConnection.getInstance().createStatement();
-        ResultSet data = statement.executeQuery("SELECT * FROM airport ORDER BY code");
-
-        while(data.next()) {
-            airportCodes.add(data.getString("code") + " - " + data.getString("name") + ", " + data.getString("country"));
-        }
-
-        return airportCodes.toArray(new String[0]);
-    }
     public String [] getAllPlanesForComboBox()
             throws SQLException, DataBaseConnectionException {
         ArrayList<String> planeIDs = new ArrayList<>();
@@ -324,14 +312,82 @@ public class AirlineDataBaseAccess implements DAO {
         }
         return classeNames.toArray(new String[0]);
     }
+    public String [] getAllAirportsForComboBox()
+            throws SQLException, DataBaseConnectionException {
+        ArrayList<String> airportCodes = new ArrayList<>();
+        Statement statement = SingletonConnection.getInstance().createStatement();
+        ResultSet data = statement.executeQuery("SELECT * FROM airport ORDER BY code");
+
+        while(data.next()) {
+            airportCodes.add(data.getString("code") + " - " + data.getString("name") + ", " + data.getString("country"));
+        }
+
+        return airportCodes.toArray(new String[0]);
+    }
+    public String [] getAllTerminalsOfAnAirportForComboBox(String airportId)
+            throws SQLException, DataBaseConnectionException {
+        ArrayList<String> terminalsOfAnAirport = new ArrayList<>();
+        String sql =
+            "SELECT DISTINCT " +
+                "terminal " +
+            "FROM " +
+                "gate gat, " +
+                "airport air " +
+            "WHERE " +
+                "gat.airport = air.code AND " +
+                "air.code = ? " +
+            "ORDER BY " +
+                "terminal;";
+
+        PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sql);
+        preparedStatement.setString(1, airportId);
+
+        ResultSet data = preparedStatement.executeQuery();
+
+        while (data.next()) {
+            terminalsOfAnAirport.add(data.getString("terminal"));
+        }
+
+        return terminalsOfAnAirport.toArray(new String[0]);
+    }
+    public String [] getAllGatesOfAnAirportAndTerminalForComboBox(String airportId, String terminalId)
+            throws SQLException, DataBaseConnectionException {
+        ArrayList<String> gatesOfAnAirportAndTerminal = new ArrayList<>();
+        String sql =
+            "SELECT " +
+                "number " +
+            "FROM " +
+                "gate gat, " +
+                "airport air " +
+            "WHERE " +
+                "gat.airport = air.code AND " +
+                "air.code = ? AND " +
+                "gat.terminal = ? " +
+            "ORDER BY " +
+                "number;";
+
+        PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sql);
+        preparedStatement.setString(1, airportId);
+        preparedStatement.setString(2, terminalId);
+
+        ResultSet data = preparedStatement.executeQuery();
+
+        while (data.next()) {
+            gatesOfAnAirportAndTerminal.add(data.getString("number"));
+        }
+
+        return gatesOfAnAirportAndTerminal.toArray(new String[0]);
+    }
     //endregion
 
     //region Edit
     public void addFlight(Flight flightToAdd)
             throws SQLException, DataBaseConnectionException {
         String sql =
-                "INSERT INTO flight " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "INSERT INTO " +
+                    "flight " +
+                "VALUES " +
+                    "(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         PreparedStatement preparedStatement = preparedFlightStatement(sql, flightToAdd);
 
@@ -340,10 +396,20 @@ public class AirlineDataBaseAccess implements DAO {
     public void modifyFlight(Flight flightToUpdate, String originalNumber)
             throws SQLException, DataBaseConnectionException {
         String sql =
-                "UPDATE flight " +
-                "SET number = ?, departure_time = ?, arrival_time = ?, is_meal_on_board = ?, " +
-                "meal_description = ?, departure_gate = ?, arrival_gate = ?, pilot = ?, plane = ? " +
-                "WHERE number = ?";
+            "UPDATE " +
+                "flight " +
+            "SET " +
+                "number = ?, " +
+                "departure_time = ?, " +
+                "arrival_time = ?, " +
+                "is_meal_on_board = ?, " +
+                "meal_description = ?, " +
+                "departure_gate = ?, " +
+                "arrival_gate = ?, " +
+                "pilot = ?, " +
+                "plane = ? " +
+            "WHERE " +
+                "number = ?";
 
         PreparedStatement preparedStatement = preparedFlightStatement(sql, flightToUpdate);
         preparedStatement.setString(10, originalNumber);
@@ -358,8 +424,11 @@ public class AirlineDataBaseAccess implements DAO {
     public void deleteFlight(Flight flightToDelete)
             throws SQLException, DataBaseConnectionException {
         String sql =
-                "DELETE FROM flight " +
-                "WHERE number = ?";
+                "DELETE " +
+                "FROM " +
+                    "flight " +
+                "WHERE " +
+                    "number = ?";
         PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sql);
         preparedStatement.setString(1, flightToDelete.getNumber());
 

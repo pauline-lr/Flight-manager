@@ -1,17 +1,19 @@
 package view.panels.menuBarPanels.optionsFlightPanels;
 
+import exception.DataBaseConnectionException;
 import view.forms.flightForms.FlightForm;
 import view.panels.buttons.ButtonsPanel;
 import view.windows.MenuWindow;
 
 import java.awt.*;
+import java.sql.SQLException;
 import javax.swing.*;
 
 public class AddFlightPanel extends JPanel {
     private MenuWindow menuWindow;
     private FlightForm flightForm;
 
-    public AddFlightPanel(MenuWindow menuWindow) {
+    public AddFlightPanel(MenuWindow menuWindow) throws SQLException, DataBaseConnectionException {
         this.flightForm = new FlightForm();
         this.menuWindow = menuWindow;
         this.setLayout(new BorderLayout());
