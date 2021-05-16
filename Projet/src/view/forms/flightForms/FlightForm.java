@@ -269,19 +269,19 @@ public class FlightForm extends JPanel {
 
     public Integer getPlaneId() {
         String planeText = (String) planeComboBox.getSelectedItem();
-        String [] res = planeText.split(" ");
+        String [] res = planeText != null ? planeText.split(" ") : new String[0];
         return Integer.parseInt(res[0]);
     }
 
     public String getPilotId() {
-        String pilotId = " ";
+        StringBuilder pilotId = new StringBuilder(" ");
         String pilotText = (String) pilotComboBox.getSelectedItem();
         String [] res = pilotText.split(" ");
         for (int i = 0; i < LENGTH_PILOT_ID; i++) {
-            pilotId += res[i];
+            pilotId.append(res[i]);
         }
 
-        return pilotId;
+        return pilotId.toString();
     }
 
     public String getDepartureAirportComboBox() {
@@ -307,8 +307,9 @@ public class FlightForm extends JPanel {
         GregorianCalendar departureDate = new GregorianCalendar(departureYear.getSelectedIndex(), departureMonth.getSelectedIndex(), departureDay.getSelectedIndex(), departureHour.getSelectedIndex(), departureMinute.getSelectedIndex());
         GregorianCalendar arrivalDate = new GregorianCalendar(arrivalYear.getSelectedIndex(), arrivalMonth.getSelectedIndex(), arrivalDay.getSelectedIndex(), arrivalHour.getSelectedIndex(), arrivalMinute.getSelectedIndex());
 
-        Flight flight = new Flight(numberTextField.getText(), departureDate, arrivalDate, isMealOnBoardCheckBox.isSelected(), mealDescriptionLabel.getText(), getPilotId(),
-                departureGateSpinner.getSelectedItem().toString(), arrivalGateSpinner.getSelectedItem().toString(), getPlaneId());
+        Flight flight = new Flight(numberTextField.getText(), departureDate, arrivalDate, isMealOnBoardCheckBox.isSelected(),
+                mealDescriptionLabel.getText(), getPilotId(), Objects.requireNonNull(departureGateSpinner.getSelectedItem()).toString(),
+                Objects.requireNonNull(arrivalGateSpinner.getSelectedItem()).toString(), getPlaneId());
         return flight;
     }
 
