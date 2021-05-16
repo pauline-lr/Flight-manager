@@ -265,53 +265,53 @@ public class AirlineDataBaseAccess implements DAO {
     //endregion
 
     //region Get
-    public ArrayList<String> getAllFlightsForComboBox()
+    public String [] getAllFlightsForComboBox()
             throws SQLException, DataBaseConnectionException {
         ArrayList<String> flightNumbers = new ArrayList<>();
         Statement statement = SingletonConnection.getInstance().createStatement();
-        ResultSet data = statement.executeQuery("SELECT number FROM flight ORDER BY number");
+        ResultSet data = statement.executeQuery("SELECT * FROM flight ORDER BY number");
 
         while(data.next()) {
             flightNumbers.add(data.getString("number"));
         }
 
-        return flightNumbers;
+        return flightNumbers.toArray(new String[0]);
     }
-    public ArrayList<String> getAllPilotsForComboBox()
+    public String [] getAllPilotsForComboBox()
             throws SQLException, DataBaseConnectionException {
         ArrayList<String> pilotLicenceNumbers = new ArrayList<>();
         Statement statement = SingletonConnection.getInstance().createStatement();
-        ResultSet data = statement.executeQuery("SELECT licence_number FROM pilot ORDER BY licence_number");
+        ResultSet data = statement.executeQuery("SELECT * FROM pilot ORDER BY licence_number");
 
         while(data.next()) {
-            pilotLicenceNumbers.add(data.getString("licence_number"));
+            pilotLicenceNumbers.add(data.getString("licence_number") + " - " + data.getString("last_name") + " " + data.getString("first_name"));
         }
 
-        return pilotLicenceNumbers;
+        return pilotLicenceNumbers.toArray(new String[0]);
     }
-    public ArrayList<String> getAllAirportsForComboBox()
+    public String [] getAllAirportsForComboBox()
             throws SQLException, DataBaseConnectionException {
         ArrayList<String> airportCodes = new ArrayList<>();
         Statement statement = SingletonConnection.getInstance().createStatement();
-        ResultSet data = statement.executeQuery("SELECT code FROM airport ORDER BY code");
+        ResultSet data = statement.executeQuery("SELECT * FROM airport ORDER BY code");
 
         while(data.next()) {
-            airportCodes.add(data.getString("code"));
+            airportCodes.add(data.getString("code") + " - " + data.getString("name") + ", " + data.getString("country"));
         }
 
-        return airportCodes;
+        return airportCodes.toArray(new String[0]);
     }
-    public ArrayList<Integer> getAllPlanesForComboBox()
+    public String [] getAllPlanesForComboBox()
             throws SQLException, DataBaseConnectionException {
-        ArrayList<Integer> planeIDs = new ArrayList<>();
+        ArrayList<String> planeIDs = new ArrayList<>();
         Statement statement = SingletonConnection.getInstance().createStatement();
-        ResultSet data = statement.executeQuery("SELECT plane_id FROM plane ORDER BY plane_id");
+        ResultSet data = statement.executeQuery("SELECT * FROM plane ORDER BY plane_id");
 
         while(data.next()) {
-            planeIDs.add(data.getInt("plane_id"));
+            planeIDs.add(data.getString("plane_id") + " - " + data.getString("brand") + " " + data.getString("model"));
         }
 
-        return planeIDs;
+        return planeIDs.toArray(new String[0]);
     }
     public String [] getAllClassesForComboBox()
             throws SQLException, DataBaseConnectionException {
@@ -394,54 +394,4 @@ public class AirlineDataBaseAccess implements DAO {
 
         return preparedStatement;
     }
-    /*
-    private static ArrayList<Flight> flightResultSetIntoArrayList(ResultSet data) throws SQLException, FlightException.MealDescriptionException, FlightException.NumberFlightException {
-        ArrayList<Flight> flights = new ArrayList<>();
-        Flight flight;
-        GregorianCalendar departureTime = new GregorianCalendar();
-        GregorianCalendar arrivalTime = new GregorianCalendar();
-        String mealDescription;
-
-        while (data.next()) {
-            departureTime.setTime(data.getDate("departure_time"));
-            arrivalTime.setTime(data.getDate("arrival_time"));
-
-            flight = new Flight(
-                    data.getString("number"),
-                    departureTime,
-                    arrivalTime,
-                    data.getBoolean("is_meal_on_board"),
-                    data.getString("pilot"),
-                    data.getString("departure_gate"),
-                    data.getString("arrival_gate"),
-                    data.getInt("plane")
-            );
-
-            mealDescription = data.getString("meal_description");
-            if (!data.wasNull()) {
-                flight.setMealDescription(mealDescription);
-            }
-
-            flights.add(flight);
-        }
-
-        return flights;
-    }
-    private static ArrayList<Class> classResultSetIntoArrayList(ResultSet data) throws SQLException, NameClassException {
-        ArrayList<Class> classes = new ArrayList<>();
-        Class classe;
-
-        while (data.next()) {
-            classe = new Class(
-                    data.getInt("num"),
-                    data.getString("name")
-            );
-
-            classes.add(classe);
-        }
-
-        return classes;
-    }
-    */
-    //endregion
 }

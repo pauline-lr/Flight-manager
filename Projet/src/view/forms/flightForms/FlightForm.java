@@ -102,7 +102,7 @@ public class FlightForm extends JPanel {
         departureAirportLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(departureAirportLabel);
         try {
-            departureAirportComboBox = new JComboBox(controller.getAllAirportsForComboBox().toArray());
+            departureAirportComboBox = new JComboBox(controller.getAllAirportsForComboBox());
         } catch (Exception exception) {
             JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
@@ -177,7 +177,7 @@ public class FlightForm extends JPanel {
         arrivalAirportLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(arrivalAirportLabel);
         try {
-            arrivalAirportComboBox = new JComboBox(controller.getAllAirportsForComboBox().toArray());
+            arrivalAirportComboBox = new JComboBox(controller.getAllAirportsForComboBox());
         } catch (Exception exception) {
             JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
@@ -216,7 +216,7 @@ public class FlightForm extends JPanel {
         planeLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(planeLabel);
         try {
-            planeComboBox = new JComboBox(controller.getAllPlanesForComboBox().toArray());
+            planeComboBox = new JComboBox(controller.getAllPlanesForComboBox());
         } catch (Exception exception) {
             JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
@@ -227,7 +227,7 @@ public class FlightForm extends JPanel {
         pilotLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(pilotLabel);
         try {
-            pilotComboBox = new JComboBox(controller.getAllPilotsForComboBox().toArray());
+            pilotComboBox = new JComboBox(controller.getAllPilotsForComboBox());
         } catch (Exception exception) {
             JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }

@@ -22,7 +22,7 @@ public class SearchPilotForm extends JPanel {
         pilotName = new JLabel("Pilote : ");
         pilotName.setHorizontalAlignment(SwingConstants.RIGHT);
         add(pilotName);
-        pilotNameSelect = new JComboBox(controller.getAllPilotsForComboBox().toArray());
+        pilotNameSelect = new JComboBox(controller.getAllPilotsForComboBox());
         this.add(pilotNameSelect);
     }
 }

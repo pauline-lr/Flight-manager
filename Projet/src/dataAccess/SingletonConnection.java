@@ -1,7 +1,6 @@
 package dataAccess;
 
-import exception.DataBaseCloseException;
-import exception.DataBaseConnectionException;
+import exception.*;
 
 import java.sql.*;
 
