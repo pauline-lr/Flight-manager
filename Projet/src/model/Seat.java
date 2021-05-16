@@ -35,21 +35,23 @@ public class Seat {
 
     //region Setters
     private void setSeatRow(Integer seatRow) throws SeatException.SeatRowException {
-        Pattern r = Pattern.compile(REGEX_SEAT_ROW);
-        Matcher m = r.matcher(Integer.toString(seatRow));
-        if (m.find())
+        Pattern pattern = Pattern.compile(REGEX_SEAT_ROW);
+        Matcher matcher = pattern.matcher(Integer.toString(seatRow));
+        if (matcher.find()) {
             this.seatRow = seatRow;
-        else
+        } else {
             throw new SeatException.SeatRowException(seatRow);
+        }
     }
 
     private void setSeatColumn(Character seatColumn) throws SeatException.SeatColumnException {
-        Pattern r = Pattern.compile(REGEX_SEAT_COLUMN);
-        Matcher m = r.matcher(Character.toString(seatColumn));
-        if (m.find())
+        Pattern pattern = Pattern.compile(REGEX_SEAT_COLUMN);
+        Matcher matcher = pattern.matcher(Character.toString(seatColumn));
+        if (matcher.find()) {
             this.seatColumn = seatColumn;
-        else
+        } else {
             throw new SeatException.SeatColumnException(seatColumn);
+        }
     }
 
     private void setOnWindowSide(Boolean onWindowSide) {

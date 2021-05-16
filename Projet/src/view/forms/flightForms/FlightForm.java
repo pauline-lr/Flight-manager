@@ -274,9 +274,8 @@ public class FlightForm extends JPanel {
     }
 
     public String getPilotId() {
-        StringBuilder pilotId = new StringBuilder(" ");
         String pilotText = (String) pilotComboBox.getSelectedItem();
-        String [] res = pilotText.split(" ");
+        String [] res = pilotText.split("");
         for (int i = 0; i < LENGTH_PILOT_ID; i++) {
             pilotId.append(res[i]);
         }
