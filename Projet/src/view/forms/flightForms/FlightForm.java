@@ -8,8 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.regex.*;
 
 public class FlightForm extends JPanel {
     private static final int LENGTH_PILOT_ID = 7;
@@ -293,7 +292,7 @@ public class FlightForm extends JPanel {
         String id = null;
         if (matcher.find())
         {
-            id = (String) matcher.group();
+            id = matcher.group();
         }
         return id;
     }
