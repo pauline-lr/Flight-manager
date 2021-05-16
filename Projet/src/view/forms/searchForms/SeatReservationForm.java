@@ -22,7 +22,7 @@ public class SeatReservationForm extends JPanel {
         seatCategory = new JLabel("Classe du siège : ");
         seatCategory.setHorizontalAlignment(SwingConstants.RIGHT);
         add(seatCategory);
-        seatCategorySelect = new JComboBox(controller.getAllClassesName().toArray());
+        seatCategorySelect = new JComboBox(controller.getAllClassesForComboBox());
         this.add(seatCategorySelect);
     }
 }

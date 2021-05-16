@@ -20,15 +20,15 @@ public interface DAO {
     //endregion
 
     //region Get
-    ArrayList<String> getAllFlightsNumber()
+    ArrayList<String> getAllFlightsForComboBox()
             throws SQLException, DataBaseConnectionException;
-    ArrayList<String> getAllPilotsLicenceNumber()
+    ArrayList<String> getAllPilotsForComboBox()
             throws SQLException, DataBaseConnectionException;
     ArrayList<String> getAllAirportsForComboBox()
             throws SQLException, DataBaseConnectionException;
-    ArrayList<Integer> getAllPlanesID()
+    ArrayList<Integer> getAllPlanesForComboBox()
             throws SQLException, DataBaseConnectionException;
-    ArrayList<String> getAllClassesName()
+    String [] getAllClassesForComboBox()
             throws SQLException, DataBaseConnectionException;
     //endregion
 

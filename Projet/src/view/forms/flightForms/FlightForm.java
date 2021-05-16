@@ -216,7 +216,7 @@ public class FlightForm extends JPanel {
         planeLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(planeLabel);
         try {
-            planeComboBox = new JComboBox(controller.getAllPlanesID().toArray());
+            planeComboBox = new JComboBox(controller.getAllPlanesForComboBox().toArray());
         } catch (Exception exception) {
             JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
@@ -227,7 +227,7 @@ public class FlightForm extends JPanel {
         pilotLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(pilotLabel);
         try {
-            pilotComboBox = new JComboBox(controller.getAllPilotsLicenceNumber().toArray());
+            pilotComboBox = new JComboBox(controller.getAllPilotsForComboBox().toArray());
         } catch (Exception exception) {
             JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }

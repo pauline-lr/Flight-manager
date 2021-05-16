@@ -20,14 +20,14 @@ public class SingletonConnection {
         return uniqueConnection;
     }
 
-    // il faut fermer la connexion à la base de donnée
+    // il faut fermer la connexion à la base de données
     public static void closeConnection() throws DataBaseCloseException {
-        try{
-            if(uniqueConnection != null)
+        if (uniqueConnection != null) {
+            try {
                 uniqueConnection.close();
-        }
-        catch (SQLException exception){
-            throw new DataBaseCloseException();
+            } catch (SQLException exception){
+                throw new DataBaseCloseException();
+            }
         }
     }
 }

@@ -36,25 +36,25 @@ public class FlightManager {
     //endregion
 
     //region Get
-    public ArrayList<String> getAllFlightsNumber()
+    public ArrayList<String> getAllFlightsForComboBox()
             throws SQLException, DataBaseConnectionException {
-        return dao.getAllFlightsNumber();
+        return dao.getAllFlightsForComboBox();
     }
-    public ArrayList<String> getAllPilotsLicenceNumber()
+    public ArrayList<String> getAllPilotsForComboBox()
             throws SQLException, DataBaseConnectionException {
-        return dao.getAllPilotsLicenceNumber();
+        return dao.getAllPilotsForComboBox();
     }
     public ArrayList<String> getAllAirportsForComboBox()
             throws SQLException, DataBaseConnectionException {
         return dao.getAllAirportsForComboBox();
     }
-    public ArrayList<Integer> getAllPlanesID()
+    public ArrayList<Integer> getAllPlanesForComboBox()
             throws SQLException, DataBaseConnectionException {
-        return dao.getAllPlanesID();
+        return dao.getAllPlanesForComboBox();
     }
-    public ArrayList<String> getAllClassesName()
+    public String [] getAllClassesForComboBox()
             throws SQLException, DataBaseConnectionException {
-        return dao.getAllClassesName();
+        return dao.getAllClassesForComboBox();
     }
     //endregion
 

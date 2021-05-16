@@ -265,9 +265,9 @@ public class AirlineDataBaseAccess implements DAO {
     //endregion
 
     //region Get
-    public ArrayList<String> getAllFlightsNumber()
+    public ArrayList<String> getAllFlightsForComboBox()
             throws SQLException, DataBaseConnectionException {
-        ArrayList<String> flightNumbers = new ArrayList();
+        ArrayList<String> flightNumbers = new ArrayList<>();
         Statement statement = SingletonConnection.getInstance().createStatement();
         ResultSet data = statement.executeQuery("SELECT number FROM flight ORDER BY number");
 
@@ -277,9 +277,9 @@ public class AirlineDataBaseAccess implements DAO {
 
         return flightNumbers;
     }
-    public ArrayList<String> getAllPilotsLicenceNumber()
+    public ArrayList<String> getAllPilotsForComboBox()
             throws SQLException, DataBaseConnectionException {
-        ArrayList<String> pilotLicenceNumbers = new ArrayList();
+        ArrayList<String> pilotLicenceNumbers = new ArrayList<>();
         Statement statement = SingletonConnection.getInstance().createStatement();
         ResultSet data = statement.executeQuery("SELECT licence_number FROM pilot ORDER BY licence_number");
 
@@ -291,7 +291,7 @@ public class AirlineDataBaseAccess implements DAO {
     }
     public ArrayList<String> getAllAirportsForComboBox()
             throws SQLException, DataBaseConnectionException {
-        ArrayList<String> airportCodes = new ArrayList();
+        ArrayList<String> airportCodes = new ArrayList<>();
         Statement statement = SingletonConnection.getInstance().createStatement();
         ResultSet data = statement.executeQuery("SELECT code FROM airport ORDER BY code");
 
@@ -301,9 +301,9 @@ public class AirlineDataBaseAccess implements DAO {
 
         return airportCodes;
     }
-    public ArrayList<Integer> getAllPlanesID()
+    public ArrayList<Integer> getAllPlanesForComboBox()
             throws SQLException, DataBaseConnectionException {
-        ArrayList<Integer> planeIDs = new ArrayList();
+        ArrayList<Integer> planeIDs = new ArrayList<>();
         Statement statement = SingletonConnection.getInstance().createStatement();
         ResultSet data = statement.executeQuery("SELECT plane_id FROM plane ORDER BY plane_id");
 
@@ -313,17 +313,16 @@ public class AirlineDataBaseAccess implements DAO {
 
         return planeIDs;
     }
-    public ArrayList<String> getAllClassesName()
+    public String [] getAllClassesForComboBox()
             throws SQLException, DataBaseConnectionException {
-        ArrayList<String> classeNames = new ArrayList();
+        ArrayList<String> classeNames = new ArrayList<>();
         Statement statement = SingletonConnection.getInstance().createStatement();
         ResultSet data = statement.executeQuery("SELECT name FROM class ORDER BY class_id DESC");
 
         while(data.next()) {
             classeNames.add(data.getString("name"));
         }
-
-        return classeNames;
+        return classeNames.toArray(new String[0]);
     }
     //endregion
 
