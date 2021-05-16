@@ -8,6 +8,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class FlightForm extends JPanel {
     private static final int LENGTH_PILOT_ID = 7;
@@ -267,39 +269,32 @@ public class FlightForm extends JPanel {
         return arrivalMinute;
     }
 
+    // !!!!!!!!!!!!!!!!!!!!!       Faire exception
+    public String getId(String text) {
+        Pattern pattern = Pattern.compile("^\\w+(?=\\s-\\s)");
+        Matcher matcher = pattern.matcher(text);
+        String id = null;
+        if (matcher.find())
+        {
+            id = (String) matcher.group();
+        }
+        return id;
+    }
     public Integer getPlaneId() {
         String planeText = (String) planeComboBox.getSelectedItem();
-        String [] res = planeText != null ? planeText.split(" ") : new String[0];
-        return Integer.parseInt(res[0]);
+        return Integer.parseInt(getId(planeText));
     }
-
     public String getPilotId() {
-        String pilotText = (String) pilotComboBox.getSelectedItem();
-        String [] res = pilotText.split("");
-        for (int i = 0; i < LENGTH_PILOT_ID; i++) {
-            pilotId.append(res[i]);
-        }
-
-        return pilotId.toString();
+        String pilotText = (String)pilotComboBox.getSelectedItem();
+        return getId(pilotText);
     }
-
-    public String getDepartureAirportComboBox() {
-        return obtainAirportId(departureAirportComboBox);
+    public String getDepartureAirportId() {
+        String departureAirportText = (String)departureAirportComboBox.getSelectedItem();
+        return getId(departureAirportText);
     }
-
-    public String getArrivalAirportComboBox() {
-        return obtainAirportId(arrivalAirportComboBox);
-    }
-
-    public String obtainAirportId(JComboBox airport){
-        String airport_Id = " ";
-        String airportText = (String) airport.getSelectedItem();
-        String [] res = airportText.split(" ");
-        for (int i = 0; i < LENGTH_AIRPORT_ID; i++) {
-            airport_Id += res[i];
-        }
-
-        return airport_Id;
+    public String getArrivalAirportId() {
+        String arrivalAirportText = (String)arrivalAirportComboBox.getSelectedItem();
+        return getId(arrivalAirportText);
     }
 
     public Flight getFlight() throws FlightException.NumberFlightException, FlightException.MealDescriptionException {
