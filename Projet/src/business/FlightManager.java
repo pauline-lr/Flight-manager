@@ -44,9 +44,9 @@ public class FlightManager {
             throws SQLException, DataBaseConnectionException {
         return dao.getAllPilotsLicenceNumber();
     }
-    public ArrayList<String> getAllAirportsCode()
+    public ArrayList<String> getAllAirportsForComboBox()
             throws SQLException, DataBaseConnectionException {
-        return dao.getAllAirportsCode();
+        return dao.getAllAirportsForComboBox();
     }
     public ArrayList<Integer> getAllPlanesID()
             throws SQLException, DataBaseConnectionException {

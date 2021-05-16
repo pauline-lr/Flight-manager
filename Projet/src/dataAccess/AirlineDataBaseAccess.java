@@ -289,7 +289,7 @@ public class AirlineDataBaseAccess implements DAO {
 
         return pilotLicenceNumbers;
     }
-    public ArrayList<String> getAllAirportsCode()
+    public ArrayList<String> getAllAirportsForComboBox()
             throws SQLException, DataBaseConnectionException {
         ArrayList<String> airportCodes = new ArrayList();
         Statement statement = SingletonConnection.getInstance().createStatement();

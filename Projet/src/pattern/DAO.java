@@ -24,7 +24,7 @@ public interface DAO {
             throws SQLException, DataBaseConnectionException;
     ArrayList<String> getAllPilotsLicenceNumber()
             throws SQLException, DataBaseConnectionException;
-    ArrayList<String> getAllAirportsCode()
+    ArrayList<String> getAllAirportsForComboBox()
             throws SQLException, DataBaseConnectionException;
     ArrayList<Integer> getAllPlanesID()
             throws SQLException, DataBaseConnectionException;

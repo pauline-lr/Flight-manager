@@ -102,7 +102,7 @@ public class FlightForm extends JPanel {
         departureAirportLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(departureAirportLabel);
         try {
-            departureAirportComboBox = new JComboBox(controller.getAllAirportsCode().toArray());
+            departureAirportComboBox = new JComboBox(controller.getAllAirportsForComboBox().toArray());
         } catch (Exception exception) {
             JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
@@ -177,7 +177,7 @@ public class FlightForm extends JPanel {
         arrivalAirportLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(arrivalAirportLabel);
         try {
-            arrivalAirportComboBox = new JComboBox(controller.getAllAirportsCode().toArray());
+            arrivalAirportComboBox = new JComboBox(controller.getAllAirportsForComboBox().toArray());
         } catch (Exception exception) {
             JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }

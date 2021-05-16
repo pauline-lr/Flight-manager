@@ -43,9 +43,9 @@ public class ApplicationController {
             throws SQLException, DataBaseConnectionException {
         return flightManager.getAllPilotsLicenceNumber();
     }
-    public ArrayList<String> getAllAirportsCode()
+    public ArrayList<String> getAllAirportsForComboBox()
             throws SQLException, DataBaseConnectionException {
-        return flightManager.getAllAirportsCode();
+        return flightManager.getAllAirportsForComboBox();
     }
     public ArrayList<Integer> getAllPlanesID()
             throws SQLException, DataBaseConnectionException {
