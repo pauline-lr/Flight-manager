@@ -17,20 +17,12 @@ import java.util.GregorianCalendar;
 
 public class FlightTable extends AbstractTableModel {
     private String [] columnNames = {"Numéro", "Heure de départ", "Aéroport de départ",  "Porte de départ", "Heure d'arrivée","Aéroport d'arrivée",  "Porte d'arrivée" ,"Repas", "Description du repas", "Pilote", "Avion"};
-
+    private ApplicationController controller = new ApplicationController();
     private ArrayList<Flight> flights;
 
-    public FlightTable(ApplicationController controller){
-        try{
-            // je pense qu'il va falloir créer une nouvelle méthode dans DBAccess pour gérer ça
-            flights = controller.getAllFlightsForComboBox();
-        }catch(DataBaseAccessException exception) {
-            JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } catch (DataBaseConnectionException e) {
-            e.printStackTrace();
-        }
+    public FlightTable(){
+        // je pense qu'il va falloir créer une nouvelle méthode dans DBAccess pour gérer ça
+        flights = controller.getAllFlights();
     }
 
     public FlightTable(ArrayList<Flight> flights){
@@ -57,15 +49,21 @@ public class FlightTable extends AbstractTableModel {
             case 1:
                 return flight.getDepartureTime();
             case 2:
-                // comment accéder à l'aéroport via l'id de gate ?
-                return flight.getDepartureGate().getAirport();
+                try {
+                    return controller.getAirportToString(flight.getDepartureGate());
+                } catch (SQLException | DataBaseConnectionException throwables) {
+                    throwables.printStackTrace();
+                }
             case 3:
                 return flight.getDepartureGate();
             case 4:
                 return flight.getArrivalTime();
             case 5 :
-                // comment accéder à l'aéroport via l'id de gate ?
-                return flight.getArrivalGate().getAiport();
+                try {
+                    return controller.getAirportToString(flight.getArrivalGate());
+                } catch (SQLException | DataBaseConnectionException throwables) {
+                    throwables.printStackTrace();
+                }
             case 6 :
                 return flight.getArrivalGate();
             case 7:

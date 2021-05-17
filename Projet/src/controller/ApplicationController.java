@@ -38,9 +38,8 @@ public class ApplicationController {
     //endregion
 
     //region Get
-    public String [] getAllFlightsForComboBox()
-            throws SQLException, DataBaseConnectionException {
-        return flightManager.getAllFlightsForComboBox();
+    public ArrayList<Flight> getAllFlights() {
+        return flightManager.getAllFlights();
     }
     public String [] getAllPilotsForComboBox()
             throws SQLException, DataBaseConnectionException {
@@ -65,6 +64,10 @@ public class ApplicationController {
     public String [] getAllGatesOfAnAirportAndTerminalForComboBox(String airportId, String terminalId)
             throws SQLException, DataBaseConnectionException {
         return flightManager.getAllGatesOfAnAirportAndTerminalForComboBox(airportId, terminalId);
+    }
+    public String getAirportToString(String gateId)
+            throws SQLException, DataBaseConnectionException {
+        return flightManager.getAirportToString(gateId);
     }
     //endregion
 
