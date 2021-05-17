@@ -333,7 +333,6 @@ public class FlightForm extends JPanel {
         ;
     }
 
-
     private class MealOnBoardListener implements ItemListener {
         @Override
         public void itemStateChanged(ItemEvent evt){

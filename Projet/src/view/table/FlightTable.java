@@ -2,10 +2,12 @@ package view.table;
 
 import controller.ApplicationController;
 import exception.DataBaseAccessException;
+import exception.DataBaseConnectionException;
 import model.Flight;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
@@ -24,6 +26,10 @@ public class FlightTable extends AbstractTableModel {
             flights = controller.getAllFlightsForComboBox();
         }catch(DataBaseAccessException exception) {
             JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (DataBaseConnectionException e) {
+            e.printStackTrace();
         }
     }
 

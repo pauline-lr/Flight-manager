@@ -1,6 +1,7 @@
 package view.panels.buttons;
 
 import controller.ApplicationController;
+import exception.DataBaseAccessException;
 import exception.DataBaseConnectionException;
 import exception.FlightException;
 import model.Flight;
@@ -17,6 +18,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
+import java.util.GregorianCalendar;
 
 public class ButtonsPanel extends JPanel {
     private static MenuWindow menuWindow;
@@ -24,6 +26,7 @@ public class ButtonsPanel extends JPanel {
     private ApplicationController controller = new ApplicationController();
     FlightForm flightForm;
     private JButton retour, validation, réinit;
+    private GregorianCalendar start, end;
 
     public ButtonsPanel(MenuWindow menuWindow, String typeAction, FlightForm flightForm, String label){
         this.menuWindow = menuWindow;
@@ -42,6 +45,13 @@ public class ButtonsPanel extends JPanel {
         this.add(retour);
         this.add(validation);
         this.add(réinit);
+    }
+
+    // recherche entre 2 dates
+    public ButtonsPanel(MenuWindow menuWindow,String typeAction, GregorianCalendar start, GregorianCalendar end, String label){
+        this(menuWindow, typeAction, null, label);
+        this.start = start;
+        this.end = end;
     }
 
     // bouton retour
@@ -68,11 +78,14 @@ public class ButtonsPanel extends JPanel {
                     }else if(typeAction.equals("Modification")){
                         controller.modifyFlight(flight);
                         JOptionPane.showMessageDialog(null, "Vol modifié", "Succès", JOptionPane.INFORMATION_MESSAGE);
+                    }else if(typeAction.equals("DateFlightSearch")){
+                        controller.getAllFlightsBetweenDates(start, end);
                     }
                 }
 
                 takeOut();
-            } catch (FlightException.NumberFlightException | FlightException.MealDescriptionException | SQLException | DataBaseConnectionException e) {
+            } catch (FlightException.NumberFlightException | FlightException.MealDescriptionException | SQLException
+                    | DataBaseConnectionException | DataBaseAccessException e) {
                 e.printStackTrace();
             }
         }
