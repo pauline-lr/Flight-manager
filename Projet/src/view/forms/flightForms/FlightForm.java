@@ -114,13 +114,13 @@ public class FlightForm extends JPanel {
         addEmptyLabel();
         addEmptyLabel();
 
-
         // departureGate
         departureTerminalLabel = new JLabel("Terminal : ");
         departureTerminalLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(departureTerminalLabel);
 
         departureTerminalComboBox = new JComboBox(controller.getAllTerminalsOfAnAirportForComboBox(getDepartureAirportId()));
+        departureTerminalComboBox.addItemListener(new departureAirportComboBoxListener());
         this.add(departureTerminalComboBox);
 
         departureGateLabel = new JLabel("Porte : ");
@@ -172,7 +172,6 @@ public class FlightForm extends JPanel {
         addEmptyLabel();
         addEmptyLabel();
 
-
         // arrivalAirport
         arrivalAirportLabel = new JLabel("Aéroport d'arrivée : ");
         arrivalAirportLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -188,7 +187,6 @@ public class FlightForm extends JPanel {
         addEmptyLabel();
         addEmptyLabel();
         addEmptyLabel();
-
 
         // arrivalGate
         arrivalTerminalLabel = new JLabel("Terminal : ");
@@ -236,7 +234,6 @@ public class FlightForm extends JPanel {
 
         addEmptyLabel();
 
-
         // isMealOnBoard
         isMealOnBoardCheckBox = new JCheckBox("Repas à bord");
         isMealOnBoardCheckBox.addItemListener(new MealOnBoardListener());
@@ -264,27 +261,21 @@ public class FlightForm extends JPanel {
     public JTextField getMealDescriptionTextField() {
         return mealDescriptionTextField;
     }
-
     public JComboBox getDepartureTerminalComboBox() {
         return departureTerminalComboBox;
     }
-
     public JComboBox getArrivalTerminalComboBox() {
         return arrivalTerminalComboBox;
     }
-
     public JComboBox getDepartureGateSpinner() {
         return departureGateSpinner;
     }
-
     public JComboBox getArrivalGateSpinner() {
         return arrivalGateSpinner;
     }
-
     public JCheckBox getIsMealOnBoardCheckBox() {
         return isMealOnBoardCheckBox;
     }
-
 
     // !!!!!!!!!!!!!!!!!!!!!       Faire exception
     public String getId(String text) {
@@ -314,11 +305,49 @@ public class FlightForm extends JPanel {
         return getId(arrivalAirportText);
     }
 
+    private class departureAirportComboBoxListener implements ItemListener {
+        @Override
+        public void itemStateChanged(ItemEvent event){
+            if (event.getStateChange() == ItemEvent.SELECTED) {
+                departureAirportComboBox.removeAll();
+                try {
+                    for (String item : controller.getAllTerminalsOfAnAirportForComboBox(getArrivalAirportId())) {
+                        departureAirportComboBox.insertItemAt(item, departureAirportComboBox.getItemCount());
+                    }
+                } catch (SQLException | DataBaseConnectionException throwables) {
+                    throwables.printStackTrace();
+                }
+                departureAirportComboBox.setSelectedIndex(0);
+            }
+        }
+    }
+
+    private class arrivalAirportComboBoxListener implements ItemListener {
+        @Override
+        public void itemStateChanged(ItemEvent evt){
+            if (evt.getStateChange() == ItemEvent.SELECTED){
+                mealDescriptionTextField.setEnabled(true);
+            } else {
+                mealDescriptionTextField.setEnabled(false);
+            }
+        }
+    }
+
     public Flight getFlight() throws FlightException.NumberFlightException, FlightException.MealDescriptionException {
-        GregorianCalendar departureDate = new GregorianCalendar(Integer.parseInt(departureYear.getValue().toString()), Integer.parseInt(departureMonth.getValue().toString()), Integer.parseInt(departureDay.getValue().toString()),
-                Integer.parseInt(departureHour.getValue().toString()), Integer.parseInt(departureMinute.getValue().toString()));
-        GregorianCalendar arrivalDate = new GregorianCalendar(Integer.parseInt(arrivalYear.getValue().toString()), Integer.parseInt(arrivalMonth.getValue().toString()), Integer.parseInt(arrivalDay.getValue().toString()),
-                Integer.parseInt(arrivalHour.getValue().toString()), Integer.parseInt(arrivalMinute.getValue().toString()));
+        GregorianCalendar departureDate =
+                new GregorianCalendar(
+                        Integer.parseInt(departureYear.getValue().toString()),
+                        Integer.parseInt(departureMonth.getValue().toString()),
+                        Integer.parseInt(departureDay.getValue().toString()),
+                        Integer.parseInt(departureHour.getValue().toString()),
+                        Integer.parseInt(departureMinute.getValue().toString()));
+        GregorianCalendar arrivalDate =
+                new GregorianCalendar(
+                        Integer.parseInt(arrivalYear.getValue().toString()),
+                        Integer.parseInt(arrivalMonth.getValue().toString()),
+                        Integer.parseInt(arrivalDay.getValue().toString()),
+                        Integer.parseInt(arrivalHour.getValue().toString()),
+                        Integer.parseInt(arrivalMinute.getValue().toString()));
 
         return new Flight(
             numberTextField.getText(),

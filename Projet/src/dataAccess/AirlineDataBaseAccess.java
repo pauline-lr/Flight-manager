@@ -265,30 +265,44 @@ public class AirlineDataBaseAccess implements DAO {
     //endregion
 
     //region Get
-    public ArrayList<Flight> getAllFlights() throws DataBaseAccessException{
-        try{
-            ArrayList<Flight> flights =  new ArrayList<>();
+    public ArrayList<Flight> getAllFlights() {
+        ArrayList<Flight> flights =  new ArrayList<>();
+        Flight flight;
+        GregorianCalendar departureTime = new GregorianCalendar();
+        GregorianCalendar arrivalTime = new GregorianCalendar();
+        String mealDescription;
 
-            Connection connection = SingletonConnection.getInstance();
-            PreparedStatement statement;
-            ResultSet data;
+        try {
+            PreparedStatement statement = SingletonConnection.getInstance().prepareStatement("SELECT * FROM flight ORDER BY number");
+            ResultSet data = statement.executeQuery();
+            while (data.next()) {
+                departureTime.setTime(data.getDate("departure_time"));
+                arrivalTime.setTime(data.getDate("arrival_time"));
 
-            statement = connection.prepareStatement("" +
-                    /*+ récupérer via la BD les infos d'un vol*/;
-            data = statement.executeQuery();
+                flight = new Flight(
+                        data.getString("number"),
+                        departureTime,
+                        arrivalTime,
+                        data.getBoolean("is_meal_on_board"),
+                        data.getString("pilot"),
+                        data.getString("departure_gate"),
+                        data.getString("arrival_gate"),
+                        data.getInt("plane")
+                );
 
-            while(data.next()){
-                flight.
+                mealDescription = data.getString("meal_description");
+                if (!data.wasNull()) {
+                    flight.setMealDescription(mealDescription);
+                }
+
+                flights.add(flight);
             }
-
-            return flights;
-        } catch (SQLException throwables) {
+        } catch (SQLException | DataBaseConnectionException | FlightException.NumberFlightException | FlightException.MealDescriptionException throwables) {
             throwables.printStackTrace();
-        } catch (DataBaseConnectionException e) {
-            e.printStackTrace();
         }
-    }
 
+        return flights;
+    }
     public String [] getAllFlightsForComboBox()
             throws SQLException, DataBaseConnectionException {
         ArrayList<String> flightNumbers = new ArrayList<>();
@@ -401,6 +415,29 @@ public class AirlineDataBaseAccess implements DAO {
         }
 
         return gatesOfAnAirportAndTerminal.toArray(new String[0]);
+    }
+    public String getAirportToString(String gateId)
+            throws SQLException, DataBaseConnectionException {
+        String airportId;
+        String sql =
+            "SELECT " +
+                "air.code, " +
+                "air.name, " +
+                "air.country " +
+            "FROM " +
+                "gate gat, " +
+                "airport air " +
+            "WHERE " +
+                "gat.airport = air.code AND " +
+                "gat.gate_id = ?;";
+        PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sql);
+        preparedStatement.setString(1, gateId);
+
+        ResultSet data = preparedStatement.executeQuery();
+
+        airportId = data.getString("code") + " - " + data.getString("name") + ", " + data.getString("country");
+
+        return airportId;
     }
     //endregion
 
