@@ -278,7 +278,7 @@ public class AirlineDataBaseAccess implements DAO {
             data = statement.executeQuery();
 
             while(data.next()){
-                flight.
+                // ...
             }
 
             return flights;
