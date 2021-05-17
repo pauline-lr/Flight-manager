@@ -52,6 +52,10 @@ public class Gate {
     }
     //endregion
 
+
     //region Getters
+    public String getAirport() {
+        return airport;
+    }
     //endregion
 }

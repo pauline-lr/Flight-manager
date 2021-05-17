@@ -265,6 +265,30 @@ public class AirlineDataBaseAccess implements DAO {
     //endregion
 
     //region Get
+    public ArrayList<Flight> getAllFlights() throws DataBaseAccessException{
+        try{
+            ArrayList<Flight> flights =  new ArrayList<>();
+
+            Connection connection = SingletonConnection.getInstance();
+            PreparedStatement statement;
+            ResultSet data;
+
+            statement = connection.prepareStatement("" +
+                    /*+ récupérer via la BD les infos d'un vol*/;
+            data = statement.executeQuery();
+
+            while(data.next()){
+                flight.
+            }
+
+            return flights;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (DataBaseConnectionException e) {
+            e.printStackTrace();
+        }
+    }
+
     public String [] getAllFlightsForComboBox()
             throws SQLException, DataBaseConnectionException {
         ArrayList<String> flightNumbers = new ArrayList<>();

@@ -14,7 +14,7 @@ import java.util.GregorianCalendar;
  * */
 
 public class FlightTable extends AbstractTableModel {
-    private String [] columnNames = {"Numéro", "Départ", "Arrivée", "Repas", "Description du repas", "Pilote", "Porte de départ", "Porte d'arrivée", "Avion"};
+    private String [] columnNames = {"Numéro", "Heure de départ", "Aéroport de départ",  "Porte de départ", "Heure d'arrivée","Aéroport d'arrivée",  "Porte d'arrivée" ,"Repas", "Description du repas", "Pilote", "Avion"};
 
     private ArrayList<Flight> flights;
 
@@ -51,18 +51,24 @@ public class FlightTable extends AbstractTableModel {
             case 1:
                 return flight.getDepartureTime();
             case 2:
-                return flight.getArrivalTime();
+                // comment accéder à l'aéroport via l'id de gate ?
+                return flight.getDepartureGate().getAirport();
             case 3:
-                return flight.getMealOnBoard() ? "Oui" : "Non";
-            case 4:
-                return flight.getMealDescription() == null ? null : flight.getMealDescription();
-            case 5:
-                return flight.getPilot();
-            case 6:
                 return flight.getDepartureGate();
-            case 7:
+            case 4:
+                return flight.getArrivalTime();
+            case 5 :
+                // comment accéder à l'aéroport via l'id de gate ?
+                return flight.getArrivalGate().getAiport();
+            case 6 :
                 return flight.getArrivalGate();
-            case 8:
+            case 7:
+                return flight.getMealOnBoard() ? "Oui" : "Non";
+            case 8 :
+                return flight.getMealDescription() == null ? null : flight.getMealDescription();
+            case 9:
+                return flight.getPilot();
+            case 10:
                 return flight.getPlane();
             default:
                 return null;
@@ -74,22 +80,26 @@ public class FlightTable extends AbstractTableModel {
 
         switch (col){
             case 0:
-            case 3:
-            case 4:
+            case 2:
             case 5:
+            case 7:
+                case 8:
+                    case 9:
                 c = String.class;
                 break;
             case 1:
-            case 2:
+            case 4:
                 c = GregorianCalendar.class;
                 break;
+            case 3:
             case 6:
-            case 7:
                 c = Character.class;
                 break;
-            case 8:
+            case 10:
                 c = Integer.class;
                 break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + col);
         }
         return c;
     }
