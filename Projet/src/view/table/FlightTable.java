@@ -1,7 +1,6 @@
 package view.table;
 
 import controller.ApplicationController;
-import exception.DataBaseAccessException;
 import exception.DataBaseConnectionException;
 import model.Flight;
 

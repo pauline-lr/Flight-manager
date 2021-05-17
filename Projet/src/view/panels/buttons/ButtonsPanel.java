@@ -5,6 +5,7 @@ import exception.DataBaseAccessException;
 import exception.DataBaseConnectionException;
 import exception.FlightException;
 import model.Flight;
+import model.SearchFlightsByDate;
 import view.forms.flightForms.FlightForm;
 import view.panels.menuBarPanels.optionsFlightPanels.AddFlightPanel;
 import view.panels.menuBarPanels.optionsFlightPanels.ModifyFlightPanel;
@@ -12,12 +13,14 @@ import view.panels.menuBarPanels.searchPanels.DateFlightPanel;
 import view.panels.menuBarPanels.searchPanels.SearchPilotPanel;
 import view.panels.menuBarPanels.searchPanels.SeatReservationPanel;
 import view.panels.menuWindowPanels.WelcomePanel;
+import view.table.FlightBetween2DatesTable;
 import view.windows.MenuWindow;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public class ButtonsPanel extends JPanel {
@@ -79,7 +82,9 @@ public class ButtonsPanel extends JPanel {
                         controller.modifyFlight(flight);
                         JOptionPane.showMessageDialog(null, "Vol modifié", "Succès", JOptionPane.INFORMATION_MESSAGE);
                     }else if(typeAction.equals("DateFlightSearch")){
-                        controller.getAllFlightsBetweenDates(start, end);
+                        ArrayList<SearchFlightsByDate> flights = controller.getAllFlightsBetweenDates(start, end);
+                        FlightBetween2DatesTable flightTable = new FlightBetween2DatesTable(controller);
+
                     }
                 }
 
