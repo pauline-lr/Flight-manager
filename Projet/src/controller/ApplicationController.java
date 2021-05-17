@@ -8,6 +8,7 @@ import model.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
@@ -40,6 +41,10 @@ public class ApplicationController {
     //region Get
     public ArrayList<Flight> getAllFlights() {
         return flightManager.getAllFlights();
+    }
+    public String [] getAllFlightsForComboBox()
+            throws SQLException, DataBaseConnectionException {
+        return flightManager.getAllFlightsForComboBox();
     }
     public String [] getAllPilotsForComboBox()
             throws SQLException, DataBaseConnectionException {

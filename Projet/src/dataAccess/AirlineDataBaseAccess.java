@@ -313,7 +313,7 @@ public class AirlineDataBaseAccess implements DAO {
             flightNumbers.add(data.getString("number"));
         }
 
-        return (String[]) flightNumbers.toArray();
+        return flightNumbers.toArray(new String[0]);
     }
     public String [] getAllPilotsForComboBox()
             throws SQLException, DataBaseConnectionException {
@@ -325,7 +325,7 @@ public class AirlineDataBaseAccess implements DAO {
             pilotLicenceNumbers.add(data.getString("licence_number") + " - " + data.getString("last_name") + " " + data.getString("first_name"));
         }
 
-        return (String[]) pilotLicenceNumbers.toArray();
+        return pilotLicenceNumbers.toArray(new String[0]);
     }
     public String [] getAllPlanesForComboBox()
             throws SQLException, DataBaseConnectionException {
@@ -337,7 +337,7 @@ public class AirlineDataBaseAccess implements DAO {
             planeIDs.add(data.getString("plane_id") + " - " + data.getString("brand") + " " + data.getString("model"));
         }
 
-        return (String[]) planeIDs.toArray();
+        return planeIDs.toArray(new String[0]);
     }
     public String [] getAllClassesForComboBox()
             throws SQLException, DataBaseConnectionException {
@@ -348,7 +348,7 @@ public class AirlineDataBaseAccess implements DAO {
         while(data.next()) {
             classeNames.add(data.getString("name"));
         }
-        return (String[]) classeNames.toArray();
+        return classeNames.toArray(new String[0]);
     }
     public String [] getAllAirportsForComboBox()
             throws SQLException, DataBaseConnectionException {
@@ -360,7 +360,7 @@ public class AirlineDataBaseAccess implements DAO {
             airportCodes.add(data.getString("code") + " - " + data.getString("name") + ", " + data.getString("country"));
         }
 
-        return (String[]) airportCodes.toArray();
+        return airportCodes.toArray(new String[0]);
     }
     public String [] getAllTerminalsOfAnAirportForComboBox(String airportId)
             throws SQLException, DataBaseConnectionException {
@@ -386,7 +386,7 @@ public class AirlineDataBaseAccess implements DAO {
             terminalsOfAnAirport.add(data.getString("terminal"));
         }
 
-        return (String[]) terminalsOfAnAirport.toArray();
+        return terminalsOfAnAirport.toArray(new String[0]);
     }
     public String [] getAllGatesOfAnAirportAndTerminalForComboBox(String airportId, String terminalId)
             throws SQLException, DataBaseConnectionException {
@@ -414,7 +414,7 @@ public class AirlineDataBaseAccess implements DAO {
             gatesOfAnAirportAndTerminal.add(Integer.toString(data.getInt("number")));
         }
 
-        return (String[]) gatesOfAnAirportAndTerminal.toArray();
+        return gatesOfAnAirportAndTerminal.toArray(new String[0]);
     }
     public String getAirportToString(String gateId)
             throws SQLException, DataBaseConnectionException {

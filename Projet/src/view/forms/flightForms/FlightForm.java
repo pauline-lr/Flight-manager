@@ -121,7 +121,7 @@ public class FlightForm extends JPanel {
         this.add(departureTerminalLabel);
 
         departureTerminalComboBox = new JComboBox(controller.getAllTerminalsOfAnAirportForComboBox(getDepartureAirportId()));
-
+        departureTerminalComboBox.addItemListener(new departureTerminalComboBoxListener());
         this.add(departureTerminalComboBox);
 
         departureGateLabel = new JLabel("Porte : ");
@@ -196,6 +196,7 @@ public class FlightForm extends JPanel {
         this.add(arrivalTerminalLabel);
 
         arrivalTerminalComboBox = new JComboBox(controller.getAllTerminalsOfAnAirportForComboBox(getArrivalAirportId()));
+        arrivalTerminalComboBox.addItemListener(new arrivalTerminalComboBoxListener());
         this.add(arrivalTerminalComboBox);
 
         arrivalGateLabel = new JLabel("Porte : ");
@@ -328,6 +329,22 @@ public class FlightForm extends JPanel {
             }
         }
     }
+    private class departureTerminalComboBoxListener implements ItemListener {
+        @Override
+        public void itemStateChanged(ItemEvent event) {
+            if (event.getStateChange() == ItemEvent.SELECTED) {
+                try {
+                    String[] updatedGatesOfAnAirportAndTerminalForComboBox = controller.getAllGatesOfAnAirportAndTerminalForComboBox(getDepartureAirportId(), (String) getDepartureTerminalComboBox().getSelectedItem());
+                    departureGateComboBox.removeAllItems();
+                    for (String gate : updatedGatesOfAnAirportAndTerminalForComboBox) {
+                        departureGateComboBox.addItem(gate);
+                    }
+                } catch (SQLException | DataBaseConnectionException throwables) {
+                    throwables.printStackTrace();
+                }
+            }
+        }
+    }
 
     private class arrivalAirportComboBoxListener implements ItemListener {
         @Override
@@ -350,44 +367,58 @@ public class FlightForm extends JPanel {
             }
         }
     }
+    private class arrivalTerminalComboBoxListener implements ItemListener {
+        @Override
+        public void itemStateChanged(ItemEvent event) {
+            if (event.getStateChange() == ItemEvent.SELECTED) {
+                try {
+                    String[] updatedGatesOfAnAirportAndTerminalForComboBox = controller.getAllGatesOfAnAirportAndTerminalForComboBox(getArrivalAirportId(), (String) getArrivalTerminalComboBox().getSelectedItem());
+                    arrivalGateComboBox.removeAllItems();
+                    for (String gate : updatedGatesOfAnAirportAndTerminalForComboBox) {
+                        arrivalGateComboBox.addItem(gate);
+                    }
+                } catch (SQLException | DataBaseConnectionException throwables) {
+                    throwables.printStackTrace();
+                }
+            }
+        }
+    }
 
     public Flight getFlight() throws FlightException.NumberFlightException, FlightException.MealDescriptionException {
         GregorianCalendar departureDate =
-                new GregorianCalendar(
-                        Integer.parseInt(departureYear.getValue().toString()),
-                        Integer.parseInt(departureMonth.getValue().toString()),
-                        Integer.parseInt(departureDay.getValue().toString()),
-                        Integer.parseInt(departureHour.getValue().toString()),
-                        Integer.parseInt(departureMinute.getValue().toString()));
+            new GregorianCalendar(
+                Integer.parseInt(departureYear.getValue().toString()),
+                Integer.parseInt(departureMonth.getValue().toString()),
+                Integer.parseInt(departureDay.getValue().toString()),
+                Integer.parseInt(departureHour.getValue().toString()),
+                Integer.parseInt(departureMinute.getValue().toString()));
         GregorianCalendar arrivalDate =
-                new GregorianCalendar(
-                        Integer.parseInt(arrivalYear.getValue().toString()),
-                        Integer.parseInt(arrivalMonth.getValue().toString()),
-                        Integer.parseInt(arrivalDay.getValue().toString()),
-                        Integer.parseInt(arrivalHour.getValue().toString()),
-                        Integer.parseInt(arrivalMinute.getValue().toString()));
+            new GregorianCalendar(
+                Integer.parseInt(arrivalYear.getValue().toString()),
+                Integer.parseInt(arrivalMonth.getValue().toString()),
+                Integer.parseInt(arrivalDay.getValue().toString()),
+                Integer.parseInt(arrivalHour.getValue().toString()),
+                Integer.parseInt(arrivalMinute.getValue().toString()));
 
-        return new Flight(
-            numberTextField.getText(),
-            departureDate,
-            arrivalDate,
-            isMealOnBoardCheckBox.isSelected(),
-            mealDescriptionLabel.getText(),
-            getPilotId(),
-            Objects.requireNonNull(departureGateComboBox.getSelectedItem()).toString(),
-            Objects.requireNonNull(arrivalGateComboBox.getSelectedItem()).toString(),
-            getPlaneId())
+        return
+            new Flight(
+                numberTextField.getText(),
+                departureDate,
+                arrivalDate,
+                isMealOnBoardCheckBox.isSelected(),
+                mealDescriptionLabel.getText(),
+                getPilotId(),
+                Objects.requireNonNull(departureGateComboBox.getSelectedItem()).toString(),
+                Objects.requireNonNull(arrivalGateComboBox.getSelectedItem()).toString(),
+                getPlaneId()
+            )
         ;
     }
 
     private class MealOnBoardListener implements ItemListener {
         @Override
-        public void itemStateChanged(ItemEvent evt){
-            if(evt.getStateChange() == ItemEvent.SELECTED){
-                mealDescriptionTextField.setEnabled(true);
-            }else{
-                mealDescriptionTextField.setEnabled(false);
-            }
+        public void itemStateChanged(ItemEvent itemEvent){
+            mealDescriptionTextField.setEnabled(itemEvent.getStateChange() == ItemEvent.SELECTED);
         }
     }
 }
