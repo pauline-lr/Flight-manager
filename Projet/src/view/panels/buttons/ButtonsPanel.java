@@ -13,7 +13,7 @@ import view.panels.menuBarPanels.searchPanels.DateFlightPanel;
 import view.panels.menuBarPanels.searchPanels.SearchPilotPanel;
 import view.panels.menuBarPanels.searchPanels.SeatReservationPanel;
 import view.panels.menuWindowPanels.WelcomePanel;
-import view.table.FlightBetween2DatesTable;
+import view.table.FlightTable;
 import view.windows.MenuWindow;
 
 import javax.swing.*;
@@ -83,7 +83,7 @@ public class ButtonsPanel extends JPanel {
                         JOptionPane.showMessageDialog(null, "Vol modifié", "Succès", JOptionPane.INFORMATION_MESSAGE);
                     }else if(typeAction.equals("DateFlightSearch")){
                         ArrayList<SearchFlightsByDate> flights = controller.getAllFlightsBetweenDates(start, end);
-                        FlightBetween2DatesTable flightTable = new FlightBetween2DatesTable(controller);
+                        FlightTable flightTable = new FlightTable(controller);
 
                     }
                 }

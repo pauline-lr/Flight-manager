@@ -10,17 +10,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
-/*
- * source : https://thierry-leriche-dessirier.developpez.com/tutoriels/java/afficher-tableau-avec-tablemodel-5-min/
- * */
-
 public class FlightTable extends AbstractTableModel {
-    private String [] columnNames = {"Numéro", "Heure de départ", "Aéroport de départ",  "Porte de départ", "Heure d'arrivée","Aéroport d'arrivée",  "Porte d'arrivée" ,"Repas", "Description du repas", "Pilote", "Avion"};
-    private ApplicationController controller = new ApplicationController();
+    private ApplicationController controller;
+    private String [] columnNames = {"Numéro", "Heure de départ", "Aéroport de départ",  "Porte de départ",
+            "Heure d'arrivée","Aéroport d'arrivée",  "Porte d'arrivée" ,"Repas", "Description du repas", "Pilote", "Avion"};
     private ArrayList<Flight> flights;
 
-    public FlightTable(){
-        // je pense qu'il va falloir créer une nouvelle méthode dans DBAccess pour gérer ça
+    public FlightTable(ApplicationController controller){
+        this.controller = controller;
         flights = controller.getAllFlights();
     }
 
