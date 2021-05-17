@@ -52,7 +52,7 @@ CREATE TABLE airport (
 );
 
 CREATE TABLE gate (
-    gate_id VARCHAR(3),
+    gate_id VARCHAR(6),
     terminal CHAR(1),
     number INT,
     airport VARCHAR(50),
@@ -88,7 +88,7 @@ CREATE TABLE class (
 );
 
 CREATE TABLE seat (
-    seat_id VARCHAR(4),
+    seat_id VARCHAR(10),
     seat_row INT,
     seat_column CHAR(1),
     is_on_window_side BOOLEAN NOT NULL,
@@ -157,23 +157,32 @@ VALUES
 
 INSERT INTO gate
 VALUES
-    ('A13', 'A', 13, 'LHR'),
-    ('B24', 'B', 24, 'JFK'),
-    ('A11', 'A', 11, 'LHR'),
-    ('B1', 'B', 1, 'BRU'),
-    ('B2', 'B', 2, 'BRU')
+    ('A13LHR', 'A', 13, 'LHR'),
+    ('B24JFK', 'B', 24, 'JFK'),
+    ('A11LHR', 'A', 11, 'LHR'),
+    ('B1BRU', 'B', 1, 'BRU'),
+    ('B2BRU', 'B', 2, 'BRU'),
+    ('B3BRU', 'B', 3, 'BRU'),
+    ('B4BRU', 'B', 4, 'BRU'),
+    ('B5BRU', 'B', 5, 'BRU'),
+    ('A1BRU', 'A', 1, 'BRU'),
+    ('A2BRU', 'A', 2, 'BRU'),
+    ('A3BRU', 'A', 3, 'BRU'),
+    ('A4BRU', 'A', 4, 'BRU'),
+    ('A5BRU', 'A', 5, 'BRU'),
+    ('A6BRU', 'A', 6, 'BRU')
 ;
 
 INSERT INTO flight
 VALUES
-	('987346', '2033-07-05', '2033-07-05', true, 'Choux rouge avec des brocolis et une banane en dessert', 'A13', 'B24', 'DRW1563', 1),
-    ('744325', '2021-08-05', '2021-08-06', false, null, 'B1', 'A11', 'DBS1562', 3),
-    ('871124', '2022-02-05', '2033-02-06', false, null, 'B24', 'B1', 'BTD4596', 5)
+	('SA7346', '2022-07-05 16:48:00', '2022-07-05 17:48:00', true, 'Choux rouge avec des brocolis et une banane en dessert', 'A13LHR', 'B24JFK', 'DRW1563', 1),
+    ('JF4325', '2021-08-05 13:31:00', '2021-08-06 01:34:00', false, null, 'B1BRU', 'A11LHR', 'DBS1562', 3),
+    ('OD1124', '2022-02-05 12:20:00', '2022-02-06 10:54:00', false, null, 'B24JFK', 'A2BRU', 'BTD4596', 5)
 ;
 
 INSERT INTO seat
 VALUES
-    ('13F', 13, 'F', true, 'EF4854263', '987346', 1),
-    ('25A', 25, 'A', true, 'EF7856324', '744325', 3),
-    ('1', 1, 'B', false, 'EF3568956', '744325', 3)
+    ('13FSA7346', 13, 'F', true, 'EF4854263', 'SA7346', 1),
+    ('25AJF4325', 25, 'A', true, 'EF7856324', 'JF4325', 3),
+    ('1BJF4325', 1, 'B', false, 'EF3568956', 'JF4325', 3)
 ;
