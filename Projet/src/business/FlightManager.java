@@ -39,6 +39,10 @@ public class FlightManager {
     public ArrayList<Flight> getAllFlights() {
         return dao.getAllFlights();
     }
+    public String [] getAllFlightsForComboBox()
+            throws SQLException, DataBaseConnectionException {
+        return dao.getAllFlightsForComboBox();
+    }
     public String [] getAllPilotsForComboBox()
             throws SQLException, DataBaseConnectionException {
         return dao.getAllPilotsForComboBox();

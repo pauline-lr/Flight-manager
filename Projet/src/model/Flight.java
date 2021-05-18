@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 
 // NB : j'ai changé les types d'objets qui étaient en String par leur objet car j'en avais besoin pour le getters 
 public class Flight {
-    public final static String REGEX_NUMBER = "^[A-z][A-z]\\d{4}$";
+    public final static String REGEX_NUMBER = "^[A-Z][A-Z]\\d{4}$";
     private final static int MEAL_DESCRIPTION_LENTGH = 400;
 
     private String number;                      // 6 characters = 2 letters then 4 positive digits
@@ -57,7 +57,8 @@ public class Flight {
             }
     }
     private void setDepartureTime(GregorianCalendar departureTime) {
-        if (departureTime.compareTo(currentDate) > 0) {
+        this.departureTime = departureTime;
+        /*if (departureTime.compareTo(currentDate) > 0) {
             this.departureTime = departureTime;
         } else {
             try {
@@ -66,9 +67,11 @@ public class Flight {
                 exception.printStackTrace();
             }
         }
+        */
     }
     private void setArrivalTime(GregorianCalendar arrivalTime) {
-        if (arrivalTime.compareTo(currentDate) > 0) {
+        this.arrivalTime = arrivalTime;
+        /*if (arrivalTime.compareTo(currentDate) > 0) {
             this.arrivalTime = arrivalTime;
         } else {
             try {
@@ -77,6 +80,7 @@ public class Flight {
                 exception.printStackTrace();
             }
         }
+        */
     }
     private void setMealOnBoard(Boolean mealOnBoard) {
         isMealOnBoard = mealOnBoard;

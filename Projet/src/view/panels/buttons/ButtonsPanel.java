@@ -75,16 +75,15 @@ public class ButtonsPanel extends JPanel {
             try {
                 if(flightForm != null) {
                     Flight flight = flightForm.getFlight();
-                    if(typeAction.equals("Addition")){
+                    if (typeAction.equals("Addition")) {
                         controller.addFlight(flight);
                         JOptionPane.showMessageDialog(null, "Vol ajouté", "Succès", JOptionPane.INFORMATION_MESSAGE);
-                    }else if(typeAction.equals("Modification")){
+                    } else if(typeAction.equals("Modification")) {
                         controller.modifyFlight(flight);
                         JOptionPane.showMessageDialog(null, "Vol modifié", "Succès", JOptionPane.INFORMATION_MESSAGE);
-                    }else if(typeAction.equals("DateFlightSearch")){
+                    } else if(typeAction.equals("DateFlightSearch")) {
                         ArrayList<SearchFlightsByDate> flights = controller.getAllFlightsBetweenDates(start, end);
                         FlightTable flightTable = new FlightTable(controller);
-
                     }
                 }
 
@@ -111,16 +110,17 @@ public class ButtonsPanel extends JPanel {
     public void takeOut() throws SQLException, DataBaseConnectionException {
         menuWindow.getCont().removeAll();
 
-        if(typeAction.equals("Addition"))
+        if (typeAction.equals("Addition")) {
             menuWindow.getCont().add(new AddFlightPanel(menuWindow), BorderLayout.CENTER);
-        else if(typeAction.equals("Modification"))
+        } else if (typeAction.equals("Modification")) {
             menuWindow.getCont().add(new ModifyFlightPanel(menuWindow), BorderLayout.CENTER);
-        else if(typeAction.equals("DateFlightSearch"))
+        } else if (typeAction.equals("DateFlightSearch")) {
             menuWindow.getCont().add(new DateFlightPanel(menuWindow), BorderLayout.CENTER);
-        else if(typeAction.equals("SearchPilot"))
+        } else if(typeAction.equals("SearchPilot")) {
             menuWindow.getCont().add(new SearchPilotPanel(menuWindow), BorderLayout.CENTER);
-        else if(typeAction.equals("SeatReservationSearch"))
+        } else if(typeAction.equals("SeatReservationSearch")) {
             menuWindow.getCont().add(new SeatReservationPanel(menuWindow), BorderLayout.CENTER);
+        }
 
         menuWindow.getCont().repaint();
         menuWindow.setVisible(true);

@@ -411,7 +411,7 @@ public class AirlineDataBaseAccess implements DAO {
         ResultSet data = preparedStatement.executeQuery();
 
         while (data.next()) {
-            gatesOfAnAirportAndTerminal.add(data.getString("number"));
+            gatesOfAnAirportAndTerminal.add(Integer.toString(data.getInt("number")));
         }
 
         return gatesOfAnAirportAndTerminal.toArray(new String[0]);

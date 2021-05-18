@@ -21,6 +21,8 @@ public interface DAO {
 
     //region Get
     ArrayList<Flight> getAllFlights();
+    String [] getAllFlightsForComboBox()
+            throws SQLException, DataBaseConnectionException;
     String [] getAllPilotsForComboBox()
             throws SQLException, DataBaseConnectionException;
     String [] getAllPlanesForComboBox()
