@@ -5,15 +5,15 @@ import exception.DataBaseAccessException;
 import exception.DataBaseConnectionException;
 import exception.FlightException;
 import model.Flight;
-import model.SearchFlightsByDate;
+import model.SearchFlightsBetweenDates;
 import view.forms.flightForms.FlightForm;
 import view.panels.menuBarPanels.optionsFlightPanels.AddFlightPanel;
 import view.panels.menuBarPanels.optionsFlightPanels.ModifyFlightPanel;
-import view.panels.menuBarPanels.searchPanels.DateFlightPanel;
-import view.panels.menuBarPanels.searchPanels.SearchPilotPanel;
-import view.panels.menuBarPanels.searchPanels.SeatReservationPanel;
+import view.panels.menuBarPanels.searchPanels.SearchFlightsBetweenDatesPanel;
+import view.panels.menuBarPanels.searchPanels.SearchFlightsByPilotPanel;
+import view.panels.menuBarPanels.searchPanels.SearchPassengersByClassPanel;
 import view.panels.menuWindowPanels.WelcomePanel;
-import view.table.DateFlightTable;
+import view.table.SearchFlightsBetweenDatesTable;
 import view.windows.MenuWindow;
 
 import javax.swing.*;
@@ -30,7 +30,7 @@ public class ButtonsPanel extends JPanel {
     FlightForm flightForm;
     private JButton retour, validation, réinit;
     private GregorianCalendar start, end;
-    private DateFlightPanel dateFlight;
+    private SearchFlightsBetweenDatesPanel dateFlight;
 
     public ButtonsPanel(MenuWindow menuWindow, String typeAction, FlightForm flightForm, String label, ApplicationController controller){
         this.controller = controller;
@@ -53,7 +53,7 @@ public class ButtonsPanel extends JPanel {
     }
 
     // recherche entre 2 dates
-    public ButtonsPanel(MenuWindow menuWindow, String typeAction, DateFlightPanel dateFlight,
+    public ButtonsPanel(MenuWindow menuWindow, String typeAction, SearchFlightsBetweenDatesPanel dateFlight,
                         GregorianCalendar start, GregorianCalendar end, String label, ApplicationController controller){
         this(menuWindow, typeAction, null, label, controller);
         this.dateFlight = dateFlight;
@@ -79,17 +79,21 @@ public class ButtonsPanel extends JPanel {
             try {
                 if(flightForm != null) {
                     Flight flight = flightForm.getFlight();
-                    if (typeAction.equals("Addition")) {
-                        controller.addFlight(flight);
-                        JOptionPane.showMessageDialog(null, "Vol ajouté", "Succès", JOptionPane.INFORMATION_MESSAGE);
-                    } else if(typeAction.equals("Modification")) {
-                        controller.modifyFlight(flight);
-                        JOptionPane.showMessageDialog(null, "Vol modifié", "Succès", JOptionPane.INFORMATION_MESSAGE);
-                    } else if(typeAction.equals("DateFlightSearch")) {
-                        ArrayList<SearchFlightsByDate> flights = controller.getAllFlightsBetweenDates(start, end);
-                        DateFlightTable flightTable = new DateFlightTable(controller, flights);
-                        JTable table = new JTable(flightTable);
-                        dateFlight.add(BorderLayout.CENTER, new JScrollPane(table));
+                    switch (typeAction) {
+                        case "Addition" -> {
+                            controller.addFlight(flight);
+                            JOptionPane.showMessageDialog(null, "Vol ajouté", "Succès", JOptionPane.INFORMATION_MESSAGE);
+                        }
+                        case "Modification" -> {
+                            controller.modifyFlight(flight);
+                            JOptionPane.showMessageDialog(null, "Vol modifié", "Succès", JOptionPane.INFORMATION_MESSAGE);
+                        }
+                        case "DateFlightSearch" -> {
+                            ArrayList<SearchFlightsBetweenDates> flights = controller.getAllFlightsBetweenDates(start, end);
+                            SearchFlightsBetweenDatesTable flightTable = new SearchFlightsBetweenDatesTable(controller, flights);
+                            JTable table = new JTable(flightTable);
+                            dateFlight.add(BorderLayout.CENTER, new JScrollPane(table));
+                        }
                     }
                 }
 
@@ -121,11 +125,11 @@ public class ButtonsPanel extends JPanel {
         } else if (typeAction.equals("Modification")) {
             menuWindow.getCont().add(new ModifyFlightPanel(menuWindow, controller), BorderLayout.CENTER);
         } else if (typeAction.equals("DateFlightSearch")) {
-            menuWindow.getCont().add(new DateFlightPanel(menuWindow, controller), BorderLayout.CENTER);
+            menuWindow.getCont().add(new SearchFlightsBetweenDatesPanel(menuWindow, controller), BorderLayout.CENTER);
         } else if(typeAction.equals("SearchPilot")) {
-            menuWindow.getCont().add(new SearchPilotPanel(menuWindow, controller), BorderLayout.CENTER);
+            menuWindow.getCont().add(new SearchFlightsByPilotPanel(menuWindow, controller), BorderLayout.CENTER);
         } else if(typeAction.equals("SeatReservationSearch")) {
-            menuWindow.getCont().add(new SeatReservationPanel(menuWindow, controller), BorderLayout.CENTER);
+            menuWindow.getCont().add(new SearchPassengersByClassPanel(menuWindow, controller), BorderLayout.CENTER);
         }
 
         menuWindow.getCont().repaint();

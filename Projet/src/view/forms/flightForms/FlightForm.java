@@ -16,10 +16,10 @@ public class FlightForm extends JPanel {
     private static final int LENGTH_AIRPORT_ID = 3;
 
     private ApplicationController controller = new ApplicationController();
-
+    private Font font = new Font(null, Font.BOLD, 13);
     private JTextField numberTextField, mealDescriptionTextField;
     private JCheckBox isMealOnBoardCheckBox;
-    private JLabel  numberLabel, departureDateLabel, departureHourLabel, arrivalDateLabel, arrivalHourLabel, departureAirportLabel, departureTerminalLabel,
+    private JLabel  departureLabel, arrivalLabel, numberLabel, mealLabel, departureDateLabel, departureHourLabel, arrivalDateLabel, arrivalHourLabel, departureAirportLabel, departureTerminalLabel,
             departureGateLabel, arrivalAirportLabel, arrivalTerminalLabel, arrivalGateLabel, mealDescriptionLabel, planeLabel, pilotLabel, empty;
     private JSpinner departureDay, departureMonth, departureYear, departureHour, departureMinute;
     private JSpinner arrivalDay, arrivalMonth, arrivalYear, arrivalHour, arrivalMinute;
@@ -33,18 +33,18 @@ public class FlightForm extends JPanel {
 
     public FlightForm() throws SQLException, DataBaseConnectionException {
         currentDate = new GregorianCalendar();
-        setLayout(new GridLayout(13, 4));
+        setLayout(new GridLayout(16, 4));
         createFlightForm();
     }
 
     public void createFlightForm() throws SQLException, DataBaseConnectionException {
         addFlightNumberField();
+        addPlaneField();
+        addPilotField();
         addDepartureMomentField();
         addDepartureLocationField();
         addArrivalMomentField();
         addArrivalLocationField();
-        addPlaneField();
-        addPilotField();
         addMealOnBoardField();
     }
 
@@ -71,7 +71,7 @@ public class FlightForm extends JPanel {
                 departureDate,
                 arrivalDate,
                 isMealOnBoardCheckBox.isSelected(),
-                mealDescriptionTextField.getText() == "" ? null : mealDescriptionTextField.getText(),
+                mealDescriptionTextField.getText(),
                 getPilotId(),
                 getDepartureGateId(),
                 getArrivalGateId(),
@@ -81,8 +81,9 @@ public class FlightForm extends JPanel {
 
     //region Fields
     private void addFlightNumberField() {
-        numberLabel = new JLabel("N° de vol : ");
-        numberLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        numberLabel = new JLabel("    Numéro");
+        numberLabel.setFont(font);
+        numberLabel.setHorizontalAlignment(SwingConstants.LEFT);
         add(numberLabel);
 
         numberTextField = new JTextField();
@@ -94,9 +95,54 @@ public class FlightForm extends JPanel {
         addEmptyField();
     }
 
+    private void addPlaneField() {
+        planeLabel = new JLabel("    Avion");
+        planeLabel.setFont(font);
+        planeLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        this.add(planeLabel);
+        try {
+            planeComboBox = new JComboBox(controller.getAllPlanesForComboBox());
+        } catch (Exception exception) {
+            JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
+        this.add(planeComboBox);
+
+        addEmptyField();
+        addEmptyField();
+        addEmptyField();
+    }
+
+    private void addPilotField() {
+        pilotLabel = new JLabel("    Pilote");
+        pilotLabel.setFont(font);
+        pilotLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        this.add(pilotLabel);
+        try {
+            pilotComboBox = new JComboBox(controller.getAllPilotsForComboBox());
+        } catch (Exception exception) {
+            JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
+        this.add(pilotComboBox);
+
+        addEmptyField();
+        addEmptyField();
+        addEmptyField();
+    }
+
     private void addDepartureMomentField() {
+        // departure
+        departureLabel = new JLabel("    Départ");
+        departureLabel.setFont(font);
+        departureLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        this.add(departureLabel);
+
+        addEmptyField();
+        addEmptyField();
+        addEmptyField();
+        addEmptyField();
+
         // departureDate
-        departureDateLabel = new JLabel("Date de départ : ");
+        departureDateLabel = new JLabel("Date : ");
         departureDateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(departureDateLabel);
 
@@ -116,7 +162,7 @@ public class FlightForm extends JPanel {
         addEmptyField();
 
         // departureTime
-        departureHourLabel = new JLabel("Heure de départ : ");
+        departureHourLabel = new JLabel("Heure : ");
         departureHourLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(departureHourLabel);
 
@@ -133,7 +179,7 @@ public class FlightForm extends JPanel {
     }
     private void addDepartureLocationField() throws SQLException, DataBaseConnectionException {
         // departureAirport
-        departureAirportLabel = new JLabel("Aéroport de départ : ");
+        departureAirportLabel = new JLabel("Aéroport : ");
         departureAirportLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(departureAirportLabel);
         try {
@@ -168,8 +214,19 @@ public class FlightForm extends JPanel {
     }
 
     private void addArrivalMomentField() {
+        // arrival
+        arrivalLabel = new JLabel("    Arrivée");
+        arrivalLabel.setFont(font);
+        arrivalLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        this.add(arrivalLabel);
+
+        addEmptyField();
+        addEmptyField();
+        addEmptyField();
+        addEmptyField();
+
         // arrivalDate
-        arrivalDateLabel = new JLabel("Date d'arrivée : ");
+        arrivalDateLabel = new JLabel("Date : ");
         arrivalDateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(arrivalDateLabel);
 
@@ -188,7 +245,7 @@ public class FlightForm extends JPanel {
         addEmptyField();
 
         // arrivalTime
-        arrivalHourLabel = new JLabel("Heure d'arrivée : ");
+        arrivalHourLabel = new JLabel("Heure : ");
         arrivalHourLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(arrivalHourLabel);
 
@@ -205,7 +262,7 @@ public class FlightForm extends JPanel {
     }
     private void addArrivalLocationField() throws SQLException, DataBaseConnectionException {
         // arrivalAirport
-        arrivalAirportLabel = new JLabel("Aéroport d'arrivée : ");
+        arrivalAirportLabel = new JLabel("Aéroport : ");
         arrivalAirportLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(arrivalAirportLabel);
         try {
@@ -237,49 +294,25 @@ public class FlightForm extends JPanel {
 
         arrivalGateComboBox = new JComboBox(controller.getAllGatesOfAnAirportAndTerminalForComboBox(getArrivalAirportId(), (String)arrivalTerminalComboBox.getSelectedItem()));
         this.add(arrivalGateComboBox);
-
-        addEmptyField();
-        addEmptyField();
-        addEmptyField();
-        addEmptyField();
-        addEmptyField();
-    }
-
-    private void addPlaneField() {
-        planeLabel = new JLabel("Avion : ");
-        planeLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        this.add(planeLabel);
-        try {
-            planeComboBox = new JComboBox(controller.getAllPlanesForComboBox());
-        } catch (Exception exception) {
-            JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-        }
-        this.add(planeComboBox);
-    }
-
-    private void addPilotField() {
-        pilotLabel = new JLabel("Pilote : ");
-        pilotLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        this.add(pilotLabel);
-        try {
-            pilotComboBox = new JComboBox(controller.getAllPilotsForComboBox());
-        } catch (Exception exception) {
-            JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-        }
-        this.add(pilotComboBox);
-
-        addEmptyField();
     }
 
     private void addMealOnBoardField() {
+        mealLabel = new JLabel("    Repas");
+        mealLabel.setFont(font);
+        mealLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        add(mealLabel);
+        addEmptyField();
+        addEmptyField();
+        addEmptyField();
+
+        addEmptyField();
+        addEmptyField();
         isMealOnBoardCheckBox = new JCheckBox("Repas à bord");
         isMealOnBoardCheckBox.addItemListener(new MealOnBoardListener());
         isMealOnBoardCheckBox.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(isMealOnBoardCheckBox);
 
-        addEmptyField();
-
-        mealDescriptionLabel = new JLabel("Description du repas : ");
+        mealDescriptionLabel = new JLabel("Description : ");
         mealDescriptionLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         add(mealDescriptionLabel);
 

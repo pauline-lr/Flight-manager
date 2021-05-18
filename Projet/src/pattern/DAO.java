@@ -11,7 +11,7 @@ import java.util.GregorianCalendar;
 
 public interface DAO {
     //region Search
-    ArrayList<SearchFlightsByDate> getAllFlightsBetweenDates(GregorianCalendar startDate, GregorianCalendar endDate)
+    ArrayList<SearchFlightsBetweenDates> getAllFlightsBetweenDates(GregorianCalendar startDate, GregorianCalendar endDate)
             throws DataBaseAccessException;
     ArrayList<SearchPassengersByClass> getAllPassengersOfAClass(model.Class seatClass)
             throws DataBaseAccessException;

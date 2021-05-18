@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class ModifyFlightForm extends JPanel {
+    private Font font = new Font(null, Font.BOLD, 13);
     private JLabel flightLabel;
     private JComboBox flightComboBox;
 
@@ -13,8 +14,9 @@ public class ModifyFlightForm extends JPanel {
     public ModifyFlightForm(){
         this.setLayout(new GridLayout(4, 1, 3, 3));
 
-        flightLabel = new JLabel("Vol à modifier : ");
-        flightLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        flightLabel = new JLabel("    Vol à modifier");
+        flightLabel.setFont(font);
+        flightLabel.setHorizontalAlignment(SwingConstants.LEFT);
         this.add(flightLabel);
 
         flightComboBox = new JComboBox();

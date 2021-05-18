@@ -1,13 +1,11 @@
 package view.forms.searchForms;
 
-import controller.ApplicationController;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-public class DateFlightForm extends JPanel {
+public class SearchFlightsBetweenDatesForm extends JPanel {
     private GregorianCalendar firstDateCalendar;
     private GregorianCalendar lastDateCalendar;
     private JLabel start, end;
@@ -17,14 +15,14 @@ public class DateFlightForm extends JPanel {
     private SpinnerNumberModel endDayModel, endMonthModel, endYearModel;
     private GregorianCalendar currentDate;
 
-    public DateFlightForm(){
+    public SearchFlightsBetweenDatesForm(){
         currentDate = new GregorianCalendar();
         this.setLayout(new GridLayout(2, 4));
 
-        initForm();
+        createFlightsBetweenDatesForm();
     }
 
-    void initForm(){
+    void createFlightsBetweenDatesForm(){
         start = new JLabel("Date de début : ");
         start.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(start);

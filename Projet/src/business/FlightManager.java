@@ -21,7 +21,7 @@ public class FlightManager {
     }
 
     //region Search
-    public ArrayList<SearchFlightsByDate> getAllFlightsBetweenDates(GregorianCalendar startDate, GregorianCalendar endDate)
+    public ArrayList<SearchFlightsBetweenDates> getAllFlightsBetweenDates(GregorianCalendar startDate, GregorianCalendar endDate)
             throws DataBaseAccessException {
         return dao.getAllFlightsBetweenDates(startDate,endDate);
     }

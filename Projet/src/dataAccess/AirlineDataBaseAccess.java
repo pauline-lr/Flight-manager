@@ -10,12 +10,12 @@ import java.util.*;
 
 public class AirlineDataBaseAccess implements DAO {
     //region Search
-    public ArrayList<SearchFlightsByDate> getAllFlightsBetweenDates(GregorianCalendar startDate, GregorianCalendar endDate)
+    public ArrayList<SearchFlightsBetweenDates> getAllFlightsBetweenDates(GregorianCalendar startDate, GregorianCalendar endDate)
             throws DataBaseAccessException {
-        ArrayList<SearchFlightsByDate> flights = new ArrayList<>();
+        ArrayList<SearchFlightsBetweenDates> flights = new ArrayList<>();
         java.sql.Date startDateSQL = new java.sql.Date(startDate.getTimeInMillis());
         java.sql.Date endDateSQL = new java.sql.Date(endDate.getTimeInMillis());
-        SearchFlightsByDate flight;
+        SearchFlightsBetweenDates flight;
         GregorianCalendar flightDepartureTime = new GregorianCalendar();
         GregorianCalendar flightArrivalTime = new GregorianCalendar();
 
@@ -71,7 +71,7 @@ public class AirlineDataBaseAccess implements DAO {
                 flightDepartureTime.setTime(data.getDate("flightDepartureTime"));
                 flightArrivalTime.setTime(data.getDate("flightArrivalTime"));
 
-                flight = new SearchFlightsByDate(
+                flight = new SearchFlightsBetweenDates(
                     data.getString("flightNumber"),
                     flightDepartureTime,
                     flightArrivalTime,

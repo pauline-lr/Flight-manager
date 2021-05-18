@@ -2,7 +2,7 @@ package model;
 
 import java.util.GregorianCalendar;
 
-public class SearchFlightsByDate {
+public class SearchFlightsBetweenDates {
     private String flightNumber;
     private GregorianCalendar flightDepartureTime;
     private GregorianCalendar flightArrivalTime;
@@ -23,7 +23,7 @@ public class SearchFlightsByDate {
     private String pilotFirstName;
     private String pilotLastName;
 
-    public SearchFlightsByDate(String flightNumber, GregorianCalendar flightDepartureTime, GregorianCalendar flightArrivalTime, String departureGateTerminal, Integer departureGateNumber, String departureAirportCode, String departureAirportName, String departureAirportCountry, String arrivalGateTerminal, Integer arrivalGateNumber, String arrivalAirportCode, String arrivalAirportName, String arrivalAirportCountry, Integer planeId, String planeModel, String planeBrand, String pilotLicenceNumber, String pilotFirstName, String pilotLastName) {
+    public SearchFlightsBetweenDates(String flightNumber, GregorianCalendar flightDepartureTime, GregorianCalendar flightArrivalTime, String departureGateTerminal, Integer departureGateNumber, String departureAirportCode, String departureAirportName, String departureAirportCountry, String arrivalGateTerminal, Integer arrivalGateNumber, String arrivalAirportCode, String arrivalAirportName, String arrivalAirportCountry, Integer planeId, String planeModel, String planeBrand, String pilotLicenceNumber, String pilotFirstName, String pilotLastName) {
         setFlightNumber(flightNumber);
         setFlightDepartureTime(flightDepartureTime);
         setFlightArrivalTime(flightArrivalTime);

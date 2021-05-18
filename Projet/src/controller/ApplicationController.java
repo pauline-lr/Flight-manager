@@ -1,14 +1,10 @@
 package controller;
 
 import business.*;
-import dataAccess.SingletonConnection;
 import exception.*;
 import model.*;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
@@ -24,7 +20,7 @@ public class ApplicationController {
     }
 
     //region Search
-    public ArrayList<SearchFlightsByDate> getAllFlightsBetweenDates(GregorianCalendar startDate, GregorianCalendar endDate)
+    public ArrayList<SearchFlightsBetweenDates> getAllFlightsBetweenDates(GregorianCalendar startDate, GregorianCalendar endDate)
             throws DataBaseAccessException {
         return flightManager.getAllFlightsBetweenDates(startDate,endDate);
     }

@@ -86,7 +86,11 @@ public class Flight {
     }
     public void setMealDescription(String mealDescription) throws FlightException.MealDescriptionException {
         if (mealDescription.length() <= MEAL_DESCRIPTION_LENTGH) {
-            this.mealDescription = mealDescription;
+            if (mealDescription.equals("")) {
+                this.mealDescription = null;
+            } else {
+                this.mealDescription = mealDescription;
+            }
         } else {
             throw new FlightException.MealDescriptionException(mealDescription);
         }

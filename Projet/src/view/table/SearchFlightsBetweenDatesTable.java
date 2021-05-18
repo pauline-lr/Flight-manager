@@ -2,28 +2,28 @@ package view.table;
 
 import controller.ApplicationController;
 import exception.DataBaseAccessException;
-import model.SearchFlightsByDate;
+import model.SearchFlightsBetweenDates;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
-public class DateFlightTable extends AbstractTableModel {
+public class SearchFlightsBetweenDatesTable extends AbstractTableModel {
     private ApplicationController controller;
     private String [] columnNames = {"N° de vol", "Heure de départ", "Heure d'arrivée",
             "Terminal Départ", "N° de porte Départ", "Aéroport Départ",
             "Terminal Arrivée", "N° de porte Arrivée", "Aéroport Arrivée",
             "Avion", "Pilot"};
 
-    private ArrayList<SearchFlightsByDate> flights;
+    private ArrayList<SearchFlightsBetweenDates> flights;
 
-    public DateFlightTable(ApplicationController controller,ArrayList<SearchFlightsByDate> flights) throws DataBaseAccessException {
+    public SearchFlightsBetweenDatesTable(ApplicationController controller, ArrayList<SearchFlightsBetweenDates> flights) throws DataBaseAccessException {
         this.controller = controller;
         this.flights = flights;
     }
 
-    public DateFlightTable(ArrayList<SearchFlightsByDate> flights){
+    public SearchFlightsBetweenDatesTable(ArrayList<SearchFlightsBetweenDates> flights){
         this.flights = flights;
     }
 
@@ -40,7 +40,7 @@ public class DateFlightTable extends AbstractTableModel {
     }
 
     public Object getValueAt(int row, int column){
-        SearchFlightsByDate flight = flights.get(row);
+        SearchFlightsBetweenDates flight = flights.get(row);
 
         switch(column){
             case 0:
@@ -97,7 +97,7 @@ public class DateFlightTable extends AbstractTableModel {
         return c;
     }
 
-    public SearchFlightsByDate getDateFlight(int indice){
+    public SearchFlightsBetweenDates getDateFlight(int indice){
         try{
             return flights.get(indice);
         }catch(Exception e){
@@ -106,7 +106,7 @@ public class DateFlightTable extends AbstractTableModel {
         }
     }
 
-    public ArrayList<SearchFlightsByDate> getAllSearchFlightsByDate(){
+    public ArrayList<SearchFlightsBetweenDates> getAllSearchFlightsByDate(){
         return flights;
     }
 }

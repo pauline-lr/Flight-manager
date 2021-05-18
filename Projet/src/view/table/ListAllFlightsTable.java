@@ -9,18 +9,18 @@ import javax.swing.table.AbstractTableModel;
 import java.sql.*;
 import java.util.*;
 
-public class FlightTable extends AbstractTableModel {
+public class ListAllFlightsTable extends AbstractTableModel {
     private ApplicationController controller;
     private String [] columnNames = {"Numéro", "Heure de départ", "Aéroport de départ",  "Porte de départ",
             "Heure d'arrivée","Aéroport d'arrivée",  "Porte d'arrivée" ,"Repas", "Description du repas", "Pilote", "Avion"};
     private ArrayList<Flight> flights;
 
-    public FlightTable(ApplicationController controller){
+    public ListAllFlightsTable(ApplicationController controller){
         this.controller = controller;
         flights = controller.getAllFlights();
     }
 
-    public FlightTable(ArrayList<Flight> flights){
+    public ListAllFlightsTable(ArrayList<Flight> flights){
         this.flights = flights;
     }
 
