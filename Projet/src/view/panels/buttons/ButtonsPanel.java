@@ -12,6 +12,7 @@ import view.panels.menuBarPanels.optionsFlightPanels.ModifyFlightPanel;
 import view.panels.menuBarPanels.searchPanels.SearchFlightsBetweenDatesPanel;
 import view.panels.menuBarPanels.searchPanels.SearchFlightsByPilotPanel;
 import view.panels.menuBarPanels.searchPanels.SearchPassengersByClassPanel;
+import view.panels.menuWindowPanels.AnimationSpace;
 import view.panels.menuWindowPanels.WelcomePanel;
 import view.table.SearchFlightsBetweenDatesTable;
 import view.windows.MenuWindow;
@@ -67,6 +68,7 @@ public class ButtonsPanel extends JPanel {
         public void actionPerformed(ActionEvent evt){
             menuWindow.getCont().removeAll();
             menuWindow.getCont().add(new WelcomePanel(), BorderLayout.CENTER);
+            menuWindow.getCont().add(new AnimationSpace(), BorderLayout.CENTER);
             menuWindow.getCont().repaint();
             menuWindow.setVisible(true);
         }

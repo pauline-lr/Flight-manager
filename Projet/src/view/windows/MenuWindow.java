@@ -75,7 +75,7 @@ public class MenuWindow extends JFrame{
     public void initAnimation(){
         this.animationSpace = new AnimationSpace();
         animationSpace.setLayout(new BorderLayout());
-        animationSpace.setBounds(0,120,500,100);
+        animationSpace.setBounds(0,120,600,100);
         frameContainer.add(animationSpace);
     }
 
