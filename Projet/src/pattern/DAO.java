@@ -46,7 +46,7 @@ public interface DAO {
             throws SQLException, DataBaseConnectionException;
     public void modifyFlight(Flight flightToUpdate)
             throws SQLException, DataBaseConnectionException;
-    void deleteFlight(Flight flightToDelete)
+    void deleteFlight(String flightToDelete)
             throws SQLException, DataBaseConnectionException;
     //endregion
 

@@ -86,7 +86,7 @@ public class FlightManager {
             throws SQLException, DataBaseConnectionException {
         dao.modifyFlight(flightToUpdate);
     }
-    public void deleteFlight(Flight flightToDelete)
+    public void deleteFlight(String flightToDelete)
             throws SQLException, DataBaseConnectionException {
         dao.deleteFlight(flightToDelete);
     }

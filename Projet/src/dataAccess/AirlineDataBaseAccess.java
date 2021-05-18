@@ -482,7 +482,7 @@ public class AirlineDataBaseAccess implements DAO {
             throws SQLException, DataBaseConnectionException {
         modifyFlight(flightToUpdate, flightToUpdate.getNumber());
     }
-    public void deleteFlight(Flight flightToDelete)
+    public void deleteFlight(String flightNumberToDelete)
             throws SQLException, DataBaseConnectionException {
         String sql =
                 "DELETE " +
@@ -491,7 +491,7 @@ public class AirlineDataBaseAccess implements DAO {
                 "WHERE " +
                     "number = ?";
         PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sql);
-        preparedStatement.setString(1, flightToDelete.getNumber());
+        preparedStatement.setString(1, flightNumberToDelete);
 
         preparedStatement.executeUpdate();
     }

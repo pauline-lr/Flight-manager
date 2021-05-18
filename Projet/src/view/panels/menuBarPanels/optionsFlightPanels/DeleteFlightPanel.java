@@ -55,7 +55,8 @@ public class DeleteFlightPanel extends JPanel {
                 int selectedRow = table.getSelectedRow();
                 tableFlights.removeRow(selectedRow);
                 try {
-                    controller.deleteFlight(tableFlights.getFlight(selectedRow));
+                    Flight flight = tableFlights.getFlight(selectedRow);
+                    controller.deleteFlight(flight.getNumber());
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
                 } catch (DataBaseConnectionException e) {
