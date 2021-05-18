@@ -13,7 +13,7 @@ import java.sql.SQLException;
 public class SeatReservationPanel extends JPanel {
     public SeatReservationPanel(MenuWindow menuWindow, ApplicationController controller) throws SQLException, DataBaseConnectionException {
         this.setLayout(new BorderLayout());
-        this.add(new SeatReservationForm(), BorderLayout.CENTER);
+        this.add(new SeatReservationForm(controller), BorderLayout.CENTER);
         this.add(new ButtonsPanel(menuWindow, "SeatReservationSearch", null, "Rechercher", controller), BorderLayout.SOUTH);
     }
 }

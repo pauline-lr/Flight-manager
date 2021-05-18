@@ -8,11 +8,12 @@ import java.awt.*;
 import java.sql.SQLException;
 
 public class SearchPilotForm extends JPanel {
-    private ApplicationController controller = new ApplicationController();
+    private ApplicationController controller;
     private JLabel pilotName;
     private JComboBox pilotNameSelect;
 
-    public SearchPilotForm() throws SQLException, DataBaseConnectionException {
+    public SearchPilotForm(ApplicationController controller) throws SQLException, DataBaseConnectionException {
+        this.controller = controller;
         this.setLayout(new GridLayout(8, 2, 5, 5));
 
         initForm();

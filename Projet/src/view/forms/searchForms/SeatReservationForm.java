@@ -8,11 +8,12 @@ import java.awt.*;
 import java.sql.SQLException;
 
 public class SeatReservationForm extends JPanel {
-    private ApplicationController controller = new ApplicationController();
+    private ApplicationController controller;
     private JLabel seatCategory;
     private JComboBox seatCategorySelect;
 
-    public SeatReservationForm() throws SQLException, DataBaseConnectionException {
+    public SeatReservationForm(ApplicationController controller) throws SQLException, DataBaseConnectionException {
+        this.controller = controller;
         this.setLayout(new GridLayout(8, 2, 5, 5));
 
         initForm();

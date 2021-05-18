@@ -10,7 +10,7 @@ import java.sql.*;
 import java.util.*;
 
 public class FlightTable extends AbstractTableModel {
-    private ApplicationController controller = new ApplicationController();
+    private ApplicationController controller;
     private String [] columnNames = {"Numéro", "Heure de départ", "Aéroport de départ",  "Porte de départ",
             "Heure d'arrivée","Aéroport d'arrivée",  "Porte d'arrivée" ,"Repas", "Description du repas", "Pilote", "Avion"};
     private ArrayList<Flight> flights;

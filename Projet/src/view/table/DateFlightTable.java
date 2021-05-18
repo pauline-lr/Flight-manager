@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public class DateFlightTable extends AbstractTableModel {
-    private ApplicationController controller = new ApplicationController();
+    private ApplicationController controller;
     private String [] columnNames = {"N° de vol", "Heure de départ", "Heure d'arrivée",
             "Terminal Départ", "N° de porte Départ", "Aéroport Départ",
             "Terminal Arrivée", "N° de porte Arrivée", "Aéroport Arrivée",
