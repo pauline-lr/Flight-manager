@@ -17,7 +17,7 @@ public class ModifyFlightForm extends JPanel {
 
 
     public ModifyFlightForm() throws SQLException, DataBaseConnectionException {
-        this.setLayout(new GridLayout(4, 1, 3, 3));
+        this.setLayout(new GridLayout(2, 1, 3, 3));
 
         flightLabel = new JLabel("    Vol à modifier");
         flightLabel.setFont(font);
