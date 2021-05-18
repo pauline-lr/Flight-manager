@@ -212,17 +212,17 @@ public class AirlineDataBaseAccess implements DAO {
                 "flight fli, " +
                 "plane pla, " +
                 "pilot pil, " +
-                "gate depGate, " +
+                "gate depGat, " +
                 "airport depAir, " +
-                "gate arrGate, " +
+                "gate arrGat, " +
                 "airport arrAir " +
             "WHERE " +
                 "fli.plane = pla.plane_id AND " +
                 "fli.pilot = pil.licence_number AND " +
-                "fli.departure_gate = depGate.gate_id AND " +
-                "depGate.airport = depAir.code AND " +
-                "fli.arrival_gate = arrGate.gate_id AND " +
-                "arrGate.airport = arrAir.code AND " +
+                "fli.departure_gate = depGat.gate_id AND " +
+                "depGat.airport = depAir.code AND " +
+                "fli.arrival_gate = arrGat.gate_id AND " +
+                "arrGat.airport = arrAir.code AND " +
                 "pil.last_name = ? " +
             "ORDER BY " +
                 "departure_time;";
@@ -305,15 +305,47 @@ public class AirlineDataBaseAccess implements DAO {
     }
     public String [] getAllFlightsForComboBox()
             throws SQLException, DataBaseConnectionException {
-        ArrayList<String> flightNumbers = new ArrayList<>();
+        ArrayList<String> flights = new ArrayList<>();
+        GregorianCalendar departureTime = new GregorianCalendar();
+        GregorianCalendar arrivalTime = new GregorianCalendar();
+        String sql =
+            "SELECT " +
+                "fli.number AS flightNumber, " +
+                "fli.departure_time AS departureTime, " +
+                "fli.arrival_time AS arrivalTime, " +
+                "depGat.terminal AS departureTerminal, " +
+                "depGat.number AS departureGate, " +
+                "depAir.code AS departureAirport, " +
+                "arrGat.terminal AS arrivalTerminal, " +
+                "arrGat.number AS arrivalGate, " +
+                "arrAir.code AS arrivalAirport " +
+            "FROM " +
+                "flight fli, " +
+                "gate depGat, " +
+                "airport depAir, " +
+                "gate arrGat, " +
+                "airport arrAir " +
+            "WHERE " +
+                "fli.departure_gate = depGat.gate_id AND " +
+                "depGat.airport = depAir.code AND " +
+                "fli.arrival_gate = arrGat.gate_id AND " +
+                "arrGat.airport = arrAir.code " +
+            "ORDER BY " +
+                "departure_time;";
+
         Statement statement = SingletonConnection.getInstance().createStatement();
-        ResultSet data = statement.executeQuery("SELECT * FROM flight ORDER BY number");
+        ResultSet data = statement.executeQuery(sql);
 
         while(data.next()) {
-            flightNumbers.add(data.getString("number"));
+            departureTime.setTime(data.getDate("departureTime"));
+            arrivalTime.setTime(data.getDate("arrivalTime"));
+
+            String departureHour = departureTime.get(Calendar.HOUR) + ":" + departureTime.get(Calendar.MINUTE);
+
+            flights.add(data.getString("flightNumber") + " - DÉPART : " + departureTime.getTime() + " - ARRIVÉE : " + arrivalTime.getTime());
         }
 
-        return flightNumbers.toArray(new String[0]);
+        return flights.toArray(new String[0]);
     }
     public String [] getAllPilotsForComboBox()
             throws SQLException, DataBaseConnectionException {

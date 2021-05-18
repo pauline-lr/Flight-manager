@@ -58,10 +58,9 @@ public class Flight {
             }
     }
     private void setDepartureTime(GregorianCalendar departureTime) {
-        this.departureTime = departureTime;
         Calendar departureTimeCalendar = departureTime;
-        Calendar currentDateC = currentDate;
-        if (departureTimeCalendar.compareTo(currentDateC) > 0) {
+        Calendar currentDate = this.currentDate;
+        if (departureTimeCalendar.compareTo(currentDate) > 0) {
             this.departureTime = departureTime;
         } else {
             try {
@@ -72,7 +71,6 @@ public class Flight {
         }
     }
     private void setArrivalTime(GregorianCalendar arrivalTime) {
-        this.arrivalTime = arrivalTime;
         Calendar arrivalTimeCalendar = departureTime;
         Calendar departureTimeCalendar = departureTime;
         if (arrivalTimeCalendar.compareTo(departureTimeCalendar) > 0) {
