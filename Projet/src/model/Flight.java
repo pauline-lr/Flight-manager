@@ -22,7 +22,7 @@ public class Flight {
     private String departureGate;
     private String arrivalGate;
     private Integer plane;
-    private final Calendar currentDate;
+    private final GregorianCalendar currentDate;
 
     //region Constructors
     public Flight(String number, GregorianCalendar departureTime,
@@ -58,9 +58,10 @@ public class Flight {
             }
     }
     private void setDepartureTime(GregorianCalendar departureTime) {
-        this.departureTime = departureTime;/*
+        this.departureTime = departureTime;
         Calendar departureTimeCalendar = departureTime;
-        if (departureTimeCalendar.compareTo(currentDate) > 0) {
+        Calendar currentDateC = currentDate;
+        if (departureTimeCalendar.compareTo(currentDateC) > 0) {
             this.departureTime = departureTime;
         } else {
             try {
@@ -69,12 +70,12 @@ public class Flight {
                 exception.printStackTrace();
             }
         }
-        */
     }
     private void setArrivalTime(GregorianCalendar arrivalTime) {
-        this.arrivalTime = arrivalTime;/*
+        this.arrivalTime = arrivalTime;
         Calendar arrivalTimeCalendar = departureTime;
-        if (arrivalTimeCalendar.compareTo(currentDate) > 0) {
+        Calendar departureTimeCalendar = departureTime;
+        if (arrivalTimeCalendar.compareTo(departureTimeCalendar) > 0) {
             this.arrivalTime = arrivalTime;
         } else {
             try {
@@ -83,7 +84,6 @@ public class Flight {
                 exception.printStackTrace();
             }
         }
-        */
     }
     private void setMealOnBoard(Boolean mealOnBoard) {
         isMealOnBoard = mealOnBoard;
