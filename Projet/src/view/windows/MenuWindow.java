@@ -21,6 +21,7 @@ import java.sql.SQLException;
 // Attention close dans ExitListener et ExitButtonListener
 
 public class MenuWindow extends JFrame{
+    private ApplicationController controller;
     private Container frameContainer;
     private AnimationSpace animationSpace;
     private JMenuBar menuBar;
@@ -31,6 +32,7 @@ public class MenuWindow extends JFrame{
     private JMenuItem dateFlight, seatReservation, searchPilot;
 
     public MenuWindow(){
+        controller = new ApplicationController();
         setTitle("Gestionnaire de vols");
         setBounds(100,100,600,600);
         frameContainer = this.getContentPane();
@@ -64,7 +66,7 @@ public class MenuWindow extends JFrame{
         initOptionsApplication();
 
         initOptionsFlight();
-        
+
         initListing();
 
         initOptionsSearch();
@@ -96,7 +98,7 @@ public class MenuWindow extends JFrame{
         deleteFlight.addActionListener(new DeletelightListener());
         flight.add(deleteFlight);
     }
-    
+
     public void initListing(){
         listingFlightItem = new JMenuItem("Vols à venir");
         listingFlightItem.addActionListener(new ListingFlightListener());
@@ -137,7 +139,6 @@ public class MenuWindow extends JFrame{
     private class ExitListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent evt){
-            ApplicationController controller = new ApplicationController();
             try {
                 controller.closeConnection();
             } catch (DataBaseCloseException exception) {
@@ -217,7 +218,7 @@ public class MenuWindow extends JFrame{
         @Override
         public void actionPerformed(ActionEvent evt){
             frameContainer.removeAll();
-            frameContainer.add(new AllFlightsPanel(MenuWindow.this), BorderLayout.CENTER);
+            frameContainer.add(new AllFlightsPanel(MenuWindow.this, controller), BorderLayout.CENTER);
             frameContainer.repaint();
             MenuWindow.this.setVisible(true);
         }

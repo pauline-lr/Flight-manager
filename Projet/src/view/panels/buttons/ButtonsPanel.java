@@ -89,7 +89,7 @@ public class ButtonsPanel extends JPanel {
                         ArrayList<SearchFlightsByDate> flights = controller.getAllFlightsBetweenDates(start, end);
                         DateFlightTable flightTable = new DateFlightTable(controller, flights);
                         JTable table = new JTable(flightTable);
-                        dateFlight.add(new JScrollPane(table), BorderLayout.CENTER);
+                        dateFlight.add(BorderLayout.CENTER, new JScrollPane(table));
                     }
                 }
 
