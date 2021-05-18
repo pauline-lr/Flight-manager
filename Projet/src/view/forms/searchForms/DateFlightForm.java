@@ -17,7 +17,7 @@ public class DateFlightForm extends JPanel {
 
     public DateFlightForm(){
         currentDate = new GregorianCalendar();
-        this.setLayout(new GridLayout(8, 4));
+        this.setLayout(new GridLayout(2, 4));
 
         initForm();
     }
