@@ -115,10 +115,6 @@ public class ListAllFlightsTable extends AbstractTableModel {
         return flights;
     }
 
-    public String[] getColumnNames() {
-        return columnNames;
-    }
-
     public void removeRow(int row){
         this.flights.remove(row);
     }

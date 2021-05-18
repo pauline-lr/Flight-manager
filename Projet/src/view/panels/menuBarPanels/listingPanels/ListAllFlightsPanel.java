@@ -12,6 +12,6 @@ public class ListAllFlightsPanel extends JPanel {
     public ListAllFlightsPanel(MenuWindow menuWindow, ApplicationController controller) {
         ListAllFlightsTable listAllFlightsTable = new ListAllFlightsTable(controller);
         JTable table = new JTable(listAllFlightsTable);
-        this.add(BorderLayout.CENTER, new JScrollPane(table));
+        this.add(new JScrollPane(table), BorderLayout.CENTER);
     }
 }
