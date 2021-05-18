@@ -1,5 +1,6 @@
 package view.panels.menuBarPanels.searchPanels;
 
+import controller.ApplicationController;
 import exception.DataBaseConnectionException;
 import view.forms.searchForms.SeatReservationForm;
 import view.panels.buttons.ButtonsPanel;
@@ -10,9 +11,9 @@ import java.awt.*;
 import java.sql.SQLException;
 
 public class SeatReservationPanel extends JPanel {
-    public SeatReservationPanel(MenuWindow menuWindow) throws SQLException, DataBaseConnectionException {
+    public SeatReservationPanel(MenuWindow menuWindow, ApplicationController controller) throws SQLException, DataBaseConnectionException {
         this.setLayout(new BorderLayout());
         this.add(new SeatReservationForm(), BorderLayout.CENTER);
-        this.add(new ButtonsPanel(menuWindow, "SeatReservationSearch", null, "Rechercher"), BorderLayout.SOUTH);
+        this.add(new ButtonsPanel(menuWindow, "SeatReservationSearch", null, "Rechercher", controller), BorderLayout.SOUTH);
     }
 }

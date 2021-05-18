@@ -7,7 +7,6 @@ import exception.FlightException;
 import model.Flight;
 import model.SearchFlightsByDate;
 import view.forms.flightForms.FlightForm;
-import view.forms.searchForms.DateFlightForm;
 import view.panels.menuBarPanels.optionsFlightPanels.AddFlightPanel;
 import view.panels.menuBarPanels.optionsFlightPanels.ModifyFlightPanel;
 import view.panels.menuBarPanels.searchPanels.DateFlightPanel;
@@ -15,7 +14,6 @@ import view.panels.menuBarPanels.searchPanels.SearchPilotPanel;
 import view.panels.menuBarPanels.searchPanels.SeatReservationPanel;
 import view.panels.menuWindowPanels.WelcomePanel;
 import view.table.DateFlightTable;
-import view.table.FlightTable;
 import view.windows.MenuWindow;
 
 import javax.swing.*;
@@ -28,13 +26,14 @@ import java.util.GregorianCalendar;
 public class ButtonsPanel extends JPanel {
     private static MenuWindow menuWindow;
     private String typeAction;
-    private ApplicationController controller = new ApplicationController();
+    private ApplicationController controller;
     FlightForm flightForm;
     private JButton retour, validation, réinit;
     private GregorianCalendar start, end;
     private DateFlightPanel dateFlight;
 
-    public ButtonsPanel(MenuWindow menuWindow, String typeAction, FlightForm flightForm, String label){
+    public ButtonsPanel(MenuWindow menuWindow, String typeAction, FlightForm flightForm, String label, ApplicationController controller){
+        this.controller = controller;
         this.menuWindow = menuWindow;
         this.typeAction = typeAction;
         this.flightForm = flightForm;
@@ -54,8 +53,9 @@ public class ButtonsPanel extends JPanel {
     }
 
     // recherche entre 2 dates
-    public ButtonsPanel(MenuWindow menuWindow, String typeAction, DateFlightPanel dateFlight, GregorianCalendar start, GregorianCalendar end, String label){
-        this(menuWindow, typeAction, null, label);
+    public ButtonsPanel(MenuWindow menuWindow, String typeAction, DateFlightPanel dateFlight,
+                        GregorianCalendar start, GregorianCalendar end, String label, ApplicationController controller){
+        this(menuWindow, typeAction, null, label, controller);
         this.dateFlight = dateFlight;
         this.start = start;
         this.end = end;
@@ -117,15 +117,15 @@ public class ButtonsPanel extends JPanel {
         menuWindow.getCont().removeAll();
 
         if (typeAction.equals("Addition")) {
-            menuWindow.getCont().add(new AddFlightPanel(menuWindow), BorderLayout.CENTER);
+            menuWindow.getCont().add(new AddFlightPanel(menuWindow, controller), BorderLayout.CENTER);
         } else if (typeAction.equals("Modification")) {
-            menuWindow.getCont().add(new ModifyFlightPanel(menuWindow), BorderLayout.CENTER);
+            menuWindow.getCont().add(new ModifyFlightPanel(menuWindow, controller), BorderLayout.CENTER);
         } else if (typeAction.equals("DateFlightSearch")) {
-            menuWindow.getCont().add(new DateFlightPanel(menuWindow), BorderLayout.CENTER);
+            menuWindow.getCont().add(new DateFlightPanel(menuWindow, controller), BorderLayout.CENTER);
         } else if(typeAction.equals("SearchPilot")) {
-            menuWindow.getCont().add(new SearchPilotPanel(menuWindow), BorderLayout.CENTER);
+            menuWindow.getCont().add(new SearchPilotPanel(menuWindow, controller), BorderLayout.CENTER);
         } else if(typeAction.equals("SeatReservationSearch")) {
-            menuWindow.getCont().add(new SeatReservationPanel(menuWindow), BorderLayout.CENTER);
+            menuWindow.getCont().add(new SeatReservationPanel(menuWindow, controller), BorderLayout.CENTER);
         }
 
         menuWindow.getCont().repaint();

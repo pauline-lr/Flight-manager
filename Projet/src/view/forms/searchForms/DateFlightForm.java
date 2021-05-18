@@ -1,5 +1,7 @@
 package view.forms.searchForms;
 
+import controller.ApplicationController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.Calendar;
