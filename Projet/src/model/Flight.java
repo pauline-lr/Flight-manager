@@ -58,7 +58,8 @@ public class Flight {
             }
     }
     private void setDepartureTime(GregorianCalendar departureTime) {
-        Calendar departureTimeCalendar = departureTime;
+        this.departureTime = departureTime;
+        /*Calendar departureTimeCalendar = departureTime;
         if (departureTimeCalendar.compareTo(currentDate) > 0) {
             this.departureTime = departureTime;
         } else {
@@ -67,10 +68,11 @@ public class Flight {
             } catch (FlightException.DepartureDateException | DateTimeParseException exception) {
                 exception.printStackTrace();
             }
-        }
+        }*/
     }
     private void setArrivalTime(GregorianCalendar arrivalTime) {
-        Calendar arrivalTimeCalendar = departureTime;
+        this.arrivalTime = arrivalTime;
+        /*Calendar arrivalTimeCalendar = departureTime;
         if (arrivalTimeCalendar.compareTo(currentDate) > 0) {
             this.arrivalTime = arrivalTime;
         } else {
@@ -79,7 +81,7 @@ public class Flight {
             } catch (FlightException.ArrivalDateException | DateTimeParseException exception) {
                 exception.printStackTrace();
             }
-        }
+        }*/
     }
     private void setMealOnBoard(Boolean mealOnBoard) {
         isMealOnBoard = mealOnBoard;
