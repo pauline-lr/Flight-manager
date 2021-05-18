@@ -15,20 +15,32 @@ public class AddFlightForm extends JPanel {
     private static final int LENGTH_PILOT_ID = 7;
     private static final int LENGTH_AIRPORT_ID = 3;
 
-    private ApplicationController controller = new ApplicationController();
     private Font font = new Font(null, Font.BOLD, 13);
-    private JTextField numberTextField, mealDescriptionTextField;
+    private ApplicationController controller = new ApplicationController();
+
+    private JTextField
+            numberTextField,
+            mealDescriptionTextField;
     private JCheckBox isMealOnBoardCheckBox;
-    private JLabel  departureLabel, arrivalLabel, numberLabel, mealLabel, departureDateLabel, departureHourLabel, arrivalDateLabel, arrivalHourLabel, departureAirportLabel, departureTerminalLabel,
-            departureGateLabel, arrivalAirportLabel, arrivalTerminalLabel, arrivalGateLabel, mealDescriptionLabel, planeLabel, pilotLabel, empty;
-    private JSpinner departureDay, departureMonth, departureYear, departureHour, departureMinute;
-    private JSpinner arrivalDay, arrivalMonth, arrivalYear, arrivalHour, arrivalMinute;
-    private SpinnerNumberModel departureDayModel, departureMonthModel, departureYearModel, departureHourModel, departureMinuteModel;
-    private SpinnerNumberModel arrivalDayModel, arrivalMonthModel, arrivalYearModel, arrivalHourModel, arrivalMinuteModel;
-    private JComboBox departureGateComboBox;
-    private JComboBox arrivalGateComboBox;
-    private JComboBox planeComboBox, pilotComboBox, departureAirportComboBox, arrivalAirportComboBox;
-    private JComboBox departureTerminalComboBox, arrivalTerminalComboBox;
+    private JLabel
+            numberLabel,
+            pilotLabel,
+            planeLabel,
+            departureLabel, departureDateLabel, departureTimeLabel, departureAirportLabel, departureTerminalLabel, departureGateLabel,
+            arrivalLabel, arrivalDateLabel, arrivalTimeLabel, arrivalAirportLabel, arrivalTerminalLabel, arrivalGateLabel,
+            mealLabel, mealDescriptionLabel,
+            empty;
+    private JSpinner
+            departureDay, departureMonth, departureYear, departureHour, departureMinute,
+            arrivalDay, arrivalMonth, arrivalYear, arrivalHour, arrivalMinute;
+    private SpinnerNumberModel
+            departureDayModel, departureMonthModel, departureYearModel, departureHourModel, departureMinuteModel,
+            arrivalDayModel, arrivalMonthModel, arrivalYearModel, arrivalHourModel, arrivalMinuteModel;
+    private JComboBox
+            pilotComboBox,
+            planeComboBox,
+            departureAirportComboBox, departureTerminalComboBox, departureGateComboBox,
+            arrivalAirportComboBox, arrivalTerminalComboBox, arrivalGateComboBox;
     private GregorianCalendar currentDate;
 
     public AddFlightForm() throws SQLException, DataBaseConnectionException {
@@ -39,8 +51,8 @@ public class AddFlightForm extends JPanel {
 
     public void createFlightForm() throws SQLException, DataBaseConnectionException {
         addFlightNumberField();
-        addPlaneField();
         addPilotField();
+        addPlaneField();
         addDepartureMomentField();
         addDepartureLocationField();
         addArrivalMomentField();
@@ -95,34 +107,36 @@ public class AddFlightForm extends JPanel {
         addEmptyField();
     }
 
-    private void addPlaneField() {
-        planeLabel = new JLabel("    Avion");
-        planeLabel.setFont(font);
-        planeLabel.setHorizontalAlignment(SwingConstants.LEFT);
-        this.add(planeLabel);
-        try {
-            planeComboBox = new JComboBox(controller.getAllPlanesForComboBox());
-        } catch (Exception exception) {
-            JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-        }
-        this.add(planeComboBox);
-
-        addEmptyField();
-        addEmptyField();
-        addEmptyField();
-    }
-
     private void addPilotField() {
         pilotLabel = new JLabel("    Pilote");
         pilotLabel.setFont(font);
         pilotLabel.setHorizontalAlignment(SwingConstants.LEFT);
         this.add(pilotLabel);
+
         try {
             pilotComboBox = new JComboBox(controller.getAllPilotsForComboBox());
         } catch (Exception exception) {
             JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
         this.add(pilotComboBox);
+
+        addEmptyField();
+        addEmptyField();
+        addEmptyField();
+    }
+
+    private void addPlaneField() {
+        planeLabel = new JLabel("    Avion");
+        planeLabel.setFont(font);
+        planeLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        this.add(planeLabel);
+
+        try {
+            planeComboBox = new JComboBox(controller.getAllPlanesForComboBox());
+        } catch (Exception exception) {
+            JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
+        this.add(planeComboBox);
 
         addEmptyField();
         addEmptyField();
@@ -162,9 +176,9 @@ public class AddFlightForm extends JPanel {
         addEmptyField();
 
         // departureTime
-        departureHourLabel = new JLabel("Heure : ");
-        departureHourLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        this.add(departureHourLabel);
+        departureTimeLabel = new JLabel("Heure : ");
+        departureTimeLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        this.add(departureTimeLabel);
 
         departureHourModel = new SpinnerNumberModel(currentDate.get(Calendar.HOUR_OF_DAY),0,23,1);
         departureHour = new JSpinner(departureHourModel);
@@ -182,6 +196,7 @@ public class AddFlightForm extends JPanel {
         departureAirportLabel = new JLabel("Aéroport : ");
         departureAirportLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(departureAirportLabel);
+
         try {
             departureAirportComboBox = new JComboBox(controller.getAllAirportsForComboBox());
         } catch (Exception exception) {
@@ -245,9 +260,9 @@ public class AddFlightForm extends JPanel {
         addEmptyField();
 
         // arrivalTime
-        arrivalHourLabel = new JLabel("Heure : ");
-        arrivalHourLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        this.add(arrivalHourLabel);
+        arrivalTimeLabel = new JLabel("Heure : ");
+        arrivalTimeLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        this.add(arrivalTimeLabel);
 
         arrivalHourModel = new SpinnerNumberModel(currentDate.get(Calendar.HOUR_OF_DAY),0,23,1);
         arrivalHour = new JSpinner(arrivalHourModel);
@@ -265,6 +280,7 @@ public class AddFlightForm extends JPanel {
         arrivalAirportLabel = new JLabel("Aéroport : ");
         arrivalAirportLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(arrivalAirportLabel);
+
         try {
             arrivalAirportComboBox = new JComboBox(controller.getAllAirportsForComboBox());
         } catch (Exception exception) {
