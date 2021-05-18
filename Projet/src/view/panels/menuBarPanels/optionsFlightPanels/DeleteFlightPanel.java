@@ -52,7 +52,6 @@ public class DeleteFlightPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent evt) {
             if(table.getSelectedRow() != -1) {
-                // supprimer la ligne sélectionnée du modèle de table
                 int selectedRow = table.getSelectedRow();
                 tableFlights.removeRow(selectedRow);
                 try {
