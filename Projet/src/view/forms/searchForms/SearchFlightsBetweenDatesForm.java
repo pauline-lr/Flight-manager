@@ -39,8 +39,7 @@ public class SearchFlightsBetweenDatesForm extends JPanel {
         startYear = new JSpinner(startYearModel);
         add(startYear);
 
-        firstDateCalendar = new GregorianCalendar(Integer.parseInt(startYear.getValue().toString()),
-                Integer.parseInt(startMonth.getValue().toString()), Integer.parseInt(startDay.getValue().toString()));
+        firstDateCalendar = new GregorianCalendar(Integer.parseInt(startYear.getValue().toString()), Integer.parseInt(startMonth.getValue().toString()), Integer.parseInt(startDay.getValue().toString()));
 
         end = new JLabel("Date de fin : ");
         end.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -58,8 +57,7 @@ public class SearchFlightsBetweenDatesForm extends JPanel {
         endYear = new JSpinner(endYearModel);
         add(endYear);
 
-        lastDateCalendar = new GregorianCalendar(Integer.parseInt(endYear.getValue().toString()),
-                Integer.parseInt(endMonth.getValue().toString()), Integer.parseInt(endDay.getValue().toString()));
+        lastDateCalendar = new GregorianCalendar(Integer.parseInt(endYear.getValue().toString()), Integer.parseInt(endMonth.getValue().toString()), Integer.parseInt(endDay.getValue().toString()));
     }
 
     public GregorianCalendar getFirstDateCalendar() {

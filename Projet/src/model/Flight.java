@@ -58,8 +58,8 @@ public class Flight {
             }
     }
     private void setDepartureTime(GregorianCalendar departureTime) {
-        this.departureTime = departureTime;
-        /*Calendar departureTimeCalendar = departureTime;
+        this.departureTime = departureTime;/*
+        Calendar departureTimeCalendar = departureTime;
         if (departureTimeCalendar.compareTo(currentDate) > 0) {
             this.departureTime = departureTime;
         } else {
@@ -68,11 +68,12 @@ public class Flight {
             } catch (FlightException.DepartureDateException | DateTimeParseException exception) {
                 exception.printStackTrace();
             }
-        }*/
+        }
+        */
     }
     private void setArrivalTime(GregorianCalendar arrivalTime) {
-        this.arrivalTime = arrivalTime;
-        /*Calendar arrivalTimeCalendar = departureTime;
+        this.arrivalTime = arrivalTime;/*
+        Calendar arrivalTimeCalendar = departureTime;
         if (arrivalTimeCalendar.compareTo(currentDate) > 0) {
             this.arrivalTime = arrivalTime;
         } else {
@@ -81,20 +82,23 @@ public class Flight {
             } catch (FlightException.ArrivalDateException | DateTimeParseException exception) {
                 exception.printStackTrace();
             }
-        }*/
+        }
+        */
     }
     private void setMealOnBoard(Boolean mealOnBoard) {
         isMealOnBoard = mealOnBoard;
     }
     public void setMealDescription(String mealDescription) throws FlightException.MealDescriptionException {
-        if (mealDescription.length() <= MEAL_DESCRIPTION_LENTGH) {
-            if (mealDescription.equals("")) {
-                this.mealDescription = null;
+        if (mealDescription != null) {
+            if (!(mealDescription.equals(""))) {
+                if (mealDescription.length() <= MEAL_DESCRIPTION_LENTGH) {
+                    this.mealDescription = mealDescription;
+                } else {
+                    throw new FlightException.MealDescriptionException(mealDescription);
+                }
             } else {
-                this.mealDescription = mealDescription;
+                this.mealDescription = null;
             }
-        } else {
-            throw new FlightException.MealDescriptionException(mealDescription);
         }
     }
     private void setPilot(String pilot) {

@@ -1,0 +1,4 @@
+Bugs
+
+- gates en double parfois lors de la selection de airport et terminal dans les combobox de addFlightForm
+- date pose problem avec le current date dans les setters de flight

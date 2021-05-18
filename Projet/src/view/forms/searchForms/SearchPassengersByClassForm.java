@@ -15,13 +15,13 @@ public class SearchPassengersByClassForm extends JPanel {
 
     public SearchPassengersByClassForm(ApplicationController controller) throws SQLException, DataBaseConnectionException {
         this.controller = controller;
-        this.setLayout(new GridLayout(8, 2, 5, 5));
+        this.setLayout(new GridLayout(14, 2, 5, 5));
 
         createPassengersByClassForm();
     }
 
     public void createPassengersByClassForm() throws SQLException, DataBaseConnectionException {
-        seatCategory = new JLabel("    Classe du siège");
+        seatCategory = new JLabel("    Choisissez la classe");
         seatCategory.setFont(font);
         seatCategory.setHorizontalAlignment(SwingConstants.LEFT);
         add(seatCategory);
