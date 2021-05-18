@@ -68,8 +68,8 @@ public class AirlineDataBaseAccess implements DAO {
             ResultSet data = preparedStatement.executeQuery();
 
             while (data.next()) {
-                flightDepartureTime.setTime(data.getDate("flightDepartureTime"));
-                flightArrivalTime.setTime(data.getDate("flightArrivalTime"));
+                flightDepartureTime.setTime(data.getTimestamp("flightDepartureTime"));
+                flightArrivalTime.setTime(data.getTimestamp("flightArrivalTime"));
 
                 flight = new SearchFlightsBetweenDates(
                     data.getString("flightNumber"),
@@ -156,8 +156,8 @@ public class AirlineDataBaseAccess implements DAO {
             ResultSet data = preparedStatement.executeQuery();
 
             while (data.next()) {
-                flightDepartureTime.setTime(data.getDate("flightDepartureTime"));
-                flightArrivalTime.setTime(data.getDate("flightArrivalTime"));
+                flightDepartureTime.setTime(data.getTimestamp("flightDepartureTime"));
+                flightArrivalTime.setTime(data.getTimestamp("flightArrivalTime"));
 
                 passenger = new SearchPassengersByClass(
                     data.getString("passengerPassportNumber"),
@@ -233,8 +233,8 @@ public class AirlineDataBaseAccess implements DAO {
             ResultSet data = preparedStatement.executeQuery();
 
             while (data.next()) {
-                flightDepartureTime.setTime(data.getDate("flightDepartureTime"));
-                flightArrivalTime.setTime(data.getDate("flightArrivalTime"));
+                flightDepartureTime.setTime(data.getTimestamp("flightDepartureTime"));
+                flightArrivalTime.setTime(data.getTimestamp("flightArrivalTime"));
 
                 flight = new SearchFlightsByPilot(
                         data.getString("flightNumber"),
@@ -337,12 +337,21 @@ public class AirlineDataBaseAccess implements DAO {
         ResultSet data = statement.executeQuery(sql);
 
         while(data.next()) {
-            departureTime.setTime(data.getDate("departureTime"));
-            arrivalTime.setTime(data.getDate("arrivalTime"));
+            departureTime.setTime(data.getTimestamp("departureTime"));
+            arrivalTime.setTime(data.getTimestamp("arrivalTime"));
 
-            String departureHour = departureTime.get(Calendar.HOUR) + ":" + departureTime.get(Calendar.MINUTE);
+            String departureInfos =
+                "DÉPART : " + departureTime.get(Calendar.HOUR_OF_DAY) + ":" + departureTime.get(Calendar.MINUTE) + " " +
+                departureTime.get(Calendar.DAY_OF_MONTH) + "/" + departureTime.get(Calendar.MONTH) + "/" + departureTime.get(Calendar.YEAR) + ", " +
+                data.getString("departureTerminal") + data.getInt("departureGate") + ", " + data.getString("departureAirport")
+            ;
+            String arrivalMoment =
+                "ARRIVÉE : " + arrivalTime.get(Calendar.HOUR_OF_DAY) + ":" + arrivalTime.get(Calendar.MINUTE) + " " +
+                arrivalTime.get(Calendar.DAY_OF_MONTH) + "/" + arrivalTime.get(Calendar.MONTH) + "/" + arrivalTime.get(Calendar.YEAR) + ", " +
+                data.getString("arrivalTerminal") + data.getInt("arrivalGate") + ", " + data.getString("arrivalAirport")
+            ;
 
-            flights.add(data.getString("flightNumber") + " - DÉPART : " + departureTime.getTime() + " - ARRIVÉE : " + arrivalTime.getTime());
+            flights.add(data.getString("flightNumber") + " - " + departureInfos + " - " + arrivalMoment);
         }
 
         return flights.toArray(new String[0]);
@@ -541,8 +550,8 @@ public class AirlineDataBaseAccess implements DAO {
         PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sql);
 
         preparedStatement.setString(1,  flight.getNumber());
-        preparedStatement.setDate(2, new java.sql.Date(flight.getDepartureTime().getTimeInMillis()));
-        preparedStatement.setDate(3, new java.sql.Date(flight.getArrivalTime().getTimeInMillis()));
+        preparedStatement.setTimestamp(2, new java.sql.Timestamp(flight.getDepartureTime().getTimeInMillis()));
+        preparedStatement.setTimestamp(3, new java.sql.Timestamp(flight.getArrivalTime().getTimeInMillis()));
         preparedStatement.setBoolean(4, flight.getMealOnBoard());
         if (flight.getMealDescription() == null) {
             preparedStatement.setNull(5, Types.VARCHAR);
@@ -556,4 +565,5 @@ public class AirlineDataBaseAccess implements DAO {
 
         return preparedStatement;
     }
+    //endregion
 }

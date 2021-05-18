@@ -65,7 +65,7 @@ public class ListAllFlightsTable extends AbstractTableModel {
             case 7:
                 return flight.getMealOnBoard() ? "Oui" : "Non";
             case 8 :
-                return flight.getMealDescription() == null ? null : flight.getMealDescription();
+                return flight.getMealDescription() == null ? "/" : flight.getMealDescription();
             case 9:
                 return flight.getPilot();
             case 10:

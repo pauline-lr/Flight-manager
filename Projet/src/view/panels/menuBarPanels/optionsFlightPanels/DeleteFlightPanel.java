@@ -8,9 +8,8 @@ import view.windows.MenuWindow;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.sql.SQLException;
+import java.awt.event.*;
+import java.sql.*;
 
 public class DeleteFlightPanel extends JPanel {
     private ApplicationController controller;
