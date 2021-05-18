@@ -8,7 +8,6 @@ import java.util.GregorianCalendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-// NB : j'ai changé les types d'objets qui étaient en String par leur objet car j'en avais besoin pour le getters 
 public class Flight {
     public final static String REGEX_NUMBER = "^[A-Z][A-Z]\\d{4}$";
     private final static int MEAL_DESCRIPTION_LENTGH = 400;
