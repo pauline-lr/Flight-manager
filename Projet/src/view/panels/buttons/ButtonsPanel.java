@@ -6,7 +6,7 @@ import exception.DataBaseConnectionException;
 import exception.FlightException;
 import model.Flight;
 import model.SearchFlightsBetweenDates;
-import view.forms.flightForms.FlightForm;
+import view.forms.flightForms.AddFlightForm;
 import view.panels.menuBarPanels.optionsFlightPanels.AddFlightPanel;
 import view.panels.menuBarPanels.optionsFlightPanels.ModifyFlightPanel;
 import view.panels.menuBarPanels.searchPanels.SearchFlightsBetweenDatesPanel;
@@ -27,16 +27,16 @@ public class ButtonsPanel extends JPanel {
     private static MenuWindow menuWindow;
     private String typeAction;
     private ApplicationController controller;
-    FlightForm flightForm;
+    AddFlightForm addFlightForm;
     private JButton retour, validation, réinit;
     private GregorianCalendar start, end;
     private SearchFlightsBetweenDatesPanel dateFlight;
 
-    public ButtonsPanel(MenuWindow menuWindow, String typeAction, FlightForm flightForm, String label, ApplicationController controller){
+    public ButtonsPanel(MenuWindow menuWindow, String typeAction, AddFlightForm addFlightForm, String label, ApplicationController controller){
         this.controller = controller;
         this.menuWindow = menuWindow;
         this.typeAction = typeAction;
-        this.flightForm = flightForm;
+        this.addFlightForm = addFlightForm;
         this.setLayout(new FlowLayout());
 
         retour = new JButton("Retour");
@@ -77,8 +77,8 @@ public class ButtonsPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent evt){
             try {
-                if(flightForm != null) {
-                    Flight flight = flightForm.getFlight();
+                if(addFlightForm != null) {
+                    Flight flight = addFlightForm.getFlight();
                     switch (typeAction) {
                         case "Addition" -> {
                             controller.addFlight(flight);

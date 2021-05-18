@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.*;
 import java.util.regex.*;
 
-public class FlightForm extends JPanel {
+public class AddFlightForm extends JPanel {
     private static final int LENGTH_PILOT_ID = 7;
     private static final int LENGTH_AIRPORT_ID = 3;
 
@@ -31,7 +31,7 @@ public class FlightForm extends JPanel {
     private JComboBox departureTerminalComboBox, arrivalTerminalComboBox;
     private GregorianCalendar currentDate;
 
-    public FlightForm() throws SQLException, DataBaseConnectionException {
+    public AddFlightForm() throws SQLException, DataBaseConnectionException {
         currentDate = new GregorianCalendar();
         setLayout(new GridLayout(16, 4));
         createFlightForm();
