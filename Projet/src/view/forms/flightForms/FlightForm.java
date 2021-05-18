@@ -56,6 +56,9 @@ public class FlightForm extends JPanel {
                 Integer.parseInt(departureHour.getValue().toString()),
                 Integer.parseInt(departureMinute.getValue().toString())
         );
+
+        /*GregorianCalendar(int year, int month, int dayOfMonth,
+        int hourOfDay, int minute)*/
         GregorianCalendar arrivalDate = new GregorianCalendar(
                 Integer.parseInt(arrivalYear.getValue().toString()),
                 Integer.parseInt(arrivalMonth.getValue().toString()) - 1,
@@ -68,7 +71,7 @@ public class FlightForm extends JPanel {
                 departureDate,
                 arrivalDate,
                 isMealOnBoardCheckBox.isSelected(),
-                mealDescriptionTextField.getText(),
+                mealDescriptionTextField.getText() == "" ? null : mealDescriptionTextField.getText(),
                 getPilotId(),
                 getDepartureGateId(),
                 getArrivalGateId(),

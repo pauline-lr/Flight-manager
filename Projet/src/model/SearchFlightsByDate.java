@@ -104,4 +104,83 @@ public class SearchFlightsByDate {
         this.pilotLastName = pilotLastName;
     }
     //endregion
+
+    //region Getters
+    public String getFlightNumber() {
+        return flightNumber;
+    }
+
+    public GregorianCalendar getFlightDepartureTime() {
+        return flightDepartureTime;
+    }
+
+    public GregorianCalendar getFlightArrivalTime() {
+        return flightArrivalTime;
+    }
+
+    public String getDepartureGateTerminal() {
+        return departureGateTerminal;
+    }
+
+    public Integer getDepartureGateNumber() {
+        return departureGateNumber;
+    }
+
+    public String getDepartureAirportCode() {
+        return departureAirportCode;
+    }
+
+    public String getDepartureAirportName() {
+        return departureAirportName;
+    }
+
+    public String getDepartureAirportCountry() {
+        return departureAirportCountry;
+    }
+
+    public String getArrivalGateTerminal() {
+        return arrivalGateTerminal;
+    }
+
+    public Integer getArrivalGateNumber() {
+        return arrivalGateNumber;
+    }
+
+    public String getArrivalAirportCode() {
+        return arrivalAirportCode;
+    }
+
+    public String getArrivalAirportName() {
+        return arrivalAirportName;
+    }
+
+    public String getArrivalAirportCountry() {
+        return arrivalAirportCountry;
+    }
+
+    public Integer getPlaneId() {
+        return planeId;
+    }
+
+    public String getPlaneModel() {
+        return planeModel;
+    }
+
+    public String getPlaneBrand() {
+        return planeBrand;
+    }
+
+    public String getPilotLicenceNumber() {
+        return pilotLicenceNumber;
+    }
+
+    public String getPilotFirstName() {
+        return pilotFirstName;
+    }
+
+    public String getPilotLastName() {
+        return pilotLastName;
+    }
+
+    //endregion
 }

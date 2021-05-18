@@ -75,7 +75,7 @@ public class FlightTable extends AbstractTableModel {
     }
 
     public Class getColumnClass(int col){
-        Class c = null;
+        Class c;
 
         switch (col){
             case 0:
@@ -84,15 +84,13 @@ public class FlightTable extends AbstractTableModel {
             case 7:
                 case 8:
                     case 9:
+            case 3:
+            case 6:
                 c = String.class;
                 break;
             case 1:
             case 4:
                 c = GregorianCalendar.class;
-                break;
-            case 3:
-            case 6:
-                c = Character.class;
                 break;
             case 10:
                 c = Integer.class;

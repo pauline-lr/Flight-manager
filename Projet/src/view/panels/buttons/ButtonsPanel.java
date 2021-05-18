@@ -7,12 +7,14 @@ import exception.FlightException;
 import model.Flight;
 import model.SearchFlightsByDate;
 import view.forms.flightForms.FlightForm;
+import view.forms.searchForms.DateFlightForm;
 import view.panels.menuBarPanels.optionsFlightPanels.AddFlightPanel;
 import view.panels.menuBarPanels.optionsFlightPanels.ModifyFlightPanel;
 import view.panels.menuBarPanels.searchPanels.DateFlightPanel;
 import view.panels.menuBarPanels.searchPanels.SearchPilotPanel;
 import view.panels.menuBarPanels.searchPanels.SeatReservationPanel;
 import view.panels.menuWindowPanels.WelcomePanel;
+import view.table.DateFlightTable;
 import view.table.FlightTable;
 import view.windows.MenuWindow;
 
@@ -30,6 +32,7 @@ public class ButtonsPanel extends JPanel {
     FlightForm flightForm;
     private JButton retour, validation, réinit;
     private GregorianCalendar start, end;
+    private DateFlightPanel dateFlight;
 
     public ButtonsPanel(MenuWindow menuWindow, String typeAction, FlightForm flightForm, String label){
         this.menuWindow = menuWindow;
@@ -51,8 +54,9 @@ public class ButtonsPanel extends JPanel {
     }
 
     // recherche entre 2 dates
-    public ButtonsPanel(MenuWindow menuWindow,String typeAction, GregorianCalendar start, GregorianCalendar end, String label){
+    public ButtonsPanel(MenuWindow menuWindow, String typeAction, DateFlightPanel dateFlight, GregorianCalendar start, GregorianCalendar end, String label){
         this(menuWindow, typeAction, null, label);
+        this.dateFlight = dateFlight;
         this.start = start;
         this.end = end;
     }
@@ -83,7 +87,9 @@ public class ButtonsPanel extends JPanel {
                         JOptionPane.showMessageDialog(null, "Vol modifié", "Succès", JOptionPane.INFORMATION_MESSAGE);
                     } else if(typeAction.equals("DateFlightSearch")) {
                         ArrayList<SearchFlightsByDate> flights = controller.getAllFlightsBetweenDates(start, end);
-                        FlightTable flightTable = new FlightTable(controller);
+                        DateFlightTable flightTable = new DateFlightTable(controller, flights);
+                        JTable table = new JTable(flightTable);
+                        dateFlight.add(new JScrollPane(table), BorderLayout.CENTER);
                     }
                 }
 
