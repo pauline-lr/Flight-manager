@@ -33,7 +33,7 @@ public class ButtonsPanel extends JPanel {
     private JButton retour, validation, réinit;
     private GregorianCalendar start, end;
     private SearchFlightsBetweenDatesPanel dateFlight;
-    private SearchFlightsByPilotPanel fligthbyPilotPanel;
+    private SearchFlightsByPilotPanel flightByPilotPanel;
     private String pilotId;
 
 
@@ -67,10 +67,10 @@ public class ButtonsPanel extends JPanel {
     }
 
     // recherche  pilote
-    public ButtonsPanel(MenuWindow menuWindow, String typeAction, SearchFlightsByPilotPanel fligthbyPilotPanel,
+    public ButtonsPanel(MenuWindow menuWindow, String typeAction, SearchFlightsByPilotPanel flightByPilotPanel,
                         String pilotId, String label, ApplicationController controller){
         this(menuWindow, typeAction, null, label, controller);
-        this.fligthbyPilotPanel = fligthbyPilotPanel;
+        this.flightByPilotPanel = flightByPilotPanel;
         this.pilotId = pilotId;
     }
 
@@ -110,7 +110,7 @@ public class ButtonsPanel extends JPanel {
                             ArrayList<SearchFlightsByPilot> flights = controller.getAllFlightsOfAPilot(pilotId);
                             SearchFlightsByPilotTable flightTable = new SearchFlightsByPilotTable(controller, flights);
                             JTable table = new JTable(flightTable);
-                            fligthbyPilotPanel.add(new JScrollPane(table), BorderLayout.CENTER);
+                            flightByPilotPanel.add(new JScrollPane(table), BorderLayout.CENTER);
                         }
                     }
                 }
