@@ -82,6 +82,10 @@ public class FlightManager {
             throws SQLException, DataBaseConnectionException {
         return dao.getAirportToString(gateId);
     }
+    public String getTerminalToString(String gateId)
+            throws SQLException, DataBaseConnectionException {
+        return dao.getTerminalToString(gateId);
+    }
     public String getGateToString(String gateId)
             throws SQLException, DataBaseConnectionException {
         return dao.getGateToString(gateId);

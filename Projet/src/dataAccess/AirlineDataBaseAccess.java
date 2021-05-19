@@ -525,12 +525,32 @@ public class AirlineDataBaseAccess implements DAO {
 
         return airportToString;
     }
+    public String getTerminalToString(String gateId)
+            throws SQLException, DataBaseConnectionException {
+        String gateToString = null;
+        String sql =
+                "SELECT " +
+                        "terminal " +
+                        "FROM " +
+                        "gate " +
+                        "WHERE " +
+                        "gate_id = ?";
+        PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sql);
+        preparedStatement.setString(1, gateId);
+
+        ResultSet data = preparedStatement.executeQuery();
+
+        if (data.next()) {
+            gateToString = data.getString("terminal");
+        }
+
+        return gateToString;
+    }
     public String getGateToString(String gateId)
             throws SQLException, DataBaseConnectionException {
         String gateToString = null;
         String sql =
             "SELECT " +
-                "terminal, " +
                 "number " +
             "FROM " +
                 "gate " +
@@ -542,7 +562,7 @@ public class AirlineDataBaseAccess implements DAO {
         ResultSet data = preparedStatement.executeQuery();
 
         if (data.next()) {
-            gateToString = data.getString("terminal") + data.getInt("number");
+            gateToString = Integer.toString(data.getInt("number"));
         }
 
         return gateToString;
