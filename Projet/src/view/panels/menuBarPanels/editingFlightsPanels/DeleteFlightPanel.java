@@ -3,7 +3,6 @@ package view.panels.menuBarPanels.editingFlightsPanels;
 import controller.ApplicationController;
 import exception.DataBaseConnectionException;
 import exception.FlightException;
-import model.Flight;
 import view.tables.ListAllFlightsTable;
 import view.windows.MenuWindow;
 
@@ -14,7 +13,7 @@ import java.sql.*;
 
 public class DeleteFlightPanel extends JPanel {
     private ApplicationController controller;
-    private ListAllFlightsTable tableFlights;
+    private ListAllFlightsTable flightsTable;
     private JTable table;
     private JButton validateDeletationButton;
 
@@ -24,10 +23,10 @@ public class DeleteFlightPanel extends JPanel {
         this.setLayout(new BorderLayout());
         this.add(new DeleteFlightMessagePanel(), BorderLayout.PAGE_START);
 
-        this.tableFlights = new ListAllFlightsTable();
-        this.table = new JTable(tableFlights);
-        table.setModel(tableFlights);
-        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        this.flightsTable = new ListAllFlightsTable();
+        this.table = new JTable(flightsTable);
+        table.setModel(flightsTable);
+        table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
         validateDeletationButton = new JButton("Supprimer");
         validateDeletationButton.addActionListener(new ValidationDeletation());
@@ -54,15 +53,14 @@ public class DeleteFlightPanel extends JPanel {
         public void actionPerformed(ActionEvent evt) {
             if(table.getSelectedRow() != -1) {
                 int selectedRow = table.getSelectedRow();
-                tableFlights.removeRow(selectedRow);
                 try {
-                    Flight flight = tableFlights.getFlight(selectedRow);
-                    controller.deleteFlight(flight.getNumber());
+                    controller.deleteFlight(flightsTable.getFlight(selectedRow));
                 } catch (SQLException | DataBaseConnectionException throwables) {
                     throwables.printStackTrace();
                 }
+                flightsTable.removeRow(selectedRow);
                 JOptionPane.showMessageDialog(null, "Vol supprimé", "Succès", JOptionPane.INFORMATION_MESSAGE);
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(null, "Veuillez sélectionner une ligne", "Succès", JOptionPane.ERROR_MESSAGE);
             }
         }

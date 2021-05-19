@@ -11,8 +11,8 @@ import java.util.regex.Pattern;
 
 public class SearchFlightsByPilotForm extends JPanel {
     private ApplicationController controller;
-    private JLabel pilotName;
-    private JComboBox pilotNameSelect;
+    private JLabel pilotLabel;
+    private JComboBox pilotComboBox;
     private Font font = new Font(null, Font.BOLD, 13);
 
     public SearchFlightsByPilotForm(ApplicationController controller) throws SQLException, DataBaseConnectionException {
@@ -23,16 +23,17 @@ public class SearchFlightsByPilotForm extends JPanel {
     }
 
     public void createFlightsByPilotForm() throws SQLException, DataBaseConnectionException {
-        pilotName = new JLabel("    Choisissez le pilote");
-        pilotName.setFont(font);
-        pilotName.setHorizontalAlignment(SwingConstants.LEFT);
-        add(pilotName);
-        pilotNameSelect = new JComboBox(controller.getAllPilotsForComboBox());
-        this.add(pilotNameSelect);
+        pilotLabel = new JLabel("    Choisissez le pilote");
+        pilotLabel.setFont(font);
+        pilotLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        add(pilotLabel);
+
+        pilotComboBox = new JComboBox(controller.getAllPilotsForComboBox());
+        this.add(pilotComboBox);
     }
 
     public String getPilotId() {
-        String pilotText = (String)pilotNameSelect.getSelectedItem();
+        String pilotText = (String) pilotComboBox.getSelectedItem();
         return getId(pilotText);
     }
 

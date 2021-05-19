@@ -9,8 +9,8 @@ import java.sql.SQLException;
 
 public class SearchPassengersByClassForm extends JPanel {
     private ApplicationController controller;
-    private JLabel seatCategory;
-    private JComboBox seatCategorySelect;
+    private JLabel classLabel;
+    private JComboBox classComboBox;
     private Font font = new Font(null, Font.BOLD, 13);
 
     public SearchPassengersByClassForm(ApplicationController controller) throws SQLException, DataBaseConnectionException {
@@ -21,11 +21,12 @@ public class SearchPassengersByClassForm extends JPanel {
     }
 
     public void createPassengersByClassForm() throws SQLException, DataBaseConnectionException {
-        seatCategory = new JLabel("    Choisissez la classe");
-        seatCategory.setFont(font);
-        seatCategory.setHorizontalAlignment(SwingConstants.LEFT);
-        add(seatCategory);
-        seatCategorySelect = new JComboBox(controller.getAllClassesForComboBox());
-        this.add(seatCategorySelect);
+        classLabel = new JLabel("    Choisissez la classe");
+        classLabel.setFont(font);
+        classLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        add(classLabel);
+
+        classComboBox = new JComboBox(controller.getAllClassesForComboBox());
+        this.add(classComboBox);
     }
 }

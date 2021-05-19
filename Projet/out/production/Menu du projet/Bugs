@@ -1,4 +1,6 @@
 Bugs
 
 - gates en double parfois lors de la selection de airport et terminal dans les combobox de addFlightForm
-- Demander pour passer le meme controller ou creer un nouveau a chaque fois
+- photo
+- photo
+- erreur de suppression avec vol deja présent

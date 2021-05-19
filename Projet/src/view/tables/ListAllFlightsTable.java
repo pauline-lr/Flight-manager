@@ -147,9 +147,9 @@ public class ListAllFlightsTable extends AbstractTableModel {
         };
     }
 
-    public Flight getFlight(int indice){
+    public String getFlight(int indice){
         try {
-            return flights.get(indice);
+            return flights.get(indice).getNumber();
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, e, "ERROR : flight tables", JOptionPane.ERROR_MESSAGE);
             return null;

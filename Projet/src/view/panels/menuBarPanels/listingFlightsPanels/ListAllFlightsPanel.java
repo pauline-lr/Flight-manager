@@ -20,9 +20,10 @@ public class ListAllFlightsPanel extends JPanel {
             throws SQLException, DataBaseConnectionException, FlightException.MealDescriptionException, FlightException.NumberFlightException {
         /*ListAllFlightsTable listAllFlightsTable = new ListAllFlightsTable(controller);
         JTable table = new JTable(listAllFlightsTable);*/
-        ListAllFlightsTable flightTable = new ListAllFlightsTable();
-        JTable table = new JTable(flightTable);
-        table.setModel(flightTable);
+        ListAllFlightsTable flightsTable = new ListAllFlightsTable();
+        this.setLayout(new BorderLayout());
+        JTable table = new JTable(flightsTable);
+        table.setModel(flightsTable);
         this.add(new JScrollPane(table), BorderLayout.CENTER);
     }
 }
