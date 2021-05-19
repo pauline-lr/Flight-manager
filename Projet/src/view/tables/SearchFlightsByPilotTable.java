@@ -1,4 +1,4 @@
-package view.table;
+package view.tables;
 
 import controller.ApplicationController;
 import model.SearchFlightsByPilot;

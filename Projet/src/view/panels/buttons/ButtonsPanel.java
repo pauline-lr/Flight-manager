@@ -6,6 +6,7 @@ import exception.DataBaseConnectionException;
 import exception.FlightException;
 import model.Flight;
 import model.SearchFlightsBetweenDates;
+import model.SearchFlightsByPilot;
 import view.forms.flightForms.AddFlightForm;
 import view.panels.menuBarPanels.editingFlightsPanels.AddFlightPanel;
 import view.panels.menuBarPanels.editingFlightsPanels.ModifyFlightPanel;
@@ -14,6 +15,7 @@ import view.panels.menuBarPanels.searchingPanels.SearchFlightsByPilotPanel;
 import view.panels.menuBarPanels.searchingPanels.SearchPassengersByClassPanel;
 import view.panels.menuWindowPanels.WelcomePanel;
 import view.tables.SearchFlightsBetweenDatesTable;
+import view.tables.SearchFlightsByPilotTable;
 import view.windows.MenuWindow;
 
 import javax.swing.*;
@@ -104,6 +106,11 @@ public class ButtonsPanel extends JPanel {
                             SearchFlightsBetweenDatesTable flightTable = new SearchFlightsBetweenDatesTable(controller, flights);
                             JTable table = new JTable(flightTable);
                             dateFlight.add(BorderLayout.CENTER, new JScrollPane(table));
+                        } case "SearchPilot" -> {
+                            ArrayList<SearchFlightsByPilot> flights = controller.getAllFlightsOfAPilot(pilotId);
+                            SearchFlightsByPilotTable flightTable = new SearchFlightsByPilotTable(controller, flights);
+                            JTable table = new JTable(flightTable);
+                            fligthbyPilotPanel.add(BorderLayout.CENTER, new JScrollPane(table));
                         }
                     }
                 }
