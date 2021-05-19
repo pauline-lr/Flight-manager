@@ -6,6 +6,8 @@ import exception.DataBaseConnectionException;
 import javax.swing.*;
 import java.awt.*;
 import java.sql.SQLException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SearchFlightsByPilotForm extends JPanel {
     private ApplicationController controller;
@@ -27,5 +29,20 @@ public class SearchFlightsByPilotForm extends JPanel {
         add(pilotName);
         pilotNameSelect = new JComboBox(controller.getAllPilotsForComboBox());
         this.add(pilotNameSelect);
+    }
+
+    public String getPilotId() {
+        String pilotText = (String)pilotNameSelect.getSelectedItem();
+        return getId(pilotText);
+    }
+
+    public String getId(String text) {
+        Pattern pattern = Pattern.compile("^\\w+(?=\\s-\\s)");
+        Matcher matcher = pattern.matcher(text);
+        String id = null;
+        if (matcher.find()) {
+            id = matcher.group();
+        }
+        return id;
     }
 }

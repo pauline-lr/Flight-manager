@@ -12,8 +12,9 @@ import java.sql.SQLException;
 
 public class SearchFlightsByPilotPanel extends JPanel {
     public SearchFlightsByPilotPanel(MenuWindow menuWindow, ApplicationController controller) throws SQLException, DataBaseConnectionException {
+        SearchFlightsByPilotForm pilotForm = new SearchFlightsByPilotForm(controller);
         this.setLayout(new BorderLayout());
-        this.add(new SearchFlightsByPilotForm(controller), BorderLayout.CENTER);
-        this.add(new ButtonsPanel(menuWindow, "SearchPilot", null, "Rechercher", controller), BorderLayout.SOUTH);
+        this.add(pilotForm, BorderLayout.CENTER);
+        this.add(new ButtonsPanel(menuWindow, "SearchPilot", this, pilotForm.getPilotId(), "Rechercher",  controller), BorderLayout.SOUTH);
     }
 }

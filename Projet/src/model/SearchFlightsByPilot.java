@@ -31,6 +31,57 @@ public class SearchFlightsByPilot {
         setArrivalAirportCountry(arrivalAirportCountry);
     }
 
+    //refion Getters
+    public String getFlightNumber() {
+        return flightNumber;
+    }
+
+    public GregorianCalendar getFlightDepartureTime() {
+        return flightDepartureTime;
+    }
+
+    public GregorianCalendar getFlightArrivalTime() {
+        return flightArrivalTime;
+    }
+
+    public Integer getPlaneId() {
+        return planeId;
+    }
+
+    public String getPlaneModel() {
+        return planeModel;
+    }
+
+    public String getPlaneBrand() {
+        return planeBrand;
+    }
+
+    public String getDepartureAirportCode() {
+        return departureAirportCode;
+    }
+
+    public String getDepartureAirportName() {
+        return departureAirportName;
+    }
+
+    public String getDepartureAirportCountry() {
+        return departureAirportCountry;
+    }
+
+    public String getArrivalAirportCode() {
+        return arrivalAirportCode;
+    }
+
+    public String getArrivalAirportName() {
+        return arrivalAirportName;
+    }
+
+    public String getArrivalAirportCountry() {
+        return arrivalAirportCountry;
+    }
+
+    //endregion
+
     public void setFlightNumber(String flightNumber) {
         this.flightNumber = flightNumber;
     }
