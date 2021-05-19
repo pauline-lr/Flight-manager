@@ -1,4 +1,4 @@
-package view.table;
+package view.tables;
 
 import controller.ApplicationController;
 import exception.DataBaseConnectionException;
@@ -106,7 +106,7 @@ public class ListAllFlightsTable extends AbstractTableModel {
         try{
             return flights.get(indice);
         }catch(Exception e){
-            JOptionPane.showMessageDialog(null, e, "ERROR : flight table", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, e, "ERROR : flight tables", JOptionPane.ERROR_MESSAGE);
             return null;
         }
     }

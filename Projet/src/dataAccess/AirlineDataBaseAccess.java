@@ -2,7 +2,6 @@ package dataAccess;
 
 import exception.*;
 import model.*;
-import model.Class;
 import pattern.*;
 
 import java.sql.*;

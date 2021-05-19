@@ -1,9 +1,9 @@
-package view.panels.menuBarPanels.optionsFlightPanels;
+package view.panels.menuBarPanels.editingFlightsPanels;
 
 import controller.ApplicationController;
 import exception.DataBaseConnectionException;
 import model.Flight;
-import view.table.ListAllFlightsTable;
+import view.tables.ListAllFlightsTable;
 import view.windows.MenuWindow;
 
 import javax.swing.*;

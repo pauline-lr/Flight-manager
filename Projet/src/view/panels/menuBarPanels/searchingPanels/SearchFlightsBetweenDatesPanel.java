@@ -1,4 +1,4 @@
-package view.panels.menuBarPanels.searchPanels;
+package view.panels.menuBarPanels.searchingPanels;
 
 import controller.ApplicationController;
 import view.forms.searchForms.SearchFlightsBetweenDatesForm;

@@ -6,17 +6,14 @@ import exception.DataBaseConnectionException;
 import exception.FlightException;
 import model.Flight;
 import model.SearchFlightsBetweenDates;
-import model.SearchFlightsByPilot;
 import view.forms.flightForms.AddFlightForm;
 import view.panels.menuBarPanels.optionsFlightPanels.AddFlightPanel;
 import view.panels.menuBarPanels.optionsFlightPanels.ModifyFlightPanel;
 import view.panels.menuBarPanels.searchPanels.SearchFlightsBetweenDatesPanel;
 import view.panels.menuBarPanels.searchPanels.SearchFlightsByPilotPanel;
 import view.panels.menuBarPanels.searchPanels.SearchPassengersByClassPanel;
-import view.panels.menuWindowPanels.AnimationSpace;
 import view.panels.menuWindowPanels.WelcomePanel;
 import view.table.SearchFlightsBetweenDatesTable;
-import view.table.SearchFlightsByPilotTable;
 import view.windows.MenuWindow;
 
 import javax.swing.*;
@@ -30,16 +27,14 @@ public class ButtonsPanel extends JPanel {
     private static MenuWindow menuWindow;
     private String typeAction;
     private ApplicationController controller;
-    private AddFlightForm addFlightForm;
+    AddFlightForm addFlightForm;
     private JButton retour, validation, réinit;
     private GregorianCalendar start, end;
     private SearchFlightsBetweenDatesPanel dateFlight;
-    private SearchFlightsByPilotPanel flightByPilotPanel;
-    private String pilotId;
 
     public ButtonsPanel(MenuWindow menuWindow, String typeAction, AddFlightForm addFlightForm, String label, ApplicationController controller){
         this.controller = controller;
-        ButtonsPanel.menuWindow = menuWindow;
+        this.menuWindow = menuWindow;
         this.typeAction = typeAction;
         this.addFlightForm = addFlightForm;
         this.setLayout(new FlowLayout());
@@ -66,21 +61,12 @@ public class ButtonsPanel extends JPanel {
         this.end = end;
     }
 
-    // recherche pilote
-    public ButtonsPanel(MenuWindow menuWindow, String typeAction, SearchFlightsByPilotPanel flightByPilotPanel,
-                       String pilotId, String label, ApplicationController controller){
-        this(menuWindow, typeAction, null, label, controller);
-        this.flightByPilotPanel = flightByPilotPanel;
-        this.pilotId = pilotId;
-    }
-
     // bouton retour
     public static class RetourListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent evt){
             menuWindow.getCont().removeAll();
             menuWindow.getCont().add(new WelcomePanel(), BorderLayout.CENTER);
-            menuWindow.getCont().add(new AnimationSpace(), BorderLayout.CENTER);
             menuWindow.getCont().repaint();
             menuWindow.setVisible(true);
         }
@@ -107,12 +93,6 @@ public class ButtonsPanel extends JPanel {
                             SearchFlightsBetweenDatesTable flightTable = new SearchFlightsBetweenDatesTable(controller, flights);
                             JTable table = new JTable(flightTable);
                             dateFlight.add(BorderLayout.CENTER, new JScrollPane(table));
-                        }
-                        case "SearchPilot" -> {
-                            ArrayList<SearchFlightsByPilot> flights = controller.getAllFlightsOfAPilot(pilotId);
-                            SearchFlightsByPilotTable flightTable = new SearchFlightsByPilotTable(controller, flights);
-                            JTable table = new JTable(flightTable);
-                            flightByPilotPanel.add(BorderLayout.CENTER, new JScrollPane(table));
                         }
                     }
                 }
