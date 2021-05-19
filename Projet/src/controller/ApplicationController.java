@@ -67,6 +67,14 @@ public class ApplicationController {
             throws SQLException, DataBaseConnectionException {
         return flightManager.getAllGatesOfAnAirportAndTerminalForComboBox(airportId, terminalId);
     }
+    public String getPilotToString(String pilotId)
+            throws SQLException, DataBaseConnectionException {
+        return flightManager.getPilotToString(pilotId);
+    }
+    public String getPlaneToString(Integer planeId)
+            throws SQLException, DataBaseConnectionException {
+        return flightManager.getPlaneToString(planeId);
+    }
     public String getAirportToString(String gateId)
             throws SQLException, DataBaseConnectionException {
         return flightManager.getAirportToString(gateId);

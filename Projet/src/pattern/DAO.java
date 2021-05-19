@@ -2,6 +2,7 @@ package pattern;
 // https://www.baeldung.com/java-dao-pattern
 // domain class = Flight
 
+import dataAccess.SingletonConnection;
 import exception.*;
 import model.*;
 
@@ -35,6 +36,10 @@ public interface DAO {
     String [] getAllTerminalsOfAnAirportForComboBox(String airportId)
             throws SQLException, DataBaseConnectionException;
     String [] getAllGatesOfAnAirportAndTerminalForComboBox(String airportId, String terminalId)
+            throws SQLException, DataBaseConnectionException;
+    String getPilotToString(String pilotId)
+            throws SQLException, DataBaseConnectionException;
+    String getPlaneToString(Integer planeId)
             throws SQLException, DataBaseConnectionException;
     String getAirportToString(String gateId)
             throws SQLException, DataBaseConnectionException;

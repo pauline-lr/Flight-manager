@@ -29,10 +29,12 @@ public class ListAllFlightsTable extends AbstractTableModel {
         columnNames.add("Heure de départ");
         columnNames.add("Date de départ");
         columnNames.add("Aéroport de départ");
+        columnNames.add("Terminal de départ");
         columnNames.add("Porte de départ");
         columnNames.add("Heure d'arrivée");
         columnNames.add("Date d'arrivée");
         columnNames.add("Aéroport d'arrivée");
+        columnNames.add("Terminal d'arrivée");
         columnNames.add("Porte d'arrivée");
         columnNames.add("Repas");
         columnNames.add("Description du repas");
@@ -61,9 +63,17 @@ public class ListAllFlightsTable extends AbstractTableModel {
             case 0:
                 return flight.getNumber();
             case 1:
-                return flight.getPilot();
+                try {
+                    return controller.getPilotToString(flight.getPilot());
+                } catch (SQLException | DataBaseConnectionException throwables) {
+                    throwables.printStackTrace();
+                }
             case 2:
-                return flight.getPlane().toString();
+                try {
+                    return controller.getPlaneToString(flight.getPlane());
+                } catch (SQLException | DataBaseConnectionException throwables) {
+                    throwables.printStackTrace();
+                }
             case 3:
                 return timeFormat(departure);
             case 4:
@@ -76,29 +86,41 @@ public class ListAllFlightsTable extends AbstractTableModel {
                 }
             case 6:
                 try {
-                    return controller.getGateToString(flight.getDepartureGate());
+                    return controller.getTerminalToString(flight.getDepartureGate());
                 } catch (SQLException | DataBaseConnectionException throwables) {
                     throwables.printStackTrace();
                 }
             case 7:
-                return timeFormat(arrival);
+                try {
+                    return controller.getGateToString(flight.getDepartureGate());
+                } catch (SQLException | DataBaseConnectionException throwables) {
+                    throwables.printStackTrace();
+                }
             case 8:
-                return dateFormat(arrival);
+                return timeFormat(arrival);
             case 9:
+                return dateFormat(arrival);
+            case 10:
                 try {
                     return controller.getAirportToString(flight.getArrivalGate());
                 } catch (SQLException | DataBaseConnectionException throwables) {
                     throwables.printStackTrace();
                 }
-            case 10:
+            case 11:
+                try {
+                    return controller.getTerminalToString(flight.getArrivalGate());
+                } catch (SQLException | DataBaseConnectionException throwables) {
+                    throwables.printStackTrace();
+                }
+            case 12:
                 try {
                     return controller.getGateToString(flight.getArrivalGate());
                 } catch (SQLException | DataBaseConnectionException throwables) {
                     throwables.printStackTrace();
                 }
-            case 11:
+            case 13:
                 return flight.getMealOnBoard() ? "Oui" : "Non";
-            case 12:
+            case 14:
                 return flight.getMealDescription() == null ? null : flight.getMealDescription();
             default:
                 return null;
@@ -111,7 +133,6 @@ public class ListAllFlightsTable extends AbstractTableModel {
 
         return format.format(calendar.getTime());
     }
-
     public static String dateFormat(GregorianCalendar calendar) {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         format.setCalendar(calendar);

@@ -454,6 +454,52 @@ public class AirlineDataBaseAccess implements DAO {
 
         return gatesOfAnAirportAndTerminal.toArray(new String[0]);
     }
+    public String getPilotToString(String pilotId)
+            throws SQLException, DataBaseConnectionException {
+        String pilotToString = null;
+        String sql =
+            "SELECT " +
+                "licence_number, " +
+                "first_name, " +
+                "last_name " +
+            "FROM " +
+                "pilot " +
+            "WHERE " +
+                "licence_number = ?";
+        PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sql);
+        preparedStatement.setString(1, pilotId);
+
+        ResultSet data = preparedStatement.executeQuery();
+
+        if (data.next()) {
+            pilotToString = data.getString("licence_number") + " - " + data.getString("last_name") + " "  + data.getString("first_name");
+        }
+
+        return pilotToString;
+    }
+    public String getPlaneToString(Integer planeId)
+            throws SQLException, DataBaseConnectionException {
+        String planeToString = null;
+        String sql =
+            "SELECT " +
+                "plane_id, " +
+                "model, " +
+                "brand " +
+            "FROM " +
+                "plane " +
+            "WHERE " +
+                "plane_id = ?";
+        PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sql);
+        preparedStatement.setInt(1, planeId);
+
+        ResultSet data = preparedStatement.executeQuery();
+
+        if (data.next()) {
+            planeToString = data.getInt("plane_id") + " - " + data.getString("brand") + " " + data.getString("model");
+        }
+
+        return planeToString;
+    }
     public String getAirportToString(String gateId)
             throws SQLException, DataBaseConnectionException {
         String airportToString = null;
