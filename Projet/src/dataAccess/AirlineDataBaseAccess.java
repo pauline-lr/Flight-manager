@@ -264,40 +264,38 @@ public class AirlineDataBaseAccess implements DAO {
     //endregion
 
     //region Get
-    public ArrayList<Flight> getAllFlights() {
+    public ArrayList<Flight> getAllFlights()
+            throws SQLException, DataBaseConnectionException, FlightException.MealDescriptionException, FlightException.NumberFlightException {
         ArrayList<Flight> flights =  new ArrayList<>();
         Flight flight;
-        GregorianCalendar departureTime = new GregorianCalendar();
-        GregorianCalendar arrivalTime = new GregorianCalendar();
         String mealDescription;
 
-        try {
-            PreparedStatement statement = SingletonConnection.getInstance().prepareStatement("SELECT * FROM flight ORDER BY number");
-            ResultSet data = statement.executeQuery();
-            while (data.next()) {
-                departureTime.setTime(data.getTimestamp("departure_time"));
-                arrivalTime.setTime(data.getTimestamp("arrival_time"));
+        Statement statement = SingletonConnection.getInstance().createStatement();
+        ResultSet data = statement.executeQuery("SELECT * FROM flight ORDER BY number");
 
-                flight = new Flight(
-                        data.getString("number"),
-                        departureTime,
-                        arrivalTime,
-                        data.getBoolean("is_meal_on_board"),
-                        data.getString("pilot"),
-                        data.getString("departure_gate"),
-                        data.getString("arrival_gate"),
-                        data.getInt("plane")
-                );
+        while (data.next()) {
+            GregorianCalendar departureTime = new GregorianCalendar();
+            departureTime.setTime(data.getTimestamp("departure_time"));
+            GregorianCalendar arrivalTime = new GregorianCalendar();
+            arrivalTime.setTime(data.getTimestamp("arrival_time"));
 
-                mealDescription = data.getString("meal_description");
-                if (!data.wasNull()) {
-                    flight.setMealDescription(mealDescription);
-                }
+            flight = new Flight(
+                    data.getString("number"),
+                    departureTime,
+                    arrivalTime,
+                    data.getBoolean("is_meal_on_board"),
+                    data.getString("pilot"),
+                    data.getString("departure_gate"),
+                    data.getString("arrival_gate"),
+                    data.getInt("plane")
+            );
 
-                flights.add(flight);
+            mealDescription = data.getString("meal_description");
+            if (!data.wasNull()) {
+                flight.setMealDescription(mealDescription);
             }
-        } catch (SQLException | DataBaseConnectionException | FlightException.NumberFlightException | FlightException.MealDescriptionException throwables) {
-            throwables.printStackTrace();
+
+            flights.add(flight);
         }
 
         return flights;
@@ -458,7 +456,7 @@ public class AirlineDataBaseAccess implements DAO {
     }
     public String getAirportToString(String gateId)
             throws SQLException, DataBaseConnectionException {
-        String airportId;
+        String airportId = null;
         String sql =
             "SELECT " +
                 "air.code, " +
@@ -469,14 +467,15 @@ public class AirlineDataBaseAccess implements DAO {
                 "airport air " +
             "WHERE " +
                 "gat.airport = air.code AND " +
-                "gat.gate_id = ?;";
+                "gat.gate_id = ?";
         PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sql);
         preparedStatement.setString(1, gateId);
 
         ResultSet data = preparedStatement.executeQuery();
 
-        airportId = data.getString("code") + " - " + data.getString("name") + ", " + data.getString("country");
-
+        if (data.next()) {
+            airportId = data.getString("code") + " - " + data.getString("name") + ", " + data.getString("country");
+        }
         return airportId;
     }
     //endregion

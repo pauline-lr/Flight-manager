@@ -2,6 +2,7 @@ package view.panels.menuBarPanels.editingFlightsPanels;
 
 import controller.ApplicationController;
 import exception.DataBaseConnectionException;
+import exception.FlightException;
 import model.Flight;
 import view.tables.ListAllFlightsTable;
 import view.windows.MenuWindow;
@@ -17,12 +18,13 @@ public class DeleteFlightPanel extends JPanel {
     private JTable table;
     private JButton validateDeletationButton;
 
-    public DeleteFlightPanel(MenuWindow menuWindow, ApplicationController controller) {
+    public DeleteFlightPanel(MenuWindow menuWindow, ApplicationController controller)
+            throws SQLException, DataBaseConnectionException, FlightException.MealDescriptionException, FlightException.NumberFlightException {
         this.controller = controller;
         this.setLayout(new BorderLayout());
         this.add(new DeleteFlightMessagePanel(), BorderLayout.PAGE_START);
 
-        this.tableFlights = new ListAllFlightsTable(controller);
+        this.tableFlights = new ListAllFlightsTable();
         this.table = new JTable(tableFlights);
         table.setModel(tableFlights);
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

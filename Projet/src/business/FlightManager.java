@@ -36,7 +36,8 @@ public class FlightManager {
     //endregion
 
     //region Get
-    public ArrayList<Flight> getAllFlights() {
+    public ArrayList<Flight> getAllFlights()
+            throws SQLException, DataBaseConnectionException, FlightException.MealDescriptionException, FlightException.NumberFlightException {
         return dao.getAllFlights();
     }
     public String [] getAllFlightsForComboBox()

@@ -4,6 +4,7 @@ import controller.ApplicationController;
 import exception.DataBaseAccessException;
 import exception.DataBaseCloseException;
 import exception.DataBaseConnectionException;
+import exception.FlightException;
 import view.panels.menuBarPanels.listingFlightsPanels.ListAllFlightsPanel;
 import view.panels.menuBarPanels.editingFlightsPanels.AddFlightPanel;
 import view.panels.menuBarPanels.editingFlightsPanels.DeleteFlightPanel;
@@ -223,7 +224,11 @@ public class MenuWindow extends JFrame{
         @Override
         public void actionPerformed(ActionEvent evt){
             frameContainer.removeAll();
-            frameContainer.add(new ListAllFlightsPanel(MenuWindow.this, controller), BorderLayout.CENTER);
+            try {
+                frameContainer.add(new ListAllFlightsPanel(MenuWindow.this, controller), BorderLayout.CENTER);
+            } catch (SQLException | DataBaseConnectionException | FlightException.MealDescriptionException | FlightException.NumberFlightException throwables) {
+                throwables.printStackTrace();
+            }
             frameContainer.repaint();
             MenuWindow.this.setVisible(true);
         }
@@ -233,7 +238,11 @@ public class MenuWindow extends JFrame{
         @Override
         public void actionPerformed(ActionEvent evt){
             frameContainer.removeAll();
-            frameContainer.add(new DeleteFlightPanel(MenuWindow.this, controller), BorderLayout.CENTER);
+            try {
+                frameContainer.add(new DeleteFlightPanel(MenuWindow.this, controller), BorderLayout.CENTER);
+            } catch (SQLException | DataBaseConnectionException | FlightException.MealDescriptionException | FlightException.NumberFlightException throwables) {
+                throwables.printStackTrace();
+            }
             frameContainer.repaint();
             MenuWindow.this.setVisible(true);
         }

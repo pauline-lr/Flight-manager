@@ -103,14 +103,14 @@ public class ButtonsPanel extends JPanel {
                             JOptionPane.showMessageDialog(null, "Vol modifié", "Succès", JOptionPane.INFORMATION_MESSAGE);
                         }
                         case "DateFlightSearch" -> {
-                            if(start.compareTo(end) <= 0){
+                            if (start.compareTo(end) <= 0) {
                                 ArrayList<SearchFlightsBetweenDates> flights = controller.getAllFlightsBetweenDates(start, end);
                                 /*SearchFlightsBetweenDatesTable flightTable = new SearchFlightsBetweenDatesTable(controller, flights);
                                 JTable table = new JTable(flightTable);
                                 table.setModel(flightTable);
                                 dateFlight.add(new JScrollPane(table), BorderLayout.CENTER);*/
                                 dateFlight.add(new ResultSearchFlightBetweenDates(controller, flights), BorderLayout.CENTER);
-                            }else{
+                            } else {
                                 JOptionPane.showMessageDialog(null, "Veuillez entrer une première date antérieure à l'autre ", "Erreur", JOptionPane.ERROR_MESSAGE);
                             }
 

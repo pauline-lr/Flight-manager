@@ -20,7 +20,8 @@ public interface DAO {
     //endregion
 
     //region Get
-    ArrayList<Flight> getAllFlights();
+    ArrayList<Flight> getAllFlights()
+            throws DataBaseConnectionException, SQLException, FlightException.MealDescriptionException, FlightException.NumberFlightException;
     String [] getAllFlightsForComboBox()
             throws SQLException, DataBaseConnectionException;
     String [] getAllPilotsForComboBox()
