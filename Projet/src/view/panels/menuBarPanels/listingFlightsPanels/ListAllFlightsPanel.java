@@ -1,7 +1,7 @@
-package view.panels.menuBarPanels.listingPanels;
+package view.panels.menuBarPanels.listingFlightsPanels;
 
 import controller.ApplicationController;
-import view.table.ListAllFlightsTable;
+import view.tables.ListAllFlightsTable;
 import view.windows.MenuWindow;
 
 import javax.swing.*;

@@ -1,4 +1,4 @@
-package view.panels.menuBarPanels.optionsFlightPanels;
+package view.panels.menuBarPanels.editingFlightsPanels;
 
 import controller.ApplicationController;
 import exception.DataBaseConnectionException;
