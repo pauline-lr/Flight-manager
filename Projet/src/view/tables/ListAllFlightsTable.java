@@ -43,7 +43,7 @@ public class ListAllFlightsTable extends AbstractTableModel {
             case 0:
                 return flight.getNumber();
             case 1:
-                return flight.getDepartureTime();
+                return flight.getDepartureTime().getTime();
             case 2:
                 try {
                     return controller.getAirportToString(flight.getDepartureGate());
@@ -53,7 +53,7 @@ public class ListAllFlightsTable extends AbstractTableModel {
             case 3:
                 return flight.getDepartureGate();
             case 4:
-                return flight.getArrivalTime();
+                return flight.getArrivalTime().getTime();
             case 5 :
                 try {
                     return controller.getAirportToString(flight.getArrivalGate());
@@ -65,7 +65,7 @@ public class ListAllFlightsTable extends AbstractTableModel {
             case 7:
                 return flight.getMealOnBoard() ? "Oui" : "Non";
             case 8 :
-                return flight.getMealDescription() == null ? "/" : flight.getMealDescription();
+                return flight.getMealDescription() == null ? null : flight.getMealDescription();
             case 9:
                 return flight.getPilot();
             case 10:

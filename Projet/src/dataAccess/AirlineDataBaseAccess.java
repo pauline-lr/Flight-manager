@@ -275,8 +275,8 @@ public class AirlineDataBaseAccess implements DAO {
             PreparedStatement statement = SingletonConnection.getInstance().prepareStatement("SELECT * FROM flight ORDER BY number");
             ResultSet data = statement.executeQuery();
             while (data.next()) {
-                departureTime.setTime(data.getDate("departure_time"));
-                arrivalTime.setTime(data.getDate("arrival_time"));
+                departureTime.setTime(data.getTimestamp("departure_time"));
+                arrivalTime.setTime(data.getTimestamp("arrival_time"));
 
                 flight = new Flight(
                         data.getString("number"),
