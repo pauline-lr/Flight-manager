@@ -7,13 +7,13 @@ import exception.FlightException;
 import model.Flight;
 import model.SearchFlightsBetweenDates;
 import view.forms.flightForms.AddFlightForm;
-import view.panels.menuBarPanels.optionsFlightPanels.AddFlightPanel;
-import view.panels.menuBarPanels.optionsFlightPanels.ModifyFlightPanel;
-import view.panels.menuBarPanels.searchPanels.SearchFlightsBetweenDatesPanel;
-import view.panels.menuBarPanels.searchPanels.SearchFlightsByPilotPanel;
-import view.panels.menuBarPanels.searchPanels.SearchPassengersByClassPanel;
+import view.panels.menuBarPanels.editingFlightsPanels.AddFlightPanel;
+import view.panels.menuBarPanels.editingFlightsPanels.ModifyFlightPanel;
+import view.panels.menuBarPanels.searchingPanels.SearchFlightsBetweenDatesPanel;
+import view.panels.menuBarPanels.searchingPanels.SearchFlightsByPilotPanel;
+import view.panels.menuBarPanels.searchingPanels.SearchPassengersByClassPanel;
 import view.panels.menuWindowPanels.WelcomePanel;
-import view.table.SearchFlightsBetweenDatesTable;
+import view.tables.SearchFlightsBetweenDatesTable;
 import view.windows.MenuWindow;
 
 import javax.swing.*;
@@ -31,6 +31,9 @@ public class ButtonsPanel extends JPanel {
     private JButton retour, validation, réinit;
     private GregorianCalendar start, end;
     private SearchFlightsBetweenDatesPanel dateFlight;
+    private SearchFlightsByPilotPanel fligthbyPilotPanel;
+    private String pilotId;
+
 
     public ButtonsPanel(MenuWindow menuWindow, String typeAction, AddFlightForm addFlightForm, String label, ApplicationController controller){
         this.controller = controller;
@@ -59,6 +62,14 @@ public class ButtonsPanel extends JPanel {
         this.dateFlight = dateFlight;
         this.start = start;
         this.end = end;
+    }
+
+    // recherche  pilote
+    public ButtonsPanel(MenuWindow menuWindow, String typeAction, SearchFlightsByPilotPanel fligthbyPilotPanel,
+                        String pilotId, String label, ApplicationController controller){
+        this(menuWindow, typeAction, null, label, controller);
+        this.fligthbyPilotPanel = fligthbyPilotPanel;
+        this.pilotId = pilotId;
     }
 
     // bouton retour
