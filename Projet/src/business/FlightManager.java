@@ -25,13 +25,13 @@ public class FlightManager {
             throws DataBaseAccessException {
         return dao.getAllFlightsBetweenDates(startDate,endDate);
     }
-    public ArrayList<SearchPassengersByClass> getAllPassengersOfAClass(model.Class seatClass)
+    public ArrayList<SearchPassengersByClass> getAllPassengersOfAClass(String className)
             throws DataBaseAccessException {
-        return dao.getAllPassengersOfAClass(seatClass);
+        return dao.getAllPassengersOfAClass(className);
     }
-    public ArrayList<SearchFlightsByPilot> getAllFlightsOfAPilot(Pilot pilot)
+    public ArrayList<SearchFlightsByPilot> getAllFlightsOfAPilot(String pilotLicenceNumber)
             throws DataBaseAccessException {
-        return dao.getAllFlightsOfAPilot(pilot);
+        return dao.getAllFlightsOfAPilot(pilotLicenceNumber);
     }
     //endregion
 

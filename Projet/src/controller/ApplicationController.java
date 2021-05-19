@@ -24,13 +24,13 @@ public class ApplicationController {
             throws DataBaseAccessException {
         return flightManager.getAllFlightsBetweenDates(startDate,endDate);
     }
-    public ArrayList<SearchPassengersByClass> getAllPassengersOfAClass(model.Class seatClass)
+    public ArrayList<SearchPassengersByClass> getAllPassengersOfAClass(String className)
             throws DataBaseAccessException {
-        return flightManager.getAllPassengersOfAClass(seatClass);
+        return flightManager.getAllPassengersOfAClass(className);
     }
-    public ArrayList<SearchFlightsByPilot> getAllFlightsOfAPilot(Pilot pilot)
+    public ArrayList<SearchFlightsByPilot> getAllFlightsOfAPilot(String pilotLicenceNumber)
             throws DataBaseAccessException {
-        return flightManager.getAllFlightsOfAPilot(pilot);
+        return flightManager.getAllFlightsOfAPilot(pilotLicenceNumber);
     }
     //endregion
 

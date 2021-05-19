@@ -13,9 +13,9 @@ public interface DAO {
     //region Search
     ArrayList<SearchFlightsBetweenDates> getAllFlightsBetweenDates(GregorianCalendar startDate, GregorianCalendar endDate)
             throws DataBaseAccessException;
-    ArrayList<SearchPassengersByClass> getAllPassengersOfAClass(model.Class seatClass)
+    ArrayList<SearchPassengersByClass> getAllPassengersOfAClass(String className)
             throws DataBaseAccessException;
-    ArrayList<SearchFlightsByPilot> getAllFlightsOfAPilot(Pilot pilot)
+    ArrayList<SearchFlightsByPilot> getAllFlightsOfAPilot(String pilotLicenceNumber)
             throws DataBaseAccessException;
     //endregion
 
