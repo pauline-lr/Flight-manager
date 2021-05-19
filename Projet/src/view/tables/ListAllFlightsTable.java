@@ -8,6 +8,7 @@ import model.Flight;
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class ListAllFlightsTable extends AbstractTableModel {
@@ -44,7 +45,6 @@ public class ListAllFlightsTable extends AbstractTableModel {
     public int getColumnCount() {
         return columnNames.size();
     }
-
     public int getRowCount() {
         return flights.size();
     }
@@ -63,11 +63,11 @@ public class ListAllFlightsTable extends AbstractTableModel {
             case 1:
                 return flight.getPilot();
             case 2:
-                return flight.getPlane();
+                return flight.getPlane().toString();
             case 3:
-                return departure.get(Calendar.HOUR_OF_DAY) + ":" + departure.get(Calendar.MINUTE);
+                return timeFormat(departure);
             case 4:
-                return departure.get(Calendar.DAY_OF_MONTH) + "/" + departure.get(Calendar.MONTH) + "/" + departure.get(Calendar.YEAR);
+                return dateFormat(departure);
             case 5:
                 try {
                     return controller.getAirportToString(flight.getDepartureGate());
@@ -81,9 +81,9 @@ public class ListAllFlightsTable extends AbstractTableModel {
                     throwables.printStackTrace();
                 }
             case 7:
-                return arrival.get(Calendar.HOUR_OF_DAY) + ":" + arrival.get(Calendar.MINUTE);
+                return timeFormat(arrival);
             case 8:
-                return arrival.get(Calendar.DAY_OF_MONTH) + "/" + arrival.get(Calendar.MONTH) + "/" + arrival.get(Calendar.YEAR);
+                return dateFormat(arrival);
             case 9:
                 try {
                     return controller.getAirportToString(flight.getArrivalGate());
@@ -105,14 +105,25 @@ public class ListAllFlightsTable extends AbstractTableModel {
         }
     }
 
+    public static String timeFormat(GregorianCalendar calendar) {
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+        format.setCalendar(calendar);
+
+        return format.format(calendar.getTime());
+    }
+
+    public static String dateFormat(GregorianCalendar calendar) {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        format.setCalendar(calendar);
+
+        return format.format(calendar.getTime());
+    }
+
     public Class getColumnClass(int column) {
-        Class c = switch (column) {
-            case 0, 1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 -> String.class;
-            case 2 -> Integer.class;
+        return switch (column) {
+            case 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 -> String.class;
             default -> throw new IllegalStateException("Unexpected value: " + column);
         };
-
-        return c;
     }
 
     public Flight getFlight(int indice){
