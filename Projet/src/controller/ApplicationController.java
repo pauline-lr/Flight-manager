@@ -71,6 +71,10 @@ public class ApplicationController {
             throws SQLException, DataBaseConnectionException {
         return flightManager.getAirportToString(gateId);
     }
+    public String getGateToString(String gateId)
+            throws SQLException, DataBaseConnectionException {
+        return flightManager.getGateToString(gateId);
+    }
     //endregion
 
     //region Edit

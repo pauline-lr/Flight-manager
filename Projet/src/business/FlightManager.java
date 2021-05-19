@@ -72,6 +72,10 @@ public class FlightManager {
             throws SQLException, DataBaseConnectionException {
         return dao.getAirportToString(gateId);
     }
+    public String getGateToString(String gateId)
+            throws SQLException, DataBaseConnectionException {
+        return dao.getGateToString(gateId);
+    }
     //endregion
 
     //region Edit

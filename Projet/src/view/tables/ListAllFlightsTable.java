@@ -75,7 +75,11 @@ public class ListAllFlightsTable extends AbstractTableModel {
                     throwables.printStackTrace();
                 }
             case 6:
-                return flight.getDepartureGate();
+                try {
+                    return controller.getGateToString(flight.getDepartureGate());
+                } catch (SQLException | DataBaseConnectionException throwables) {
+                    throwables.printStackTrace();
+                }
             case 7:
                 return arrival.get(Calendar.HOUR_OF_DAY) + ":" + arrival.get(Calendar.MINUTE);
             case 8:
@@ -87,7 +91,11 @@ public class ListAllFlightsTable extends AbstractTableModel {
                     throwables.printStackTrace();
                 }
             case 10:
-                return flight.getArrivalGate();
+                try {
+                    return controller.getGateToString(flight.getArrivalGate());
+                } catch (SQLException | DataBaseConnectionException throwables) {
+                    throwables.printStackTrace();
+                }
             case 11:
                 return flight.getMealOnBoard() ? "Oui" : "Non";
             case 12:

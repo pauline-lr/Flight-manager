@@ -38,6 +38,8 @@ public interface DAO {
             throws SQLException, DataBaseConnectionException;
     String getAirportToString(String gateId)
             throws SQLException, DataBaseConnectionException;
+    String getGateToString(String gateId)
+            throws SQLException, DataBaseConnectionException;
     //endregion
 
     //region Edit
