@@ -15,29 +15,40 @@ public class ListAllFlightsTable extends AbstractTableModel {
     private ArrayList<Flight> flights;
 
     public ListAllFlightsTable(ApplicationController controller){
-        this.columnNames = new String[]{"Numéro", "Heure de départ", "Aéroport de départ", "Porte de départ",
-                "Heure d'arrivée", "Aéroport d'arrivée", "Porte d'arrivée", "Repas", "Description du repas", "Pilote", "Avion"};
+        this.columnNames = new String [] {
+            "Numéro",
+            "Heure de départ",
+            "Aéroport de départ",
+            "Porte de départ",
+            "Heure d'arrivée",
+            "Aéroport d'arrivée",
+            "Porte d'arrivée",
+            "Repas",
+            "Description du repas",
+            "Pilote",
+            "Avion"
+        };
         this.controller = controller;
         flights = controller.getAllFlights();
     }
 
-    public ListAllFlightsTable(ArrayList<Flight> flights){
+    public ListAllFlightsTable(ArrayList<Flight> flights) {
         this.flights = flights;
     }
 
-    public int getColumnCount(){
+    public int getColumnCount() {
         return columnNames.length;
     }
 
-    public int getRowCount(){
+    public int getRowCount() {
         return flights.size();
     }
 
-    public String getColumnName(int col){
-        return columnNames[col];
+    public String getColumnName(int column) {
+        return columnNames[column];
     }
 
-    public Object getValueAt(int row, int column){
+    public Object getValueAt(int row, int column) {
         Flight flight = flights.get(row);
         switch(column){
             case 0:
@@ -75,10 +86,10 @@ public class ListAllFlightsTable extends AbstractTableModel {
         }
     }
 
-    public Class getColumnClass(int col){
+    public Class getColumnClass(int column){
         Class c;
 
-        switch (col){
+        switch (column){
             case 0:
             case 2:
             case 5:
@@ -97,7 +108,7 @@ public class ListAllFlightsTable extends AbstractTableModel {
                 c = Integer.class;
                 break;
             default:
-                throw new IllegalStateException("Unexpected value: " + col);
+                throw new IllegalStateException("Unexpected value: " + column);
         }
         return c;
     }

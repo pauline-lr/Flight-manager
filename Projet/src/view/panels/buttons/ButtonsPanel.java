@@ -29,7 +29,7 @@ public class ButtonsPanel extends JPanel {
     private static MenuWindow menuWindow;
     private String typeAction;
     private ApplicationController controller;
-    AddFlightForm addFlightForm;
+    private AddFlightForm addFlightForm;
     private JButton retour, validation, réinit;
     private GregorianCalendar start, end;
     private SearchFlightsBetweenDatesPanel dateFlight;
