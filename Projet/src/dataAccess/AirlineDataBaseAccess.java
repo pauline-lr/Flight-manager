@@ -104,7 +104,7 @@ public class AirlineDataBaseAccess implements DAO {
 
         return flights;
     }
-    public ArrayList<SearchPassengersByClass> getAllPassengersOfAClass(Class seatClass)
+    public ArrayList<SearchPassengersByClass> getAllPassengersOfAClass(String className)
             throws DataBaseAccessException {
         ArrayList<SearchPassengersByClass> passengers = new ArrayList<>();
         SearchPassengersByClass passenger;
@@ -151,7 +151,7 @@ public class AirlineDataBaseAccess implements DAO {
 
         try {
             PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sql);
-            preparedStatement.setString(1, seatClass.getName());
+            preparedStatement.setString(1, className);
 
             ResultSet data = preparedStatement.executeQuery();
 
@@ -187,7 +187,7 @@ public class AirlineDataBaseAccess implements DAO {
 
         return passengers;
     }
-    public ArrayList<SearchFlightsByPilot> getAllFlightsOfAPilot(Pilot pilot)
+    public ArrayList<SearchFlightsByPilot> getAllFlightsOfAPilot(String pilotLicenceNumber)
             throws DataBaseAccessException {
         ArrayList<SearchFlightsByPilot> flights = new ArrayList<>();
         SearchFlightsByPilot flight;
@@ -228,7 +228,7 @@ public class AirlineDataBaseAccess implements DAO {
                 "departure_time;";
         try {
             PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sql);
-            preparedStatement.setString(1, pilot.getLicenceNumber());
+            preparedStatement.setString(1, pilotLicenceNumber);
 
             ResultSet data = preparedStatement.executeQuery();
 

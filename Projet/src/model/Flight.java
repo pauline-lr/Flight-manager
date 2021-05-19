@@ -21,7 +21,6 @@ public class Flight {
     private String departureGate;
     private String arrivalGate;
     private Integer plane;
-    private final GregorianCalendar currentDate;
 
     //region Constructors
     public Flight(String number, GregorianCalendar departureTime,
@@ -37,7 +36,6 @@ public class Flight {
         setDepartureGate(departureGate);
         setArrivalGate(arrivalGate);
         setPlane(plane);
-        currentDate = new GregorianCalendar();
     }
     public Flight(String number, GregorianCalendar departureTime,
                   GregorianCalendar arrivalTime, Boolean isMealOnBoard, String pilot, String departureGate, String arrivalGate, Integer plane)
@@ -57,9 +55,8 @@ public class Flight {
             }
     }
     private void setDepartureTime(GregorianCalendar departureTime) {
-        Calendar departureTimeCalendar = departureTime;
-        Calendar currentDate = this.currentDate;
-        if (departureTimeCalendar.compareTo(currentDate) > 0) {
+        GregorianCalendar currentDate = new GregorianCalendar();
+        if (departureTime.compareTo(currentDate) > 0) {
             this.departureTime = departureTime;
         } else {
             try {
@@ -70,9 +67,7 @@ public class Flight {
         }
     }
     private void setArrivalTime(GregorianCalendar arrivalTime) {
-        Calendar arrivalTimeCalendar = departureTime;
-        Calendar departureTimeCalendar = departureTime;
-        if (arrivalTimeCalendar.compareTo(departureTimeCalendar) > 0) {
+        if (arrivalTime.compareTo(departureTime) > 0) {
             this.arrivalTime = arrivalTime;
         } else {
             try {
@@ -145,4 +140,20 @@ public class Flight {
         return plane;
     }
     //endregion
+
+
+    @Override
+    public String toString() {
+        return "Flight" + '\n' +
+                "number = " + number + '\n' +
+                "departureTime = " + departureTime.getTime() + '\n' +
+                "arrivalTime = " + arrivalTime.getTime() + '\n' +
+                "isMealOnBoard = " + isMealOnBoard + '\n' +
+                "mealDescription = " + mealDescription + '\n' +
+                "pilot = " + pilot + '\n' +
+                "departureGate = " + departureGate + '\n' +
+                "arrivalGate = " + arrivalGate + '\n' +
+                "plane = " + plane + '\n'
+                ;
+    }
 }
