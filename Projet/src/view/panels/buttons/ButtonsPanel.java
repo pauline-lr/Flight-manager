@@ -14,6 +14,7 @@ import view.panels.menuBarPanels.searchingPanels.SearchFlightsBetweenDatesPanel;
 import view.panels.menuBarPanels.searchingPanels.SearchFlightsByPilotPanel;
 import view.panels.menuBarPanels.searchingPanels.SearchPassengersByClassPanel;
 import view.panels.menuWindowPanels.WelcomePanel;
+import view.resultSearch.ResultSearchFlightBetweenDates;
 import view.tables.SearchFlightsBetweenDatesTable;
 import view.tables.SearchFlightsByPilotTable;
 import view.windows.MenuWindow;
@@ -104,10 +105,11 @@ public class ButtonsPanel extends JPanel {
                         case "DateFlightSearch" -> {
                             if(start.compareTo(end) <= 0){
                                 ArrayList<SearchFlightsBetweenDates> flights = controller.getAllFlightsBetweenDates(start, end);
-                                SearchFlightsBetweenDatesTable flightTable = new SearchFlightsBetweenDatesTable(controller, flights);
+                                /*SearchFlightsBetweenDatesTable flightTable = new SearchFlightsBetweenDatesTable(controller, flights);
                                 JTable table = new JTable(flightTable);
                                 table.setModel(flightTable);
-                                dateFlight.add(new JScrollPane(table), BorderLayout.CENTER);
+                                dateFlight.add(new JScrollPane(table), BorderLayout.CENTER);*/
+                                dateFlight.add(new ResultSearchFlightBetweenDates(controller, dateFlight, flights), BorderLayout.CENTER);
                             }else{
                                 JOptionPane.showMessageDialog(null, "Veuillez entrer une première date antérieure à l'autre ", "Erreur", JOptionPane.ERROR_MESSAGE);
                             }
@@ -135,13 +137,13 @@ public class ButtonsPanel extends JPanel {
         public void actionPerformed(ActionEvent evt){
             try {
                 takeOut();
-            } catch (SQLException | DataBaseConnectionException throwables) {
+            } catch (SQLException | DataBaseConnectionException | DataBaseAccessException throwables) {
                 throwables.printStackTrace();
             }
         }
     }
 
-    public void takeOut() throws SQLException, DataBaseConnectionException {
+    public void takeOut() throws SQLException, DataBaseConnectionException, DataBaseAccessException {
         menuWindow.getCont().removeAll();
 
         if (typeAction.equals("Addition")) {
