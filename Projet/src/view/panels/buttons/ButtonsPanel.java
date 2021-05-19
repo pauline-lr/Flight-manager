@@ -115,7 +115,6 @@ public class ButtonsPanel extends JPanel {
                     }
                 }
 
-                takeOut();
             } catch (FlightException.NumberFlightException | FlightException.MealDescriptionException | SQLException
                     | DataBaseConnectionException | DataBaseAccessException e) {
                 e.printStackTrace();
