@@ -61,23 +61,25 @@ public class AddFlightForm extends JPanel {
     }
 
     public Flight getFlight() throws FlightException.NumberFlightException, FlightException.MealDescriptionException {
-        GregorianCalendar departureDate = new GregorianCalendar(
-                Integer.parseInt(departureYear.getValue().toString()),
-                Integer.parseInt(departureMonth.getValue().toString()) - 1,
-                Integer.parseInt(departureDay.getValue().toString()),
-                Integer.parseInt(departureHour.getValue().toString()),
-                Integer.parseInt(departureMinute.getValue().toString())
-        );
-
         /*GregorianCalendar(int year, int month, int dayOfMonth,
         int hourOfDay, int minute)*/
-        GregorianCalendar arrivalDate = new GregorianCalendar(
-                Integer.parseInt(arrivalYear.getValue().toString()),
-                Integer.parseInt(arrivalMonth.getValue().toString()) - 1,
-                Integer.parseInt(arrivalDay.getValue().toString()),
-                Integer.parseInt(arrivalHour.getValue().toString()),
-                Integer.parseInt(arrivalMinute.getValue().toString())
+
+        GregorianCalendar departureDate = new GregorianCalendar(
+                (Integer) departureYear.getValue(),
+                (Integer) departureMonth.getValue() - 1,
+                (Integer) departureDay.getValue(),
+                (Integer) departureHour.getValue(),
+                (Integer) departureMinute.getValue()
         );
+
+        GregorianCalendar arrivalDate = new GregorianCalendar(
+                (Integer) arrivalYear.getValue(),
+                (Integer) arrivalMonth.getValue() - 1,
+                (Integer) arrivalDay.getValue(),
+                (Integer) arrivalHour.getValue(),
+                (Integer) arrivalMinute.getValue()
+        );
+
         return new Flight(
                 numberTextField.getText(),
                 departureDate,
