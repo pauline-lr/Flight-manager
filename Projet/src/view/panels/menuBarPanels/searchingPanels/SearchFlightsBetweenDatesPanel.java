@@ -10,11 +10,13 @@ import java.awt.*;
 
 public class SearchFlightsBetweenDatesPanel extends JPanel {
     private SearchFlightsBetweenDatesForm searchFlightsBetweenDatesForm;
+    private BorderLayout border;
     public SearchFlightsBetweenDatesPanel(MenuWindow menuWindow, ApplicationController controller) {
+        this.border = new BorderLayout();
         this.searchFlightsBetweenDatesForm = new SearchFlightsBetweenDatesForm();
-        this.setLayout(new BorderLayout());
+        this.setLayout(border);
         this.add(searchFlightsBetweenDatesForm, BorderLayout.PAGE_START);
 
-        this.add(new ButtonsPanel(menuWindow, "DateFlightSearch", this, searchFlightsBetweenDatesForm.getFirstDateCalendar(), searchFlightsBetweenDatesForm.getLastDateCalendar(), "Rechercher", controller), BorderLayout.SOUTH);
+        this.add(new ButtonsPanel(menuWindow, "DateFlightSearch", this, searchFlightsBetweenDatesForm.getFirstDateCalendar(), searchFlightsBetweenDatesForm.getLastDateCalendar(), "Rechercher", controller, border), BorderLayout.SOUTH);
     }
 }
