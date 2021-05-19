@@ -102,14 +102,21 @@ public class ButtonsPanel extends JPanel {
                             JOptionPane.showMessageDialog(null, "Vol modifié", "Succès", JOptionPane.INFORMATION_MESSAGE);
                         }
                         case "DateFlightSearch" -> {
-                            ArrayList<SearchFlightsBetweenDates> flights = controller.getAllFlightsBetweenDates(start, end);
-                            SearchFlightsBetweenDatesTable flightTable = new SearchFlightsBetweenDatesTable(controller, flights);
-                            JTable table = new JTable(flightTable);
-                            dateFlight.add(new JScrollPane(table), BorderLayout.CENTER);
+                            if(start.compareTo(end) <= 0){
+                                ArrayList<SearchFlightsBetweenDates> flights = controller.getAllFlightsBetweenDates(start, end);
+                                SearchFlightsBetweenDatesTable flightTable = new SearchFlightsBetweenDatesTable(controller, flights);
+                                JTable table = new JTable(flightTable);
+                                table.setModel(flightTable);
+                                dateFlight.add(new JScrollPane(table), BorderLayout.CENTER);
+                            }else{
+                                JOptionPane.showMessageDialog(null, "Veuillez entrer une première date antérieure à l'autre ", "Erreur", JOptionPane.ERROR_MESSAGE);
+                            }
+
                         } case "SearchPilot" -> {
                             ArrayList<SearchFlightsByPilot> flights = controller.getAllFlightsOfAPilot(pilotId);
                             SearchFlightsByPilotTable flightTable = new SearchFlightsByPilotTable(controller, flights);
                             JTable table = new JTable(flightTable);
+                            table.setModel(flightTable);
                             flightByPilotPanel.add(new JScrollPane(table), BorderLayout.CENTER);
                         }
                     }
