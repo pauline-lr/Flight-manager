@@ -115,11 +115,11 @@ public class ButtonsPanel extends JPanel {
                             }
 
                         } case "SearchPilot" -> {
-                            ArrayList<SearchFlightsByPilot> flights = controller.getAllFlightsOfAPilot(pilotId);
+                            /*ArrayList<SearchFlightsByPilot> flights = controller.getAllFlightsOfAPilot(pilotId);
                             SearchFlightsByPilotTable flightTable = new SearchFlightsByPilotTable(controller, flights);
                             JTable table = new JTable(flightTable);
                             table.setModel(flightTable);
-                            flightByPilotPanel.add(new JScrollPane(table), BorderLayout.CENTER);
+                            flightByPilotPanel.add(new JScrollPane(table), BorderLayout.CENTER);*/
                         }
                     }
                 }

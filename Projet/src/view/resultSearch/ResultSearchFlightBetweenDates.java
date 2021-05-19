@@ -43,6 +43,7 @@ public class ResultSearchFlightBetweenDates extends JPanel {
         column.setPreferredWidth(300);
 
         scrollPane = new JScrollPane(table);
+        listSelect = table.getSelectionModel();
         this.add(scrollPane, BorderLayout.CENTER);
     }
 }
