@@ -35,6 +35,66 @@ public class SearchPassengersByClass {
         setArrivalAirportCountry(arrivalAirportCountry);
     }
 
+    //region Getters
+
+    public String getPassengerPassportNumber() {
+        return passengerPassportNumber;
+    }
+
+    public String getPassengerFirstName() {
+        return passengerFirstName;
+    }
+
+    public String getPassengerLastName() {
+        return passengerLastName;
+    }
+
+    public Integer getSeatRow() {
+        return seatRow;
+    }
+
+    public String getSeatColumn() {
+        return seatColumn;
+    }
+
+    public String getFlightNumber() {
+        return flightNumber;
+    }
+
+    public GregorianCalendar getFlightDepartureTime() {
+        return flightDepartureTime;
+    }
+
+    public GregorianCalendar getFlightArrivalTime() {
+        return flightArrivalTime;
+    }
+
+    public String getDepartureAirportCode() {
+        return departureAirportCode;
+    }
+
+    public String getDepartureAirportName() {
+        return departureAirportName;
+    }
+
+    public String getDepartureAirportCountry() {
+        return departureAirportCountry;
+    }
+
+    public String getArrivalAirportCode() {
+        return arrivalAirportCode;
+    }
+
+    public String getArrivalAirportName() {
+        return arrivalAirportName;
+    }
+
+    public String getArrivalAirportCountry() {
+        return arrivalAirportCountry;
+    }
+
+    //endregion
+
     public void setPassengerPassportNumber(String passengerPassportNumber) {
         this.passengerPassportNumber = passengerPassportNumber;
     }

@@ -1,26 +1,27 @@
 package view.tables;
 
+
 import controller.ApplicationController;
 import model.SearchFlightsByPilot;
+import model.SearchPassengersByClass;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
-public class SearchFlightsByPilotTable extends AbstractTableModel {
+public class SearchPassengersByClassTable extends AbstractTableModel {
     private ApplicationController controller;
-    private String [] columnNames = {"N° de vol", "Heure de départ", "Heure d'arrivée",
-            "Avion", "Aéroport Départ", "Aéroport Arrivée"};
+    private String [] columnNames = {"N° passeport", "Nom", "Place", "N° de vol", "Heure de départ", "Heure d'arrivée",
+                                    "Aéroport Départ","Aéroport Arrivée"};
+    private ArrayList<SearchPassengersByClass> flights;
 
-    private ArrayList<SearchFlightsByPilot> flights;
-
-    public SearchFlightsByPilotTable(ApplicationController controller, ArrayList<SearchFlightsByPilot> flights)  {
+    public SearchPassengersByClassTable(ApplicationController controller, ArrayList<SearchPassengersByClass> flights)  {
         this.controller = controller;
         this.flights = flights;
     }
 
-    public SearchFlightsByPilotTable(ArrayList<SearchFlightsByPilot> flights){
+    public SearchPassengersByClassTable(ArrayList<SearchPassengersByClass> flights){
         this.flights = flights;
     }
 
@@ -37,22 +38,27 @@ public class SearchFlightsByPilotTable extends AbstractTableModel {
     }
 
     public Object getValueAt(int row, int column){
-        SearchFlightsByPilot flight = flights.get(row);
+        SearchPassengersByClass flight = flights.get(row);
         switch(column){
             case 0:
-                return flight.getFlightNumber();
+                return flight.getPassengerPassportNumber();
             case 1:
-                return flight.getFlightDepartureTime();
+                return flight.getPassengerLastName() + flight.getPassengerFirstName();
             case 2:
-                return flight.getFlightArrivalTime();
+                return flight.getSeatRow() + flight.getSeatColumn();
             case 3:
-                return flight.getPlaneId().toString() + flight.getPlaneModel() + flight.getPlaneBrand();
+                return flight.getFlightNumber();
             case 4 :
-                return flight.getDepartureAirportCode() + flight.getDepartureAirportName() + flight.getDepartureAirportCountry();
+                return flight.getFlightDepartureTime();
             case 5:
+                return flight.getFlightArrivalTime();
+            case 6:
+                return flight.getDepartureAirportCode() + flight.getDepartureAirportName() + flight.getDepartureAirportCountry();
+            case 7:
                 return flight.getArrivalAirportCode() + flight.getArrivalAirportName() + flight.getArrivalAirportCountry();
-            default:
-                return null;
+
+                default:
+                    return null;
         }
     }
 
@@ -61,13 +67,15 @@ public class SearchFlightsByPilotTable extends AbstractTableModel {
 
         switch (col){
             case 0:
-            case 3:
-            case 4:
-            case 5:
-                c = String.class;
-                break;
             case 1:
             case 2:
+            case 3:
+            case 6:
+            case 7:
+                c = String.class;
+                break;
+            case 4:
+            case 5:
                 c = GregorianCalendar.class;
                 break;
             default:
@@ -76,7 +84,7 @@ public class SearchFlightsByPilotTable extends AbstractTableModel {
         return c;
     }
 
-    public SearchFlightsByPilot getPilotFlight(int indice){
+    public SearchPassengersByClass getPilotFlight(int indice){
         try{
             return flights.get(indice);
         }catch(Exception e){
@@ -85,7 +93,7 @@ public class SearchFlightsByPilotTable extends AbstractTableModel {
         }
     }
 
-    public ArrayList<SearchFlightsByPilot> getAllSearchFlightsByPilot(){
+    public ArrayList<SearchPassengersByClass> getAllSearchFlightsByPilot(){
         return flights;
     }
 }
