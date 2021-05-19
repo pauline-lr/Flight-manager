@@ -17,23 +17,23 @@ public class ResultSearchFlightBetweenDates extends JPanel {
     private SearchFlightsBetweenDatesPanel panel;
     private JPanel panelTable;
     private SearchFlightsBetweenDatesTable flightTable;
-    RowSorter<SearchFlightsBetweenDatesTable> sorter;
+    private ListSelectionModel listSelect;
 
 
-    public ResultSearchFlightBetweenDates(ApplicationController controller, SearchFlightsBetweenDatesPanel panel, ArrayList<SearchFlightsBetweenDates> flights) throws DataBaseAccessException {
+
+    public ResultSearchFlightBetweenDates(ApplicationController controller, ArrayList<SearchFlightsBetweenDates> flights) throws DataBaseAccessException {
         JTable table;
         TableColumn column;
         JScrollPane scrollPane;
+        RowSorter<SearchFlightsBetweenDatesTable> sorter;
 
         this.controller = controller;
         setLayout(new BorderLayout());
-        panelTable = new JPanel();
-        panelTable.setLayout(new BorderLayout());
 
         if(flights == null){
-            flightTable = new SearchFlightsBetweenDatesTable(controller,  flights);
+            flightTable = new SearchFlightsBetweenDatesTable(controller);
         }else{
-            flightTable = new SearchFlightsBetweenDatesTable(flights);
+            flightTable = new SearchFlightsBetweenDatesTable(controller, flights);
         }
 
         table = new JTable(flightTable);

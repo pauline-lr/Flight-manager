@@ -109,7 +109,7 @@ public class ButtonsPanel extends JPanel {
                                 JTable table = new JTable(flightTable);
                                 table.setModel(flightTable);
                                 dateFlight.add(new JScrollPane(table), BorderLayout.CENTER);*/
-                                dateFlight.add(new ResultSearchFlightBetweenDates(controller, dateFlight, flights), BorderLayout.CENTER);
+                                dateFlight.add(new ResultSearchFlightBetweenDates(controller, flights), BorderLayout.CENTER);
                             }else{
                                 JOptionPane.showMessageDialog(null, "Veuillez entrer une première date antérieure à l'autre ", "Erreur", JOptionPane.ERROR_MESSAGE);
                             }

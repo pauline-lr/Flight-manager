@@ -1,6 +1,7 @@
 package view.windows;
 
 import controller.ApplicationController;
+import exception.DataBaseAccessException;
 import exception.DataBaseCloseException;
 import exception.DataBaseConnectionException;
 import view.panels.menuBarPanels.listingFlightsPanels.ListAllFlightsPanel;
@@ -180,7 +181,11 @@ public class MenuWindow extends JFrame{
         @Override
         public void actionPerformed(ActionEvent evt){
             frameContainer.removeAll();
-            frameContainer.add(new SearchFlightsBetweenDatesPanel(MenuWindow.this, controller), BorderLayout.CENTER);
+            try {
+                frameContainer.add(new SearchFlightsBetweenDatesPanel(MenuWindow.this, controller), BorderLayout.CENTER);
+            } catch (DataBaseAccessException e) {
+                e.printStackTrace();
+            }
             frameContainer.repaint();
             MenuWindow.this.setVisible(true);
         }
