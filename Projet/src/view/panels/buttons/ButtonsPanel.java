@@ -35,7 +35,6 @@ public class ButtonsPanel extends JPanel {
     private SearchFlightsBetweenDatesPanel dateFlight;
     private SearchFlightsByPilotPanel flightByPilotPanel;
     private String pilotId;
-    private BorderLayout border;
 
 
     public ButtonsPanel(MenuWindow menuWindow, String typeAction, AddFlightForm addFlightForm, String label, ApplicationController controller){
@@ -60,9 +59,8 @@ public class ButtonsPanel extends JPanel {
 
     // recherche entre 2 dates
     public ButtonsPanel(MenuWindow menuWindow, String typeAction, SearchFlightsBetweenDatesPanel dateFlight,
-                        GregorianCalendar start, GregorianCalendar end, String label, ApplicationController controller, BorderLayout border){
+                        GregorianCalendar start, GregorianCalendar end, String label, ApplicationController controller){
         this(menuWindow, typeAction, null, label, controller);
-        this.border = border;
         this.dateFlight = dateFlight;
         this.start = start;
         this.end = end;
@@ -109,7 +107,7 @@ public class ButtonsPanel extends JPanel {
                                 SearchFlightsBetweenDatesTable flightTable = new SearchFlightsBetweenDatesTable(controller, flights);
                                 JTable table = new JTable(flightTable);
                                 table.setModel(flightTable);
-                                dateFlight.add(new JScrollPane(table), border.CENTER);
+                                dateFlight.add(new JScrollPane(table), BorderLayout.CENTER);
                             }else{
                                 JOptionPane.showMessageDialog(null, "Veuillez entrer une première date antérieure à l'autre ", "Erreur", JOptionPane.ERROR_MESSAGE);
                             }
