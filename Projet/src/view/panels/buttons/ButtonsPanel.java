@@ -36,6 +36,8 @@ public class ButtonsPanel extends JPanel {
     private SearchFlightsBetweenDatesPanel dateFlight;
     private SearchFlightsByPilotPanel flightByPilotPanel;
     private String pilotId;
+    private SearchPassengersByClassPanel classByPassengerPanel;
+    private String classId;
 
 
     public ButtonsPanel(MenuWindow menuWindow, String typeAction, AddFlightForm addFlightForm, String label, ApplicationController controller){
@@ -73,6 +75,14 @@ public class ButtonsPanel extends JPanel {
         this(menuWindow, typeAction, null, label, controller);
         this.flightByPilotPanel = flightByPilotPanel;
         this.pilotId = pilotId;
+    }
+
+    // recherche  passenger
+    public ButtonsPanel(MenuWindow menuWindow, String typeAction, SearchPassengersByClassPanel classByPassengerPanel,
+                        String classId, String label, ApplicationController controller){
+        this(menuWindow, typeAction, null, label, controller);
+        this.classByPassengerPanel = classByPassengerPanel;
+        this.classId = classId;
     }
 
     // bouton retour
@@ -120,6 +130,8 @@ public class ButtonsPanel extends JPanel {
                             JTable table = new JTable(flightTable);
                             table.setModel(flightTable);
                             flightByPilotPanel.add(new JScrollPane(table), BorderLayout.CENTER);*/
+                        } case "SeatReservationSearch" -> {
+
                         }
                     }
                 }
