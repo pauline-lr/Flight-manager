@@ -225,7 +225,7 @@ public class MenuWindow extends JFrame{
         public void actionPerformed(ActionEvent evt){
             frameContainer.removeAll();
             try {
-                frameContainer.add(new ListAllFlightsPanel(MenuWindow.this, controller), BorderLayout.CENTER);
+                frameContainer.add(new ListAllFlightsPanel(), BorderLayout.CENTER);
             } catch (SQLException | DataBaseConnectionException | FlightException.MealDescriptionException | FlightException.NumberFlightException throwables) {
                 throwables.printStackTrace();
             }
