@@ -20,6 +20,7 @@ import view.tables.SearchFlightsByPilotTable;
 import view.windows.MenuWindow;
 
 import javax.swing.*;
+import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
@@ -112,34 +113,45 @@ public class ButtonsPanel extends JPanel {
                             controller.modifyFlight(flight);
                             JOptionPane.showMessageDialog(null, "Vol modifié", "Succès", JOptionPane.INFORMATION_MESSAGE);
                         }
-                        case "DateFlightSearch" -> {
-                            if (start.compareTo(end) <= 0) {
-                                ArrayList<SearchFlightsBetweenDates> flights = controller.getAllFlightsBetweenDates(start, end);
+                    }
+                }else{
+                        switch (typeAction) {
+                            case "DateFlightSearch" -> {
+                                if (start.compareTo(end) <= 0) {
+                                    ArrayList<SearchFlightsBetweenDates> flights = controller.getAllFlightsBetweenDates(start, end);
                                 /*SearchFlightsBetweenDatesTable flightTable = new SearchFlightsBetweenDatesTable(controller, flights);
                                 JTable table = new JTable(flightTable);
                                 table.setModel(flightTable);
                                 dateFlight.add(new JScrollPane(table), BorderLayout.CENTER);*/
-                                dateFlight.add(new ResultSearchFlightBetweenDates(controller, flights), BorderLayout.CENTER);
-                            } else {
-                                JOptionPane.showMessageDialog(null, "Veuillez entrer une première date antérieure à l'autre ", "Erreur", JOptionPane.ERROR_MESSAGE);
-                            }
+                                    dateFlight.add(new ResultSearchFlightBetweenDates(controller, flights), BorderLayout.CENTER);
+                                } else {
+                                    JOptionPane.showMessageDialog(null, "Veuillez entrer une première date antérieure à l'autre ", "Erreur", JOptionPane.ERROR_MESSAGE);
+                                }
 
-                        } case "SearchPilot" -> {
+                            }
+                            case "SearchPilot" -> {
                             /*ArrayList<SearchFlightsByPilot> flights = controller.getAllFlightsOfAPilot(pilotId);
                             SearchFlightsByPilotTable flightTable = new SearchFlightsByPilotTable(controller, flights);
                             JTable table = new JTable(flightTable);
                             table.setModel(flightTable);
                             flightByPilotPanel.add(new JScrollPane(table), BorderLayout.CENTER);*/
-                        } case "SeatReservationSearch" -> {
+                                ArrayList<SearchFlightsByPilot> flights = controller.getAllFlightsOfAPilot(pilotId);
+                                SearchFlightsByPilotTable flightTable = new SearchFlightsByPilotTable(controller, flights);
+                                JTable table = new JTable(flightTable);
+                                table.setModel(flightTable);
+                                flightByPilotPanel.add(new JScrollPane(table), BorderLayout.CENTER);
+                            }
+                            case "SeatReservationSearch" -> {
 
+                            }
                         }
                     }
-                }
 
-            } catch (FlightException.NumberFlightException | FlightException.MealDescriptionException | SQLException
-                    | DataBaseConnectionException | DataBaseAccessException e) {
-                e.printStackTrace();
+                } catch (SQLException | FlightException.NumberFlightException | FlightException.MealDescriptionException |
+                    DataBaseAccessException | DataBaseConnectionException throwables) {
+                throwables.printStackTrace();
             }
+
         }
     }
 
