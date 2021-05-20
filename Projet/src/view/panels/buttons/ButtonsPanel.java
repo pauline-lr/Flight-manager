@@ -20,6 +20,7 @@ import view.tables.SearchFlightsByPilotTable;
 import view.windows.MenuWindow;
 
 import javax.swing.*;
+import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.*;
@@ -39,7 +40,8 @@ public class ButtonsPanel extends JPanel {
     private String pilotId;
     private SearchPassengersByClassPanel classByPassengerPanel;
     private String classId;
-
+    private JTable table;
+    private ListSelectionModel listSelect;
 
     public ButtonsPanel(MenuWindow menuWindow, String typeAction, AddFlightForm addFlightForm, String label, ApplicationController controller){
         this.controller = controller;
@@ -104,26 +106,44 @@ public class ButtonsPanel extends JPanel {
             try {
                 if(addFlightForm != null) {
                     Flight flight = addFlightForm.getFlight();
-                    switch (typeAction) {
-                        case "Addition" -> {
-                            controller.addFlight(flight);
-                            JOptionPane.showMessageDialog(null, "Vol ajouté", "Succès", JOptionPane.INFORMATION_MESSAGE);
-                        }
-                        case "Modification" -> {
-                            controller.modifyFlight(flight);
-                            JOptionPane.showMessageDialog(null, "Vol modifié", "Succès", JOptionPane.INFORMATION_MESSAGE);
-                        }
+                    if (typeAction.equals("Addition")) {
+                        controller.addFlight(flight);
+                        JOptionPane.showMessageDialog(null, "Vol ajouté", "Succès", JOptionPane.INFORMATION_MESSAGE);
                     }
                 }else{
                         switch (typeAction) {
+                            case "Modification" -> {
+                                //Flight flight = modifyFlight.getFlight()
+                                //controller.modifyFlight(flight);
+                                JOptionPane.showMessageDialog(null, "Vol modifié", "Succès", JOptionPane.INFORMATION_MESSAGE);
+                            }
                             case "DateFlightSearch" -> {
-                                if (start.compareTo(end) <= 0) {
+                                if (start.compareTo(end) < 0) {
+                                    SearchFlightsBetweenDatesTable flightTable;
+                                    RowSorter<SearchFlightsBetweenDatesTable> sorter;
+                                    TableColumn column;
+                                    JScrollPane scrollPane;
                                     ArrayList<SearchFlightsBetweenDates> flights = controller.getAllFlightsBetweenDates(start, end);
-                                /*SearchFlightsBetweenDatesTable flightTable = new SearchFlightsBetweenDatesTable(controller, flights);
-                                JTable table = new JTable(flightTable);
-                                table.setModel(flightTable);
-                                dateFlight.add(new JScrollPane(table), BorderLayout.CENTER);*/
-                                    dateFlight.add(new ResultSearchFlightBetweenDates(controller, flights), BorderLayout.CENTER);
+                                    /*SearchFlightsBetweenDatesTable flightTable = new SearchFlightsBetweenDatesTable(controller, flights);
+                                    JTable table = new JTable(flightTable);
+                                    table.setModel(flightTable);
+                                    dateFlight.add(new JScrollPane(table), BorderLayout.CENTER);*/
+                                    if(flights == null){
+                                        flightTable = new SearchFlightsBetweenDatesTable(controller);
+                                    }else{
+                                        flightTable = new SearchFlightsBetweenDatesTable(controller, flights);
+                                    }
+
+                                    table = new JTable(flightTable);
+                                    sorter = new TableRowSorter<>(flightTable);
+                                    table.setRowSorter(sorter);
+                                    column = table.getColumnModel().getColumn(1);
+                                    column.setPreferredWidth(300);
+
+                                    scrollPane = new JScrollPane(table);
+                                    listSelect = table.getSelectionModel();
+                                    dateFlight.add(scrollPane, BorderLayout.CENTER);
+                                   // dateFlight.add(new ResultSearchFlightBetweenDates(controller, flights), BorderLayout.CENTER);
                                 } else {
                                     JOptionPane.showMessageDialog(null, "Veuillez entrer une première date antérieure à l'autre ", "Erreur", JOptionPane.ERROR_MESSAGE);
                                 }
@@ -138,7 +158,6 @@ public class ButtonsPanel extends JPanel {
                                 ArrayList<SearchFlightsByPilot> flights = controller.getAllFlightsOfAPilot(pilotId);
                                 SearchFlightsByPilotTable flightTable = new SearchFlightsByPilotTable(controller, flights);
                                 JTable table = new JTable(flightTable);
-                                table.setModel(flightTable);
                                 flightByPilotPanel.add(new JScrollPane(table), BorderLayout.CENTER);
                             }
                             case "SeatReservationSearch" -> {
