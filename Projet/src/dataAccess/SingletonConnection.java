@@ -19,7 +19,6 @@ public class SingletonConnection {
         return uniqueConnection;
     }
 
-    // il faut fermer la connexion à la base de données
     public static void closeConnection() throws DataBaseCloseException {
         if (uniqueConnection != null) {
             try {

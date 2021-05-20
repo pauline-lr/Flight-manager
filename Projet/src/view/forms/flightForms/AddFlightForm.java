@@ -12,9 +12,6 @@ import java.util.*;
 import java.util.regex.*;
 
 public class AddFlightForm extends JPanel {
-    private static final int LENGTH_PILOT_ID = 7;
-    private static final int LENGTH_AIRPORT_ID = 3;
-
     private Font font = new Font(null, Font.BOLD, 13);
     private ApplicationController controller = new ApplicationController();
 
@@ -61,9 +58,6 @@ public class AddFlightForm extends JPanel {
     }
 
     public Flight getFlight() throws FlightException.NumberFlightException, FlightException.MealDescriptionException {
-        /*GregorianCalendar(int year, int month, int dayOfMonth,
-        int hourOfDay, int minute)*/
-
         GregorianCalendar departureDate = new GregorianCalendar(
                 (Integer) departureYear.getValue(),
                 (Integer) departureMonth.getValue() - 1,

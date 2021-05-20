@@ -1,8 +1,5 @@
 package pattern;
-// https://www.baeldung.com/java-dao-pattern
-// domain class = Flight
 
-import dataAccess.SingletonConnection;
 import exception.*;
 import model.*;
 

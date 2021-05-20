@@ -20,8 +20,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.sql.SQLException;
 
-// Attention close dans ExitListener et ExitButtonListener
-
 public class MenuWindow extends JFrame{
     private ApplicationController controller;
     private Container frameContainer;

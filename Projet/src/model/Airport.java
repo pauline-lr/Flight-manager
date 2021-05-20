@@ -6,7 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Airport {
-    private final static String REGEX_CODE = "^\\w{3}$";
+    private final static String REGEX_CODE = "^[A-Z][A-Z][A-Z]$";
     private final static int LENGTH_NAME = 50;
     private final static int LENGTH_COUNTRY = 50;
 

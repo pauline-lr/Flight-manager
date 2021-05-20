@@ -6,8 +6,7 @@ import exception.DataBaseConnectionException;
 import javax.swing.*;
 import java.awt.*;
 import java.sql.SQLException;
-import java.util.Calendar;
-import java.util.Date;
+
 
 public class ModifyFlightForm extends JPanel {
     private ApplicationController controller = new ApplicationController();
