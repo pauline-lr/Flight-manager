@@ -3,12 +3,13 @@ package model;
 import exception.FlightException;
 
 import java.time.format.DateTimeParseException;
-import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Flight {
+
+    //region Variables
     public final static String REGEX_NUMBER = "^[A-Z][A-Z]\\d{4}$";
     private final static int MEAL_DESCRIPTION_LENTGH = 400;
 
@@ -21,13 +22,13 @@ public class Flight {
     private String departureGate;
     private String arrivalGate;
     private Integer plane;
+    //endregion
 
     //region Constructors
     public Flight(String number, GregorianCalendar departureTime,
                   GregorianCalendar arrivalTime, Boolean isMealOnBoard, String mealDescription, String pilot, String departureGate, String arrivalGate, Integer plane)
             throws FlightException.NumberFlightException, FlightException.MealDescriptionException{
         setNumber(number);
-        // GregorianCalendar(int year, int month, int dayOfMonth, int hourOfDay, int minute) cf. doc java
         setDepartureTime(departureTime);
         setArrivalTime(arrivalTime);
         setMealOnBoard(isMealOnBoard);
@@ -107,7 +108,7 @@ public class Flight {
     }
     //endregion
 
-    //region Getters
+    //region Get
     public String getNumber() {
         return number;
     }
@@ -140,7 +141,6 @@ public class Flight {
         return plane;
     }
     //endregion
-
 
     @Override
     public String toString() {
