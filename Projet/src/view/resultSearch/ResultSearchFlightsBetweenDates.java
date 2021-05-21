@@ -9,19 +9,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class ResultSearchFlightBetweenDates extends JPanel {
+public class ResultSearchFlightsBetweenDates extends JPanel {
     private ApplicationController controller;
 
-    public ResultSearchFlightBetweenDates(ArrayList<SearchFlightsBetweenDates> flights) throws DataBaseAccessException {
-        JTable table;
+    public ResultSearchFlightsBetweenDates(ArrayList<SearchFlightsBetweenDates> flights) throws DataBaseAccessException {
         this.controller = new ApplicationController();
 
-        /*if(flights == null){
-            flightsTable = new SearchFlightsBetweenDatesTable(controller);
-        }else{*/
         SearchFlightsBetweenDatesTable flightsTable = new SearchFlightsBetweenDatesTable(flights);
         this.setLayout(new BorderLayout());
-        table = new JTable(flightsTable);
+        JTable table = new JTable(flightsTable);
         table.setModel(flightsTable);
         this.add(new JScrollPane(table), BorderLayout.CENTER);
     }
