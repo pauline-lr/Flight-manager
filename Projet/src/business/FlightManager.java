@@ -10,109 +10,109 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public class FlightManager {
-    private DAO dao;
+    private DataAccessObject dataAccessObject;
 
     public FlightManager(){
         setDao(new AirlineDataBaseAccess());
     }
 
-    private void setDao(DAO dao) {
-        this.dao = dao;
+    private void setDao(DataAccessObject dataAccessObject) {
+        this.dataAccessObject = dataAccessObject;
     }
 
     //region Search
     public ArrayList<SearchFlightsBetweenDates> getAllFlightsBetweenDates(GregorianCalendar startDate, GregorianCalendar endDate)
             throws DataBaseAccessException {
-        return dao.getAllFlightsBetweenDates(startDate,endDate);
+        return dataAccessObject.getAllFlightsBetweenDates(startDate,endDate);
     }
     public ArrayList<SearchPassengersByClass> getAllPassengersOfAClass(String className)
             throws DataBaseAccessException {
-        return dao.getAllPassengersOfAClass(className);
+        return dataAccessObject.getAllPassengersOfAClass(className);
     }
     public ArrayList<SearchFlightsByPilot> getAllFlightsOfAPilot(String pilotLicenceNumber)
             throws DataBaseAccessException {
-        return dao.getAllFlightsOfAPilot(pilotLicenceNumber);
+        return dataAccessObject.getAllFlightsOfAPilot(pilotLicenceNumber);
     }
     //endregion
 
     //region Get
     public ArrayList<Flight> getAllFlights()
             throws SQLException, DataBaseConnectionException, FlightException.MealDescriptionException, FlightException.NumberFlightException {
-        return dao.getAllFlights();
+        return dataAccessObject.getAllFlights();
     }
     public String [] getAllFlightsForComboBox()
             throws SQLException, DataBaseConnectionException {
-        return dao.getAllFlightsForComboBox();
+        return dataAccessObject.getAllFlightsForComboBox();
     }
     public String [] getAllPilotsForComboBox()
             throws SQLException, DataBaseConnectionException {
-        return dao.getAllPilotsForComboBox();
+        return dataAccessObject.getAllPilotsForComboBox();
     }
     public String [] getAllPlanesForComboBox()
             throws SQLException, DataBaseConnectionException {
-        return dao.getAllPlanesForComboBox();
+        return dataAccessObject.getAllPlanesForComboBox();
     }
     public String [] getAllClassesForComboBox()
             throws SQLException, DataBaseConnectionException {
-        return dao.getAllClassesForComboBox();
+        return dataAccessObject.getAllClassesForComboBox();
     }
     public String [] getAllAirportsForComboBox()
             throws SQLException, DataBaseConnectionException {
-        return dao.getAllAirportsForComboBox();
+        return dataAccessObject.getAllAirportsForComboBox();
     }
     public String [] getAllTerminalsOfAnAirportForComboBox(String airportId)
             throws SQLException, DataBaseConnectionException {
-        return dao.getAllTerminalsOfAnAirportForComboBox(airportId);
+        return dataAccessObject.getAllTerminalsOfAnAirportForComboBox(airportId);
     }
     public String [] getAllGatesOfAnAirportAndTerminalForComboBox(String airportId, String terminalId)
             throws SQLException, DataBaseConnectionException {
-        return dao.getAllGatesOfAnAirportAndTerminalForComboBox(airportId, terminalId);
+        return dataAccessObject.getAllGatesOfAnAirportAndTerminalForComboBox(airportId, terminalId);
     }
     public String getPilotToString(String pilotId)
             throws SQLException, DataBaseConnectionException {
-        return dao.getPilotToString(pilotId);
+        return dataAccessObject.getPilotToString(pilotId);
     }
     public String getPlaneToString(Integer planeId)
             throws SQLException, DataBaseConnectionException {
-        return dao.getPlaneToString(planeId);
+        return dataAccessObject.getPlaneToString(planeId);
     }
     public String getAirportToString(String gateId)
             throws SQLException, DataBaseConnectionException {
-        return dao.getAirportToString(gateId);
+        return dataAccessObject.getAirportToString(gateId);
     }
     public String getTerminalToString(String gateId)
             throws SQLException, DataBaseConnectionException {
-        return dao.getTerminalToString(gateId);
+        return dataAccessObject.getTerminalToString(gateId);
     }
     public String getGateToString(String gateId)
             throws SQLException, DataBaseConnectionException {
-        return dao.getGateToString(gateId);
+        return dataAccessObject.getGateToString(gateId);
     }
     //endregion
 
     //region Edit
     public void addFlight(Flight flightToAdd)
             throws SQLException, DataBaseConnectionException {
-        dao.addFlight(flightToAdd);
+        dataAccessObject.addFlight(flightToAdd);
     }
     public void modifyFlight(Flight flightToUpdate, String originalNumber)
             throws SQLException, DataBaseConnectionException {
-        dao.modifyFlight(flightToUpdate, originalNumber);
+        dataAccessObject.modifyFlight(flightToUpdate, originalNumber);
     }
     public void modifyFlight(Flight flightToUpdate)
             throws SQLException, DataBaseConnectionException {
-        dao.modifyFlight(flightToUpdate);
+        dataAccessObject.modifyFlight(flightToUpdate);
     }
     public void deleteFlight(String flightToDelete)
             throws SQLException, DataBaseConnectionException {
-        dao.deleteFlight(flightToDelete);
+        dataAccessObject.deleteFlight(flightToDelete);
     }
     //endregion
 
     //region Connection
     public void closeConnection()
             throws DataBaseCloseException {
-        dao.closeConnection();
+        dataAccessObject.closeConnection();
     }
     //endregion
 

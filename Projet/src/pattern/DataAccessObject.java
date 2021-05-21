@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
-public interface DAO {
+public interface DataAccessObject {
     //region Search
     ArrayList<SearchFlightsBetweenDates> getAllFlightsBetweenDates(GregorianCalendar startDate, GregorianCalendar endDate)
             throws DataBaseAccessException;
@@ -18,6 +18,16 @@ public interface DAO {
     //endregion
 
     //region Get
+    String getPilotToString(String pilotId)
+            throws SQLException, DataBaseConnectionException;
+    String getPlaneToString(Integer planeId)
+            throws SQLException, DataBaseConnectionException;
+    String getAirportToString(String gateId)
+            throws SQLException, DataBaseConnectionException;
+    String getTerminalToString(String gateId)
+            throws SQLException, DataBaseConnectionException;
+    String getGateToString(String gateId)
+            throws SQLException, DataBaseConnectionException;
     ArrayList<Flight> getAllFlights()
             throws DataBaseConnectionException, SQLException, FlightException.MealDescriptionException, FlightException.NumberFlightException;
     String [] getAllFlightsForComboBox()
@@ -33,16 +43,6 @@ public interface DAO {
     String [] getAllTerminalsOfAnAirportForComboBox(String airportId)
             throws SQLException, DataBaseConnectionException;
     String [] getAllGatesOfAnAirportAndTerminalForComboBox(String airportId, String terminalId)
-            throws SQLException, DataBaseConnectionException;
-    String getPilotToString(String pilotId)
-            throws SQLException, DataBaseConnectionException;
-    String getPlaneToString(Integer planeId)
-            throws SQLException, DataBaseConnectionException;
-    String getAirportToString(String gateId)
-            throws SQLException, DataBaseConnectionException;
-    String getTerminalToString(String gateId)
-            throws SQLException, DataBaseConnectionException;
-    String getGateToString(String gateId)
             throws SQLException, DataBaseConnectionException;
     //endregion
 

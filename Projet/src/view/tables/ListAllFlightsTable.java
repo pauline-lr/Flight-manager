@@ -4,11 +4,11 @@ import controller.ApplicationController;
 import exception.DataBaseConnectionException;
 import exception.FlightException;
 import model.Flight;
+import tool.Format;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.sql.*;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class ListAllFlightsTable extends AbstractTableModel {
@@ -76,9 +76,9 @@ public class ListAllFlightsTable extends AbstractTableModel {
                     throwables.printStackTrace();
                 }
             case 3:
-                return timeFormat(departure);
+                return Format.timeFormat(departure);
             case 4:
-                return dateFormat(departure);
+                return Format.dateFormat(departure);
             case 5:
                 try {
                     return controller.getAirportToString(flight.getDepartureGate());
@@ -98,9 +98,9 @@ public class ListAllFlightsTable extends AbstractTableModel {
                     throwables.printStackTrace();
                 }
             case 8:
-                return timeFormat(arrival);
+                return Format.timeFormat(arrival);
             case 9:
-                return dateFormat(arrival);
+                return Format.dateFormat(arrival);
             case 10:
                 try {
                     return controller.getAirportToString(flight.getArrivalGate());
@@ -126,20 +126,6 @@ public class ListAllFlightsTable extends AbstractTableModel {
             default:
                 return null;
         }
-    }
-
-    public static String timeFormat(GregorianCalendar calendar) {
-        SimpleDateFormat format = new SimpleDateFormat("HH:mm");
-        format.setCalendar(calendar);
-
-        return format.format(calendar.getTime());
-    }
-
-    public static String dateFormat(GregorianCalendar calendar) {
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        format.setCalendar(calendar);
-
-        return format.format(calendar.getTime());
     }
 
     public Class getColumnClass(int column) {

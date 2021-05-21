@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 public class Flight {
 
     //region Variables
-    public final static String REGEX_NUMBER = "^[A-Z][A-Z]\\d{4}$";
+    private final static String REGEX_NUMBER = "^[A-Z][A-Z]\\d{4}$";
     private final static int MEAL_DESCRIPTION_LENTGH = 400;
 
     private String number;                      // 6 characters = 2 letters then 4 positive digits

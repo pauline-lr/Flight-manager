@@ -3,42 +3,45 @@ package view.forms.flightForms;
 import controller.*;
 import exception.*;
 import model.*;
+import tool.GetID;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.SQLException;
 import java.util.*;
-import java.util.regex.*;
 
 public class FlightForm extends JPanel {
     private final Font font = new Font(null, Font.BOLD, 13);
-    private final ApplicationController controller = new ApplicationController();
-    private final GregorianCalendar currentDate;
+    private ApplicationController controller;
+    private GregorianCalendar currentDate;
 
-    private JTextField
-            numberTextField,
-            mealDescriptionTextField;
-    private JCheckBox
-            isMealOnBoardCheckBox;
-    private JSpinner
-            departureDay, departureMonth, departureYear, departureHour, departureMinute,
+    private JTextField numberTextField, mealDescriptionTextField;
+    private JCheckBox isMealOnBoardCheckBox;
+    private JSpinner departureDay, departureMonth, departureYear, departureHour, departureMinute,
             arrivalDay, arrivalMonth, arrivalYear, arrivalHour, arrivalMinute;
-    private SpinnerNumberModel
-            departureDayModel, departureMonthModel, departureYearModel, departureHourModel, departureMinuteModel,
+    private SpinnerNumberModel departureDayModel, departureMonthModel, departureYearModel, departureHourModel, departureMinuteModel,
             arrivalDayModel, arrivalMonthModel, arrivalYearModel, arrivalHourModel, arrivalMinuteModel;
-    private JComboBox<String>
-            pilotComboBox, planeComboBox,
+    private JComboBox pilotComboBox, planeComboBox,
             departureAirportComboBox, departureTerminalComboBox, departureGateComboBox,
             arrivalAirportComboBox, arrivalTerminalComboBox, arrivalGateComboBox;
 
     public FlightForm() throws SQLException, DataBaseConnectionException {
-        currentDate = new GregorianCalendar();
+        setController(new ApplicationController());
+        setCurrentDate(new GregorianCalendar());
         setLayout(new GridLayout(16, 4));
         createFlightForm();
     }
 
-    public void createFlightForm() throws SQLException, DataBaseConnectionException {
+    private void setController(ApplicationController controller) {
+        this.controller = controller;
+    }
+
+    private void setCurrentDate(GregorianCalendar currentDate) {
+        this.currentDate = currentDate;
+    }
+
+    private void createFlightForm() throws SQLException, DataBaseConnectionException {
         addFlightNumberField();
         addPilotField();
         addPlaneField();
@@ -72,10 +75,10 @@ public class FlightForm extends JPanel {
                 arrivalDate,
                 isMealOnBoardCheckBox.isSelected(),
                 mealDescriptionTextField.getText(),
-                getPilotId(),
-                getDepartureGateId(),
-                getArrivalGateId(),
-                getPlaneId()
+                GetID.getPilotId(pilotComboBox),
+                GetID.getGateId(departureAirportComboBox, departureTerminalComboBox, departureGateComboBox),
+                GetID.getGateId(arrivalAirportComboBox, arrivalTerminalComboBox, arrivalGateComboBox),
+                GetID.getPlaneId(planeComboBox)
         );
     }
 
@@ -204,7 +207,7 @@ public class FlightForm extends JPanel {
         departureTerminalLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(departureTerminalLabel);
 
-        departureTerminalComboBox = new JComboBox<>(controller.getAllTerminalsOfAnAirportForComboBox(getDepartureAirportId()));
+        departureTerminalComboBox = new JComboBox<>(controller.getAllTerminalsOfAnAirportForComboBox(GetID.getAirportId(departureAirportComboBox)));
         departureTerminalComboBox.addItemListener(new departureTerminalComboBoxListener());
         this.add(departureTerminalComboBox);
 
@@ -213,7 +216,7 @@ public class FlightForm extends JPanel {
         departureGateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(departureGateLabel);
 
-        departureGateComboBox = new JComboBox<>(controller.getAllGatesOfAnAirportAndTerminalForComboBox(getDepartureAirportId(), (String) departureTerminalComboBox.getSelectedItem()));
+        departureGateComboBox = new JComboBox<>(controller.getAllGatesOfAnAirportAndTerminalForComboBox(GetID.getAirportId(departureAirportComboBox), (String) departureTerminalComboBox.getSelectedItem()));
         this.add(departureGateComboBox);
     }
 
@@ -289,7 +292,7 @@ public class FlightForm extends JPanel {
         arrivalTerminalLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(arrivalTerminalLabel);
 
-        arrivalTerminalComboBox = new JComboBox<>(controller.getAllTerminalsOfAnAirportForComboBox(getArrivalAirportId()));
+        arrivalTerminalComboBox = new JComboBox<>(controller.getAllTerminalsOfAnAirportForComboBox(GetID.getAirportId(arrivalAirportComboBox)));
         arrivalTerminalComboBox.addItemListener(new arrivalTerminalComboBoxListener());
         this.add(arrivalTerminalComboBox);
 
@@ -298,7 +301,7 @@ public class FlightForm extends JPanel {
         arrivalGateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(arrivalGateLabel);
 
-        arrivalGateComboBox = new JComboBox<>(controller.getAllGatesOfAnAirportAndTerminalForComboBox(getArrivalAirportId(), (String) arrivalTerminalComboBox.getSelectedItem()));
+        arrivalGateComboBox = new JComboBox<>(controller.getAllGatesOfAnAirportAndTerminalForComboBox(GetID.getAirportId(arrivalAirportComboBox), (String) arrivalTerminalComboBox.getSelectedItem()));
         this.add(arrivalGateComboBox);
     }
 
@@ -335,53 +338,13 @@ public class FlightForm extends JPanel {
     }
     //endregion
 
-    //region ID Getters
-    public String getId(String text) {
-        Pattern pattern = Pattern.compile("^\\w+(?=\\s-\\s)");
-        Matcher matcher = pattern.matcher(text);
-        String id = null;
-        if (matcher.find()) {
-            id = matcher.group();
-        }
-        return id;
-    }
-
-    public String getDepartureAirportId() {
-        String departureAirportText = (String) departureAirportComboBox.getSelectedItem();
-        return getId(departureAirportText);
-    }
-
-    public String getDepartureGateId() {
-        return (String) departureTerminalComboBox.getSelectedItem() + departureGateComboBox.getSelectedItem() + getDepartureAirportId();
-    }
-
-    public String getArrivalAirportId() {
-        String arrivalAirportText = (String) arrivalAirportComboBox.getSelectedItem();
-        return getId(arrivalAirportText);
-    }
-
-    public String getArrivalGateId() {
-        return (String) arrivalTerminalComboBox.getSelectedItem() + arrivalGateComboBox.getSelectedItem() + getArrivalAirportId();
-    }
-
-    public Integer getPlaneId() {
-        String planeText = (String) planeComboBox.getSelectedItem();
-        return Integer.parseInt(getId(planeText));
-    }
-
-    public String getPilotId() {
-        String pilotText = (String) pilotComboBox.getSelectedItem();
-        return getId(pilotText);
-    }
-    //endregion
-
     //region Listeners
     private class departureAirportComboBoxListener implements ItemListener {
         @Override
         public void itemStateChanged(ItemEvent event) {
             try {
-                String[] updatedTerminalsOfAnAirportForComboBox = controller.getAllTerminalsOfAnAirportForComboBox(getDepartureAirportId());
-                String[] updatedGatesOfAnAirportAndTerminalForComboBox = controller.getAllGatesOfAnAirportAndTerminalForComboBox(getDepartureAirportId(), (String) departureTerminalComboBox.getSelectedItem());
+                String[] updatedTerminalsOfAnAirportForComboBox = controller.getAllTerminalsOfAnAirportForComboBox(GetID.getAirportId(departureAirportComboBox));
+                String[] updatedGatesOfAnAirportAndTerminalForComboBox = controller.getAllGatesOfAnAirportAndTerminalForComboBox(GetID.getAirportId(departureAirportComboBox), (String) departureTerminalComboBox.getSelectedItem());
                 departureTerminalComboBox.removeAllItems();
                 departureGateComboBox.removeAllItems();
                 if (event.getStateChange() == ItemEvent.SELECTED) {
@@ -402,7 +365,7 @@ public class FlightForm extends JPanel {
         @Override
         public void itemStateChanged(ItemEvent event) {
             try {
-                String[] updatedGatesOfAnAirportAndTerminalForComboBox = controller.getAllGatesOfAnAirportAndTerminalForComboBox(getDepartureAirportId(), (String) departureTerminalComboBox.getSelectedItem());
+                String[] updatedGatesOfAnAirportAndTerminalForComboBox = controller.getAllGatesOfAnAirportAndTerminalForComboBox(GetID.getAirportId(departureAirportComboBox), (String) departureTerminalComboBox.getSelectedItem());
                 departureGateComboBox.removeAllItems();
                 if (event.getStateChange() == ItemEvent.SELECTED) {
                     for (String gate : updatedGatesOfAnAirportAndTerminalForComboBox) {
@@ -419,8 +382,8 @@ public class FlightForm extends JPanel {
         @Override
         public void itemStateChanged(ItemEvent event) {
             try {
-                String[] updatedTerminalsOfAnAirportForComboBox = controller.getAllTerminalsOfAnAirportForComboBox(getArrivalAirportId());
-                String[] updatedGatesOfAnAirportAndTerminalForComboBox = controller.getAllGatesOfAnAirportAndTerminalForComboBox(getArrivalAirportId(), (String) arrivalTerminalComboBox.getSelectedItem());
+                String[] updatedTerminalsOfAnAirportForComboBox = controller.getAllTerminalsOfAnAirportForComboBox(GetID.getAirportId(arrivalAirportComboBox));
+                String[] updatedGatesOfAnAirportAndTerminalForComboBox = controller.getAllGatesOfAnAirportAndTerminalForComboBox(GetID.getAirportId(arrivalAirportComboBox), (String) arrivalTerminalComboBox.getSelectedItem());
                 arrivalTerminalComboBox.removeAllItems();
                 arrivalGateComboBox.removeAllItems();
                 if (event.getStateChange() == ItemEvent.SELECTED) {
@@ -441,7 +404,7 @@ public class FlightForm extends JPanel {
         @Override
         public void itemStateChanged(ItemEvent event) {
             try {
-                String[] updatedGatesOfAnAirportAndTerminalForComboBox = controller.getAllGatesOfAnAirportAndTerminalForComboBox(getArrivalAirportId(), (String) arrivalTerminalComboBox.getSelectedItem());
+                String[] updatedGatesOfAnAirportAndTerminalForComboBox = controller.getAllGatesOfAnAirportAndTerminalForComboBox(GetID.getAirportId(arrivalAirportComboBox), (String) arrivalTerminalComboBox.getSelectedItem());
                 arrivalGateComboBox.removeAllItems();
                 if (event.getStateChange() == ItemEvent.SELECTED) {
                     for (String gate : updatedGatesOfAnAirportAndTerminalForComboBox) {

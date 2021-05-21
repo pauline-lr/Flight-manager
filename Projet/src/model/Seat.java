@@ -6,8 +6,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Seat {
-    public final static String REGEX_SEAT_ROW = "^\\d{3}$";
-    public final static String REGEX_SEAT_COLUMN = "^[A-Z]$";
+    private final static String REGEX_SEAT_ROW = "^\\d{3}$";
+    private final static String REGEX_SEAT_COLUMN = "^[A-Z]$";
 
     private Integer seatRow;            // Max 3 positive digits
     private Character seatColumn;       // 1 letter

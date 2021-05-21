@@ -4,6 +4,8 @@ import controller.ApplicationController;
 import exception.DataBaseAccessException;
 import exception.DataBaseConnectionException;
 import model.SearchFlightsByPilot;
+import tool.Format;
+import tool.GetID;
 import view.forms.searchForms.SearchFlightsByPilotForm;
 import view.resultSearch.ResultSearchFlightsByPilot;
 import view.windows.MenuWindow;
@@ -24,7 +26,7 @@ public class SearchFlightsByPilotPanel extends JPanel {
     public SearchFlightsByPilotPanel(MenuWindow menuWindow, ApplicationController controller) throws SQLException, DataBaseConnectionException {
         this.panel = this;
         this.controller = new ApplicationController();
-        this.searchFlightsByPilotForm = new SearchFlightsByPilotForm(controller);
+        this.searchFlightsByPilotForm = new SearchFlightsByPilotForm();
         this.setLayout(new BorderLayout());
         this.add(searchFlightsByPilotForm, BorderLayout.PAGE_START);
 
@@ -36,9 +38,9 @@ public class SearchFlightsByPilotPanel extends JPanel {
     private class ValidationListener implements ActionListener {
         public void actionPerformed(ActionEvent evt) {
             panel.removeAll();
-            ArrayList<SearchFlightsByPilot> flights = new ArrayList<>();
+            ArrayList<SearchFlightsByPilot> flights;
             try {
-                flights = controller.getAllFlightsOfAPilot(searchFlightsByPilotForm.getPilotId());
+                flights = controller.getAllFlightsOfAPilot(GetID.getPilotId(searchFlightsByPilotForm.getPilotComboBox()));
                 panel.add(new ResultSearchFlightsByPilot(flights), BorderLayout.CENTER);
                 panel.repaint();
             } catch (DataBaseAccessException e) {

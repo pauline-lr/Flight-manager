@@ -3,14 +3,12 @@ package dataAccess;
 import exception.*;
 import model.*;
 import pattern.*;
+import tool.Format;
 
 import java.sql.*;
 import java.util.*;
 
-import static view.tables.ListAllFlightsTable.timeFormat;
-import static view.tables.ListAllFlightsTable.dateFormat;
-
-public class AirlineDataBaseAccess implements DAO {
+public class AirlineDataBaseAccess implements DataAccessObject {
     //region Search
     public ArrayList<SearchFlightsBetweenDates> getAllFlightsBetweenDates(GregorianCalendar startDate, GregorianCalendar endDate)
             throws DataBaseAccessException {
@@ -339,10 +337,10 @@ public class AirlineDataBaseAccess implements DAO {
             arrivalTime.setTime(data.getTimestamp("arrivalTime"));
 
             String departureInformation =
-                    "DÉPART : " + timeFormat(departureTime) + " " + dateFormat(departureTime) + ", " +
+                    "DÉPART : " + Format.timeFormat(departureTime) + " " + Format.dateFormat(departureTime) + ", " +
                             data.getString("departureTerminal") + data.getInt("departureGate") + ", " + data.getString("departureAirport");
             String arrivalInformation =
-                    "ARRIVÉE : " + timeFormat(arrivalTime) + " " + dateFormat(arrivalTime) + ", " +
+                    "ARRIVÉE : " + Format.timeFormat(arrivalTime) + " " + Format.dateFormat(arrivalTime) + ", " +
                             data.getString("arrivalTerminal") + data.getInt("arrivalGate") + ", " + data.getString("arrivalAirport");
 
             flights.add(data.getString("flightNumber") + " - " + departureInformation + " - " + arrivalInformation);

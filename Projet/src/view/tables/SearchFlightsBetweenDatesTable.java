@@ -5,6 +5,7 @@ import exception.DataBaseAccessException;
 import exception.DataBaseConnectionException;
 import model.Flight;
 import model.SearchFlightsBetweenDates;
+import tool.Format;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
@@ -66,9 +67,9 @@ public class SearchFlightsBetweenDatesTable extends AbstractTableModel {
                 return flight.getPlaneId() + " - " + flight.getPlaneBrand()
                         + " - " + flight.getPlaneModel();
             case 3:
-                return timeFormat(departure);
+                return Format.timeFormat(departure);
             case 4:
-                return dateFormat(departure);
+                return Format.dateFormat(departure);
             case 5:
               return flight.getDepartureAirportCode() + " - " + flight.getDepartureAirportCode()
                       + " - " + flight.getDepartureAirportCountry();
@@ -77,9 +78,9 @@ public class SearchFlightsBetweenDatesTable extends AbstractTableModel {
             case 7:
                return flight.getDepartureGateNumber();
             case 8:
-                return timeFormat(arrival);
+                return Format.timeFormat(arrival);
             case 9:
-                return dateFormat(arrival);
+                return Format.dateFormat(arrival);
             case 10:
                 return flight.getArrivalAirportCode() + " - " + flight.getArrivalAirportCode()
                         + " - " + flight.getArrivalAirportCountry();
@@ -90,20 +91,6 @@ public class SearchFlightsBetweenDatesTable extends AbstractTableModel {
             default:
                 return null;
         }
-    }
-
-    public static String timeFormat(GregorianCalendar calendar) {
-        SimpleDateFormat format = new SimpleDateFormat("HH:mm");
-        format.setCalendar(calendar);
-
-        return format.format(calendar.getTime());
-    }
-
-    public static String dateFormat(GregorianCalendar calendar) {
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        format.setCalendar(calendar);
-
-        return format.format(calendar.getTime());
     }
 
     public Class getColumnClass(int column) {

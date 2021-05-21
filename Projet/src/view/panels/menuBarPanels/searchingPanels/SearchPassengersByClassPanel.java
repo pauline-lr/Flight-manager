@@ -5,6 +5,7 @@ import exception.DataBaseAccessException;
 import exception.DataBaseConnectionException;
 import model.SearchFlightsBetweenDates;
 import model.SearchPassengersByClass;
+import tool.GetID;
 import view.forms.searchForms.SearchPassengersByClassForm;
 import view.panels.buttons.ButtonsPanel;
 import view.resultSearch.ResultSearchFlightsBetweenDates;
@@ -43,7 +44,7 @@ public class SearchPassengersByClassPanel extends JPanel {
             panel.removeAll();
             ArrayList<SearchPassengersByClass> flights;
             try {
-                flights = controller.getAllPassengersOfAClass(searchPassengersByClassForm.getClassId());
+                flights = controller.getAllPassengersOfAClass(GetID.getClassId(searchPassengersByClassForm.getClassComboBox()));
                 panel.add(new ResultSearchPassengersByClass(flights), BorderLayout.CENTER);
                 panel.repaint();
             } catch (DataBaseAccessException e) {
