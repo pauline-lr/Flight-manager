@@ -2,19 +2,16 @@ package view.forms.searchForms;
 
 import controller.ApplicationController;
 import exception.DataBaseConnectionException;
+import tool.Format;
 
 import javax.swing.*;
 import java.awt.*;
 import java.sql.SQLException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class SearchFlightsByPilotForm extends JPanel {
     private ApplicationController controller;
-    private final Font font = new Font(null, Font.BOLD, 13);
-
     private JLabel pilotLabel;
-    private JComboBox pilotComboBox;
+    private JComboBox<String> pilotComboBox;
 
     public SearchFlightsByPilotForm() throws SQLException, DataBaseConnectionException {
         setController(new ApplicationController());
@@ -23,7 +20,7 @@ public class SearchFlightsByPilotForm extends JPanel {
         createFlightsByPilotForm();
     }
 
-    public JComboBox getPilotComboBox() {
+    public JComboBox<String> getPilotComboBox() {
         return pilotComboBox;
     }
 
@@ -33,11 +30,11 @@ public class SearchFlightsByPilotForm extends JPanel {
 
     public void createFlightsByPilotForm() throws SQLException, DataBaseConnectionException {
         pilotLabel = new JLabel("    Choisissez le pilote");
-        pilotLabel.setFont(font);
+        pilotLabel.setFont(Format.font);
         pilotLabel.setHorizontalAlignment(SwingConstants.LEFT);
         add(pilotLabel);
 
-        pilotComboBox = new JComboBox(controller.getAllPilotsForComboBox());
+        pilotComboBox = new JComboBox<>(controller.getAllPilotsForComboBox());
         this.add(pilotComboBox);
     }
 }

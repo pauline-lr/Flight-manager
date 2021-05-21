@@ -3,7 +3,7 @@ package view.forms.flightForms;
 import controller.*;
 import exception.*;
 import model.*;
-import tool.GetID;
+import tool.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,17 +12,15 @@ import java.sql.SQLException;
 import java.util.*;
 
 public class FlightForm extends JPanel {
-    private final Font font = new Font(null, Font.BOLD, 13);
     private ApplicationController controller;
     private GregorianCalendar currentDate;
-
     private JTextField numberTextField, mealDescriptionTextField;
     private JCheckBox isMealOnBoardCheckBox;
     private JSpinner departureDay, departureMonth, departureYear, departureHour, departureMinute,
             arrivalDay, arrivalMonth, arrivalYear, arrivalHour, arrivalMinute;
     private SpinnerNumberModel departureDayModel, departureMonthModel, departureYearModel, departureHourModel, departureMinuteModel,
             arrivalDayModel, arrivalMonthModel, arrivalYearModel, arrivalHourModel, arrivalMinuteModel;
-    private JComboBox pilotComboBox, planeComboBox,
+    private JComboBox<String> pilotComboBox, planeComboBox,
             departureAirportComboBox, departureTerminalComboBox, departureGateComboBox,
             arrivalAirportComboBox, arrivalTerminalComboBox, arrivalGateComboBox;
 
@@ -85,7 +83,7 @@ public class FlightForm extends JPanel {
     //region Fields
     private void addFlightNumberField() {
         JLabel numberLabel = new JLabel("    Numéro");
-        numberLabel.setFont(font);
+        numberLabel.setFont(Format.font);
         numberLabel.setHorizontalAlignment(SwingConstants.LEFT);
         add(numberLabel);
 
@@ -100,7 +98,7 @@ public class FlightForm extends JPanel {
 
     private void addPilotField() {
         JLabel pilotLabel = new JLabel("    Pilote");
-        pilotLabel.setFont(font);
+        pilotLabel.setFont(Format.font);
         pilotLabel.setHorizontalAlignment(SwingConstants.LEFT);
         this.add(pilotLabel);
 
@@ -118,7 +116,7 @@ public class FlightForm extends JPanel {
 
     private void addPlaneField() {
         JLabel planeLabel = new JLabel("    Avion");
-        planeLabel.setFont(font);
+        planeLabel.setFont(Format.font);
         planeLabel.setHorizontalAlignment(SwingConstants.LEFT);
         this.add(planeLabel);
 
@@ -137,7 +135,7 @@ public class FlightForm extends JPanel {
     private void addDepartureMomentField() {
         // departure
         JLabel departureLabel = new JLabel("    Départ");
-        departureLabel.setFont(font);
+        departureLabel.setFont(Format.font);
         departureLabel.setHorizontalAlignment(SwingConstants.LEFT);
         this.add(departureLabel);
 
@@ -223,7 +221,7 @@ public class FlightForm extends JPanel {
     private void addArrivalMomentField() {
         // arrival
         JLabel arrivalLabel = new JLabel("    Arrivée");
-        arrivalLabel.setFont(font);
+        arrivalLabel.setFont(Format.font);
         arrivalLabel.setHorizontalAlignment(SwingConstants.LEFT);
         this.add(arrivalLabel);
 
@@ -307,7 +305,7 @@ public class FlightForm extends JPanel {
 
     private void addMealOnBoardField() {
         JLabel mealLabel = new JLabel("    Repas");
-        mealLabel.setFont(font);
+        mealLabel.setFont(Format.font);
         mealLabel.setHorizontalAlignment(SwingConstants.LEFT);
         add(mealLabel);
         addEmptyField();

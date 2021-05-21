@@ -4,7 +4,6 @@ import controller.ApplicationController;
 import exception.DataBaseAccessException;
 import exception.DataBaseConnectionException;
 import model.SearchFlightsByPilot;
-import tool.Format;
 import tool.GetID;
 import view.forms.searchForms.SearchFlightsByPilotForm;
 import view.resultSearch.ResultSearchFlightsByPilot;
@@ -18,14 +17,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class SearchFlightsByPilotPanel extends JPanel {
-    private SearchFlightsByPilotPanel panel;
     private ApplicationController controller;
+    private SearchFlightsByPilotPanel panel;
     private SearchFlightsByPilotForm searchFlightsByPilotForm;
     private JButton validation;
 
-    public SearchFlightsByPilotPanel(MenuWindow menuWindow, ApplicationController controller) throws SQLException, DataBaseConnectionException {
+    public SearchFlightsByPilotPanel(MenuWindow menuWindow) throws SQLException, DataBaseConnectionException {
+        setController(new ApplicationController());
         this.panel = this;
-        this.controller = new ApplicationController();
         this.searchFlightsByPilotForm = new SearchFlightsByPilotForm();
         this.setLayout(new BorderLayout());
         this.add(searchFlightsByPilotForm, BorderLayout.PAGE_START);
@@ -33,6 +32,10 @@ public class SearchFlightsByPilotPanel extends JPanel {
         this.validation = new JButton("Rechercher");
         validation.addActionListener(new ValidationListener());
         this.add(validation, BorderLayout.PAGE_END);
+    }
+
+    private void setController(ApplicationController controller) {
+        this.controller = controller;
     }
 
     private class ValidationListener implements ActionListener {

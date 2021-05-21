@@ -12,13 +12,18 @@ import java.sql.*;
 import java.util.*;
 
 public class ListAllFlightsTable extends AbstractTableModel {
-    private ApplicationController controller = new ApplicationController();
+    private ApplicationController controller;
     private ArrayList<String> columnNames;
     private ArrayList<Flight> flights;
 
     public ListAllFlightsTable() throws SQLException, DataBaseConnectionException, FlightException.MealDescriptionException, FlightException.NumberFlightException {
+        setController(new ApplicationController());
         setColumnNames();
         setFlights(controller.getAllFlights());
+    }
+
+    private void setController(ApplicationController controller) {
+        this.controller = controller;
     }
 
     private void setColumnNames() {

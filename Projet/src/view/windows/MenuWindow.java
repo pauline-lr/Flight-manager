@@ -32,7 +32,7 @@ public class MenuWindow extends JFrame{
     private JMenuItem dateFlight, seatReservation, searchPilot;
 
     public MenuWindow(){
-        controller = new ApplicationController();
+        setController(new ApplicationController());
         setTitle("Gestionnaire de vols");
         setBounds(100,100,600,600);
         frameContainer = this.getContentPane();
@@ -48,6 +48,9 @@ public class MenuWindow extends JFrame{
         this.setVisible(true);
     }
 
+    public void setController(ApplicationController controller) {
+        this.controller = controller;
+    }
 
     public void initMenuBar(){
         menuBar = new JMenuBar();
@@ -126,7 +129,6 @@ public class MenuWindow extends JFrame{
     private class ExitButtonListener extends WindowAdapter {
         @Override
         public void windowClosing(WindowEvent evt){
-            ApplicationController controller = new ApplicationController();
             try {
                 controller.closeConnection();
             } catch (DataBaseCloseException exception) {
@@ -153,7 +155,7 @@ public class MenuWindow extends JFrame{
         public void actionPerformed(ActionEvent evt){
             frameContainer.removeAll();
             try {
-                frameContainer.add(new AddFlightPanel(MenuWindow.this, controller), BorderLayout.CENTER);
+                frameContainer.add(new AddFlightPanel(MenuWindow.this), BorderLayout.CENTER);
             } catch (SQLException | DataBaseConnectionException throwables) {
                 throwables.printStackTrace();
             }
@@ -167,7 +169,7 @@ public class MenuWindow extends JFrame{
         public void actionPerformed(ActionEvent evt){
             frameContainer.removeAll();
             try {
-                frameContainer.add(new ModifyFlightPanel(MenuWindow.this, controller), BorderLayout.CENTER);
+                frameContainer.add(new ModifyFlightPanel(MenuWindow.this), BorderLayout.CENTER);
             } catch (SQLException | DataBaseConnectionException throwables) {
                 throwables.printStackTrace();
             }
@@ -181,7 +183,7 @@ public class MenuWindow extends JFrame{
         public void actionPerformed(ActionEvent evt){
             frameContainer.removeAll();
             try {
-                frameContainer.add(new SearchFlightsBetweenDatesPanel(controller), BorderLayout.CENTER);
+                frameContainer.add(new SearchFlightsBetweenDatesPanel(), BorderLayout.CENTER);
             } catch (DataBaseAccessException e) {
                 e.printStackTrace();
             }
@@ -195,7 +197,7 @@ public class MenuWindow extends JFrame{
         public void actionPerformed(ActionEvent evt){
             frameContainer.removeAll();
             try {
-                frameContainer.add(new SearchPassengersByClassPanel(MenuWindow.this, controller), BorderLayout.CENTER);
+                frameContainer.add(new SearchPassengersByClassPanel(MenuWindow.this), BorderLayout.CENTER);
             } catch (SQLException | DataBaseConnectionException throwables) {
                 throwables.printStackTrace();
             }
@@ -209,7 +211,7 @@ public class MenuWindow extends JFrame{
         public void actionPerformed(ActionEvent evt){
             frameContainer.removeAll();
             try {
-                frameContainer.add(new SearchFlightsByPilotPanel(MenuWindow.this, controller), BorderLayout.CENTER);
+                frameContainer.add(new SearchFlightsByPilotPanel(MenuWindow.this), BorderLayout.CENTER);
             } catch (SQLException | DataBaseConnectionException throwables) {
                 throwables.printStackTrace();
             }
@@ -237,7 +239,7 @@ public class MenuWindow extends JFrame{
         public void actionPerformed(ActionEvent evt){
             frameContainer.removeAll();
             try {
-                frameContainer.add(new DeleteFlightPanel(MenuWindow.this, controller), BorderLayout.CENTER);
+                frameContainer.add(new DeleteFlightPanel(MenuWindow.this), BorderLayout.CENTER);
             } catch (SQLException | DataBaseConnectionException | FlightException.MealDescriptionException | FlightException.NumberFlightException throwables) {
                 throwables.printStackTrace();
             }

@@ -10,11 +10,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class ResultSearchFlightsBetweenDates extends JPanel {
-    private ApplicationController controller;
-
     public ResultSearchFlightsBetweenDates(ArrayList<SearchFlightsBetweenDates> flights) throws DataBaseAccessException {
-        this.controller = new ApplicationController();
-
         SearchFlightsBetweenDatesTable flightsTable = new SearchFlightsBetweenDatesTable(flights);
         this.setLayout(new BorderLayout());
         JTable table = new JTable(flightsTable);

@@ -6,15 +6,10 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class SearchFlightsBetweenDatesForm extends JPanel {
-    private GregorianCalendar firstDateCalendar;
-    private GregorianCalendar lastDateCalendar;
-    private JLabel DatesLabel, start, end;
-    private JSpinner startDay, startMonth, startYear;
-    private JSpinner endDay, endMonth, endYear;
-    private SpinnerNumberModel startDayModel, startMonthModel, startYearModel;
-    private SpinnerNumberModel endDayModel, endMonthModel, endYearModel;
-    private GregorianCalendar currentDate;
-    // private Font font = new Font(null, Font.BOLD, 13);
+    private GregorianCalendar firstDateCalendar, lastDateCalendar, currentDate;
+    private JLabel start, end;
+    private JSpinner startDay, startMonth, startYear, endDay, endMonth, endYear;
+    private SpinnerNumberModel startDayModel, startMonthModel, startYearModel, endDayModel, endMonthModel, endYearModel;
 
     public SearchFlightsBetweenDatesForm(){
         currentDate = new GregorianCalendar();
@@ -24,13 +19,6 @@ public class SearchFlightsBetweenDatesForm extends JPanel {
     }
 
     void createFlightsBetweenDatesForm(){
-        /*
-        DatesLabel = new JLabel("    Choisissez la date de début et de fin");
-        DatesLabel.setFont(font);
-        DatesLabel.setHorizontalAlignment(SwingConstants.LEFT);
-        add(DatesLabel);
-         */
-
         start = new JLabel("Date de début : ");
         start.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(start);

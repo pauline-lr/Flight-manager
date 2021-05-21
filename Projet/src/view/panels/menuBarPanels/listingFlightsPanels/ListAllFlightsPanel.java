@@ -8,8 +8,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.sql.SQLException;
 
-
-
 public class ListAllFlightsPanel extends JPanel {
     public ListAllFlightsPanel()
             throws SQLException, DataBaseConnectionException, FlightException.MealDescriptionException, FlightException.NumberFlightException {

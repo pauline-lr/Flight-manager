@@ -16,13 +16,13 @@ public class SearchPassengersByClassTable extends AbstractTableModel {
                                     "Aéroport Départ","Aéroport Arrivée"};
     private ArrayList<SearchPassengersByClass> flights;
 
-    public SearchPassengersByClassTable(ApplicationController controller, ArrayList<SearchPassengersByClass> flights)  {
-        this.controller = controller;
+    public SearchPassengersByClassTable(ArrayList<SearchPassengersByClass> flights)  {
+        setController(new ApplicationController());
         this.flights = flights;
     }
 
-    public SearchPassengersByClassTable(ArrayList<SearchPassengersByClass> flights){
-        this.flights = flights;
+    private void setController(ApplicationController controller) {
+        this.controller = controller;
     }
 
     public int getColumnCount(){

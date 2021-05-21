@@ -15,13 +15,18 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public class SearchFlightsBetweenDatesTable extends AbstractTableModel {
-    private ApplicationController controller = new ApplicationController();
+    private ApplicationController controller;
     private ArrayList<String> columnNames;
     private ArrayList<SearchFlightsBetweenDates> flights;
 
     public SearchFlightsBetweenDatesTable(ArrayList<SearchFlightsBetweenDates> flights) {
+        setController(new ApplicationController());
         setColumnNames();
         this.flights = flights;
+    }
+
+    private void setController(ApplicationController controller) {
+        this.controller = controller;
     }
 
     private void setColumnNames() {

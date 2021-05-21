@@ -20,14 +20,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class SearchPassengersByClassPanel extends JPanel {
-    private SearchPassengersByClassPanel panel;
     private ApplicationController controller;
+    private SearchPassengersByClassPanel panel;
     private SearchPassengersByClassForm searchPassengersByClassForm;
     private JButton validation;
 
-    public SearchPassengersByClassPanel(MenuWindow menuWindow, ApplicationController controller) throws SQLException, DataBaseConnectionException {
+    public SearchPassengersByClassPanel(MenuWindow menuWindow) throws SQLException, DataBaseConnectionException {
+        setController(new ApplicationController());
         this.panel = this;
-        this.controller = new ApplicationController();
         this.searchPassengersByClassForm = new SearchPassengersByClassForm();
         this.setLayout(new BorderLayout());
         this.add(searchPassengersByClassForm, BorderLayout.PAGE_START);
@@ -36,6 +36,10 @@ public class SearchPassengersByClassPanel extends JPanel {
         validation.addActionListener(new ValidationListener());
         this.add(validation, BorderLayout.PAGE_END);
 
+    }
+
+    private void setController(ApplicationController controller) {
+        this.controller = controller;
     }
 
     private class ValidationListener implements ActionListener {

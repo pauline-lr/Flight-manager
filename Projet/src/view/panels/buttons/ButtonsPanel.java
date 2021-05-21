@@ -24,9 +24,9 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public class ButtonsPanel extends JPanel {
+    private ApplicationController controller;
     private static MenuWindow menuWindow;
     private String typeAction;
-    private ApplicationController controller;
     private FlightForm flightForm;
     private JButton retour, validation, réinit;
     private GregorianCalendar start, end;
@@ -38,8 +38,8 @@ public class ButtonsPanel extends JPanel {
     private JTable table;
     private ListSelectionModel listSelect;
 
-    public ButtonsPanel(MenuWindow menuWindow, String typeAction, FlightForm flightForm, String label, ApplicationController controller){
-        this.controller = controller;
+    public ButtonsPanel(MenuWindow menuWindow, String typeAction, FlightForm flightForm, String label){
+        setController(new ApplicationController());
         this.menuWindow = menuWindow;
         this.typeAction = typeAction;
         this.flightForm = flightForm;
@@ -56,6 +56,10 @@ public class ButtonsPanel extends JPanel {
         this.add(retour);
         this.add(validation);
         this.add(réinit);
+    }
+
+    private void setController(ApplicationController controller) {
+        this.controller = controller;
     }
 
     // recherche entre 2 dates
@@ -153,7 +157,7 @@ public class ButtonsPanel extends JPanel {
                             table.setModel(flightTable);
                             flightByPilotPanel.add(new JScrollPane(table), BorderLayout.CENTER);*/
                                 ArrayList<SearchFlightsByPilot> flights = controller.getAllFlightsOfAPilot(pilotId);
-                                SearchFlightsByPilotTable flightTable = new SearchFlightsByPilotTable(controller, flights);
+                                SearchFlightsByPilotTable flightTable = new SearchFlightsByPilotTable(flights);
                                 JTable table = new JTable(flightTable);
                                 flightByPilotPanel.add(new JScrollPane(table), BorderLayout.CENTER);
                             }
@@ -187,15 +191,15 @@ public class ButtonsPanel extends JPanel {
         menuWindow.getCont().removeAll();
 
         if (typeAction.equals("Addition")) {
-            menuWindow.getCont().add(new AddFlightPanel(menuWindow, controller), BorderLayout.CENTER);
+            menuWindow.getCont().add(new AddFlightPanel(menuWindow), BorderLayout.CENTER);
         } else if (typeAction.equals("Modification")) {
-            menuWindow.getCont().add(new ModifyFlightPanel(menuWindow, controller), BorderLayout.CENTER);
+            menuWindow.getCont().add(new ModifyFlightPanel(menuWindow), BorderLayout.CENTER);
         } else if (typeAction.equals("DateFlightSearch")) {
-            menuWindow.getCont().add(new SearchFlightsBetweenDatesPanel(controller), BorderLayout.CENTER);
+            menuWindow.getCont().add(new SearchFlightsBetweenDatesPanel(), BorderLayout.CENTER);
         } else if(typeAction.equals("SearchPilot")) {
-            menuWindow.getCont().add(new SearchFlightsByPilotPanel(menuWindow, controller), BorderLayout.CENTER);
+            menuWindow.getCont().add(new SearchFlightsByPilotPanel(menuWindow), BorderLayout.CENTER);
         } else if(typeAction.equals("SeatReservationSearch")) {
-            menuWindow.getCont().add(new SearchPassengersByClassPanel(menuWindow, controller), BorderLayout.CENTER);
+            menuWindow.getCont().add(new SearchPassengersByClassPanel(menuWindow), BorderLayout.CENTER);
         }
 
         menuWindow.getCont().repaint();

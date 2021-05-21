@@ -4,10 +4,8 @@ import controller.ApplicationController;
 import exception.DataBaseAccessException;
 import exception.SearchDateException;
 import model.SearchFlightsBetweenDates;
-import model.SearchFlightsByPilot;
 import view.forms.searchForms.SearchFlightsBetweenDatesForm;
 import view.resultSearch.ResultSearchFlightsBetweenDates;
-
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,14 +15,14 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public class SearchFlightsBetweenDatesPanel extends JPanel {
-    private SearchFlightsBetweenDatesPanel panel;
     private ApplicationController controller;
+    private SearchFlightsBetweenDatesPanel panel;
     private SearchFlightsBetweenDatesForm searchFlightsBetweenDatesForm;
     private JButton validation;
 
-    public SearchFlightsBetweenDatesPanel(ApplicationController controller) throws DataBaseAccessException {
+    public SearchFlightsBetweenDatesPanel() throws DataBaseAccessException {
+        setController(new ApplicationController());
         this.panel = this;
-        this.controller = controller;
         this.searchFlightsBetweenDatesForm = new SearchFlightsBetweenDatesForm();
         this.setLayout(new BorderLayout());
         this.add(searchFlightsBetweenDatesForm, BorderLayout.PAGE_START);
@@ -40,6 +38,10 @@ public class SearchFlightsBetweenDatesPanel extends JPanel {
 
         /*this.add(new ButtonsPanel(menuWindow, "DateFlightSearch", this,
                 searchFlightsBetweenDatesForm.getFirstDateCalendar(), searchFlightsBetweenDatesForm.getFirstDateCalendar(), "Rechercher", controller), BorderLayout.SOUTH);*/
+    }
+
+    private void setController(ApplicationController controller) {
+        this.controller = controller;
     }
 
     private class ValidationListener implements ActionListener {

@@ -14,11 +14,11 @@ public class AddFlightPanel extends JPanel {
     private MenuWindow menuWindow;
     private FlightForm flightForm;
 
-    public AddFlightPanel(MenuWindow menuWindow, ApplicationController controller) throws SQLException, DataBaseConnectionException {
+    public AddFlightPanel(MenuWindow menuWindow) throws SQLException, DataBaseConnectionException {
         this.flightForm = new FlightForm();
         this.menuWindow = menuWindow;
         this.setLayout(new BorderLayout());
         this.add(flightForm, BorderLayout.CENTER);
-        this.add(new ButtonsPanel(menuWindow, "Addition", flightForm, "Ajouter", controller), BorderLayout.SOUTH);
+        this.add(new ButtonsPanel(menuWindow, "Addition", flightForm, "Ajouter"), BorderLayout.SOUTH);
     }
 }

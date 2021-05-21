@@ -1,7 +1,5 @@
 package view.panels.menuBarPanels.editingFlightsPanels;
 
-
-import controller.ApplicationController;
 import exception.DataBaseConnectionException;
 import view.forms.flightForms.FlightForm;
 import view.forms.flightForms.ModifyFlightForm;
@@ -17,13 +15,13 @@ public class ModifyFlightPanel extends JPanel {
     private MenuWindow menuWindow;
     private FlightForm flightForm;
 
-    public ModifyFlightPanel(MenuWindow menuWindow, ApplicationController controller) throws SQLException, DataBaseConnectionException {
+    public ModifyFlightPanel(MenuWindow menuWindow) throws SQLException, DataBaseConnectionException {
         this.flightForm = new FlightForm();
         this.menuWindow = menuWindow;
         this.setLayout(new BorderLayout());
         this.add(new ModifyFlightForm(), BorderLayout.PAGE_START);
         this.add(flightForm, BorderLayout.CENTER);
-        this.add(new ButtonsPanel(menuWindow, "Modification", flightForm, "Modifier", controller), BorderLayout.SOUTH);
+        this.add(new ButtonsPanel(menuWindow, "Modification", flightForm, "Modifier"), BorderLayout.SOUTH);
     }
 }
 
