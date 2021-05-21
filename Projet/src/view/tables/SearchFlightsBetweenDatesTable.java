@@ -116,13 +116,4 @@ public class SearchFlightsBetweenDatesTable extends AbstractTableModel {
             default -> throw new IllegalStateException("Unexpected value: " + column);
         };
     }
-
-    public String getFlight(int indice) {
-        try {
-            return flights.get(indice).getFlightNumber();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e, "ERROR : flight tables", JOptionPane.ERROR_MESSAGE);
-            return null;
-        }
-    }
 }
