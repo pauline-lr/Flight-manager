@@ -5,6 +5,8 @@ import exception.DataBaseConnectionException;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.sql.SQLException;
 
 
@@ -24,6 +26,16 @@ public class ModifyFlightForm extends JPanel {
         this.add(flightLabel);
 
         flightComboBox = new JComboBox(controller.getAllFlightsForComboBox());
+        flightComboBox.addItemListener(new flightComboBoxListener());
         this.add(flightComboBox);
+    }
+
+    private class flightComboBoxListener implements ItemListener {
+        @Override
+        public void itemStateChanged(ItemEvent event) {
+            if (event.getStateChange() == ItemEvent.SELECTED) {
+
+            }
+        }
     }
 }
