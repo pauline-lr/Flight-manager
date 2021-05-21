@@ -39,13 +39,14 @@ public class SearchFlightsByPilotPanel extends JPanel {
             ArrayList<SearchFlightsByPilot> flights = new ArrayList<>();
             try {
                 flights = controller.getAllFlightsOfAPilot(searchFlightsByPilotForm.getPilotId());
+                panel.add(new ResultSearchFlightsByPilot(flights), BorderLayout.CENTER);
+                panel.repaint();
             } catch (DataBaseAccessException e) {
                 e.printStackTrace();
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur liée à la BD", JOptionPane.ERROR_MESSAGE);
             }
 
-            panel.add(new ResultSearchFlightsByPilot(flights), BorderLayout.CENTER);
-            panel.repaint();
+
         }
     }
 }
