@@ -4,6 +4,7 @@ import controller.ApplicationController;
 import exception.DataBaseAccessException;
 import exception.SearchDateException;
 import model.SearchFlightsBetweenDates;
+import model.SearchFlightsByPilot;
 import view.forms.searchForms.SearchFlightsBetweenDatesForm;
 import view.resultSearch.ResultSearchFlightsBetweenDates;
 

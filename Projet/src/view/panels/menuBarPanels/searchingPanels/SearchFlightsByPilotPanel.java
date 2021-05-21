@@ -27,8 +27,6 @@ public class SearchFlightsByPilotPanel extends JPanel {
         this.searchFlightsByPilotForm = new SearchFlightsByPilotForm(controller);
         this.setLayout(new BorderLayout());
         this.add(searchFlightsByPilotForm, BorderLayout.PAGE_START);
-      /*  this.add(new ButtonsPanel(menuWindow, "SearchPilot", this, pilotForm.getPilotId(),
-                "Rechercher", controller), BorderLayout.PAGE_END);*/
 
         this.validation = new JButton("Rechercher");
         validation.addActionListener(new ValidationListener());
