@@ -119,7 +119,7 @@ public class ListAllFlightsTable extends AbstractTableModel {
                     throwables.printStackTrace();
                 }
             case 13:
-                return flight.getMealOnBoard() ? "Oui" : "Non";
+                return flight.getMealOnBoard();
             case 14:
                 return flight.getMealDescription() == null ? null : flight.getMealDescription();
             default:
@@ -142,7 +142,8 @@ public class ListAllFlightsTable extends AbstractTableModel {
 
     public Class getColumnClass(int column) {
         return switch (column) {
-            case 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 -> String.class;
+            case 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14 -> String.class;
+            case 13 -> Boolean.class;
             default -> throw new IllegalStateException("Unexpected value: " + column);
         };
     }
