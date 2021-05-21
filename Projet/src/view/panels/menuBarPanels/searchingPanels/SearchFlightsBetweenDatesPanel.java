@@ -2,6 +2,7 @@ package view.panels.menuBarPanels.searchingPanels;
 
 import controller.ApplicationController;
 import exception.DataBaseAccessException;
+import exception.SearchDateException;
 import model.SearchFlightsBetweenDates;
 import view.forms.searchForms.SearchFlightsBetweenDatesForm;
 import view.resultSearch.ResultSearchFlightBetweenDates;
@@ -52,20 +53,22 @@ public class SearchFlightsBetweenDatesPanel extends JPanel {
                     flights = controller.getAllFlightsBetweenDates(searchFlightsBetweenDatesForm.getFirstDateCalendar(), searchFlightsBetweenDatesForm.getFirstDateCalendar());
                 } catch (DataBaseAccessException e) {
                     e.printStackTrace();
-                    JOptionPane.showMessageDialog(null, "Type d'erreur : " +  e.getMessage() +
-                            "\n Merci de contacter le service informatique, Nous nous excusons pour le désagrément", "Erreur liée à la BD", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null,  e.getMessage(), "Erreur liée à la BD", JOptionPane.ERROR_MESSAGE);
                 }
                 try {
                     panel.add(new ResultSearchFlightBetweenDates(flights));
                 } catch (DataBaseAccessException e) {
                     e.printStackTrace();
-                    JOptionPane.showMessageDialog(null, "Type d'erreur : " +  e.getMessage() +
-                            "\n Merci de contacter le service informatique, Nous nous excusons pour le désagrément", "Erreur liée à la BD", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null,  e.getMessage(), "Erreur liée à la BD", JOptionPane.ERROR_MESSAGE);
                 }
                 panel.repaint();
             } else {
-                // exception
-                JOptionPane.showMessageDialog(null, "Veuillez entrer une première date antérieure à l'autre ", "Erreur", JOptionPane.ERROR_MESSAGE);
+                try {
+                    throw new SearchDateException();
+                } catch (SearchDateException e) {
+                    e.printStackTrace();
+                    JOptionPane.showMessageDialog(null, e.getMessage() , "Erreur", JOptionPane.ERROR_MESSAGE);
+                }
             }
         }
     }
