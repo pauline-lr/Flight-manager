@@ -5,22 +5,18 @@ import exception.DataBaseAccessException;
 import exception.DataBaseConnectionException;
 import exception.FlightException;
 import model.Flight;
-import model.SearchFlightsBetweenDates;
 import model.SearchFlightsByPilot;
-import view.forms.flightForms.AddFlightForm;
+import view.forms.flightForms.FlightForm;
 import view.panels.menuBarPanels.editingFlightsPanels.AddFlightPanel;
 import view.panels.menuBarPanels.editingFlightsPanels.ModifyFlightPanel;
 import view.panels.menuBarPanels.searchingPanels.SearchFlightsBetweenDatesPanel;
 import view.panels.menuBarPanels.searchingPanels.SearchFlightsByPilotPanel;
 import view.panels.menuBarPanels.searchingPanels.SearchPassengersByClassPanel;
 import view.panels.menuWindowPanels.WelcomePanel;
-import view.tables.SearchFlightsBetweenDatesTable;
 import view.tables.SearchFlightsByPilotTable;
 import view.windows.MenuWindow;
 
 import javax.swing.*;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
@@ -31,7 +27,7 @@ public class ButtonsPanel extends JPanel {
     private static MenuWindow menuWindow;
     private String typeAction;
     private ApplicationController controller;
-    private AddFlightForm addFlightForm;
+    private FlightForm flightForm;
     private JButton retour, validation, réinit;
     private GregorianCalendar start, end;
     private SearchFlightsBetweenDatesPanel dateFlight;
@@ -42,11 +38,11 @@ public class ButtonsPanel extends JPanel {
     private JTable table;
     private ListSelectionModel listSelect;
 
-    public ButtonsPanel(MenuWindow menuWindow, String typeAction, AddFlightForm addFlightForm, String label, ApplicationController controller){
+    public ButtonsPanel(MenuWindow menuWindow, String typeAction, FlightForm flightForm, String label, ApplicationController controller){
         this.controller = controller;
         this.menuWindow = menuWindow;
         this.typeAction = typeAction;
-        this.addFlightForm = addFlightForm;
+        this.flightForm = flightForm;
         this.setLayout(new FlowLayout());
 
         retour = new JButton("Retour");
@@ -103,8 +99,8 @@ public class ButtonsPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent evt){
             try {
-                if(addFlightForm != null) {
-                    Flight flight = addFlightForm.getFlight();
+                if(flightForm != null) {
+                    Flight flight = flightForm.getFlight();
                     if (typeAction.equals("Addition")) {
                         controller.addFlight(flight);
                         JOptionPane.showMessageDialog(null, "Vol ajouté", "Succès", JOptionPane.INFORMATION_MESSAGE);

@@ -144,8 +144,7 @@ public class Flight {
 
     @Override
     public String toString() {
-        return "Flight" + '\n' +
-                "number = " + number + '\n' +
+        return "number = " + number + '\n' +
                 "departureTime = " + departureTime.getTime() + '\n' +
                 "arrivalTime = " + arrivalTime.getTime() + '\n' +
                 "isMealOnBoard = " + isMealOnBoard + '\n' +
@@ -153,7 +152,6 @@ public class Flight {
                 "pilot = " + pilot + '\n' +
                 "departureGate = " + departureGate + '\n' +
                 "arrivalGate = " + arrivalGate + '\n' +
-                "plane = " + plane + '\n'
-                ;
+                "plane = " + plane + '\n';
     }
 }
