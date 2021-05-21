@@ -61,7 +61,7 @@ public class Flight {
             this.departureTime = departureTime;
         } else {
             try {
-                throw new FlightException.DepartureDateException(departureTime);
+                throw new FlightException.DepartureDateException();
             } catch (FlightException.DepartureDateException | DateTimeParseException exception) {
                 exception.printStackTrace();
             }
@@ -72,7 +72,7 @@ public class Flight {
             this.arrivalTime = arrivalTime;
         } else {
             try {
-                throw new FlightException.ArrivalDateException(arrivalTime);
+                throw new FlightException.ArrivalDateException();
             } catch (FlightException.ArrivalDateException | DateTimeParseException exception) {
                 exception.printStackTrace();
             }
@@ -87,7 +87,7 @@ public class Flight {
                 if (mealDescription.length() <= MEAL_DESCRIPTION_LENTGH) {
                     this.mealDescription = mealDescription;
                 } else {
-                    throw new FlightException.MealDescriptionException(mealDescription);
+                    throw new FlightException.MealDescriptionException();
                 }
             } else {
                 this.mealDescription = null;
