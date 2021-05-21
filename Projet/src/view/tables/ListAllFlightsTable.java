@@ -151,7 +151,7 @@ public class ListAllFlightsTable extends AbstractTableModel {
         try {
             return flights.get(indice).getNumber();
         }catch(Exception e){
-            JOptionPane.showMessageDialog(null, e, "ERROR : flight tables", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR : flight tables", JOptionPane.ERROR_MESSAGE);
             return null;
         }
     }

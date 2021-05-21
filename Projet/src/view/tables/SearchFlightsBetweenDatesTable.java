@@ -2,110 +2,127 @@ package view.tables;
 
 import controller.ApplicationController;
 import exception.DataBaseAccessException;
+import exception.DataBaseConnectionException;
+import model.Flight;
 import model.SearchFlightsBetweenDates;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public class SearchFlightsBetweenDatesTable extends AbstractTableModel {
-    private ApplicationController controller;
-    private String [] columnNames = {"N° de vol", "Heure de départ", "Heure d'arrivée",
-            "Terminal Départ", "N° de porte Départ", "Aéroport Départ",
-            "Terminal Arrivée", "N° de porte Arrivée", "Aéroport Arrivée",
-            "Avion", "Pilot"};
-
+    private ApplicationController controller = new ApplicationController();
+    private ArrayList<String> columnNames;
     private ArrayList<SearchFlightsBetweenDates> flights;
 
-    public SearchFlightsBetweenDatesTable(ApplicationController controller) throws DataBaseAccessException {
+    /*public SearchFlightsBetweenDatesTable(ApplicationController controller) throws DataBaseAccessException {
         this.controller = controller;
-    }
+    }*/
 
-    public SearchFlightsBetweenDatesTable(ApplicationController controller, ArrayList<SearchFlightsBetweenDates> flights){
+    public SearchFlightsBetweenDatesTable(ArrayList<SearchFlightsBetweenDates> flights) {
+        setColumnNames();
         this.flights = flights;
     }
 
-    public int getColumnCount(){
-        return columnNames.length;
+    private void setColumnNames() {
+        columnNames = new ArrayList<>();
+        columnNames.add("Numéro");
+        columnNames.add("Pilote");
+        columnNames.add("Avion");
+        columnNames.add("Heure de départ");
+        columnNames.add("Date de départ");
+        columnNames.add("Aéroport de départ");
+        columnNames.add("Terminal de départ");
+        columnNames.add("Porte de départ");
+        columnNames.add("Heure d'arrivée");
+        columnNames.add("Date d'arrivée");
+        columnNames.add("Aéroport d'arrivée");
+        columnNames.add("Terminal d'arrivée");
+        columnNames.add("Porte d'arrivée");
     }
 
-    public int getRowCount(){
+    public int getColumnCount() {
+        return columnNames.size();
+    }
+
+    public int getRowCount() {
         return flights.size();
     }
 
-    public String getColumnName(int col){
-        return columnNames[col];
+    public String getColumnName(int col) {
+        return columnNames.get(col);
     }
 
-    public Object getValueAt(int row, int column){
+    public Object getValueAt(int row, int column) {
         SearchFlightsBetweenDates flight = flights.get(row);
-
-        switch(column){
+        GregorianCalendar departure = flight.getFlightDepartureTime();
+        GregorianCalendar arrival = flight.getFlightArrivalTime();
+        switch (column) {
             case 0:
                 return flight.getFlightNumber();
             case 1:
-                return flight.getFlightDepartureTime();
+                return flight.getPilotLicenceNumber() + " - " + flight.getPilotLastName()
+                        + " - " + flight.getPilotFirstName();
             case 2:
-                return flight.getFlightArrivalTime();
+                return flight.getPlaneId() + " - " + flight.getPlaneBrand()
+                        + " - " + flight.getPlaneModel();
             case 3:
-                return flight.getDepartureGateTerminal();
+                return timeFormat(departure);
             case 4:
-                return flight.getDepartureGateNumber();
-            case 5 :
-                return flight.getDepartureAirportCode() + flight.getDepartureAirportName() + flight.getDepartureAirportCountry();
+                return dateFormat(departure);
+            case 5:
+              return flight.getDepartureAirportCode() + " - " + flight.getDepartureAirportCode()
+                      + " - " + flight.getDepartureAirportCountry();
             case 6:
-                return flight.getArrivalGateTerminal();
+                return flight.getDepartureGateTerminal();
             case 7:
-                return flight.getArrivalGateNumber();
-            case 8 :
-                return flight.getArrivalAirportCode() + flight.getArrivalAirportName() + flight.getArrivalAirportCountry();
+               return flight.getDepartureGateNumber();
+            case 8:
+                return timeFormat(arrival);
             case 9:
-                return flight.getPlaneId().toString() + flight.getPlaneModel() + flight.getPlaneBrand();
+                return dateFormat(arrival);
             case 10:
-                return flight.getPilotLicenceNumber() + flight.getPilotFirstName() + flight.getPilotLastName();
+                return flight.getArrivalAirportCode() + " - " + flight.getArrivalAirportCode()
+                        + " - " + flight.getArrivalAirportCountry();
+            case 11:
+                return flight.getArrivalGateTerminal();
+            case 12:
+               return flight.getArrivalGateNumber();
             default:
                 return null;
         }
     }
 
-    public Class getColumnClass(int col){
-        Class c;
+    public static String timeFormat(GregorianCalendar calendar) {
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+        format.setCalendar(calendar);
 
-        switch (col){
-            case 0:
-            case 3:
-            case 5:
-            case 6:
-            case 8:
-            case 9:
-            case 10:
-                c = String.class;
-                break;
-            case 1:
-            case 2:
-                c = GregorianCalendar.class;
-                break;
-            case 4:
-            case 7:
-                c = Integer.class;
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + col);
-        }
-        return c;
+        return format.format(calendar.getTime());
     }
 
-    public SearchFlightsBetweenDates getDateFlight(int indice){
-        try{
-            return flights.get(indice);
-        }catch(Exception e){
+    public static String dateFormat(GregorianCalendar calendar) {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        format.setCalendar(calendar);
+
+        return format.format(calendar.getTime());
+    }
+
+    public Class getColumnClass(int column) {
+        return switch (column) {
+            case 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 -> String.class;
+            default -> throw new IllegalStateException("Unexpected value: " + column);
+        };
+    }
+
+    public String getFlight(int indice) {
+        try {
+            return flights.get(indice).getFlightNumber();
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e, "ERROR : flight tables", JOptionPane.ERROR_MESSAGE);
             return null;
         }
-    }
-
-    public ArrayList<SearchFlightsBetweenDates> getAllSearchFlightsByDate(){
-        return flights;
     }
 }

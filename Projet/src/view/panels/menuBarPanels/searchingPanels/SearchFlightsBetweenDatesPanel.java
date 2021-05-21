@@ -46,7 +46,7 @@ public class SearchFlightsBetweenDatesPanel extends JPanel {
         GregorianCalendar endDate = searchFlightsBetweenDatesForm.getLastDateCalendar();
         @Override
         public void actionPerformed(ActionEvent evt) {
-            if (startDate.compareTo(endDate) < 0) {
+            if (startDate.compareTo(endDate) <= 0) {
                 panel.removeAll();
                 ArrayList<SearchFlightsBetweenDates> flights = null;
                 try {
