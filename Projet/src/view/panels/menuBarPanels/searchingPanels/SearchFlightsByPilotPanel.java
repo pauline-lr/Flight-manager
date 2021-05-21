@@ -36,7 +36,7 @@ public class SearchFlightsByPilotPanel extends JPanel {
     private class ValidationListener implements ActionListener {
         public void actionPerformed(ActionEvent evt) {
             panel.removeAll();
-            ArrayList<SearchFlightsByPilot> flights = null;
+            ArrayList<SearchFlightsByPilot> flights = new ArrayList<>();
             try {
                 flights = controller.getAllFlightsOfAPilot(searchFlightsByPilotForm.getPilotId());
             } catch (DataBaseAccessException e) {
