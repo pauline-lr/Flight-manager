@@ -1,7 +1,5 @@
 package exception;
 
-import java.util.GregorianCalendar;
-
 public class FlightException extends Exception {
     public static class TerminalException extends Exception{
         private char wrongTerminal;
@@ -35,44 +33,27 @@ public class FlightException extends Exception {
         }
 
         public String getMessage( ) {
-            return  "The proposed " + wrongNumberFlight + " value for number of a Flight is invalid !";
+            return  "Le numéro de vol  \"" + wrongNumberFlight + "\" ne correspond pas à la structure requise.\n"
+                    + "Un numéro de vol se compose de 2 lettres majsucules suivient de 4 chiffres.";
         }
     }
 
     public static class MealDescriptionException extends Exception{
-        private String wrongDescriptionMeal;
-
-        public MealDescriptionException (String wrongDescriptionMeal) {
-            this.wrongDescriptionMeal = wrongDescriptionMeal;
-        }
-
         public String getMessage( ) {
-            return  "The proposed " + wrongDescriptionMeal + " value for description of meal is invalid !";
+            return  "La description de repas est trop longue.";
         }
     }
 
     public static class DepartureDateException extends Exception{
-        private GregorianCalendar wrongDepartureDate;
-
-        public DepartureDateException (GregorianCalendar wrongDepartureDate) {
-            this.wrongDepartureDate = wrongDepartureDate;
-        }
-
         public String getMessage( ) {
-            return  "The proposed " + wrongDepartureDate + " value for the departure date is invalid !";
+            return  "La date de départ doit être ultérieure à date d'aujourd'hui.";
         }
 
     }
 
     public static class ArrivalDateException extends Exception{
-        private GregorianCalendar wrongArrivalDate;
-
-        public ArrivalDateException (GregorianCalendar wrongArrivalDate) {
-            this.wrongArrivalDate = wrongArrivalDate;
-        }
-
         public String getMessage( ) {
-            return  "The proposed " + wrongArrivalDate + " value for the arrival date is invalid !";
+            return  "La date d'arrivée doit être ultérieure à la date de départ.";
         }
 
     }

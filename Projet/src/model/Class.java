@@ -19,6 +19,7 @@ public class Class {
     public void setClassID(Integer classID) {
         this.classID = classID;
     }
+
     private void setName(String name) throws NameClassException {
         if(name.length() <= NAME_LENGTH)
             this.name = name;

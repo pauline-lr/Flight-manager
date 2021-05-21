@@ -47,12 +47,4 @@ public class Airport {
             throw new AiportException.CountryException(country);
     }
     //endregion
-
-    //region Getters
-
-    public String getName() {
-        return name;
-    }
-
-    //endregion
 }

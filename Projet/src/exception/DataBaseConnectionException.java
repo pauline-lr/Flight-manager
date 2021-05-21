@@ -2,6 +2,6 @@ package exception;
 
 public class DataBaseConnectionException extends Exception {
     public String getMessage(){
-        return "ERROR : Connection to the database failed";
+        return "Erreur de connexion à la base de donnée.\nVeuillez réessayer plus tard";
     }
 }
