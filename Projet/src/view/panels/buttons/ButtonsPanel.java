@@ -14,7 +14,6 @@ import view.panels.menuBarPanels.searchingPanels.SearchFlightsBetweenDatesPanel;
 import view.panels.menuBarPanels.searchingPanels.SearchFlightsByPilotPanel;
 import view.panels.menuBarPanels.searchingPanels.SearchPassengersByClassPanel;
 import view.panels.menuWindowPanels.WelcomePanel;
-import view.resultSearch.ResultSearchFlightBetweenDates;
 import view.tables.SearchFlightsBetweenDatesTable;
 import view.tables.SearchFlightsByPilotTable;
 import view.windows.MenuWindow;
@@ -64,29 +63,29 @@ public class ButtonsPanel extends JPanel {
     }
 
     // recherche entre 2 dates
-    public ButtonsPanel(MenuWindow menuWindow, String typeAction, SearchFlightsBetweenDatesPanel dateFlight,
+    /*public ButtonsPanel(MenuWindow menuWindow, String typeAction, SearchFlightsBetweenDatesPanel dateFlight,
                         GregorianCalendar start, GregorianCalendar end, String label, ApplicationController controller){
         this(menuWindow, typeAction, null, label, controller);
         this.dateFlight = dateFlight;
         this.start = start;
         this.end = end;
-    }
+    }*/
 
     // recherche  pilote
-    public ButtonsPanel(MenuWindow menuWindow, String typeAction, SearchFlightsByPilotPanel flightByPilotPanel,
+    /*public ButtonsPanel(MenuWindow menuWindow, String typeAction, SearchFlightsByPilotPanel flightByPilotPanel,
                         String pilotId, String label, ApplicationController controller){
         this(menuWindow, typeAction, null, label, controller);
         this.flightByPilotPanel = flightByPilotPanel;
         this.pilotId = pilotId;
-    }
+    }*/
 
     // recherche  passenger
-    public ButtonsPanel(MenuWindow menuWindow, String typeAction, SearchPassengersByClassPanel classByPassengerPanel,
+    /*public ButtonsPanel(MenuWindow menuWindow, String typeAction, SearchPassengersByClassPanel classByPassengerPanel,
                         String classId, String label, ApplicationController controller){
         this(menuWindow, typeAction, null, label, controller);
         this.classByPassengerPanel = classByPassengerPanel;
         this.classId = classId;
-    }
+    }*/
 
     // bouton retour
     public static class RetourListener implements ActionListener {
@@ -118,7 +117,7 @@ public class ButtonsPanel extends JPanel {
                                 JOptionPane.showMessageDialog(null, "Vol modifié", "Succès", JOptionPane.INFORMATION_MESSAGE);
                             }
                             case "DateFlightSearch" -> {
-                                if (start.compareTo(end) < 0) {
+                               /* if (start.compareTo(end) < 0) {
                                     SearchFlightsBetweenDatesTable flightTable;
                                     RowSorter<SearchFlightsBetweenDatesTable> sorter;
                                     TableColumn column;
@@ -127,7 +126,9 @@ public class ButtonsPanel extends JPanel {
                                     /*SearchFlightsBetweenDatesTable flightTable = new SearchFlightsBetweenDatesTable(controller, flights);
                                     JTable table = new JTable(flightTable);
                                     table.setModel(flightTable);
-                                    dateFlight.add(new JScrollPane(table), BorderLayout.CENTER);*/
+                                    dateFlight.add(new JScrollPane(table), BorderLayout.CENTER);
+                                    //
+
                                     if(flights == null){
                                         flightTable = new SearchFlightsBetweenDatesTable(controller);
                                     }else{
@@ -146,7 +147,7 @@ public class ButtonsPanel extends JPanel {
                                    // dateFlight.add(new ResultSearchFlightBetweenDates(controller, flights), BorderLayout.CENTER);
                                 } else {
                                     JOptionPane.showMessageDialog(null, "Veuillez entrer une première date antérieure à l'autre ", "Erreur", JOptionPane.ERROR_MESSAGE);
-                                }
+                                }*/
 
                             }
                             case "SearchPilot" -> {
@@ -194,7 +195,7 @@ public class ButtonsPanel extends JPanel {
         } else if (typeAction.equals("Modification")) {
             menuWindow.getCont().add(new ModifyFlightPanel(menuWindow, controller), BorderLayout.CENTER);
         } else if (typeAction.equals("DateFlightSearch")) {
-            menuWindow.getCont().add(new SearchFlightsBetweenDatesPanel(menuWindow, controller), BorderLayout.CENTER);
+            menuWindow.getCont().add(new SearchFlightsBetweenDatesPanel(controller), BorderLayout.CENTER);
         } else if(typeAction.equals("SearchPilot")) {
             menuWindow.getCont().add(new SearchFlightsByPilotPanel(menuWindow, controller), BorderLayout.CENTER);
         } else if(typeAction.equals("SeatReservationSearch")) {

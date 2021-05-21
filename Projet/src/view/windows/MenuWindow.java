@@ -181,7 +181,7 @@ public class MenuWindow extends JFrame{
         public void actionPerformed(ActionEvent evt){
             frameContainer.removeAll();
             try {
-                frameContainer.add(new SearchFlightsBetweenDatesPanel(MenuWindow.this, controller), BorderLayout.CENTER);
+                frameContainer.add(new SearchFlightsBetweenDatesPanel(controller), BorderLayout.CENTER);
             } catch (DataBaseAccessException e) {
                 e.printStackTrace();
             }
