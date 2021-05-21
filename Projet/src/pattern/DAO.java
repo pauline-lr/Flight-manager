@@ -51,7 +51,7 @@ public interface DAO {
             throws SQLException, DataBaseConnectionException;
     void modifyFlight(Flight flightToUpdate, String originalNumber)
             throws SQLException, DataBaseConnectionException;
-    public void modifyFlight(Flight flightToUpdate)
+    void modifyFlight(Flight flightToUpdate)
             throws SQLException, DataBaseConnectionException;
     void deleteFlight(String flightToDelete)
             throws SQLException, DataBaseConnectionException;
@@ -60,20 +60,5 @@ public interface DAO {
     //region Connection
     void closeConnection()
             throws DataBaseCloseException;
-    //endregion
-
-    //region Tools
-    /*
-    ArrayList<Flight> flightResultSetIntoArrayList(ResultSet data) throws SQLException, FlightException.MealDescriptionException, FlightException.NumberFlightException;
-    ArrayList<Pilot> pilotResultSetIntoArrayList(ResultSet data)
-            throws SQLException, PersonException.PhoneNumberException, PersonException.FirstNameException, PersonException.LastNameException,
-            PersonException.EmailException, PilotException.LicenceNumberException, PilotException.FlyingFlightException;
-    ArrayList<Airport> airportResultSetIntoArrayList(ResultSet data)
-            throws SQLException, AiportException.CodeException, AiportException.NameAirportException, AiportException.CountryException;
-    ArrayList<Plane> planeResultSetIntoArrayList(ResultSet data)
-            throws SQLException, PlaneException.ModelException, PlaneException.BrandException;
-    ArrayList<model.Class> classResultSetIntoArrayList(ResultSet data) throws SQLException, NameClassException;
-    PreparedStatement preparedFlightStatement(String sql, Flight flight) throws SQLException, DataBaseConnectionException;
-    */
     //endregion
 }

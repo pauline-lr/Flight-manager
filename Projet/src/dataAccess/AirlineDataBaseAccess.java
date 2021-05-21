@@ -572,10 +572,22 @@ public class AirlineDataBaseAccess implements DAO {
 
     public void deleteFlight(String flightNumberToDelete)
             throws SQLException, DataBaseConnectionException {
+        deleteSeatsOfAFlight(flightNumberToDelete);
+
         String sqlRequest = "DELETE FROM flight WHERE number = ?";
 
         PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
         preparedStatement.setString(1, flightNumberToDelete);
+
+        preparedStatement.executeUpdate();
+    }
+
+    private void deleteSeatsOfAFlight (String flightNumber)
+            throws SQLException, DataBaseConnectionException {
+        String sqlRequest = "DELETE FROM seat WHERE flight = ?";
+
+        PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
+        preparedStatement.setString(1, flightNumber);
 
         preparedStatement.executeUpdate();
     }
