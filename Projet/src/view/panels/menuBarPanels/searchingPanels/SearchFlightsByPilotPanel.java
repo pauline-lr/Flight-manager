@@ -1,62 +1,51 @@
 package view.panels.menuBarPanels.searchingPanels;
 
 import controller.ApplicationController;
+import exception.DataBaseAccessException;
 import exception.DataBaseConnectionException;
-import view.panels.buttons.ButtonsPanel;
+import model.SearchFlightsByPilot;
+import view.forms.searchForms.SearchFlightsByPilotForm;
+import view.resultSearch.ResultSearchFlightsByPilot;
 import view.windows.MenuWindow;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.ArrayList;
 
 public class SearchFlightsByPilotPanel extends JPanel {
-    public SearchFlightsByPilotPanel(MenuWindow menuWindow, ApplicationController controller) throws SQLException, DataBaseConnectionException {
-        SearchFlightsByPilotForm pilotForm = new SearchFlightsByPilotForm(controller);
-        this.setLayout(new BorderLayout());
-        this.add(pilotForm, BorderLayout.PAGE_START);
-      /*  this.add(new ButtonsPanel(menuWindow, "SearchPilot", this, pilotForm.getPilotId(),
-                "Rechercher", controller), BorderLayout.PAGE_END);*/
+    private SearchFlightsByPilotPanel panel;
+    private ApplicationController controller;
+    private SearchFlightsByPilotForm searchFlightsByPilotForm;
+    private JButton validation;
 
+    public SearchFlightsByPilotPanel(MenuWindow menuWindow, ApplicationController controller) throws SQLException, DataBaseConnectionException {
+        this.panel = this;
+        this.controller = new ApplicationController();
+        this.searchFlightsByPilotForm = new SearchFlightsByPilotForm(controller);
+        this.setLayout(new BorderLayout());
+        this.add(searchFlightsByPilotForm, BorderLayout.PAGE_START);
+
+        this.validation = new JButton("Rechercher");
+        validation.addActionListener(new ValidationListener());
+        this.add(validation, BorderLayout.PAGE_END);
     }
 
-    public static class SearchFlightsByPilotForm extends JPanel {
-        private ApplicationController controller;
-        private JLabel pilotLabel;
-        private JComboBox pilotComboBox;
-        private Font font = new Font(null, Font.BOLD, 13);
-
-        public SearchFlightsByPilotForm(ApplicationController controller) throws SQLException, DataBaseConnectionException {
-            this.controller = controller;
-            this.setLayout(new GridLayout(14, 2, 5, 5));
-
-            createFlightsByPilotForm();
-        }
-
-        public void createFlightsByPilotForm() throws SQLException, DataBaseConnectionException {
-            pilotLabel = new JLabel("    Choisissez le pilote");
-            pilotLabel.setFont(font);
-            pilotLabel.setHorizontalAlignment(SwingConstants.LEFT);
-            add(pilotLabel);
-
-            pilotComboBox = new JComboBox(controller.getAllPilotsForComboBox());
-            this.add(pilotComboBox);
-        }
-
-        public String getPilotId() {
-            String pilotText = (String) pilotComboBox.getSelectedItem();
-            return getId(pilotText);
-        }
-
-        public String getId(String text) {
-            Pattern pattern = Pattern.compile("^\\w+(?=\\s-\\s)");
-            Matcher matcher = pattern.matcher(text);
-            String id = null;
-            if (matcher.find()) {
-                id = matcher.group();
+    private class ValidationListener implements ActionListener {
+        public void actionPerformed(ActionEvent evt) {
+            panel.removeAll();
+            ArrayList<SearchFlightsByPilot> flights = null;
+            try {
+                flights = controller.getAllFlightsOfAPilot(searchFlightsByPilotForm.getPilotId());
+            } catch (DataBaseAccessException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur liée à la BD", JOptionPane.ERROR_MESSAGE);
             }
-            return id;
+
+            panel.add(new ResultSearchFlightsByPilot(flights), BorderLayout.CENTER);
+            panel.repaint();
         }
     }
 }

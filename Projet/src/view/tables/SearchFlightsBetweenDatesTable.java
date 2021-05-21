@@ -18,10 +18,6 @@ public class SearchFlightsBetweenDatesTable extends AbstractTableModel {
     private ArrayList<String> columnNames;
     private ArrayList<SearchFlightsBetweenDates> flights;
 
-    /*public SearchFlightsBetweenDatesTable(ApplicationController controller) throws DataBaseAccessException {
-        this.controller = controller;
-    }*/
-
     public SearchFlightsBetweenDatesTable(ArrayList<SearchFlightsBetweenDates> flights) {
         setColumnNames();
         this.flights = flights;

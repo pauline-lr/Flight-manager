@@ -47,6 +47,7 @@ public class ListAllFlightsTable extends AbstractTableModel {
     public int getColumnCount() {
         return columnNames.size();
     }
+
     public int getRowCount() {
         return flights.size();
     }
@@ -133,6 +134,7 @@ public class ListAllFlightsTable extends AbstractTableModel {
 
         return format.format(calendar.getTime());
     }
+
     public static String dateFormat(GregorianCalendar calendar) {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         format.setCalendar(calendar);
@@ -148,16 +150,16 @@ public class ListAllFlightsTable extends AbstractTableModel {
         };
     }
 
-    public String getFlight(int indice){
+    public String getFlight(int indice) {
         try {
             return flights.get(indice).getNumber();
-        }catch(Exception e){
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR : flight tables", JOptionPane.ERROR_MESSAGE);
             return null;
         }
     }
 
-    public void removeRow(int row){
+    public void removeRow(int row) {
         this.flights.remove(row);
     }
 }

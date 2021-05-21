@@ -4,8 +4,9 @@ import controller.ApplicationController;
 import exception.DataBaseAccessException;
 import exception.SearchDateException;
 import model.SearchFlightsBetweenDates;
+import model.SearchFlightsByPilot;
 import view.forms.searchForms.SearchFlightsBetweenDatesForm;
-import view.resultSearch.ResultSearchFlightBetweenDates;
+import view.resultSearch.ResultSearchFlightsBetweenDates;
 
 
 import javax.swing.*;
@@ -56,7 +57,7 @@ public class SearchFlightsBetweenDatesPanel extends JPanel {
                     JOptionPane.showMessageDialog(null,  e.getMessage(), "Erreur liée à la BD", JOptionPane.ERROR_MESSAGE);
                 }
                 try {
-                    panel.add(new ResultSearchFlightBetweenDates(flights));
+                    panel.add(new ResultSearchFlightsBetweenDates(flights));
                 } catch (DataBaseAccessException e) {
                     e.printStackTrace();
                     JOptionPane.showMessageDialog(null,  e.getMessage(), "Erreur liée à la BD", JOptionPane.ERROR_MESSAGE);
