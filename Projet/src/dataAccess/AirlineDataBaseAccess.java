@@ -7,6 +7,9 @@ import pattern.*;
 import java.sql.*;
 import java.util.*;
 
+import static view.tables.ListAllFlightsTable.timeFormat;
+import static view.tables.ListAllFlightsTable.dateFormat;
+
 public class AirlineDataBaseAccess implements DAO {
     //region Search
     public ArrayList<SearchFlightsBetweenDates> getAllFlightsBetweenDates(GregorianCalendar startDate, GregorianCalendar endDate)
@@ -18,48 +21,47 @@ public class AirlineDataBaseAccess implements DAO {
         GregorianCalendar flightDepartureTime = new GregorianCalendar();
         GregorianCalendar flightArrivalTime = new GregorianCalendar();
 
-        String sql =
-                "SELECT " +
-                        "fli.number AS flightNumber, " +
-                        "fli.departure_time AS flightDepartureTime, " +
-                        "fli.arrival_time AS flightArrivalTime, " +
-                        "depGate.terminal AS departureGateTerminal, " +
-                        "depGate.number AS departureGateNumber, " +
-                        "depAir.code AS departureAirportCode, " +
-                        "depAir.name AS departureAirportName, " +
-                        "depAir.country AS departureAirportCountry, " +
-                        "arrGate.terminal AS arrivalGateTerminal, " +
-                        "arrGate.number AS arrivalGateNumber, " +
-                        "arrAir.code AS arrivalAirportCode, " +
-                        "arrAir.name AS arrivalAirportName, " +
-                        "arrAir.country AS arrivalAirportCountry, " +
-                        "pla.plane_id AS planeId, " +
-                        "pla.model AS planeModel, " +
-                        "pla.brand AS planeBrand, " +
-                        "pil.licence_number AS pilotLicenceNumber, " +
-                        "pil.first_name AS pilotFirstName, " +
-                        "pil.last_name AS pilotLastName " +
-                        "FROM " +
-                        "flight fli, " +
-                        "gate depGate, " +
-                        "airport depAir, " +
-                        "gate arrGate, " +
-                        "airport arrAir, " +
-                        "plane pla, " +
-                        "pilot pil " +
-                        "WHERE " +
-                        "fli.departure_gate = depGate.gate_id AND " +
-                        "depGate.airport = depAir.code AND " +
-                        "fli.arrival_gate = arrGate.gate_id AND " +
-                        "arrGate.airport = arrAir.code AND " +
-                        "fli.plane = pla.plane_id AND " +
-                        "fli.pilot = pil.licence_number AND " +
-                        "fli.departure_time BETWEEN ? AND ? " +
-                        "ORDER BY " +
-                        "fli.departure_time;";
+        String sqlRequest = "SELECT " +
+                "fli.number AS flightNumber, " +
+                "fli.departure_time AS flightDepartureTime, " +
+                "fli.arrival_time AS flightArrivalTime, " +
+                "depGate.terminal AS departureGateTerminal, " +
+                "depGate.number AS departureGateNumber, " +
+                "depAir.code AS departureAirportCode, " +
+                "depAir.name AS departureAirportName, " +
+                "depAir.country AS departureAirportCountry, " +
+                "arrGate.terminal AS arrivalGateTerminal, " +
+                "arrGate.number AS arrivalGateNumber, " +
+                "arrAir.code AS arrivalAirportCode, " +
+                "arrAir.name AS arrivalAirportName, " +
+                "arrAir.country AS arrivalAirportCountry, " +
+                "pla.plane_id AS planeId, " +
+                "pla.model AS planeModel, " +
+                "pla.brand AS planeBrand, " +
+                "pil.licence_number AS pilotLicenceNumber, " +
+                "pil.first_name AS pilotFirstName, " +
+                "pil.last_name AS pilotLastName " +
+                "FROM " +
+                "flight fli, " +
+                "gate depGate, " +
+                "airport depAir, " +
+                "gate arrGate, " +
+                "airport arrAir, " +
+                "plane pla, " +
+                "pilot pil " +
+                "WHERE " +
+                "fli.departure_gate = depGate.gate_id AND " +
+                "depGate.airport = depAir.code AND " +
+                "fli.arrival_gate = arrGate.gate_id AND " +
+                "arrGate.airport = arrAir.code AND " +
+                "fli.plane = pla.plane_id AND " +
+                "fli.pilot = pil.licence_number AND " +
+                "fli.departure_time BETWEEN ? AND ? " +
+                "ORDER BY " +
+                "fli.departure_time;";
 
         try {
-            PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sql);
+            PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
             preparedStatement.setDate(1, startDateSQL);
             preparedStatement.setDate(2, endDateSQL);
 
@@ -110,45 +112,44 @@ public class AirlineDataBaseAccess implements DAO {
         GregorianCalendar flightDepartureTime = new GregorianCalendar();
         GregorianCalendar flightArrivalTime = new GregorianCalendar();
 
-        String sql =
-                "SELECT " +
-                        "pas.passport_number AS passengerPassportNumber, " +
-                        "pas.first_name AS passengerFirstName, " +
-                        "pas.last_name AS passengerLastName, " +
-                        "sea.seat_row AS seatRow," +
-                        "sea.seat_column AS seatColumn, " +
-                        "fli.number AS flightNumber, " +
-                        "fli.departure_time AS flightDepartureTime, " +
-                        "fli.arrival_time AS flightArrivalTime, " +
-                        "depAir.code AS departureAirportCode, " +
-                        "depAir.name AS departureAirportName, " +
-                        "depAir.country AS departureAirportCountry, " +
-                        "arrAir.code AS arrivalAirportCode, " +
-                        "arrAir.name AS arrivalAirportName, " +
-                        "arrAir.country AS arrivalAirportCountry " +
-                        "FROM " +
-                        "passenger pas, " +
-                        "seat sea, " +
-                        "class cla, " +
-                        "flight fli, " +
-                        "gate depGate, " +
-                        "airport depAir, " +
-                        "gate arrGate, " +
-                        "airport arrAir " +
-                        "WHERE " +
-                        "sea.flight = fli.number AND " +
-                        "sea.passenger = pas.passport_number AND " +
-                        "sea.seat_class = cla.class_id AND " +
-                        "fli.departure_gate = depGate.gate_id AND " +
-                        "depGate.airport = depAir.code AND " +
-                        "fli.arrival_gate = arrGate.gate_id AND " +
-                        "arrGate.airport = arrAir.code AND " +
-                        "cla.name = ? " +
-                        "ORDER BY " +
-                        "pas.last_name, pas.first_name;";
+        String sqlRequest = "SELECT " +
+                "pas.passport_number AS passengerPassportNumber, " +
+                "pas.first_name AS passengerFirstName, " +
+                "pas.last_name AS passengerLastName, " +
+                "sea.seat_row AS seatRow," +
+                "sea.seat_column AS seatColumn, " +
+                "fli.number AS flightNumber, " +
+                "fli.departure_time AS flightDepartureTime, " +
+                "fli.arrival_time AS flightArrivalTime, " +
+                "depAir.code AS departureAirportCode, " +
+                "depAir.name AS departureAirportName, " +
+                "depAir.country AS departureAirportCountry, " +
+                "arrAir.code AS arrivalAirportCode, " +
+                "arrAir.name AS arrivalAirportName, " +
+                "arrAir.country AS arrivalAirportCountry " +
+                "FROM " +
+                "passenger pas, " +
+                "seat sea, " +
+                "class cla, " +
+                "flight fli, " +
+                "gate depGate, " +
+                "airport depAir, " +
+                "gate arrGate, " +
+                "airport arrAir " +
+                "WHERE " +
+                "sea.flight = fli.number AND " +
+                "sea.passenger = pas.passport_number AND " +
+                "sea.seat_class = cla.class_id AND " +
+                "fli.departure_gate = depGate.gate_id AND " +
+                "depGate.airport = depAir.code AND " +
+                "fli.arrival_gate = arrGate.gate_id AND " +
+                "arrGate.airport = arrAir.code AND " +
+                "cla.name = ? " +
+                "ORDER BY " +
+                "pas.last_name, pas.first_name;";
 
         try {
-            PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sql);
+            PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
             preparedStatement.setString(1, className);
 
             ResultSet data = preparedStatement.executeQuery();
@@ -193,40 +194,39 @@ public class AirlineDataBaseAccess implements DAO {
         GregorianCalendar flightDepartureTime = new GregorianCalendar();
         GregorianCalendar flightArrivalTime = new GregorianCalendar();
 
-        String sql =
-                "SELECT " +
-                        "fli.number AS flightNumber, " +
-                        "fli.departure_time AS flightDepartureTime, " +
-                        "fli.arrival_time AS flightArrivalTime, " +
-                        "pla.plane_id AS planeId, " +
-                        "pla.model AS planeModel, " +
-                        "pla.brand AS planeBrand, " +
-                        "depAir.code AS departureAirportCode, " +
-                        "depAir.name AS departureAirportName, " +
-                        "depAir.country AS departureAirportCountry, " +
-                        "arrAir.code AS arrivalAirportCode, " +
-                        "arrAir.name AS arrivalAirportName, " +
-                        "arrAir.country AS arrivalAirportCountry " +
-                        "FROM " +
-                        "flight fli, " +
-                        "plane pla, " +
-                        "pilot pil, " +
-                        "gate depGat, " +
-                        "airport depAir, " +
-                        "gate arrGat, " +
-                        "airport arrAir " +
-                        "WHERE " +
-                        "fli.plane = pla.plane_id AND " +
-                        "fli.pilot = pil.licence_number AND " +
-                        "fli.departure_gate = depGat.gate_id AND " +
-                        "depGat.airport = depAir.code AND " +
-                        "fli.arrival_gate = arrGat.gate_id AND " +
-                        "arrGat.airport = arrAir.code AND " +
-                        "pil.last_name = ? " +
-                        "ORDER BY " +
-                        "departure_time;";
+        String sqlRequest = "SELECT " +
+                "fli.number AS flightNumber, " +
+                "fli.departure_time AS flightDepartureTime, " +
+                "fli.arrival_time AS flightArrivalTime, " +
+                "pla.plane_id AS planeId, " +
+                "pla.model AS planeModel, " +
+                "pla.brand AS planeBrand, " +
+                "depAir.code AS departureAirportCode, " +
+                "depAir.name AS departureAirportName, " +
+                "depAir.country AS departureAirportCountry, " +
+                "arrAir.code AS arrivalAirportCode, " +
+                "arrAir.name AS arrivalAirportName, " +
+                "arrAir.country AS arrivalAirportCountry " +
+                "FROM " +
+                "flight fli, " +
+                "plane pla, " +
+                "pilot pil, " +
+                "gate depGat, " +
+                "airport depAir, " +
+                "gate arrGat, " +
+                "airport arrAir " +
+                "WHERE " +
+                "fli.plane = pla.plane_id AND " +
+                "fli.pilot = pil.licence_number AND " +
+                "fli.departure_gate = depGat.gate_id AND " +
+                "depGat.airport = depAir.code AND " +
+                "fli.arrival_gate = arrGat.gate_id AND " +
+                "arrGat.airport = arrAir.code AND " +
+                "pil.last_name = ? " +
+                "ORDER BY " +
+                "departure_time;";
         try {
-            PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sql);
+            PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
             preparedStatement.setString(1, pilotLicenceNumber);
 
             ResultSet data = preparedStatement.executeQuery();
@@ -267,16 +267,17 @@ public class AirlineDataBaseAccess implements DAO {
     public ArrayList<Flight> getAllFlights()
             throws SQLException, DataBaseConnectionException, FlightException.MealDescriptionException, FlightException.NumberFlightException {
         ArrayList<Flight> flights = new ArrayList<>();
+        String sqlRequest = "SELECT * FROM flight ORDER BY number";
         Flight flight;
         String mealDescription;
 
         Statement statement = SingletonConnection.getInstance().createStatement();
-        ResultSet data = statement.executeQuery("SELECT * FROM flight ORDER BY number");
+        ResultSet data = statement.executeQuery(sqlRequest);
 
         while (data.next()) {
             GregorianCalendar departureTime = new GregorianCalendar();
-            departureTime.setTime(data.getTimestamp("departure_time"));
             GregorianCalendar arrivalTime = new GregorianCalendar();
+            departureTime.setTime(data.getTimestamp("departure_time"));
             arrivalTime.setTime(data.getTimestamp("arrival_time"));
 
             flight = new Flight(
@@ -306,48 +307,45 @@ public class AirlineDataBaseAccess implements DAO {
         ArrayList<String> flights = new ArrayList<>();
         GregorianCalendar departureTime = new GregorianCalendar();
         GregorianCalendar arrivalTime = new GregorianCalendar();
-        String sql =
-                "SELECT " +
-                        "fli.number AS flightNumber, " +
-                        "fli.departure_time AS departureTime, " +
-                        "fli.arrival_time AS arrivalTime, " +
-                        "depGat.terminal AS departureTerminal, " +
-                        "depGat.number AS departureGate, " +
-                        "depAir.code AS departureAirport, " +
-                        "arrGat.terminal AS arrivalTerminal, " +
-                        "arrGat.number AS arrivalGate, " +
-                        "arrAir.code AS arrivalAirport " +
-                        "FROM " +
-                        "flight fli, " +
-                        "gate depGat, " +
-                        "airport depAir, " +
-                        "gate arrGat, " +
-                        "airport arrAir " +
-                        "WHERE " +
-                        "fli.departure_gate = depGat.gate_id AND " +
-                        "depGat.airport = depAir.code AND " +
-                        "fli.arrival_gate = arrGat.gate_id AND " +
-                        "arrGat.airport = arrAir.code " +
-                        "ORDER BY " +
-                        "departure_time;";
+        String sqlRequest = "SELECT " +
+                "fli.number AS flightNumber, " +
+                "fli.departure_time AS departureTime, " +
+                "fli.arrival_time AS arrivalTime, " +
+                "depGat.terminal AS departureTerminal, " +
+                "depGat.number AS departureGate, " +
+                "depAir.code AS departureAirport, " +
+                "arrGat.terminal AS arrivalTerminal, " +
+                "arrGat.number AS arrivalGate, " +
+                "arrAir.code AS arrivalAirport " +
+                "FROM " +
+                "flight fli, " +
+                "gate depGat, " +
+                "airport depAir, " +
+                "gate arrGat, " +
+                "airport arrAir " +
+                "WHERE " +
+                "fli.departure_gate = depGat.gate_id AND " +
+                "depGat.airport = depAir.code AND " +
+                "fli.arrival_gate = arrGat.gate_id AND " +
+                "arrGat.airport = arrAir.code " +
+                "ORDER BY " +
+                "departure_time;";
 
         Statement statement = SingletonConnection.getInstance().createStatement();
-        ResultSet data = statement.executeQuery(sql);
+        ResultSet data = statement.executeQuery(sqlRequest);
 
         while (data.next()) {
             departureTime.setTime(data.getTimestamp("departureTime"));
             arrivalTime.setTime(data.getTimestamp("arrivalTime"));
 
-            String departureInfos =
-                    "DÉPART : " + departureTime.get(Calendar.HOUR_OF_DAY) + ":" + departureTime.get(Calendar.MINUTE) + " " +
-                            departureTime.get(Calendar.DAY_OF_MONTH) + "/" + departureTime.get(Calendar.MONTH) + "/" + departureTime.get(Calendar.YEAR) + ", " +
+            String departureInformation =
+                    "DÉPART : " + timeFormat(departureTime) + " " + dateFormat(departureTime) + ", " +
                             data.getString("departureTerminal") + data.getInt("departureGate") + ", " + data.getString("departureAirport");
             String arrivalMoment =
-                    "ARRIVÉE : " + arrivalTime.get(Calendar.HOUR_OF_DAY) + ":" + arrivalTime.get(Calendar.MINUTE) + " " +
-                            arrivalTime.get(Calendar.DAY_OF_MONTH) + "/" + arrivalTime.get(Calendar.MONTH) + "/" + arrivalTime.get(Calendar.YEAR) + ", " +
+                    "ARRIVÉE : " + timeFormat(arrivalTime) + " " + dateFormat(arrivalTime) + ", " +
                             data.getString("arrivalTerminal") + data.getInt("arrivalGate") + ", " + data.getString("arrivalAirport");
 
-            flights.add(data.getString("flightNumber") + " - " + departureInfos + " - " + arrivalMoment);
+            flights.add(data.getString("flightNumber") + " - " + departureInformation + " - " + arrivalMoment);
         }
 
         return flights.toArray(new String[0]);
