@@ -17,10 +17,7 @@ public class FlightForm extends JPanel {
     private GregorianCalendar currentDate;
     private JTextField numberTextField, mealDescriptionTextField;
     private JCheckBox isMealOnBoardCheckBox;
-    private JSpinner departureDay, departureMonth, departureYear, departureHour, departureMinute,
-            arrivalDay, arrivalMonth, arrivalYear, arrivalHour, arrivalMinute;
-    private SpinnerNumberModel departureDayModel, departureMonthModel, departureYearModel, departureHourModel, departureMinuteModel,
-            arrivalDayModel, arrivalMonthModel, arrivalYearModel, arrivalHourModel, arrivalMinuteModel;
+    private JSpinner departureDate, departureTime, arrivalDate, arrivalTime;
     private JComboBox<String> pilotComboBox, planeComboBox,
             departureAirportComboBox, departureTerminalComboBox, departureGateComboBox,
             arrivalAirportComboBox, arrivalTerminalComboBox, arrivalGateComboBox;
@@ -52,26 +49,34 @@ public class FlightForm extends JPanel {
     }
 
     public Flight getFlight() throws FlightException.NumberFlightException, FlightException.MealDescriptionException {
-        GregorianCalendar departureDate = new GregorianCalendar(
+        GregorianCalendar departureDateGc = (GregorianCalendar) departureDate.getValue();
+        GregorianCalendar departureTimeGc = (GregorianCalendar) departureTime.getValue();
+        GregorianCalendar departureGc = new GregorianCalendar(departureDateGc.YEAR, departureDateGc.MONTH, departureDateGc.DAY_OF_MONTH, departureTimeGc.HOUR, departureTimeGc.MINUTE);
+
+        GregorianCalendar arrivalDateGc = (GregorianCalendar) arrivalDate.getValue();
+        GregorianCalendar arrivalTimeGc = (GregorianCalendar) arrivalTime.getValue();
+        GregorianCalendar arrivalGc = new GregorianCalendar(arrivalDateGc.YEAR, arrivalDateGc.MONTH, arrivalDateGc.DAY_OF_MONTH, arrivalTimeGc.HOUR, arrivalTimeGc.MINUTE);
+
+                /*new GregorianCalendar(
                 (Integer) departureYear.getValue(),
                 (Integer) departureMonth.getValue() - 1,
                 (Integer) departureDay.getValue(),
-                (Integer) departureHour.getValue(),
+                (Integer) departureTime.getValue(),
                 (Integer) departureMinute.getValue()
-        );
+        );*/
 
-        GregorianCalendar arrivalDate = new GregorianCalendar(
+        /*GregorianCalendar arrivalDate = new GregorianCalendar(
                 (Integer) arrivalYear.getValue(),
                 (Integer) arrivalMonth.getValue() - 1,
                 (Integer) arrivalDay.getValue(),
                 (Integer) arrivalHour.getValue(),
                 (Integer) arrivalMinute.getValue()
-        );
+        );*/
 
         return new Flight(
                 numberTextField.getText(),
-                departureDate,
-                arrivalDate,
+                departureGc,
+                arrivalGc,
                 isMealOnBoardCheckBox.isSelected(),
                 mealDescriptionTextField.getText(),
                 GetID.getPilotId(pilotComboBox),
@@ -135,6 +140,7 @@ public class FlightForm extends JPanel {
 
     private void addDepartureMomentField() {
         // departure
+        Date currentDate = new Date();
         JLabel departureLabel = new JLabel("    Départ");
         departureLabel.setFont(Format.font);
         departureLabel.setHorizontalAlignment(SwingConstants.LEFT);
@@ -150,33 +156,21 @@ public class FlightForm extends JPanel {
         departureDateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(departureDateLabel);
 
-        //void flightDate(SpinnerNumberModel day, SpinnerNumberModel month, SpinnerNumberModel year, SpinnerNumberModel hour, SpinnerNumberModel minute)
-        departureDayModel = new SpinnerNumberModel(currentDate.get(Calendar.DAY_OF_MONTH), 1, 31, 1);
-        departureDay = new JSpinner(departureDayModel);
-        add(departureDay);
-
-        departureMonthModel = new SpinnerNumberModel(currentDate.get(Calendar.MONTH) + 1, 1, 12, 1);
-        departureMonth = new JSpinner(departureMonthModel);
-        add(departureMonth);
-
-        departureYearModel = new SpinnerNumberModel(currentDate.get(Calendar.YEAR), 2021, 2023, 1);
-        departureYear = new JSpinner(departureYearModel);
-        add(departureYear);
+        departureDate = new JSpinner(new SpinnerDateModel(currentDate, null, null, Calendar.DAY_OF_WEEK));
+        departureDate.setEditor(new JSpinner.DateEditor(departureDate, "dd-MM-yyyy"));
+        this.add(departureDate); 
 
         addEmptyField();
-
+        addEmptyField();
+        
         // departureTime
         JLabel departureTimeLabel = new JLabel("Heure : ");
         departureTimeLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(departureTimeLabel);
 
-        departureHourModel = new SpinnerNumberModel(currentDate.get(Calendar.HOUR_OF_DAY), 0, 23, 1);
-        departureHour = new JSpinner(departureHourModel);
-        add(departureHour);
-
-        departureMinuteModel = new SpinnerNumberModel(currentDate.get(Calendar.MINUTE), 0, 59, 1);
-        departureMinute = new JSpinner(departureMinuteModel);
-        add(departureMinute);
+        departureTime = new JSpinner(new SpinnerDateModel(currentDate, null, null, Calendar.DAY_OF_WEEK));
+        departureTime.setEditor(new JSpinner.DateEditor(departureTime, "HH:mm"));
+        this.add(departureTime);
 
         addEmptyField();
         addEmptyField();
@@ -220,6 +214,7 @@ public class FlightForm extends JPanel {
     }
 
     private void addArrivalMomentField() {
+        Date currentDate = new Date();
         // arrival
         JLabel arrivalLabel = new JLabel("    Arrivée");
         arrivalLabel.setFont(Format.font);
@@ -236,18 +231,13 @@ public class FlightForm extends JPanel {
         arrivalDateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(arrivalDateLabel);
 
-        arrivalDayModel = new SpinnerNumberModel(currentDate.get(Calendar.DAY_OF_MONTH), 1, 31, 1);
-        arrivalDay = new JSpinner(arrivalDayModel);
-        add(arrivalDay);
 
-        arrivalMonthModel = new SpinnerNumberModel(currentDate.get(Calendar.MONTH) + 1, 1, 12, 1);
-        arrivalMonth = new JSpinner(arrivalMonthModel);
-        add(arrivalMonth);
+        // arrivalDate
+        arrivalDate = new JSpinner(new SpinnerDateModel(currentDate, null, null, Calendar.DAY_OF_WEEK));
+        arrivalDate.setEditor(new JSpinner.DateEditor(arrivalDate, "dd-MM-yyyy"));
+        this.add(arrivalDate);
 
-        arrivalYearModel = new SpinnerNumberModel(currentDate.get(Calendar.YEAR), 2021, 2023, 1);
-        arrivalYear = new JSpinner(arrivalYearModel);
-        add(arrivalYear);
-
+        addEmptyField();
         addEmptyField();
 
         // arrivalTime
@@ -255,13 +245,9 @@ public class FlightForm extends JPanel {
         arrivalTimeLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(arrivalTimeLabel);
 
-        arrivalHourModel = new SpinnerNumberModel(currentDate.get(Calendar.HOUR_OF_DAY), 0, 23, 1);
-        arrivalHour = new JSpinner(arrivalHourModel);
-        add(arrivalHour);
-
-        arrivalMinuteModel = new SpinnerNumberModel(currentDate.get(Calendar.MINUTE), 0, 59, 1);
-        arrivalMinute = new JSpinner(arrivalMinuteModel);
-        add(arrivalMinute);
+        arrivalTime = new JSpinner(new SpinnerDateModel(currentDate, null, null, Calendar.DAY_OF_WEEK));
+        arrivalTime.setEditor(new JSpinner.DateEditor(arrivalTime, "HH:mm"));
+        this.add(arrivalTime);
 
         addEmptyField();
         addEmptyField();
