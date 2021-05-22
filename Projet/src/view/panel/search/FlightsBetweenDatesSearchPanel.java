@@ -59,7 +59,7 @@ public class FlightsBetweenDatesSearchPanel extends JPanel {
                     JOptionPane.showMessageDialog(null,  e.getMessage(), "Erreur liée à la BD", JOptionPane.ERROR_MESSAGE);
                 }
                 try {
-                    panel.add(new FlightsBetweenDatesResultPanel(flights));
+                    panel.add(new FlightsBetweenDatesResultPanel(flights), BorderLayout.CENTER);
                 } catch (DataBaseAccessException e) {
                     e.printStackTrace();
                     JOptionPane.showMessageDialog(null,  e.getMessage(), "Erreur liée à la BD", JOptionPane.ERROR_MESSAGE);

@@ -215,6 +215,7 @@ public class FlightForm extends JPanel {
 
 
         // arrivalDate
+
         arrivalDate = new JSpinner(new SpinnerDateModel(currentDate, null, null, Calendar.DAY_OF_WEEK));
         arrivalDate.setEditor(new JSpinner.DateEditor(arrivalDate, "dd-MM-yyyy"));
         this.add(arrivalDate);
