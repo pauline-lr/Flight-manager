@@ -94,7 +94,7 @@ public class FlightsBetweenDatesResultTable extends AbstractTableModel {
 
     public Class getColumnClass(int column) {
         return switch (column) {
-            case 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 -> String.class;
+            case 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 -> String.class;
             default -> throw new IllegalStateException("Unexpected value: " + column);
         };
     }

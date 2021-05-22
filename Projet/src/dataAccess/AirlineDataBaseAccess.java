@@ -22,8 +22,6 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
         java.sql.Date startDateSQL = new java.sql.Date(startDate.getTimeInMillis());
         java.sql.Date endDateSQL = new java.sql.Date(endDate.getTimeInMillis());
         FlightsBetweenDatesSearch flight;
-        GregorianCalendar flightDepartureTime = new GregorianCalendar();
-        GregorianCalendar flightArrivalTime = new GregorianCalendar();
 
         String sqlRequest = "SELECT " +
                 "fli.number AS flightNumber, " +
@@ -72,6 +70,8 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
             ResultSet data = preparedStatement.executeQuery();
 
             while (data.next()) {
+                GregorianCalendar flightDepartureTime = new GregorianCalendar();
+                GregorianCalendar flightArrivalTime = new GregorianCalendar();
                 flightDepartureTime.setTime(data.getTimestamp("flightDepartureTime"));
                 flightArrivalTime.setTime(data.getTimestamp("flightArrivalTime"));
 
@@ -113,8 +113,6 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
             throws DataBaseAccessException {
         ArrayList<PassengersByClassSearch> passengers = new ArrayList<>();
         PassengersByClassSearch passenger;
-        GregorianCalendar flightDepartureTime = new GregorianCalendar();
-        GregorianCalendar flightArrivalTime = new GregorianCalendar();
 
         String sqlRequest = "SELECT " +
                 "pas.passport_number AS passengerPassportNumber, " +
@@ -159,6 +157,8 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
             ResultSet data = preparedStatement.executeQuery();
 
             while (data.next()) {
+                GregorianCalendar flightDepartureTime = new GregorianCalendar();
+                GregorianCalendar flightArrivalTime = new GregorianCalendar();
                 flightDepartureTime.setTime(data.getTimestamp("flightDepartureTime"));
                 flightArrivalTime.setTime(data.getTimestamp("flightArrivalTime"));
 
@@ -195,8 +195,6 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
             throws DataBaseAccessException {
         ArrayList<FlightsByPilotSearch> flights = new ArrayList<>();
         FlightsByPilotSearch flight;
-        GregorianCalendar flightDepartureTime = new GregorianCalendar();
-        GregorianCalendar flightArrivalTime = new GregorianCalendar();
 
         String sqlRequest = "SELECT " +
                 "fli.number AS flightNumber, " +
@@ -236,6 +234,8 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
             ResultSet data = preparedStatement.executeQuery();
 
             while (data.next()) {
+                GregorianCalendar flightDepartureTime = new GregorianCalendar();
+                GregorianCalendar flightArrivalTime = new GregorianCalendar();
                 flightDepartureTime.setTime(data.getTimestamp("flightDepartureTime"));
                 flightArrivalTime.setTime(data.getTimestamp("flightArrivalTime"));
 

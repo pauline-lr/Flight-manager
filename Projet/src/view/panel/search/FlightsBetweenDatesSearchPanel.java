@@ -45,24 +45,23 @@ public class FlightsBetweenDatesSearchPanel extends JPanel {
     }
 
     private class ValidationListener implements ActionListener {
-        GregorianCalendar startDate = flightsBetweenDatesSearchForm.getStartDate();
-        GregorianCalendar endDate = flightsBetweenDatesSearchForm.getEndDate();
-        @Override
         public void actionPerformed(ActionEvent evt) {
+            GregorianCalendar startDate = flightsBetweenDatesSearchForm.getStartDate();
+            GregorianCalendar endDate = flightsBetweenDatesSearchForm.getEndDate();
             if (startDate.compareTo(endDate) <= 0) {
                 panel.removeAll();
                 ArrayList<FlightsBetweenDatesSearch> flights = null;
                 try {
-                    flights = controller.getAllFlightsBetweenDates(flightsBetweenDatesSearchForm.getStartDate(), flightsBetweenDatesSearchForm.getStartDate());
+                    flights = controller.getAllFlightsBetweenDates(startDate, endDate);
                 } catch (DataBaseAccessException e) {
                     e.printStackTrace();
-                    JOptionPane.showMessageDialog(null,  e.getMessage(), "Erreur liée à la BD", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null,  e.getMessage(), "Erreur liée à la base de données", JOptionPane.ERROR_MESSAGE);
                 }
                 try {
                     panel.add(new FlightsBetweenDatesResultPanel(flights), BorderLayout.CENTER);
                 } catch (DataBaseAccessException e) {
                     e.printStackTrace();
-                    JOptionPane.showMessageDialog(null,  e.getMessage(), "Erreur liée à la BD", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null,  e.getMessage(), "Erreur liée à la base de données", JOptionPane.ERROR_MESSAGE);
                 }
                 panel.repaint();
             } else {

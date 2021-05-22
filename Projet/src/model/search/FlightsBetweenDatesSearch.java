@@ -181,7 +181,31 @@ public class FlightsBetweenDatesSearch {
     public String getPilotLastName() {
         return pilotLastName;
     }
-
-
     //endregion
+
+
+    @Override
+    public String toString() {
+        return "FlightsBetweenDatesSearch{" +
+                "flightNumber='" + flightNumber + '\'' +
+                ", flightDepartureTime=" + flightDepartureTime.getTime() +
+                ", flightArrivalTime=" + flightArrivalTime.getTime() +
+                ", departureGateTerminal='" + departureGateTerminal + '\'' +
+                ", departureGateNumber=" + departureGateNumber +
+                ", departureAirportCode='" + departureAirportCode + '\'' +
+                ", departureAirportName='" + departureAirportName + '\'' +
+                ", departureAirportCountry='" + departureAirportCountry + '\'' +
+                ", arrivalGateTerminal='" + arrivalGateTerminal + '\'' +
+                ", arrivalGateNumber=" + arrivalGateNumber +
+                ", arrivalAirportCode='" + arrivalAirportCode + '\'' +
+                ", arrivalAirportName='" + arrivalAirportName + '\'' +
+                ", arrivalAirportCountry='" + arrivalAirportCountry + '\'' +
+                ", planeId=" + planeId +
+                ", planeModel='" + planeModel + '\'' +
+                ", planeBrand='" + planeBrand + '\'' +
+                ", pilotLicenceNumber='" + pilotLicenceNumber + '\'' +
+                ", pilotFirstName='" + pilotFirstName + '\'' +
+                ", pilotLastName='" + pilotLastName + '\'' +
+                '}';
+    }
 }
