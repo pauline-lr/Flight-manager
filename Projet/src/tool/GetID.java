@@ -4,8 +4,10 @@ import javax.swing.*;
 import java.util.regex.*;
 
 public class GetID {
+    private final static String REGEX_ID = "^\\w+(?=\\s-\\s)";
+
     public static String getId(String text) {
-        Pattern pattern = Pattern.compile("^\\w+(?=\\s-\\s)");
+        Pattern pattern = Pattern.compile(REGEX_ID);
         Matcher matcher = pattern.matcher(text);
         String id = null;
         if (matcher.find()) {
