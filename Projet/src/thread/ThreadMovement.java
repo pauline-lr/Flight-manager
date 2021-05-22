@@ -1,15 +1,15 @@
 package thread;
 
-import view.panels.menuWindowPanels.AnimationSpace;
+import view.panel.home.AnimationPanel;
 
 public class ThreadMovement extends Thread {
     public final int DELAY = 10;
 
-    private AnimationSpace animationSpace;
+    private AnimationPanel animationPanel;
 
-    public ThreadMovement(AnimationSpace animationSpace) {
+    public ThreadMovement(AnimationPanel animationPanel) {
         super("ThreadMovement");
-        this.animationSpace = animationSpace;
+        this.animationPanel = animationPanel;
     }
 
     @Override
@@ -19,8 +19,8 @@ public class ThreadMovement extends Thread {
         currentTimeSystem = System.currentTimeMillis();
 
         while (true) {
-            animationSpace.cycle();
-            animationSpace.repaint();
+            animationPanel.cycle();
+            animationPanel.repaint();
 
             timeDiff = System.currentTimeMillis() - currentTimeSystem;
             sleep = DELAY - timeDiff;

@@ -2,7 +2,13 @@ package controller;
 
 import business.*;
 import exception.*;
+import exception.dataBase.DataBaseAccessException;
+import exception.dataBase.DataBaseCloseException;
+import exception.dataBase.DataBaseConnectionException;
 import model.*;
+import model.search.FlightsBetweenDatesSearch;
+import model.search.FlightsByPilotSearch;
+import model.search.PassengersByClassSearch;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -20,17 +26,17 @@ public class ApplicationController {
     }
 
     //region Search
-    public ArrayList<SearchFlightsBetweenDates> getAllFlightsBetweenDates(GregorianCalendar startDate, GregorianCalendar endDate)
+    public ArrayList<FlightsBetweenDatesSearch> getAllFlightsBetweenDates(GregorianCalendar startDate, GregorianCalendar endDate)
             throws DataBaseAccessException {
         return flightManager.getAllFlightsBetweenDates(startDate, endDate);
     }
 
-    public ArrayList<SearchPassengersByClass> getAllPassengersOfAClass(String className)
+    public ArrayList<PassengersByClassSearch> getAllPassengersOfAClass(String className)
             throws DataBaseAccessException {
         return flightManager.getAllPassengersOfAClass(className);
     }
 
-    public ArrayList<SearchFlightsByPilot> getAllFlightsOfAPilot(String pilotLicenceNumber)
+    public ArrayList<FlightsByPilotSearch> getAllFlightsOfAPilot(String pilotLicenceNumber)
             throws DataBaseAccessException {
         return flightManager.getAllFlightsOfAPilot(pilotLicenceNumber);
     }

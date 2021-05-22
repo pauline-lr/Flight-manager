@@ -1,4 +1,4 @@
-import view.windows.MenuWindow;
+import view.window.MenuWindow;
 
 public class Principal {
     public static void main(String[] args) {

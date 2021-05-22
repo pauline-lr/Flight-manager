@@ -1,21 +1,27 @@
 package dataAccess;
 
 import exception.*;
+import exception.dataBase.DataBaseAccessException;
+import exception.dataBase.DataBaseCloseException;
+import exception.dataBase.DataBaseConnectionException;
 import model.*;
-import pattern.*;
+import model.search.FlightsBetweenDatesSearch;
+import model.search.FlightsByPilotSearch;
+import model.search.PassengersByClassSearch;
+import pattern.DataAccessObjectPattern;
 import tool.Format;
 
 import java.sql.*;
 import java.util.*;
 
-public class AirlineDataBaseAccess implements DataAccessObject {
+public class AirlineDataBaseAccess implements DataAccessObjectPattern {
     //region Search
-    public ArrayList<SearchFlightsBetweenDates> getAllFlightsBetweenDates(GregorianCalendar startDate, GregorianCalendar endDate)
+    public ArrayList<FlightsBetweenDatesSearch> getAllFlightsBetweenDates(GregorianCalendar startDate, GregorianCalendar endDate)
             throws DataBaseAccessException {
-        ArrayList<SearchFlightsBetweenDates> flights = new ArrayList<>();
+        ArrayList<FlightsBetweenDatesSearch> flights = new ArrayList<>();
         java.sql.Date startDateSQL = new java.sql.Date(startDate.getTimeInMillis());
         java.sql.Date endDateSQL = new java.sql.Date(endDate.getTimeInMillis());
-        SearchFlightsBetweenDates flight;
+        FlightsBetweenDatesSearch flight;
         GregorianCalendar flightDepartureTime = new GregorianCalendar();
         GregorianCalendar flightArrivalTime = new GregorianCalendar();
 
@@ -69,7 +75,7 @@ public class AirlineDataBaseAccess implements DataAccessObject {
                 flightDepartureTime.setTime(data.getTimestamp("flightDepartureTime"));
                 flightArrivalTime.setTime(data.getTimestamp("flightArrivalTime"));
 
-                flight = new SearchFlightsBetweenDates(
+                flight = new FlightsBetweenDatesSearch(
                         data.getString("flightNumber"),
                         flightDepartureTime,
                         flightArrivalTime,
@@ -103,10 +109,10 @@ public class AirlineDataBaseAccess implements DataAccessObject {
         return flights;
     }
 
-    public ArrayList<SearchPassengersByClass> getAllPassengersOfAClass(String className)
+    public ArrayList<PassengersByClassSearch> getAllPassengersOfAClass(String className)
             throws DataBaseAccessException {
-        ArrayList<SearchPassengersByClass> passengers = new ArrayList<>();
-        SearchPassengersByClass passenger;
+        ArrayList<PassengersByClassSearch> passengers = new ArrayList<>();
+        PassengersByClassSearch passenger;
         GregorianCalendar flightDepartureTime = new GregorianCalendar();
         GregorianCalendar flightArrivalTime = new GregorianCalendar();
 
@@ -156,7 +162,7 @@ public class AirlineDataBaseAccess implements DataAccessObject {
                 flightDepartureTime.setTime(data.getTimestamp("flightDepartureTime"));
                 flightArrivalTime.setTime(data.getTimestamp("flightArrivalTime"));
 
-                passenger = new SearchPassengersByClass(
+                passenger = new PassengersByClassSearch(
                         data.getString("passengerPassportNumber"),
                         data.getString("passengerFirstName"),
                         data.getString("passengerLastName"),
@@ -185,10 +191,10 @@ public class AirlineDataBaseAccess implements DataAccessObject {
         return passengers;
     }
 
-    public ArrayList<SearchFlightsByPilot> getAllFlightsOfAPilot(String pilotLicenceNumber)
+    public ArrayList<FlightsByPilotSearch> getAllFlightsOfAPilot(String pilotLicenceNumber)
             throws DataBaseAccessException {
-        ArrayList<SearchFlightsByPilot> flights = new ArrayList<>();
-        SearchFlightsByPilot flight;
+        ArrayList<FlightsByPilotSearch> flights = new ArrayList<>();
+        FlightsByPilotSearch flight;
         GregorianCalendar flightDepartureTime = new GregorianCalendar();
         GregorianCalendar flightArrivalTime = new GregorianCalendar();
 
@@ -233,7 +239,7 @@ public class AirlineDataBaseAccess implements DataAccessObject {
                 flightDepartureTime.setTime(data.getTimestamp("flightDepartureTime"));
                 flightArrivalTime.setTime(data.getTimestamp("flightArrivalTime"));
 
-                flight = new SearchFlightsByPilot(
+                flight = new FlightsByPilotSearch(
                         data.getString("flightNumber"),
                         flightDepartureTime,
                         flightArrivalTime,
