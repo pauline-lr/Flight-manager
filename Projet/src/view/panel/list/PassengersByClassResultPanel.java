@@ -1,15 +1,15 @@
 package view.panel.list;
 
 import model.search.PassengersByClassSearch;
-import view.table.search.PassengersByClassSearchTable;
+import view.table.PassengersByClassResultTable;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class PassengersByClassListPanel extends JPanel {
-    public PassengersByClassListPanel(ArrayList<PassengersByClassSearch> flights){
-        PassengersByClassSearchTable flightsTable = new PassengersByClassSearchTable(flights);
+public class PassengersByClassResultPanel extends JPanel {
+    public PassengersByClassResultPanel(ArrayList<PassengersByClassSearch> flights){
+        PassengersByClassResultTable flightsTable = new PassengersByClassResultTable(flights);
         this.setLayout(new BorderLayout());
         JTable table = new JTable(flightsTable);
         table.setModel(flightsTable);

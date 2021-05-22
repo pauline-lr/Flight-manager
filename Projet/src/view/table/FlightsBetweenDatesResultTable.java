@@ -1,4 +1,4 @@
-package view.table.search;
+package view.table;
 
 import controller.ApplicationController;
 import model.search.FlightsBetweenDatesSearch;
@@ -8,12 +8,12 @@ import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
-public class FlightsBetweenDatesSearchTable extends AbstractTableModel {
+public class FlightsBetweenDatesResultTable extends AbstractTableModel {
     private ApplicationController controller;
     private ArrayList<String> columnNames;
     private ArrayList<FlightsBetweenDatesSearch> flights;
 
-    public FlightsBetweenDatesSearchTable(ArrayList<FlightsBetweenDatesSearch> flights) {
+    public FlightsBetweenDatesResultTable(ArrayList<FlightsBetweenDatesSearch> flights) {
         setController(new ApplicationController());
         setColumnNames();
         this.flights = flights;

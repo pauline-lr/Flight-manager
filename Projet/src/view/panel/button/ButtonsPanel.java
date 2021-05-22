@@ -13,7 +13,7 @@ import view.panel.home.WelcomePanel;
 import view.panel.search.FlightsBetweenDatesSearchPanel;
 import view.panel.search.FlightsByPilotSearchPanel;
 import view.panel.search.PassengersByClassSearchPanel;
-import view.table.search.FlightsByPilotSearchTable;
+import view.table.FlightsByPilotResultTable;
 import view.window.MenuWindow;
 
 import javax.swing.*;
@@ -118,21 +118,21 @@ public class ButtonsPanel extends JPanel {
                             }
                             case "DateFlightSearch" -> {
                                /* if (start.compareTo(end) < 0) {
-                                    FlightsBetweenDatesSearchTable flightTable;
-                                    RowSorter<FlightsBetweenDatesSearchTable> sorter;
+                                    FlightsBetweenDatesResultTable flightTable;
+                                    RowSorter<FlightsBetweenDatesResultTable> sorter;
                                     TableColumn column;
                                     JScrollPane scrollPane;
                                     ArrayList<FlightsBetweenDatesSearch> flights = controller.getAllFlightsBetweenDates(start, end);
-                                    /*FlightsBetweenDatesSearchTable flightTable = new FlightsBetweenDatesSearchTable(controller, flights);
+                                    /*FlightsBetweenDatesResultTable flightTable = new FlightsBetweenDatesResultTable(controller, flights);
                                     JTable table = new JTable(flightTable);
                                     table.setModel(flightTable);
                                     dateFlight.add(new JScrollPane(table), BorderLayout.CENTER);
                                     //
 
                                     if(flights == null){
-                                        flightTable = new FlightsBetweenDatesSearchTable(controller);
+                                        flightTable = new FlightsBetweenDatesResultTable(controller);
                                     }else{
-                                        flightTable = new FlightsBetweenDatesSearchTable(controller, flights);
+                                        flightTable = new FlightsBetweenDatesResultTable(controller, flights);
                                     }
 
                                     table = new JTable(flightTable);
@@ -152,12 +152,12 @@ public class ButtonsPanel extends JPanel {
                             }
                             case "SearchPilot" -> {
                             /*ArrayList<FlightsByPilotSearch> flights = controller.getAllFlightsOfAPilot(pilotId);
-                            FlightsByPilotSearchTable flightTable = new FlightsByPilotSearchTable(controller, flights);
+                            FlightsByPilotResultTable flightTable = new FlightsByPilotResultTable(controller, flights);
                             JTable table = new JTable(flightTable);
                             table.setModel(flightTable);
                             flightByPilotPanel.add(new JScrollPane(table), BorderLayout.CENTER);*/
                                 ArrayList<FlightsByPilotSearch> flights = controller.getAllFlightsOfAPilot(pilotId);
-                                FlightsByPilotSearchTable flightTable = new FlightsByPilotSearchTable(flights);
+                                FlightsByPilotResultTable flightTable = new FlightsByPilotResultTable(flights);
                                 JTable table = new JTable(flightTable);
                                 flightByPilotPanel.add(new JScrollPane(table), BorderLayout.CENTER);
                             }

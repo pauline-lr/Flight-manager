@@ -1,4 +1,4 @@
-package view.table.search;
+package view.table;
 
 
 import controller.ApplicationController;
@@ -9,13 +9,13 @@ import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
-public class PassengersByClassSearchTable extends AbstractTableModel {
+public class PassengersByClassResultTable extends AbstractTableModel {
     private ApplicationController controller;
     private String [] columnNames = {"N° passeport", "Nom", "Place", "N° de vol", "Heure de départ", "Heure d'arrivée",
                                     "Aéroport Départ","Aéroport Arrivée"};
     private ArrayList<PassengersByClassSearch> flights;
 
-    public PassengersByClassSearchTable(ArrayList<PassengersByClassSearch> flights)  {
+    public PassengersByClassResultTable(ArrayList<PassengersByClassSearch> flights)  {
         setController(new ApplicationController());
         this.flights = flights;
     }

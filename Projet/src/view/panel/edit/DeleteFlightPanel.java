@@ -3,7 +3,7 @@ package view.panel.edit;
 import controller.ApplicationController;
 import exception.dataBase.DataBaseConnectionException;
 import exception.FlightException;
-import view.table.list.AllFlightsListTable;
+import view.table.AllFlightsListTable;
 import view.window.MenuWindow;
 
 import javax.swing.*;

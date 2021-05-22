@@ -1,15 +1,15 @@
 package view.panel.list;
 
 import model.search.FlightsByPilotSearch;
-import view.table.search.FlightsByPilotSearchTable;
+import view.table.FlightsByPilotResultTable;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class FlightsByPilotListPanel extends JPanel {
-    public FlightsByPilotListPanel(ArrayList<FlightsByPilotSearch> flights) {
-        FlightsByPilotSearchTable flightsTable = new FlightsByPilotSearchTable(flights);
+public class FlightsByPilotResultPanel extends JPanel {
+    public FlightsByPilotResultPanel(ArrayList<FlightsByPilotSearch> flights) {
+        FlightsByPilotResultTable flightsTable = new FlightsByPilotResultTable(flights);
         this.setLayout(new BorderLayout());
         JTable table = new JTable(flightsTable);
         table.setModel(flightsTable);

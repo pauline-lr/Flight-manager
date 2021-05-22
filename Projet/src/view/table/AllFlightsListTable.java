@@ -1,4 +1,4 @@
-package view.table.list;
+package view.table;
 
 import controller.ApplicationController;
 import exception.dataBase.DataBaseConnectionException;

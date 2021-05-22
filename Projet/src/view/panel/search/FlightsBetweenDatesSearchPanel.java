@@ -5,7 +5,7 @@ import exception.dataBase.DataBaseAccessException;
 import exception.SearchDateException;
 import model.search.FlightsBetweenDatesSearch;
 import view.form.search.FlightsBetweenDatesSearchForm;
-import view.panel.list.FlightsBetweenDatesListPanel;
+import view.panel.list.FlightsBetweenDatesResultPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -31,7 +31,7 @@ public class FlightsBetweenDatesSearchPanel extends JPanel {
         validation.addActionListener(new ValidationListener());
         this.add(validation, BorderLayout.PAGE_END);
 
-        /*FlightsBetweenDatesSearchTable flightTable = new FlightsBetweenDatesSearchTable(controller, flights);
+        /*FlightsBetweenDatesResultTable flightTable = new FlightsBetweenDatesResultTable(controller, flights);
         JTable table = new JTable(flightTable);
         table.setModel(flightTable);
         this.add(new JScrollPane(table), BorderLayout.CENTER);*/
@@ -59,7 +59,7 @@ public class FlightsBetweenDatesSearchPanel extends JPanel {
                     JOptionPane.showMessageDialog(null,  e.getMessage(), "Erreur liée à la BD", JOptionPane.ERROR_MESSAGE);
                 }
                 try {
-                    panel.add(new FlightsBetweenDatesListPanel(flights));
+                    panel.add(new FlightsBetweenDatesResultPanel(flights));
                 } catch (DataBaseAccessException e) {
                     e.printStackTrace();
                     JOptionPane.showMessageDialog(null,  e.getMessage(), "Erreur liée à la BD", JOptionPane.ERROR_MESSAGE);

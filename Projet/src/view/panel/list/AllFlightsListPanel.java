@@ -2,7 +2,7 @@ package view.panel.list;
 
 import exception.dataBase.DataBaseConnectionException;
 import exception.FlightException;
-import view.table.list.AllFlightsListTable;
+import view.table.AllFlightsListTable;
 
 import javax.swing.*;
 import java.awt.*;

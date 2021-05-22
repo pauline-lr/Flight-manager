@@ -6,7 +6,7 @@ import exception.dataBase.DataBaseConnectionException;
 import model.search.PassengersByClassSearch;
 import tool.GetID;
 import view.form.search.PassengersByClassSearchForm;
-import view.panel.list.PassengersByClassListPanel;
+import view.panel.list.PassengersByClassResultPanel;
 import view.window.MenuWindow;
 
 import javax.swing.*;
@@ -46,7 +46,7 @@ public class PassengersByClassSearchPanel extends JPanel {
             ArrayList<PassengersByClassSearch> flights;
             try {
                 flights = controller.getAllPassengersOfAClass(GetID.getClassId(passengersByClassSearchForm.getClassComboBox()));
-                panel.add(new PassengersByClassListPanel(flights), BorderLayout.CENTER);
+                panel.add(new PassengersByClassResultPanel(flights), BorderLayout.CENTER);
                 panel.repaint();
             } catch (DataBaseAccessException e) {
                 e.printStackTrace();
