@@ -45,15 +45,15 @@ public class FlightsBetweenDatesSearchPanel extends JPanel {
     }
 
     private class ValidationListener implements ActionListener {
-        GregorianCalendar startDate = flightsBetweenDatesSearchForm.getFirstDateCalendar();
-        GregorianCalendar endDate = flightsBetweenDatesSearchForm.getLastDateCalendar();
+        GregorianCalendar startDate = flightsBetweenDatesSearchForm.getStartDate();
+        GregorianCalendar endDate = flightsBetweenDatesSearchForm.getEndDate();
         @Override
         public void actionPerformed(ActionEvent evt) {
             if (startDate.compareTo(endDate) <= 0) {
                 panel.removeAll();
                 ArrayList<FlightsBetweenDatesSearch> flights = null;
                 try {
-                    flights = controller.getAllFlightsBetweenDates(flightsBetweenDatesSearchForm.getFirstDateCalendar(), flightsBetweenDatesSearchForm.getFirstDateCalendar());
+                    flights = controller.getAllFlightsBetweenDates(flightsBetweenDatesSearchForm.getStartDate(), flightsBetweenDatesSearchForm.getStartDate());
                 } catch (DataBaseAccessException e) {
                     e.printStackTrace();
                     JOptionPane.showMessageDialog(null,  e.getMessage(), "Erreur liée à la BD", JOptionPane.ERROR_MESSAGE);

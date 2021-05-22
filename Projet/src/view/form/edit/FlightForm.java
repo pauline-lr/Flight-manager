@@ -140,7 +140,7 @@ public class FlightForm extends JPanel {
         this.add(departureDateLabel);
 
         departureDate = new JSpinner(new SpinnerDateModel(currentDate, null, null, Calendar.DAY_OF_WEEK));
-        departureDate.setEditor(new JSpinner.DateEditor(departureDate, "dd-MM-yyyy"));
+        departureDate.setEditor(new JSpinner.DateEditor(departureDate, "dd/MM/yyyy"));
         this.add(departureDate); 
 
         addEmptyField();
@@ -216,7 +216,7 @@ public class FlightForm extends JPanel {
 
         // arrivalDate
         arrivalDate = new JSpinner(new SpinnerDateModel(currentDate, null, null, Calendar.DAY_OF_WEEK));
-        arrivalDate.setEditor(new JSpinner.DateEditor(arrivalDate, "dd-MM-yyyy"));
+        arrivalDate.setEditor(new JSpinner.DateEditor(arrivalDate, "dd/MM/yyyy"));
         this.add(arrivalDate);
 
         addEmptyField();
