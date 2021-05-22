@@ -14,7 +14,7 @@ import java.util.*;
 
 public class FlightForm extends JPanel {
     private ApplicationController controller;
-    private GregorianCalendar currentDate;
+    private Date currentDate;
     private JTextField numberTextField, mealDescriptionTextField;
     private JCheckBox isMealOnBoardCheckBox;
     private JSpinner departureDate, departureTime, arrivalDate, arrivalTime;
@@ -24,7 +24,7 @@ public class FlightForm extends JPanel {
 
     public FlightForm() throws SQLException, DataBaseConnectionException {
         setController(new ApplicationController());
-        setCurrentDate(new GregorianCalendar());
+        setCurrentDate(new Date());
         setLayout(new GridLayout(16, 4));
         createFlightForm();
     }
@@ -33,7 +33,7 @@ public class FlightForm extends JPanel {
         this.controller = controller;
     }
 
-    private void setCurrentDate(GregorianCalendar currentDate) {
+    private void setCurrentDate(Date currentDate) {
         this.currentDate = currentDate;
     }
 
@@ -56,22 +56,6 @@ public class FlightForm extends JPanel {
         GregorianCalendar arrivalDateGc = (GregorianCalendar) arrivalDate.getValue();
         GregorianCalendar arrivalTimeGc = (GregorianCalendar) arrivalTime.getValue();
         GregorianCalendar arrivalGc = new GregorianCalendar(arrivalDateGc.YEAR, arrivalDateGc.MONTH, arrivalDateGc.DAY_OF_MONTH, arrivalTimeGc.HOUR, arrivalTimeGc.MINUTE);
-
-                /*new GregorianCalendar(
-                (Integer) departureYear.getValue(),
-                (Integer) departureMonth.getValue() - 1,
-                (Integer) departureDay.getValue(),
-                (Integer) departureTime.getValue(),
-                (Integer) departureMinute.getValue()
-        );*/
-
-        /*GregorianCalendar arrivalDate = new GregorianCalendar(
-                (Integer) arrivalYear.getValue(),
-                (Integer) arrivalMonth.getValue() - 1,
-                (Integer) arrivalDay.getValue(),
-                (Integer) arrivalHour.getValue(),
-                (Integer) arrivalMinute.getValue()
-        );*/
 
         return new Flight(
                 numberTextField.getText(),
@@ -140,7 +124,6 @@ public class FlightForm extends JPanel {
 
     private void addDepartureMomentField() {
         // departure
-        Date currentDate = new Date();
         JLabel departureLabel = new JLabel("    Départ");
         departureLabel.setFont(Format.font);
         departureLabel.setHorizontalAlignment(SwingConstants.LEFT);
@@ -214,7 +197,6 @@ public class FlightForm extends JPanel {
     }
 
     private void addArrivalMomentField() {
-        Date currentDate = new Date();
         // arrival
         JLabel arrivalLabel = new JLabel("    Arrivée");
         arrivalLabel.setFont(Format.font);
