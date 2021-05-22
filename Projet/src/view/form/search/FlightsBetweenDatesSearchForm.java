@@ -3,16 +3,17 @@ package view.form.search;
 import javax.swing.*;
 import java.awt.*;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class FlightsBetweenDatesSearchForm extends JPanel {
-    private GregorianCalendar firstDateCalendar, lastDateCalendar, currentDate;
+    private GregorianCalendar firstDateCalendar, lastDateCalendar;
     private JLabel start, end;
-    private JSpinner startDay, startMonth, startYear, endDay, endMonth, endYear;
-    private SpinnerNumberModel startDayModel, startMonthModel, startYearModel, endDayModel, endMonthModel, endYearModel;
+    private JSpinner startDate, endDate;
+    private Date currentDate;
 
     public FlightsBetweenDatesSearchForm(){
-        currentDate = new GregorianCalendar();
+        currentDate = new Date();
         this.setLayout(new GridLayout(2, 4));
 
         createFlightsBetweenDatesForm();
@@ -23,37 +24,24 @@ public class FlightsBetweenDatesSearchForm extends JPanel {
         start.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(start);
 
-        startDayModel = new SpinnerNumberModel(currentDate.get(Calendar.DAY_OF_MONTH),1,31,1);
-        startDay = new JSpinner(startDayModel);
-        add(startDay);
+        startDate = new JSpinner(new SpinnerDateModel(currentDate, null, null, Calendar.DAY_OF_WEEK));
+        startDate.setEditor(new JSpinner.DateEditor(startDate, "dd-MM-yyyy"));
+        this.add(startDate);
 
-        startMonthModel = new SpinnerNumberModel(currentDate.get(Calendar.MONTH)+1,1,12,1);
-        startMonth = new JSpinner(startMonthModel);
-        add(startMonth);
+        GregorianCalendar firstDateGC = (GregorianCalendar) startDate.getValue();
+        firstDateCalendar = new GregorianCalendar(firstDateGC.YEAR, firstDateGC.MONTH, firstDateGC.DAY_OF_WEEK);
 
-        startYearModel = new SpinnerNumberModel(currentDate.get(Calendar.YEAR),2021,2023,1);
-        startYear = new JSpinner(startYearModel);
-        add(startYear);
-
-        firstDateCalendar = new GregorianCalendar(Integer.parseInt(startYear.getValue().toString()), Integer.parseInt(startMonth.getValue().toString()), Integer.parseInt(startDay.getValue().toString()));
 
         end = new JLabel("Date de fin : ");
         end.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(end);
 
-        endDayModel = new SpinnerNumberModel(currentDate.get(Calendar.DAY_OF_MONTH),1,31,1);
-        endDay = new JSpinner(endDayModel);
-        add(endDay);
+        endDate = new JSpinner(new SpinnerDateModel(currentDate, null, null, Calendar.DAY_OF_WEEK));
+        endDate.setEditor(new JSpinner.DateEditor(endDate, "dd-MM-yyyy"));
+        this.add(endDate);
 
-        endMonthModel = new SpinnerNumberModel(currentDate.get(Calendar.MONTH)+1,1,12,1);
-        endMonth = new JSpinner(endMonthModel);
-        add(endMonth);
-
-        endYearModel = new SpinnerNumberModel(currentDate.get(Calendar.YEAR),2021,2023,1);
-        endYear = new JSpinner(endYearModel);
-        add(endYear);
-
-        lastDateCalendar = new GregorianCalendar(Integer.parseInt(endYear.getValue().toString()), Integer.parseInt(endMonth.getValue().toString()), Integer.parseInt(endDay.getValue().toString()));
+        GregorianCalendar lastDateGC = (GregorianCalendar) endDate.getValue();
+        lastDateCalendar = new GregorianCalendar(lastDateGC.YEAR, lastDateGC.MONTH, lastDateGC.DAY_OF_WEEK);
     }
 
     public GregorianCalendar getFirstDateCalendar() {
