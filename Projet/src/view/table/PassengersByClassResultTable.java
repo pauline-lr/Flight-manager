@@ -1,8 +1,7 @@
 package view.table;
 
-
-import controller.ApplicationController;
 import model.search.PassengersByClassSearch;
+import tool.Format;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
@@ -10,30 +9,44 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public class PassengersByClassResultTable extends AbstractTableModel {
-    private ApplicationController controller;
-    private String [] columnNames = {"N° passeport", "Nom", "Place", "N° de vol", "Heure de départ", "Heure d'arrivée",
-                                    "Aéroport Départ","Aéroport Arrivée"};
     private ArrayList<PassengersByClassSearch> flights;
+    private ArrayList<String> columnNames;
+
 
     public PassengersByClassResultTable(ArrayList<PassengersByClassSearch> flights)  {
-        setController(new ApplicationController());
+        setFlights(flights);
+        setColumnNames();
+    }
+
+    public void setFlights(ArrayList<PassengersByClassSearch> flights) {
         this.flights = flights;
     }
 
-    private void setController(ApplicationController controller) {
-        this.controller = controller;
+    private void setColumnNames() {
+        columnNames = new ArrayList<>();
+        columnNames.add("Passeport");
+        columnNames.add("Nom");
+        columnNames.add("Prénom");
+        columnNames.add("Siège");
+        columnNames.add("Vol");
+        columnNames.add("Heure de départ");
+        columnNames.add("Date de départ");
+        columnNames.add("Aéroport de départ");
+        columnNames.add("Heure d'arrivée");
+        columnNames.add("Date d'arrivée");
+        columnNames.add("Aéroport d'arrivée");
     }
 
     public int getColumnCount(){
-        return columnNames.length;
+        return columnNames.size();
     }
 
     public int getRowCount(){
         return flights.size();
     }
 
-    public String getColumnName(int col){
-        return columnNames[col];
+    public String getColumnName(int column){
+        return columnNames.get(column);
     }
 
     public Object getValueAt(int row, int column){
@@ -42,44 +55,36 @@ public class PassengersByClassResultTable extends AbstractTableModel {
             case 0:
                 return flight.getPassengerPassportNumber();
             case 1:
-                return flight.getPassengerLastName() + flight.getPassengerFirstName();
+                return flight.getPassengerLastName();
             case 2:
-                return flight.getSeatRow() + flight.getSeatColumn();
+                return flight.getPassengerFirstName();
             case 3:
+                return flight.getSeatRow() + flight.getSeatColumn();
+            case 4:
                 return flight.getFlightNumber();
-            case 4 :
-                return flight.getFlightDepartureTime();
             case 5:
-                return flight.getFlightArrivalTime();
+                return Format.timeFormat(flight.getFlightDepartureTime());
             case 6:
-                return flight.getDepartureAirportCode() + flight.getDepartureAirportName() + flight.getDepartureAirportCountry();
+                return Format.dateFormat(flight.getFlightDepartureTime());
             case 7:
+                return flight.getDepartureAirportCode() + flight.getDepartureAirportName() + flight.getDepartureAirportCountry();
+            case 8:
+                return Format.timeFormat(flight.getFlightArrivalTime());
+            case 9:
+                return Format.dateFormat(flight.getFlightArrivalTime());
+            case 10:
                 return flight.getArrivalAirportCode() + flight.getArrivalAirportName() + flight.getArrivalAirportCountry();
-
-                default:
-                    return null;
+            default:
+                return null;
         }
     }
 
-    public Class getColumnClass(int col){
-        Class c;
+    public Class getColumnClass(int column){
+        Class c = switch (column) {
+            case 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 -> String.class;
+            default -> throw new IllegalStateException("Unexpected value: " + column);
+        };
 
-        switch (col){
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-            case 6:
-            case 7:
-                c = String.class;
-                break;
-            case 4:
-            case 5:
-                c = GregorianCalendar.class;
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + col);
-        }
         return c;
     }
 
