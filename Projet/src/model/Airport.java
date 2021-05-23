@@ -9,6 +9,7 @@ public class Airport {
     private final static String REGEX_CODE = "^[A-Z][A-Z][A-Z]$";
     private final static int LENGTH_NAME = 50;
     private final static int LENGTH_COUNTRY = 50;
+    private final static int LENGTH_MIN = 1;
 
     private String code;        // 3 letters
     private String name;        // Max 50 characters
@@ -34,14 +35,14 @@ public class Airport {
     }
 
     private void setName(String name) throws AiportException.NameAirportException {
-        if(name.length() <= LENGTH_NAME)
+        if(name.length() >= LENGTH_MIN && name.length() <= LENGTH_NAME)
             this.name = name;
         else
             throw new AiportException.NameAirportException(name);
     }
 
     private void setCountry(String country) throws AiportException.CountryException {
-        if(country.length() <= LENGTH_COUNTRY)
+        if(country.length() >= LENGTH_MIN && country.length() <= LENGTH_COUNTRY)
             this.country = country;
         else
             throw new AiportException.CountryException(country);
