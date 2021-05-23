@@ -4,5 +4,5 @@
 #### SMITH Jonathan  etu43752@henallux.be
 
 ## Identifiant de la BD 
-root
-LoréaSmith
+#### id : root
+#### password : LoréaSmith
