@@ -42,9 +42,10 @@ public class PassengersByClassSearchPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent evt) {
             panel.removeAll();
-            ArrayList<PassengersByClassSearch> flights;
+            ArrayList<PassengersByClassSearch> flights = null;
+            String className = (String )passengersByClassSearchForm.getClassComboBox().getSelectedItem();
             try {
-                flights = controller.getAllPassengersOfAClass(GetID.getClassId(passengersByClassSearchForm.getClassComboBox()));
+                flights = controller.getAllPassengersOfAClass(className);
                 panel.add(new PassengersByClassResultPanel(flights), BorderLayout.CENTER);
                 panel.repaint();
             } catch (DataBaseAccessException e) {

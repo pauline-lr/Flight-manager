@@ -51,9 +51,9 @@ public class ButtonsPanel extends JPanel {
     public static class RetourListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent evt) {
-            menuWindow.getCont().removeAll();
-            menuWindow.getCont().add(new WelcomePanel(), BorderLayout.CENTER);
-            menuWindow.getCont().repaint();
+            menuWindow.getContainer().removeAll();
+            menuWindow.getContainer().add(new WelcomePanel(), BorderLayout.CENTER);
+            menuWindow.getContainer().repaint();
             menuWindow.setVisible(true);
         }
     }
@@ -91,11 +91,11 @@ public class ButtonsPanel extends JPanel {
     }
 
     public void takeOut() {
-        menuWindow.getCont().removeAll();
+        menuWindow.getContainer().removeAll();
 
         if (typeAction.equals("Addition")) {
             try {
-                menuWindow.getCont().add(new AddFlightPanel(), BorderLayout.CENTER);
+                menuWindow.getContainer().add(new AddFlightPanel(), BorderLayout.CENTER);
             } catch (SQLException | DataBaseConnectionException throwables) {
                 throwables.printStackTrace();
                 JOptionPane.showMessageDialog(null, throwables.getMessage(),
@@ -103,14 +103,14 @@ public class ButtonsPanel extends JPanel {
             }
         } else if (typeAction.equals("Modification")) {
             try {
-                menuWindow.getCont().add(new ModifyFlightPanel(menuWindow), BorderLayout.CENTER);
+                menuWindow.getContainer().add(new ModifyFlightPanel(menuWindow), BorderLayout.CENTER);
             } catch (SQLException | DataBaseConnectionException throwables) {
                 throwables.printStackTrace();
                 JOptionPane.showMessageDialog(null, throwables.getMessage(),
                         "Erreur", JOptionPane.ERROR_MESSAGE);
             }
         }
-        menuWindow.getCont().repaint();
+        menuWindow.getContainer().repaint();
         menuWindow.setVisible(true);
     }
 }

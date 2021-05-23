@@ -16,5 +16,6 @@ public class AllFlightsListPanel extends JPanel {
         JTable table = new JTable(flightsTable);
         table.setModel(flightsTable);
         this.add(new JScrollPane(table), BorderLayout.CENTER);
+
     }
 }

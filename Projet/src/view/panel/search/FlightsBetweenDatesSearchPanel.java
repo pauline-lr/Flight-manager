@@ -6,6 +6,7 @@ import exception.SearchDateException;
 import model.search.FlightsBetweenDatesSearch;
 import view.form.search.FlightsBetweenDatesSearchForm;
 import view.panel.list.FlightsBetweenDatesResultPanel;
+import view.window.MenuWindow;
 
 import javax.swing.*;
 import java.awt.*;

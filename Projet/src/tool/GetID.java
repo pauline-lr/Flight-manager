@@ -31,8 +31,4 @@ public class GetID {
     public static String getPilotId(JComboBox pilotComboBox) {
         return getId((String) pilotComboBox.getSelectedItem());
     }
-
-    public static String getClassId(JComboBox classComboBox) {
-        return getId((String) classComboBox.getSelectedItem());
-    }
 }

@@ -1,7 +1,6 @@
 package view.window;
 
 import controller.ApplicationController;
-import exception.dataBase.DataBaseAccessException;
 import exception.dataBase.DataBaseCloseException;
 import exception.dataBase.DataBaseConnectionException;
 import exception.FlightException;
@@ -98,7 +97,7 @@ public class MenuWindow extends JFrame{
         flight.add(modifyFlight);
 
         deleteFlight = new JMenuItem("Supprimer un vol");
-        deleteFlight.addActionListener(new DeletelightListener());
+        deleteFlight.addActionListener(new DeleteFlightListener());
         flight.add(deleteFlight);
     }
 
@@ -122,7 +121,7 @@ public class MenuWindow extends JFrame{
         search.add(searchPilot);
     }
 
-    public Container getCont() {
+    public Container getContainer() {
         return frameContainer;
     }
 
@@ -232,7 +231,7 @@ public class MenuWindow extends JFrame{
         }
     }
 
-    private class DeletelightListener implements ActionListener {
+    private class DeleteFlightListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent evt){
             frameContainer.removeAll();
