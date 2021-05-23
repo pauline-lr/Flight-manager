@@ -74,8 +74,7 @@ public class DeleteFlightPanel extends JPanel {
     }
 
     public static int okcancel(String theMessage) {
-        int result = JOptionPane.showConfirmDialog((Component) null, theMessage,
+        return JOptionPane.showConfirmDialog((Component) null, theMessage,
                 "Alert", JOptionPane.OK_CANCEL_OPTION);
-        return result;
     }
 }

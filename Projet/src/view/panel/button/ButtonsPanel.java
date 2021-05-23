@@ -27,7 +27,7 @@ public class ButtonsPanel extends JPanel {
     private JButton retour, validation, réinit;
 
 
-    public ButtonsPanel(MenuWindow menuWindow, String typeAction, FlightForm flightForm, String label){
+    public ButtonsPanel(MenuWindow menuWindow, String typeAction, FlightForm flightForm, String label) {
         setController(new ApplicationController());
         this.menuWindow = menuWindow;
         this.typeAction = typeAction;
@@ -35,7 +35,7 @@ public class ButtonsPanel extends JPanel {
         this.setLayout(new FlowLayout());
 
         retour = new JButton("Retour");
-        validation =  new JButton(label);
+        validation = new JButton(label);
         réinit = new JButton("Réinitialiser");
 
         retour.addActionListener(new RetourListener());
@@ -55,7 +55,7 @@ public class ButtonsPanel extends JPanel {
     // bouton retour
     public static class RetourListener implements ActionListener {
         @Override
-        public void actionPerformed(ActionEvent evt){
+        public void actionPerformed(ActionEvent evt) {
             menuWindow.getCont().removeAll();
             menuWindow.getCont().add(new WelcomePanel(), BorderLayout.CENTER);
             menuWindow.getCont().repaint();
@@ -64,36 +64,33 @@ public class ButtonsPanel extends JPanel {
     }
 
     // bouton de validation
-    private class ValidationListener implements ActionListener{
+    private class ValidationListener implements ActionListener {
         @Override
-        public void actionPerformed(ActionEvent evt){
+        public void actionPerformed(ActionEvent evt) {
             try {
-                if(flightForm != null) {
+                if (flightForm != null) {
                     Flight flight = flightForm.getFlight();
                     if (typeAction.equals("Addition")) {
                         controller.addFlight(flight);
                         JOptionPane.showMessageDialog(null, "Vol ajouté", "Succès", JOptionPane.INFORMATION_MESSAGE);
+                    } else if (typeAction.equals("Modification")) {
+                        // Modification
+                        //Flight flight = modifyFlight.getFlight()
+                        //controller.modifyFlight(flight);
+                        JOptionPane.showMessageDialog(null, "Vol modifié", "Succès", JOptionPane.INFORMATION_MESSAGE);
                     }
-                }else{
-                    // Modification
-                    //Flight flight = modifyFlight.getFlight()
-                    //controller.modifyFlight(flight);
-                    JOptionPane.showMessageDialog(null, "Vol modifié", "Succès", JOptionPane.INFORMATION_MESSAGE);
-
                 }
 
-            } catch (SQLException | FlightException.NumberFlightException | FlightException.MealDescriptionException |
-                DataBaseConnectionException throwables) {
+            } catch (SQLException | DataBaseConnectionException throwables) {
                 throwables.printStackTrace();
-                JOptionPane.showMessageDialog(null, throwables.getMessage() , "Erreur", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, throwables.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
 
-    // bouton de réinitialisation
-    private class ResetListener implements ActionListener{
+    private class ResetListener implements ActionListener {
         @Override
-        public void actionPerformed(ActionEvent evt){
+        public void actionPerformed(ActionEvent evt) {
             try {
                 takeOut();
             } catch (SQLException | DataBaseConnectionException | DataBaseAccessException throwables) {
@@ -109,14 +106,7 @@ public class ButtonsPanel extends JPanel {
             menuWindow.getCont().add(new AddFlightPanel(menuWindow), BorderLayout.CENTER);
         } else if (typeAction.equals("Modification")) {
             menuWindow.getCont().add(new ModifyFlightPanel(menuWindow), BorderLayout.CENTER);
-        } else if (typeAction.equals("DateFlightSearch")) {
-            menuWindow.getCont().add(new FlightsBetweenDatesSearchPanel(), BorderLayout.CENTER);
-        } else if(typeAction.equals("SearchPilot")) {
-            menuWindow.getCont().add(new FlightsByPilotSearchPanel(menuWindow), BorderLayout.CENTER);
-        } else if(typeAction.equals("SeatReservationSearch")) {
-            menuWindow.getCont().add(new PassengersByClassSearchPanel(menuWindow), BorderLayout.CENTER);
         }
-
         menuWindow.getCont().repaint();
         menuWindow.setVisible(true);
     }

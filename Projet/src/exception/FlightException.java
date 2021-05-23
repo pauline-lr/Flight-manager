@@ -33,8 +33,14 @@ public class FlightException extends Exception {
         }
 
         public String getMessage( ) {
-            return  "Le numéro de vol  \"" + wrongNumberFlight + "\" ne correspond pas à la structure requise.\n"
-                    + "Un numéro de vol se compose de 2 lettres majsucules suivient de 4 chiffres.";
+            if(wrongNumberFlight.isEmpty()){
+                return "Le numéro du vol est vide (champs obligatoire)";
+            //}else if(/*se trouve dans la DB*/){
+                //return "Le numéro de vol existe déjà";
+            }else{
+                return  "Le numéro de vol  \"" + wrongNumberFlight + "\" ne correspond pas à la structure requise.\n"
+                        + "Un numéro de vol se compose de 2 lettres majsucules suivient de 4 chiffres.";
+            }
         }
     }
 
