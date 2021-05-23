@@ -43,6 +43,36 @@ public class ApplicationController {
     //endregion
 
     //region Get
+    public Flight getFlight(String flightNumber)
+            throws SQLException, DataBaseConnectionException, FlightException.MealDescriptionException, FlightException.NumberFlightException {
+        return flightManager.getFlight(flightNumber);
+    }
+
+    public String getPilotToString(String pilotId)
+            throws SQLException, DataBaseConnectionException {
+        return flightManager.getPilotToString(pilotId);
+    }
+
+    public String getPlaneToString(Integer planeId)
+            throws SQLException, DataBaseConnectionException {
+        return flightManager.getPlaneToString(planeId);
+    }
+
+    public String getAirportToString(String gateId)
+            throws SQLException, DataBaseConnectionException {
+        return flightManager.getAirportToString(gateId);
+    }
+
+    public String getTerminalToString(String gateId)
+            throws SQLException, DataBaseConnectionException {
+        return flightManager.getTerminalToString(gateId);
+    }
+
+    public String getGateToString(String gateId)
+            throws SQLException, DataBaseConnectionException {
+        return flightManager.getGateToString(gateId);
+    }
+
     public ArrayList<Flight> getAllFlights()
             throws SQLException, DataBaseConnectionException, FlightException.MealDescriptionException, FlightException.NumberFlightException {
         return flightManager.getAllFlights();
@@ -81,31 +111,6 @@ public class ApplicationController {
     public String[] getAllGatesOfAnAirportAndTerminalForComboBox(String airportId, String terminalId)
             throws SQLException, DataBaseConnectionException {
         return flightManager.getAllGatesOfAnAirportAndTerminalForComboBox(airportId, terminalId);
-    }
-
-    public String getPilotToString(String pilotId)
-            throws SQLException, DataBaseConnectionException {
-        return flightManager.getPilotToString(pilotId);
-    }
-
-    public String getPlaneToString(Integer planeId)
-            throws SQLException, DataBaseConnectionException {
-        return flightManager.getPlaneToString(planeId);
-    }
-
-    public String getAirportToString(String gateId)
-            throws SQLException, DataBaseConnectionException {
-        return flightManager.getAirportToString(gateId);
-    }
-
-    public String getTerminalToString(String gateId)
-            throws SQLException, DataBaseConnectionException {
-        return flightManager.getTerminalToString(gateId);
-    }
-
-    public String getGateToString(String gateId)
-            throws SQLException, DataBaseConnectionException {
-        return flightManager.getGateToString(gateId);
     }
     //endregion
 

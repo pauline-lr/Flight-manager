@@ -24,6 +24,8 @@ public interface DataAccessObjectPattern {
     //endregion
 
     //region Get
+    Flight getFlight(String flightNumber)
+            throws SQLException, DataBaseConnectionException, FlightException.MealDescriptionException, FlightException.NumberFlightException;
     String getPilotToString(String pilotId)
             throws SQLException, DataBaseConnectionException;
     String getPlaneToString(Integer planeId)

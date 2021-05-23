@@ -268,6 +268,128 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
     //endregion
 
     //region Get
+    public Flight getFlight(String flightNumber)
+            throws SQLException, DataBaseConnectionException, FlightException.MealDescriptionException, FlightException.NumberFlightException {
+        String sqlRequest = "SELECT * FROM flight WHERE number = ?";
+        Flight flight = null;
+        String mealDescription;
+
+        PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
+        preparedStatement.setString(1, flightNumber);
+
+        ResultSet data = preparedStatement.executeQuery();
+
+        if (data.next()) {
+            GregorianCalendar departureTime = new GregorianCalendar();
+            GregorianCalendar arrivalTime = new GregorianCalendar();
+            departureTime.setTime(data.getTimestamp("departure_time"));
+            arrivalTime.setTime(data.getTimestamp("arrival_time"));
+
+            flight = new Flight(
+                    data.getString("number"),
+                    departureTime,
+                    arrivalTime,
+                    data.getBoolean("is_meal_on_board"),
+                    data.getString("pilot"),
+                    data.getString("departure_gate"),
+                    data.getString("arrival_gate"),
+                    data.getInt("plane")
+            );
+
+            mealDescription = data.getString("meal_description");
+            if (!data.wasNull()) {
+                flight.setMealDescription(mealDescription);
+            }
+        }
+
+        return flight;
+    }
+
+    public String getPilotToString(String pilotId)
+            throws SQLException, DataBaseConnectionException {
+        String pilotToString = null;
+        String sqlRequest = "SELECT licence_number, first_name, last_name FROM pilot WHERE licence_number = ?";
+
+        PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
+        preparedStatement.setString(1, pilotId);
+
+        ResultSet data = preparedStatement.executeQuery();
+
+        if (data.next()) {
+            pilotToString = data.getString("licence_number") + " - " + data.getString("last_name") + " " + data.getString("first_name");
+        }
+
+        return pilotToString;
+    }
+
+    public String getPlaneToString(Integer planeId)
+            throws SQLException, DataBaseConnectionException {
+        String planeToString = null;
+        String sqlRequest = "SELECT plane_id, model, brand FROM plane WHERE plane_id = ?";
+
+        PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
+        preparedStatement.setInt(1, planeId);
+
+        ResultSet data = preparedStatement.executeQuery();
+
+        if (data.next()) {
+            planeToString = data.getInt("plane_id") + " - " + data.getString("brand") + " " + data.getString("model");
+        }
+
+        return planeToString;
+    }
+
+    public String getAirportToString(String gateId)
+            throws SQLException, DataBaseConnectionException {
+        String airportToString = null;
+        String sqlRequest = "SELECT code, name, country FROM gate, airport WHERE airport = code AND gate_id = ?";
+
+        PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
+        preparedStatement.setString(1, gateId);
+
+        ResultSet data = preparedStatement.executeQuery();
+
+        if (data.next()) {
+            airportToString = data.getString("code") + " - " + data.getString("name") + ", " + data.getString("country");
+        }
+
+        return airportToString;
+    }
+
+    public String getTerminalToString(String gateId)
+            throws SQLException, DataBaseConnectionException {
+        String gateToString = null;
+        String sqlRequest = "SELECT terminal FROM gate WHERE gate_id = ?";
+
+        PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
+        preparedStatement.setString(1, gateId);
+
+        ResultSet data = preparedStatement.executeQuery();
+
+        if (data.next()) {
+            gateToString = data.getString("terminal");
+        }
+
+        return gateToString;
+    }
+
+    public String getGateToString(String gateId)
+            throws SQLException, DataBaseConnectionException {
+        String gateToString = null;
+        String sqlRequest = "SELECT number FROM gate WHERE gate_id = ?";
+
+        PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
+        preparedStatement.setString(1, gateId);
+
+        ResultSet data = preparedStatement.executeQuery();
+
+        if (data.next()) {
+            gateToString = Integer.toString(data.getInt("number"));
+        }
+
+        return gateToString;
+    }
+
     public ArrayList<Flight> getAllFlights()
             throws SQLException, DataBaseConnectionException, FlightException.MealDescriptionException, FlightException.NumberFlightException {
         ArrayList<Flight> flights = new ArrayList<>();
@@ -447,91 +569,6 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
         }
 
         return gatesOfAnAirportAndTerminal.toArray(new String[0]);
-    }
-
-    public String getPilotToString(String pilotId)
-            throws SQLException, DataBaseConnectionException {
-        String pilotToString = null;
-        String sqlRequest = "SELECT licence_number, first_name, last_name FROM pilot WHERE licence_number = ?";
-
-        PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
-        preparedStatement.setString(1, pilotId);
-
-        ResultSet data = preparedStatement.executeQuery();
-
-        if (data.next()) {
-            pilotToString = data.getString("licence_number") + " - " + data.getString("last_name") + " " + data.getString("first_name");
-        }
-
-        return pilotToString;
-    }
-
-    public String getPlaneToString(Integer planeId)
-            throws SQLException, DataBaseConnectionException {
-        String planeToString = null;
-        String sqlRequest = "SELECT plane_id, model, brand FROM plane WHERE plane_id = ?";
-
-        PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
-        preparedStatement.setInt(1, planeId);
-
-        ResultSet data = preparedStatement.executeQuery();
-
-        if (data.next()) {
-            planeToString = data.getInt("plane_id") + " - " + data.getString("brand") + " " + data.getString("model");
-        }
-
-        return planeToString;
-    }
-
-    public String getAirportToString(String gateId)
-            throws SQLException, DataBaseConnectionException {
-        String airportToString = null;
-        String sqlRequest = "SELECT code, name, country FROM gate, airport WHERE airport = code AND gate_id = ?";
-
-        PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
-        preparedStatement.setString(1, gateId);
-
-        ResultSet data = preparedStatement.executeQuery();
-
-        if (data.next()) {
-            airportToString = data.getString("code") + " - " + data.getString("name") + ", " + data.getString("country");
-        }
-
-        return airportToString;
-    }
-
-    public String getTerminalToString(String gateId)
-            throws SQLException, DataBaseConnectionException {
-        String gateToString = null;
-        String sqlRequest = "SELECT terminal FROM gate WHERE gate_id = ?";
-
-        PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
-        preparedStatement.setString(1, gateId);
-
-        ResultSet data = preparedStatement.executeQuery();
-
-        if (data.next()) {
-            gateToString = data.getString("terminal");
-        }
-
-        return gateToString;
-    }
-
-    public String getGateToString(String gateId)
-            throws SQLException, DataBaseConnectionException {
-        String gateToString = null;
-        String sqlRequest = "SELECT number FROM gate WHERE gate_id = ?";
-
-        PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
-        preparedStatement.setString(1, gateId);
-
-        ResultSet data = preparedStatement.executeQuery();
-
-        if (data.next()) {
-            gateToString = Integer.toString(data.getInt("number"));
-        }
-
-        return gateToString;
     }
     //endregion
 
