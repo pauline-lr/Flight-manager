@@ -55,17 +55,27 @@ public class DeleteFlightPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent evt) {
             if(table.getSelectedRow() != -1) {
-                int selectedRow = table.getSelectedRow();
-                try {
-                    controller.deleteFlight(flightsTable.getFlight(selectedRow));
-                } catch (SQLException | DataBaseConnectionException throwables) {
-                    throwables.printStackTrace();
+                int choice = okcancel("Etes-vous sûr de vouloir supprimer ce vol ? \n Les places réservées seront elles aussi effacées.");
+
+                if(choice == 0){
+                    int selectedRow = table.getSelectedRow();
+                    try {
+                        controller.deleteFlight(flightsTable.getFlight(selectedRow));
+                    } catch (SQLException | DataBaseConnectionException throwables) {
+                        throwables.printStackTrace();
+                    }
+                    flightsTable.removeRow(selectedRow);
+                    JOptionPane.showMessageDialog(null, "Vol supprimé", "Succès", JOptionPane.INFORMATION_MESSAGE);
                 }
-                flightsTable.removeRow(selectedRow);
-                JOptionPane.showMessageDialog(null, "Vol supprimé", "Succès", JOptionPane.INFORMATION_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(null, "Veuillez sélectionner une ligne", "Succès", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Veuillez sélectionner une ligne", "Erreur", JOptionPane.ERROR_MESSAGE);
             }
         }
+    }
+
+    public static int okcancel(String theMessage) {
+        int result = JOptionPane.showConfirmDialog((Component) null, theMessage,
+                "Alert", JOptionPane.OK_CANCEL_OPTION);
+        return result;
     }
 }
