@@ -30,7 +30,7 @@ public class PassengersByClassSearchForm extends JPanel {
 
     public void createPassengersByClassForm() throws SQLException, DataBaseConnectionException {
         classLabel = new JLabel("    Choisissez la classe");
-        classLabel.setFont(Format.font);
+        classLabel.setFont(Format.titleFont);
         classLabel.setHorizontalAlignment(SwingConstants.LEFT);
         add(classLabel);
 

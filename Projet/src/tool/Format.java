@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Format {
-    public static final Font font = new Font(null, Font.BOLD, 13);
+    public static final Font titleFont = new Font(null, Font.BOLD, 13);
 
     public static String timeFormat(GregorianCalendar calendar) {
         SimpleDateFormat format = new SimpleDateFormat("HH:mm");

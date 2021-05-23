@@ -56,18 +56,15 @@ public class FlightsBetweenDatesResultTable extends AbstractTableModel {
             case 0:
                 return flight.getFlightNumber();
             case 1:
-                return flight.getPilotLicenceNumber() + " - " + flight.getPilotLastName()
-                        + " - " + flight.getPilotFirstName();
+                return flight.getPilotLicenceNumber() + " - " + flight.getPilotLastName() + " - " + flight.getPilotFirstName();
             case 2:
-                return flight.getPlaneId() + " - " + flight.getPlaneBrand()
-                        + " - " + flight.getPlaneModel();
+                return flight.getPlaneId() + " - " + flight.getPlaneBrand() + " - " + flight.getPlaneModel();
             case 3:
                 return Format.timeFormat(departure);
             case 4:
                 return Format.dateFormat(departure);
             case 5:
-                return flight.getDepartureAirportCode() + " - " + flight.getDepartureAirportName()
-                        + ", " + flight.getDepartureAirportCountry();
+                return flight.getDepartureAirportCode() + " - " + flight.getDepartureAirportName() + ", " + flight.getDepartureAirportCountry();
             case 6:
                 return flight.getDepartureGateTerminal();
             case 7:
@@ -77,8 +74,7 @@ public class FlightsBetweenDatesResultTable extends AbstractTableModel {
             case 9:
                 return Format.dateFormat(arrival);
             case 10:
-                return flight.getArrivalAirportCode() + " - " + flight.getArrivalAirportName()
-                        + ", " + flight.getArrivalAirportCountry();
+                return flight.getArrivalAirportCode() + " - " + flight.getArrivalAirportName() + ", " + flight.getArrivalAirportCountry();
             case 11:
                 return flight.getArrivalGateTerminal();
             case 12:

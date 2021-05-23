@@ -30,7 +30,7 @@ public class FlightsByPilotSearchForm extends JPanel {
 
     public void createFlightsByPilotForm() throws SQLException, DataBaseConnectionException {
         pilotLabel = new JLabel("    Choisissez le pilote");
-        pilotLabel.setFont(Format.font);
+        pilotLabel.setFont(Format.titleFont);
         pilotLabel.setHorizontalAlignment(SwingConstants.LEFT);
         add(pilotLabel);
 
