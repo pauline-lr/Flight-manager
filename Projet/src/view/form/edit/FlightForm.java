@@ -49,19 +49,11 @@ public class FlightForm extends JPanel {
     }
 
     public Flight getFlight() {
-        GregorianCalendar departureDateGc = (GregorianCalendar) departureDate.getValue();
-        GregorianCalendar departureTimeGc = (GregorianCalendar) departureTime.getValue();
-        GregorianCalendar departureGc = new GregorianCalendar(departureDateGc.YEAR, departureDateGc.MONTH, departureDateGc.DAY_OF_MONTH, departureTimeGc.HOUR, departureTimeGc.MINUTE);
-
-        GregorianCalendar arrivalDateGc = (GregorianCalendar) arrivalDate.getValue();
-        GregorianCalendar arrivalTimeGc = (GregorianCalendar) arrivalTime.getValue();
-        GregorianCalendar arrivalGc = new GregorianCalendar(arrivalDateGc.YEAR, arrivalDateGc.MONTH, arrivalDateGc.DAY_OF_MONTH, arrivalTimeGc.HOUR, arrivalTimeGc.MINUTE);
-
         try {
             return new Flight(
                     numberTextField.getText(),
-                    departureGc,
-                    arrivalGc,
+                    Format.getDate(departureDate),
+                    Format.getDate(arrivalDate),
                     isMealOnBoardCheckBox.isSelected(),
                     mealDescriptionTextField.getText(),
                     GetID.getPilotId(pilotComboBox),

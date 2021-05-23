@@ -1,5 +1,8 @@
 package view.form.search;
 
+import tool.Format;
+import tool.GetID;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.Calendar;
@@ -19,6 +22,14 @@ public class FlightsBetweenDatesSearchForm extends JPanel {
         this.setLayout(new GridLayout(2, 4));
 
         createFlightsBetweenDatesForm();
+    }
+
+    public GregorianCalendar getStartDate() {
+        return Format.getDate(startDate);
+    }
+
+    public GregorianCalendar getEndDate() {
+        return Format.getDate(endDate);
     }
 
     public void setCurrentDate(Date currentDate) {
@@ -41,19 +52,5 @@ public class FlightsBetweenDatesSearchForm extends JPanel {
         endDate = new JSpinner(new SpinnerDateModel(currentDate, null, null, Calendar.DAY_OF_WEEK));
         endDate.setEditor(new JSpinner.DateEditor(endDate, "dd/MM/yyyy"));
         this.add(endDate);
-    }
-
-    public GregorianCalendar getStartDate() {
-        GregorianCalendar gregorianCalendar = new GregorianCalendar();
-        Date date = (Date) startDate.getValue();
-        gregorianCalendar.setTime(date);
-        return gregorianCalendar;
-    }
-
-    public GregorianCalendar getEndDate() {
-        GregorianCalendar gregorianCalendar = new GregorianCalendar();
-        Date date = (Date) endDate.getValue();
-        gregorianCalendar.setTime(date);
-        return gregorianCalendar;
     }
 }
