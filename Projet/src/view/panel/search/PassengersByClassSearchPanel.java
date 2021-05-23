@@ -42,8 +42,8 @@ public class PassengersByClassSearchPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent evt) {
             panel.removeAll();
-            ArrayList<PassengersByClassSearch> flights = null;
-            String className = (String )passengersByClassSearchForm.getClassComboBox().getSelectedItem();
+            ArrayList<PassengersByClassSearch> flights;
+            String className = (String) passengersByClassSearchForm.getClassComboBox().getSelectedItem();
             try {
                 flights = controller.getAllPassengersOfAClass(className);
                 panel.add(new PassengersByClassResultPanel(flights), BorderLayout.CENTER);

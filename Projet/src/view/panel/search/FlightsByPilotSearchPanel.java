@@ -51,8 +51,9 @@ public class FlightsByPilotSearchPanel extends JPanel {
         public void actionPerformed(ActionEvent evt) {
             panel.removeAll();
             ArrayList<FlightsByPilotSearch> flights;
+            JComboBox pilot = flightsByPilotSearchForm.getPilotComboBox();
             try {
-                flights = controller.getAllFlightsOfAPilot(GetID.getPilotId(flightsByPilotSearchForm.getPilotComboBox()));
+                flights = controller.getAllFlightsOfAPilot(GetID.getPilotId(pilot));
                 panel.add(new FlightsByPilotResultPanel(flights), BorderLayout.CENTER);
                 panel.repaint();
             } catch (DataBaseAccessException e) {

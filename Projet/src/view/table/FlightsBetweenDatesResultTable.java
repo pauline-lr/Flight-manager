@@ -3,14 +3,12 @@ package view.table;
 import model.search.FlightsBetweenDatesSearch;
 import tool.Format;
 
-import javax.swing.table.AbstractTableModel;
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
+import javax.swing.table.*;
+import java.util.*;
 
 public class FlightsBetweenDatesResultTable extends AbstractTableModel {
     private ArrayList<FlightsBetweenDatesSearch> flights;
     private ArrayList<String> columnNames;
-
 
     public FlightsBetweenDatesResultTable(ArrayList<FlightsBetweenDatesSearch> flights) {
         setFlights(flights);
@@ -68,8 +66,8 @@ public class FlightsBetweenDatesResultTable extends AbstractTableModel {
             case 4:
                 return Format.dateFormat(departure);
             case 5:
-                return flight.getDepartureAirportCode() + " - " + flight.getDepartureAirportCode()
-                        + " - " + flight.getDepartureAirportCountry();
+                return flight.getDepartureAirportCode() + " - " + flight.getDepartureAirportName()
+                        + ", " + flight.getDepartureAirportCountry();
             case 6:
                 return flight.getDepartureGateTerminal();
             case 7:
@@ -79,8 +77,8 @@ public class FlightsBetweenDatesResultTable extends AbstractTableModel {
             case 9:
                 return Format.dateFormat(arrival);
             case 10:
-                return flight.getArrivalAirportCode() + " - " + flight.getArrivalAirportCode()
-                        + " - " + flight.getArrivalAirportCountry();
+                return flight.getArrivalAirportCode() + " - " + flight.getArrivalAirportName()
+                        + ", " + flight.getArrivalAirportCountry();
             case 11:
                 return flight.getArrivalGateTerminal();
             case 12:

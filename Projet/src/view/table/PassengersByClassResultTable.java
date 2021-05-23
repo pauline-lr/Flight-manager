@@ -3,15 +3,12 @@ package view.table;
 import model.search.PassengersByClassSearch;
 import tool.Format;
 
-import javax.swing.*;
-import javax.swing.table.AbstractTableModel;
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
+import javax.swing.table.*;
+import java.util.*;
 
 public class PassengersByClassResultTable extends AbstractTableModel {
     private ArrayList<PassengersByClassSearch> flights;
     private ArrayList<String> columnNames;
-
 
     public PassengersByClassResultTable(ArrayList<PassengersByClassSearch> flights)  {
         setFlights(flights);
@@ -67,37 +64,22 @@ public class PassengersByClassResultTable extends AbstractTableModel {
             case 6:
                 return Format.dateFormat(flight.getFlightDepartureTime());
             case 7:
-                return flight.getDepartureAirportCode() + flight.getDepartureAirportName() + flight.getDepartureAirportCountry();
+                return flight.getDepartureAirportCode() + " - " + flight.getDepartureAirportName() + ", " + flight.getDepartureAirportCountry();
             case 8:
                 return Format.timeFormat(flight.getFlightArrivalTime());
             case 9:
                 return Format.dateFormat(flight.getFlightArrivalTime());
             case 10:
-                return flight.getArrivalAirportCode() + flight.getArrivalAirportName() + flight.getArrivalAirportCountry();
+                return flight.getArrivalAirportCode() + " - " + flight.getArrivalAirportName() + ", " + flight.getArrivalAirportCountry();
             default:
                 return null;
         }
     }
 
     public Class getColumnClass(int column){
-        Class c = switch (column) {
+        return switch (column) {
             case 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 -> String.class;
             default -> throw new IllegalStateException("Unexpected value: " + column);
         };
-
-        return c;
-    }
-
-    public PassengersByClassSearch getPilotFlight(int indice){
-        try{
-            return flights.get(indice);
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(null, e, "ERROR : flight table", JOptionPane.ERROR_MESSAGE);
-            return null;
-        }
-    }
-
-    public ArrayList<PassengersByClassSearch> getAllSearchFlightsByPilot(){
-        return flights;
     }
 }

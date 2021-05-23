@@ -51,14 +51,9 @@ public class FlightsBetweenDatesSearchPanel extends JPanel {
             GregorianCalendar endDate = flightsBetweenDatesSearchForm.getEndDate();
             if (startDate.compareTo(endDate) <= 0) {
                 panel.removeAll();
-                ArrayList<FlightsBetweenDatesSearch> flights = null;
+                ArrayList<FlightsBetweenDatesSearch> flights;
                 try {
                     flights = controller.getAllFlightsBetweenDates(startDate, endDate);
-                } catch (DataBaseAccessException e) {
-                    e.printStackTrace();
-                    JOptionPane.showMessageDialog(null,  e.getMessage(), "Erreur liée à la base de données", JOptionPane.ERROR_MESSAGE);
-                }
-                try {
                     panel.add(new FlightsBetweenDatesResultPanel(flights), BorderLayout.CENTER);
                 } catch (DataBaseAccessException e) {
                     e.printStackTrace();

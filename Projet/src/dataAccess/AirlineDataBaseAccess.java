@@ -224,7 +224,7 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
                 "depGat.airport = depAir.code AND " +
                 "fli.arrival_gate = arrGat.gate_id AND " +
                 "arrGat.airport = arrAir.code AND " +
-                "pil.last_name = ? " +
+                "pil.licence_number = ? " +
                 "ORDER BY " +
                 "departure_time;";
         try {
