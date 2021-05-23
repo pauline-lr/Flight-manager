@@ -155,9 +155,11 @@ public class MenuWindow extends JFrame{
         public void actionPerformed(ActionEvent evt){
             frameContainer.removeAll();
             try {
-                frameContainer.add(new AddFlightPanel(MenuWindow.this), BorderLayout.CENTER);
+                frameContainer.add(new AddFlightPanel(), BorderLayout.CENTER);
             } catch (SQLException | DataBaseConnectionException throwables) {
                 throwables.printStackTrace();
+                JOptionPane.showMessageDialog(null, throwables.getMessage( ),
+                        "Erreur", JOptionPane.ERROR_MESSAGE);
             }
             frameContainer.repaint();
             MenuWindow.this.setVisible(true);
@@ -182,11 +184,7 @@ public class MenuWindow extends JFrame{
         @Override
         public void actionPerformed(ActionEvent evt){
             frameContainer.removeAll();
-            try {
-                frameContainer.add(new FlightsBetweenDatesSearchPanel(), BorderLayout.CENTER);
-            } catch (DataBaseAccessException e) {
-                e.printStackTrace();
-            }
+            frameContainer.add(new FlightsBetweenDatesSearchPanel(), BorderLayout.CENTER);
             frameContainer.repaint();
             MenuWindow.this.setVisible(true);
         }
@@ -197,9 +195,11 @@ public class MenuWindow extends JFrame{
         public void actionPerformed(ActionEvent evt){
             frameContainer.removeAll();
             try {
-                frameContainer.add(new PassengersByClassSearchPanel(MenuWindow.this), BorderLayout.CENTER);
+                frameContainer.add(new PassengersByClassSearchPanel(), BorderLayout.CENTER);
             } catch (SQLException | DataBaseConnectionException throwables) {
                 throwables.printStackTrace();
+                JOptionPane.showMessageDialog(null, throwables.getMessage( ),
+                        "Erreur", JOptionPane.ERROR_MESSAGE);
             }
             frameContainer.repaint();
             MenuWindow.this.setVisible(true);
@@ -210,11 +210,7 @@ public class MenuWindow extends JFrame{
         @Override
         public void actionPerformed(ActionEvent evt){
             frameContainer.removeAll();
-            try {
-                frameContainer.add(new FlightsByPilotSearchPanel(MenuWindow.this), BorderLayout.CENTER);
-            } catch (SQLException | DataBaseConnectionException throwables) {
-                throwables.printStackTrace();
-            }
+            frameContainer.add(new FlightsByPilotSearchPanel(), BorderLayout.CENTER);
             frameContainer.repaint();
             MenuWindow.this.setVisible(true);
         }
@@ -228,6 +224,8 @@ public class MenuWindow extends JFrame{
                 frameContainer.add(new AllFlightsListPanel(), BorderLayout.CENTER);
             } catch (SQLException | DataBaseConnectionException | FlightException.MealDescriptionException | FlightException.NumberFlightException throwables) {
                 throwables.printStackTrace();
+                JOptionPane.showMessageDialog(null, throwables.getMessage( ),
+                        "Erreur", JOptionPane.ERROR_MESSAGE);
             }
             frameContainer.repaint();
             MenuWindow.this.setVisible(true);
@@ -240,8 +238,11 @@ public class MenuWindow extends JFrame{
             frameContainer.removeAll();
             try {
                 frameContainer.add(new DeleteFlightPanel(MenuWindow.this), BorderLayout.CENTER);
-            } catch (SQLException | DataBaseConnectionException | FlightException.MealDescriptionException | FlightException.NumberFlightException throwables) {
+            } catch (SQLException | DataBaseConnectionException | FlightException.MealDescriptionException
+                    | FlightException.NumberFlightException throwables) {
                 throwables.printStackTrace();
+                JOptionPane.showMessageDialog(null, throwables.getMessage( ),
+                        "Erreur", JOptionPane.ERROR_MESSAGE);
             }
             frameContainer.repaint();
             MenuWindow.this.setVisible(true);

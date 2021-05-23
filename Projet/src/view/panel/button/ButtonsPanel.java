@@ -1,17 +1,12 @@
 package view.panel.button;
 
 import controller.ApplicationController;
-import exception.dataBase.DataBaseAccessException;
 import exception.dataBase.DataBaseConnectionException;
-import exception.FlightException;
 import model.Flight;
 import view.form.edit.FlightForm;
 import view.panel.edit.AddFlightPanel;
 import view.panel.edit.ModifyFlightPanel;
 import view.panel.home.WelcomePanel;
-import view.panel.search.FlightsBetweenDatesSearchPanel;
-import view.panel.search.FlightsByPilotSearchPanel;
-import view.panel.search.PassengersByClassSearchPanel;
 import view.window.MenuWindow;
 
 import javax.swing.*;
@@ -91,21 +86,29 @@ public class ButtonsPanel extends JPanel {
     private class ResetListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent evt) {
-            try {
-                takeOut();
-            } catch (SQLException | DataBaseConnectionException | DataBaseAccessException throwables) {
-                throwables.printStackTrace();
-            }
+            takeOut();
         }
     }
 
-    public void takeOut() throws SQLException, DataBaseConnectionException, DataBaseAccessException {
+    public void takeOut() {
         menuWindow.getCont().removeAll();
 
         if (typeAction.equals("Addition")) {
-            menuWindow.getCont().add(new AddFlightPanel(menuWindow), BorderLayout.CENTER);
+            try {
+                menuWindow.getCont().add(new AddFlightPanel(), BorderLayout.CENTER);
+            } catch (SQLException | DataBaseConnectionException throwables) {
+                throwables.printStackTrace();
+                JOptionPane.showMessageDialog(null, throwables.getMessage(),
+                        "Erreur", JOptionPane.ERROR_MESSAGE);
+            }
         } else if (typeAction.equals("Modification")) {
-            menuWindow.getCont().add(new ModifyFlightPanel(menuWindow), BorderLayout.CENTER);
+            try {
+                menuWindow.getCont().add(new ModifyFlightPanel(menuWindow), BorderLayout.CENTER);
+            } catch (SQLException | DataBaseConnectionException throwables) {
+                throwables.printStackTrace();
+                JOptionPane.showMessageDialog(null, throwables.getMessage(),
+                        "Erreur", JOptionPane.ERROR_MESSAGE);
+            }
         }
         menuWindow.getCont().repaint();
         menuWindow.setVisible(true);

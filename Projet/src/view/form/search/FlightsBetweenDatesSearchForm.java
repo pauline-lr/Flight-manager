@@ -6,6 +6,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+// prévoir des exceptions
+// start date >= currentDate && start <= currenDate + 2 ans
+// endDate >= start+30 minutes && endDate <= start + 3 jours
+
 public class FlightsBetweenDatesSearchForm extends JPanel {
     private JSpinner startDate, endDate;
     private Date currentDate;

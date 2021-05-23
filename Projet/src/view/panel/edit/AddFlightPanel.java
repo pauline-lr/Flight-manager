@@ -13,7 +13,7 @@ public class AddFlightPanel extends JPanel {
     private MenuWindow menuWindow;
     private FlightForm flightForm;
 
-    public AddFlightPanel(MenuWindow menuWindow) throws SQLException, DataBaseConnectionException {
+    public AddFlightPanel() throws SQLException, DataBaseConnectionException {
         this.flightForm = new FlightForm();
         this.menuWindow = menuWindow;
         this.setLayout(new BorderLayout());

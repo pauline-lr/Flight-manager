@@ -17,11 +17,11 @@ Bugs et Tâches
 A faire en dernier
 - Jeux de tests
     pour des valeurs ne pouvant contenir que des intervales, tester 5 valeur
-        - plus petit que le minimum (doit générer un message d'erreur)
+        - plus petit que le minimum (doit générer un message d'erreur ou ne pas être encodable)
         - le minimum (doit fonctionner)
         - entre le minimum et le maximum (doit fonctionner)
         - le maximum (doit fonctionner)
-        - plus grand que le max(doit générer un message d'erreur )
+        - plus grand que le max(doit générer un message d'erreur ou ne pas être encodable)
 
 - Autres tests
     Validation fonctionnelle

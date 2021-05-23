@@ -7,7 +7,6 @@ import model.search.PassengersByClassSearch;
 import tool.GetID;
 import view.form.search.PassengersByClassSearchForm;
 import view.panel.list.PassengersByClassResultPanel;
-import view.window.MenuWindow;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,7 +21,7 @@ public class PassengersByClassSearchPanel extends JPanel {
     private PassengersByClassSearchForm passengersByClassSearchForm;
     private JButton validation;
 
-    public PassengersByClassSearchPanel(MenuWindow menuWindow) throws SQLException, DataBaseConnectionException {
+    public PassengersByClassSearchPanel() throws SQLException, DataBaseConnectionException {
         setController(new ApplicationController());
         this.panel = this;
         this.passengersByClassSearchForm = new PassengersByClassSearchForm();

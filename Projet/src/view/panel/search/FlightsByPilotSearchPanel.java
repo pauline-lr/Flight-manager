@@ -7,7 +7,6 @@ import model.search.FlightsByPilotSearch;
 import tool.GetID;
 import view.form.search.FlightsByPilotSearchForm;
 import view.panel.list.FlightsByPilotResultPanel;
-import view.window.MenuWindow;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,10 +21,20 @@ public class FlightsByPilotSearchPanel extends JPanel {
     private FlightsByPilotSearchForm flightsByPilotSearchForm;
     private JButton validation;
 
-    public FlightsByPilotSearchPanel(MenuWindow menuWindow) throws SQLException, DataBaseConnectionException {
+    public FlightsByPilotSearchPanel()  {
         setController(new ApplicationController());
         this.panel = this;
-        this.flightsByPilotSearchForm = new FlightsByPilotSearchForm();
+        try {
+            this.flightsByPilotSearchForm = new FlightsByPilotSearchForm();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            JOptionPane.showMessageDialog(null, throwables.getMessage( ),
+                    "Erreur", JOptionPane.ERROR_MESSAGE);
+        } catch (DataBaseConnectionException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, e.getMessage( ),
+                    "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
         this.setLayout(new BorderLayout());
         this.add(flightsByPilotSearchForm, BorderLayout.PAGE_START);
 

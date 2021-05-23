@@ -67,7 +67,7 @@ public class DeleteFlightPanel extends JPanel {
                     flightsTable.removeRow(selectedRow);
                     JOptionPane.showMessageDialog(null, "Vol supprimé", "Succès", JOptionPane.INFORMATION_MESSAGE);
                 }
-            } else {
+            } else { // cancel == 2     exit == -1
                 JOptionPane.showMessageDialog(null, "Veuillez sélectionner une ligne", "Erreur", JOptionPane.ERROR_MESSAGE);
             }
         }

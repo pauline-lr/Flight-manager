@@ -20,7 +20,7 @@ public class FlightsBetweenDatesSearchPanel extends JPanel {
     private FlightsBetweenDatesSearchForm flightsBetweenDatesSearchForm;
     private JButton validation;
 
-    public FlightsBetweenDatesSearchPanel() throws DataBaseAccessException {
+    public FlightsBetweenDatesSearchPanel() {
         setController(new ApplicationController());
         this.panel = this;
         this.flightsBetweenDatesSearchForm = new FlightsBetweenDatesSearchForm();
