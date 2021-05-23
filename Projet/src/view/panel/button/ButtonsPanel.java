@@ -5,7 +5,6 @@ import exception.dataBase.DataBaseAccessException;
 import exception.dataBase.DataBaseConnectionException;
 import exception.FlightException;
 import model.Flight;
-import model.search.FlightsByPilotSearch;
 import view.form.edit.FlightForm;
 import view.panel.edit.AddFlightPanel;
 import view.panel.edit.ModifyFlightPanel;
@@ -13,15 +12,12 @@ import view.panel.home.WelcomePanel;
 import view.panel.search.FlightsBetweenDatesSearchPanel;
 import view.panel.search.FlightsByPilotSearchPanel;
 import view.panel.search.PassengersByClassSearchPanel;
-import view.table.FlightsByPilotResultTable;
 import view.window.MenuWindow;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
 
 public class ButtonsPanel extends JPanel {
     private ApplicationController controller;
@@ -29,14 +25,7 @@ public class ButtonsPanel extends JPanel {
     private String typeAction;
     private FlightForm flightForm;
     private JButton retour, validation, réinit;
-    private GregorianCalendar start, end;
-    private FlightsBetweenDatesSearchPanel dateFlight;
-    private FlightsByPilotSearchPanel flightByPilotPanel;
-    private String pilotId;
-    private PassengersByClassSearchPanel classByPassengerPanel;
-    private String classId;
-    private JTable table;
-    private ListSelectionModel listSelect;
+
 
     public ButtonsPanel(MenuWindow menuWindow, String typeAction, FlightForm flightForm, String label){
         setController(new ApplicationController());
@@ -62,30 +51,6 @@ public class ButtonsPanel extends JPanel {
         this.controller = controller;
     }
 
-    // recherche entre 2 dates
-    /*public ButtonsPanel(MenuWindow menuWindow, String typeAction, FlightsBetweenDatesSearchPanel dateFlight,
-                        GregorianCalendar start, GregorianCalendar end, String label, ApplicationController controller){
-        this(menuWindow, typeAction, null, label, controller);
-        this.dateFlight = dateFlight;
-        this.start = start;
-        this.end = end;
-    }*/
-
-    // recherche  pilote
-    /*public ButtonsPanel(MenuWindow menuWindow, String typeAction, FlightsByPilotSearchPanel flightByPilotPanel,
-                        String pilotId, String label, ApplicationController controller){
-        this(menuWindow, typeAction, null, label, controller);
-        this.flightByPilotPanel = flightByPilotPanel;
-        this.pilotId = pilotId;
-    }*/
-
-    // recherche  passenger
-    /*public ButtonsPanel(MenuWindow menuWindow, String typeAction, PassengersByClassSearchPanel classByPassengerPanel,
-                        String classId, String label, ApplicationController controller){
-        this(menuWindow, typeAction, null, label, controller);
-        this.classByPassengerPanel = classByPassengerPanel;
-        this.classId = classId;
-    }*/
 
     // bouton retour
     public static class RetourListener implements ActionListener {
@@ -110,68 +75,18 @@ public class ButtonsPanel extends JPanel {
                         JOptionPane.showMessageDialog(null, "Vol ajouté", "Succès", JOptionPane.INFORMATION_MESSAGE);
                     }
                 }else{
-                        switch (typeAction) {
-                            case "Modification" -> {
-                                //Flight flight = modifyFlight.getFlight()
-                                //controller.modifyFlight(flight);
-                                JOptionPane.showMessageDialog(null, "Vol modifié", "Succès", JOptionPane.INFORMATION_MESSAGE);
-                            }
-                            case "DateFlightSearch" -> {
-                               /* if (start.compareTo(end) < 0) {
-                                    FlightsBetweenDatesResultTable flightTable;
-                                    RowSorter<FlightsBetweenDatesResultTable> sorter;
-                                    TableColumn column;
-                                    JScrollPane scrollPane;
-                                    ArrayList<FlightsBetweenDatesSearch> flights = controller.getAllFlightsBetweenDates(start, end);
-                                    /*FlightsBetweenDatesResultTable flightTable = new FlightsBetweenDatesResultTable(controller, flights);
-                                    JTable table = new JTable(flightTable);
-                                    table.setModel(flightTable);
-                                    dateFlight.add(new JScrollPane(table), BorderLayout.CENTER);
-                                    //
+                    // Modification
+                    //Flight flight = modifyFlight.getFlight()
+                    //controller.modifyFlight(flight);
+                    JOptionPane.showMessageDialog(null, "Vol modifié", "Succès", JOptionPane.INFORMATION_MESSAGE);
 
-                                    if(flights == null){
-                                        flightTable = new FlightsBetweenDatesResultTable(controller);
-                                    }else{
-                                        flightTable = new FlightsBetweenDatesResultTable(controller, flights);
-                                    }
+                }
 
-                                    table = new JTable(flightTable);
-                                    sorter = new TableRowSorter<>(flightTable);
-                                    table.setRowSorter(sorter);
-                                    column = table.getColumnModel().getColumn(1);
-                                    column.setPreferredWidth(300);
-
-                                    scrollPane = new JScrollPane(table);
-                                    listSelect = table.getSelectionModel();
-                                    dateFlight.add(scrollPane, BorderLayout.CENTER);
-                                   // dateFlight.add(new ResultSearchFlightBetweenDates(controller, flights), BorderLayout.CENTER);
-                                } else {
-                                    JOptionPane.showMessageDialog(null, "Veuillez entrer une première date antérieure à l'autre ", "Erreur", JOptionPane.ERROR_MESSAGE);
-                                }*/
-
-                            }
-                            case "SearchPilot" -> {
-                            /*ArrayList<FlightsByPilotSearch> flights = controller.getAllFlightsOfAPilot(pilotId);
-                            FlightsByPilotResultTable flightTable = new FlightsByPilotResultTable(controller, flights);
-                            JTable table = new JTable(flightTable);
-                            table.setModel(flightTable);
-                            flightByPilotPanel.add(new JScrollPane(table), BorderLayout.CENTER);*/
-                                ArrayList<FlightsByPilotSearch> flights = controller.getAllFlightsOfAPilot(pilotId);
-                                FlightsByPilotResultTable flightTable = new FlightsByPilotResultTable(flights);
-                                JTable table = new JTable(flightTable);
-                                flightByPilotPanel.add(new JScrollPane(table), BorderLayout.CENTER);
-                            }
-                            case "SeatReservationSearch" -> {
-
-                            }
-                        }
-                    }
-
-                } catch (SQLException | FlightException.NumberFlightException | FlightException.MealDescriptionException |
-                    DataBaseAccessException | DataBaseConnectionException throwables) {
+            } catch (SQLException | FlightException.NumberFlightException | FlightException.MealDescriptionException |
+                DataBaseConnectionException throwables) {
                 throwables.printStackTrace();
+                JOptionPane.showMessageDialog(null, throwables.getMessage() , "Erreur", JOptionPane.ERROR_MESSAGE);
             }
-
         }
     }
 
