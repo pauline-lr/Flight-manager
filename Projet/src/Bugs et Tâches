@@ -5,8 +5,8 @@ Bugs et Tâches
 - ✅ erreur de suppression avec vol deja présent
 - ✅ JSpinner Date a refaire
 - ✅ suppression seat lié a vol
-- confirmation et avertir suppression des sieges (reservations)
-- faire les exceptions pour meme vol et champs vide dans ajouter
+- [à tester] confirmation et avertir suppression des sieges (reservations)
+- [en cours] faire les exceptions pour meme vol et champs vide dans ajouter
 - voir pourquoi etirer feneter pour JTable
 - faire tache metier
 - finir modifier vol
