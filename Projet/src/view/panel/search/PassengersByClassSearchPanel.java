@@ -52,7 +52,7 @@ public class PassengersByClassSearchPanel extends JPanel {
                 panel.repaint();
             } catch (DataBaseAccessException e) {
                 e.printStackTrace();
-                JOptionPane.showMessageDialog(null,  e.getMessage(), "Erreur liée à la BD", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur liée à la BD", JOptionPane.ERROR_MESSAGE);
             }
 
         }
