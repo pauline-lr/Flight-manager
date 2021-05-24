@@ -54,8 +54,12 @@ public class ModifyFlightForm extends JPanel {
         }
     }
 
+    public String getFlightComboBoxID() {
+        return GetID.getFlightID(flightComboBox);
+    }
+
     private void updateFormInformation() {
-        String flightNumber = GetID.getFlightID(flightComboBox);
+        String flightNumber = getFlightComboBoxID();
         try {
             Flight flight = controller.getFlight(flightNumber);
             flightForm.setFlightNumberComboBox(flight.getNumber());

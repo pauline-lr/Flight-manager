@@ -12,9 +12,9 @@ import java.sql.SQLException;
 import javax.swing.*;
 
 public class AddFlightPanel extends JPanel {
-    private JButton validate;
     private ApplicationController controller;
     private FlightForm flightForm;
+    private JButton validate;
 
     public AddFlightPanel() throws SQLException, DataBaseConnectionException {
         this.flightForm = new FlightForm();
