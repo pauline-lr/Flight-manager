@@ -5,6 +5,7 @@ import exception.dataBase.DataBaseAccessException;
 import exception.SearchDateException;
 import model.search.FlightsBetweenDatesSearch;
 import view.form.search.FlightsBetweenDatesSearchForm;
+import view.panel.edit.ModifyFlightPanel;
 import view.panel.list.FlightsBetweenDatesResultPanel;
 import view.window.MenuWindow;
 
@@ -28,17 +29,12 @@ public class FlightsBetweenDatesSearchPanel extends JPanel {
         this.setLayout(new BorderLayout());
         this.add(flightsBetweenDatesSearchForm, BorderLayout.PAGE_START);
 
-        this.validation = new JButton("Rechercher");
+        JPanel buttonPanel = new JPanel();
+        validation = new JButton("Rechercher");
         validation.addActionListener(new ValidationListener());
-        this.add(validation, BorderLayout.PAGE_END);
+        this.add(buttonPanel, BorderLayout.SOUTH);
+        buttonPanel.add(validation, BorderLayout.CENTER);
 
-        /*FlightsBetweenDatesResultTable flightTable = new FlightsBetweenDatesResultTable(controller, flights);
-        JTable table = new JTable(flightTable);
-        table.setModel(flightTable);
-        this.add(new JScrollPane(table), BorderLayout.CENTER);*/
-
-        /*this.add(new ButtonsPanel(menuWindow, "DateFlightSearch", this,
-                flightsBetweenDatesSearchForm.getFirstDateCalendar(), flightsBetweenDatesSearchForm.getFirstDateCalendar(), "Rechercher", controller), BorderLayout.SOUTH);*/
     }
 
     private void setController(ApplicationController controller) {

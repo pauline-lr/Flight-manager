@@ -31,7 +31,10 @@ public class DeleteFlightPanel extends JPanel {
         validateDeletationButton.addActionListener(new ValidationDeletation());
 
         this.add(new JScrollPane(table), BorderLayout.CENTER);
-        this.add(validateDeletationButton, BorderLayout.PAGE_END);
+        JPanel buttonPanel = new JPanel();
+        this.add(buttonPanel, BorderLayout.SOUTH);
+        buttonPanel.add(validateDeletationButton, BorderLayout.CENTER);
+        //this.add(validateDeletationButton, BorderLayout.PAGE_END);
     }
 
     private void setController(ApplicationController controller) {
