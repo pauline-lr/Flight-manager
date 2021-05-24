@@ -78,7 +78,7 @@ public class MenuWindow extends JFrame{
         this.animationPanel = new AnimationPanel();
         animationPanel.setLayout(new BorderLayout());
         frameContainer.add(animationPanel, BorderLayout.CENTER);
-        animationPanel.setBounds(0,120,MenuWindow.this.getWidth(),100);
+        animationPanel.setBounds(0,120,this.getWidth(), 100);
     }
 
     public void initOptionsApplication(){

@@ -25,9 +25,9 @@ public class ThreadMovement extends Thread {
             timeDiff = System.currentTimeMillis() - currentTimeSystem;
             sleep = DELAY - timeDiff;
 
-            /*if (sleep < 0) {
+            if (sleep < 0) {
                 sleep = 2;
-            }*/
+            }
 
             try {
                 Thread.sleep(sleep);
