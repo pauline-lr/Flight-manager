@@ -25,7 +25,7 @@ public class MenuWindow extends JFrame{
     private AnimationPanel animationPanel;
     private JMenuBar menuBar;
     private JMenu flight, listingFlight, search, application;
-    private JMenuItem exit;
+    private JMenuItem home, exit;
     private JMenuItem addFlight, modifyFlight, deleteFlight;
     private JMenuItem listingFlightItem;
     private JMenuItem dateFlight, seatReservation, searchPilot;
@@ -77,14 +77,18 @@ public class MenuWindow extends JFrame{
     public void initAnimation(){
         this.animationPanel = new AnimationPanel();
         animationPanel.setLayout(new BorderLayout());
-        animationPanel.setBounds(0,120,650,100);
-        frameContainer.add(animationPanel);
+        frameContainer.add(animationPanel, BorderLayout.CENTER);
+        animationPanel.setBounds(0,120,MenuWindow.this.getWidth(),100);
     }
 
     public void initOptionsApplication(){
         exit = new JMenuItem("Quitter");
         exit.addActionListener(new ExitListener());
         application.add(exit);
+
+        home = new JMenuItem("Home");
+        home.addActionListener(new HomeListener());
+        application.add(home);
     }
 
     public void initOptionsFlight(){
@@ -244,6 +248,19 @@ public class MenuWindow extends JFrame{
                         "Erreur", JOptionPane.ERROR_MESSAGE);
             }
             frameContainer.repaint();
+            MenuWindow.this.setVisible(true);
+        }
+    }
+
+    private class HomeListener implements ActionListener {
+        /*code du boutton retour */
+        @Override
+        public void actionPerformed(ActionEvent evt) {
+            MenuWindow.this.getContainer().removeAll();
+           //MenuWindow.this.getContainer().add(new MenuWindow(), BorderLayout.CENTER);
+            frameContainer.add(new WelcomePanel(), BorderLayout.PAGE_START);
+            frameContainer.add(new AnimationPanel(), BorderLayout.CENTER);
+            MenuWindow.this.getContainer().repaint();
             MenuWindow.this.setVisible(true);
         }
     }
