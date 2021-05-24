@@ -4,7 +4,6 @@ import controller.ApplicationController;
 import exception.dataBase.DataBaseConnectionException;
 import exception.FlightException;
 import view.table.AllFlightsListTable;
-import view.window.MenuWindow;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +16,7 @@ public class DeleteFlightPanel extends JPanel {
     private JTable table;
     private JButton validateDeletationButton;
 
-    public DeleteFlightPanel(MenuWindow menuWindow) throws SQLException, DataBaseConnectionException, FlightException.MealDescriptionException, FlightException.NumberFlightException {
+    public DeleteFlightPanel() throws SQLException, DataBaseConnectionException, FlightException.MealDescriptionException, FlightException.NumberFlightException {
         setController(new ApplicationController());
         this.setLayout(new BorderLayout());
         this.add(new DeleteFlightMessagePanel(), BorderLayout.PAGE_START);
@@ -34,7 +33,6 @@ public class DeleteFlightPanel extends JPanel {
         JPanel buttonPanel = new JPanel();
         this.add(buttonPanel, BorderLayout.SOUTH);
         buttonPanel.add(validateDeletationButton, BorderLayout.CENTER);
-        //this.add(validateDeletationButton, BorderLayout.PAGE_END);
     }
 
     private void setController(ApplicationController controller) {
@@ -65,8 +63,11 @@ public class DeleteFlightPanel extends JPanel {
                     int selectedRow = table.getSelectedRow();
                     try {
                         controller.deleteFlight(flightsTable.getFlight(selectedRow));
-                    } catch (SQLException | DataBaseConnectionException throwables) {
+                    } catch (SQLException throwables) {
                         throwables.printStackTrace();
+                    } catch (DataBaseConnectionException throwables) {
+                        throwables.printStackTrace();
+                        JOptionPane.showMessageDialog(null, throwables.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                     }
                     flightsTable.removeRow(selectedRow);
                     JOptionPane.showMessageDialog(null, "Vol supprimé", "Succès", JOptionPane.INFORMATION_MESSAGE);
