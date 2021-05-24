@@ -272,7 +272,6 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
             throws SQLException, DataBaseConnectionException, FlightException.MealDescriptionException, FlightException.NumberFlightException {
         String sqlRequest = "SELECT * FROM flight WHERE number = ?";
         Flight flight = null;
-        String mealDescription;
 
         PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
         preparedStatement.setString(1, flightNumber);
@@ -280,26 +279,7 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
         ResultSet data = preparedStatement.executeQuery();
 
         if (data.next()) {
-            GregorianCalendar departureTime = new GregorianCalendar();
-            GregorianCalendar arrivalTime = new GregorianCalendar();
-            departureTime.setTime(data.getTimestamp("departure_time"));
-            arrivalTime.setTime(data.getTimestamp("arrival_time"));
-
-            flight = new Flight(
-                    data.getString("number"),
-                    departureTime,
-                    arrivalTime,
-                    data.getBoolean("is_meal_on_board"),
-                    data.getString("pilot"),
-                    data.getString("departure_gate"),
-                    data.getString("arrival_gate"),
-                    data.getInt("plane")
-            );
-
-            mealDescription = data.getString("meal_description");
-            if (!data.wasNull()) {
-                flight.setMealDescription(mealDescription);
-            }
+            flight = getFlightFromResultSet(data);
         }
 
         return flight;
@@ -394,35 +374,12 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
             throws SQLException, DataBaseConnectionException, FlightException.MealDescriptionException, FlightException.NumberFlightException {
         ArrayList<Flight> flights = new ArrayList<>();
         String sqlRequest = "SELECT * FROM flight ORDER BY number";
-        Flight flight;
-        String mealDescription;
 
         Statement statement = SingletonConnection.getInstance().createStatement();
         ResultSet data = statement.executeQuery(sqlRequest);
 
         while (data.next()) {
-            GregorianCalendar departureTime = new GregorianCalendar();
-            GregorianCalendar arrivalTime = new GregorianCalendar();
-            departureTime.setTime(data.getTimestamp("departure_time"));
-            arrivalTime.setTime(data.getTimestamp("arrival_time"));
-
-            flight = new Flight(
-                    data.getString("number"),
-                    departureTime,
-                    arrivalTime,
-                    data.getBoolean("is_meal_on_board"),
-                    data.getString("pilot"),
-                    data.getString("departure_gate"),
-                    data.getString("arrival_gate"),
-                    data.getInt("plane")
-            );
-
-            mealDescription = data.getString("meal_description");
-            if (!data.wasNull()) {
-                flight.setMealDescription(mealDescription);
-            }
-
-            flights.add(flight);
+            flights.add(getFlightFromResultSet(data));
         }
 
         return flights;
@@ -642,7 +599,37 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
     //endregion
 
     //region Tools
-    private static PreparedStatement preparedFlightStatement(String sql, Flight flight) throws SQLException, DataBaseConnectionException {
+    private Flight getFlightFromResultSet(ResultSet data)
+            throws SQLException, FlightException.MealDescriptionException, FlightException.NumberFlightException {
+        Flight flight;
+        GregorianCalendar departureTime = new GregorianCalendar();
+        GregorianCalendar arrivalTime = new GregorianCalendar();
+        String mealDescription;
+
+        departureTime.setTime(data.getTimestamp("departure_time"));
+        arrivalTime.setTime(data.getTimestamp("arrival_time"));
+
+        flight = new Flight(
+                data.getString("number"),
+                departureTime,
+                arrivalTime,
+                data.getBoolean("is_meal_on_board"),
+                data.getString("pilot"),
+                data.getString("departure_gate"),
+                data.getString("arrival_gate"),
+                data.getInt("plane")
+        );
+
+        mealDescription = data.getString("meal_description");
+        if (!data.wasNull()) {
+            flight.setMealDescription(mealDescription);
+        }
+
+        return flight;
+    }
+
+    private PreparedStatement preparedFlightStatement(String sql, Flight flight)
+            throws SQLException, DataBaseConnectionException {
         PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sql);
 
         preparedStatement.setString(1, flight.getNumber());
