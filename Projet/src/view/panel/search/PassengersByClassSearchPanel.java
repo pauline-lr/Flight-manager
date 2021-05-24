@@ -28,9 +28,11 @@ public class PassengersByClassSearchPanel extends JPanel {
         this.setLayout(new BorderLayout());
         this.add(passengersByClassSearchForm, BorderLayout.PAGE_START);
 
-        this.validation = new JButton("Rechercher");
+        JPanel buttonPanel = new JPanel();
+        validation = new JButton("Rechercher");
         validation.addActionListener(new ValidationListener());
-        this.add(validation, BorderLayout.PAGE_END);
+        this.add(buttonPanel, BorderLayout.SOUTH);
+        buttonPanel.add(validation, BorderLayout.CENTER);
 
     }
 
