@@ -18,10 +18,10 @@ public class DeleteFlightPanel extends JPanel {
 
     public DeleteFlightPanel() throws SQLException, DataBaseConnectionException, FlightException.MealDescriptionException, FlightException.NumberFlightException {
         setController(new ApplicationController());
+        setFlightsTable(new AllFlightsListTable());
         this.setLayout(new BorderLayout());
         this.add(new DeleteFlightMessagePanel(), BorderLayout.PAGE_START);
 
-        this.flightsTable = new AllFlightsListTable();
         this.table = new JTable(flightsTable);
         table.setModel(flightsTable);
         table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
@@ -37,6 +37,10 @@ public class DeleteFlightPanel extends JPanel {
 
     private void setController(ApplicationController controller) {
         this.controller = controller;
+    }
+
+    public void setFlightsTable(AllFlightsListTable flightsTable) {
+        this.flightsTable = flightsTable;
     }
 
     public static class DeleteFlightMessagePanel extends JPanel {

@@ -1,15 +1,13 @@
 package view.panel.edit;
 
 import controller.ApplicationController;
-import exception.dataBase.DataBaseConnectionException;
+import exception.dataBase.*;
 import model.Flight;
-import view.form.edit.FlightForm;
-import view.form.edit.ModifyFlightForm;
+import view.form.edit.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.sql.*;
 
 public class ModifyFlightPanel extends JPanel {
@@ -24,12 +22,7 @@ public class ModifyFlightPanel extends JPanel {
         this.setLayout(new BorderLayout());
         this.add(modifyFlightForm, BorderLayout.PAGE_START);
         this.add(flightForm, BorderLayout.CENTER);
-
-        JPanel buttonPanel = new JPanel();
-        JButton validate = new JButton("Modifier");
-        validate.addActionListener(new ValidationListener());
-        this.add(buttonPanel, BorderLayout.SOUTH);
-        buttonPanel.add(validate, BorderLayout.CENTER);
+        initializeValidationButton();
     }
 
     private void setController(ApplicationController controller) {
@@ -44,7 +37,16 @@ public class ModifyFlightPanel extends JPanel {
         this.flightForm = flightForm;
     }
 
-    private class ValidationListener implements ActionListener {
+    private void initializeValidationButton() {
+        JPanel buttonPanel = new JPanel();
+        JButton validationButton = new JButton("Modifier");
+
+        validationButton.addActionListener(new ValidationButtonListener());
+        buttonPanel.add(validationButton, BorderLayout.CENTER);
+        this.add(buttonPanel, BorderLayout.SOUTH);
+    }
+
+    private class ValidationButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent evt) {
             Flight flight = flightForm.getFlight();

@@ -1,36 +1,45 @@
 package view.panel.edit;
 
 import controller.ApplicationController;
-import exception.dataBase.DataBaseConnectionException;
+import exception.dataBase.*;
 import model.Flight;
-import view.form.edit.FlightForm;
+import view.form.edit.*;
 
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.sql.SQLException;
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.sql.*;
 
 public class AddFlightPanel extends JPanel {
     private ApplicationController controller;
     private FlightForm flightForm;
-    private JButton validate;
 
     public AddFlightPanel() throws SQLException, DataBaseConnectionException {
-        this.flightForm = new FlightForm();
-        this.controller = new ApplicationController();
+        setController(new ApplicationController());
+        setFlightForm(new FlightForm());
         this.setLayout(new BorderLayout());
         this.add(flightForm, BorderLayout.CENTER);
-
-        JPanel buttonPanel = new JPanel();
-        this.add(buttonPanel, BorderLayout.SOUTH);
-
-        validate = new JButton("Ajouter");
-        validate.addActionListener(new ValidationListener());
-        buttonPanel.add(validate, BorderLayout.CENTER);
+        initializeValidationButton();
     }
 
-    private class ValidationListener implements ActionListener {
+    private void setController(ApplicationController controller) {
+        this.controller = controller;
+    }
+
+    private void setFlightForm(FlightForm flightForm) {
+        this.flightForm = flightForm;
+    }
+
+    private void initializeValidationButton() {
+        JPanel buttonPanel = new JPanel();
+        JButton validationButton = new JButton("Ajouter");
+
+        validationButton.addActionListener(new ValidationButtonListener());
+        buttonPanel.add(validationButton, BorderLayout.CENTER);
+        this.add(buttonPanel, BorderLayout.SOUTH);
+    }
+
+    private class ValidationButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent evt) {
             try {
