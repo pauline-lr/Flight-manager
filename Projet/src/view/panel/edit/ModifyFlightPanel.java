@@ -3,7 +3,6 @@ package view.panel.edit;
 import exception.dataBase.DataBaseConnectionException;
 import view.form.edit.FlightForm;
 import view.form.edit.ModifyFlightForm;
-import view.panel.button.ButtonsPanel;
 
 import javax.swing.*;
 import java.awt.*;

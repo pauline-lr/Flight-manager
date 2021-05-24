@@ -82,13 +82,13 @@ public class MenuWindow extends JFrame{
     }
 
     public void initOptionsApplication(){
+        home = new JMenuItem("Accueil");
+        home.addActionListener(new HomeListener());
+        application.add(home);
+
         exit = new JMenuItem("Quitter");
         exit.addActionListener(new ExitListener());
         application.add(exit);
-
-        home = new JMenuItem("Home");
-        home.addActionListener(new HomeListener());
-        application.add(home);
     }
 
     public void initOptionsFlight(){
