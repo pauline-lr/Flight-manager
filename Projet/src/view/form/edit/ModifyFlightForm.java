@@ -35,12 +35,12 @@ public class ModifyFlightForm extends JPanel {
         this.add(flightComboBox);
     }
 
-    private void setController(ApplicationController controller) {
-        this.controller = controller;
+    public String getFlightComboBoxID() {
+        return GetID.getFlightID(flightComboBox);
     }
 
-    public JComboBox<String> getFlightComboBox() {
-        return flightComboBox;
+    private void setController(ApplicationController controller) {
+        this.controller = controller;
     }
 
     private void setFlightForm(FlightForm flightForm) {
@@ -52,10 +52,6 @@ public class ModifyFlightForm extends JPanel {
         public void itemStateChanged(ItemEvent event) {
             updateFormInformation();
         }
-    }
-
-    public String getFlightComboBoxID() {
-        return GetID.getFlightID(flightComboBox);
     }
 
     private void updateFormInformation() {
