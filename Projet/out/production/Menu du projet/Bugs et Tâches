@@ -1,0 +1,74 @@
+Bugs et Tâches
+
+- ✅ gates en double parfois lors de la selection de airport et terminal dans les combobox de flightForm => refaire listener
+- ✅ replacer les controllers
+- ✅ erreur de suppression avec vol deja présent
+- ✅ JSpinner Date a refaire
+- ✅ suppression seat lié a vol
+- ✅ changer string en boolean dans liste flights pour mealOnBoard
+- [à tester] confirmation et avertir suppression des sieges (reservations)
+- [en cours] faire les exceptions pour meme vol et champs vide dans ajouter
+- voir pourquoi etirer feneter pour JTable
+- finir modifier vol
+- finir 3 recherches
+- faire en sorte de pouvoir supprimer plusieurs vols
+- faire tache metier
+
+A faire en dernier
+- Jeux de tests
+    pour des valeurs ne pouvant contenir que des intervales, tester 5 valeur
+        - plus petit que le minimum (doit générer un message d'erreur ou ne pas être encodable)
+        - le minimum (doit fonctionner)
+        - entre le minimum et le maximum (doit fonctionner)
+        - le maximum (doit fonctionner)
+        - plus grand que le max(doit générer un message d'erreur ou ne pas être encodable)
+
+- Autres tests
+    Validation fonctionnelle
+    o Assurer que les différents modules implémentent correctement
+    les exigences client
+        • Validation de solution
+    o Validation des use cases
+        • Chaque cas d'utilisation est validé isolément
+        • Puis tous les cas d'utilisation sont validés ensemble
+        • Validation de performance
+    o Vérifier la conformité de la solution par rapport à ses exigences
+    de performance
+        • Validation de robustesse
+    o Mettre en évidence des éventuels problèmes de stabilité
+    et de fiabilité dans le temps
+
+    o Champ obligatoire non rempli
+        Champs obligatoires pour flight form :
+            -✅ Numéro
+            (Pour le reste, il y a des valeurs par défaut)
+    o Valeur numérique contenant des caractères
+            Seulement possible pour numéro vol car le reste JComBox ou JSpinner
+    o Nombre négatif ou nul (si valeur positive attendue)
+            Pas possible grâce au regex (pour l'id de l'avion par ex,
+            l'utilisateur ne peut pas le modifier donc ok)
+    o Valeur non comprise dans la liste des valeurs permises
+            JComboBox si c'est le cas
+    o Nouveau login déjà existant
+            - [A FAIRE] pas deux fois le même num de vol dans la BD !!
+    o Format non respecté (ex: email)
+            - RAS
+- Prévoir des checks dans le script SQL de création de la base de données
+  ex: check (quantiteCommande > 0)
+    Si on a pas le temps, tant pis mais c'est mieux (sert au cas où on réutilise la BD ailleurs)
+    les check ne dispensent pas des exceptions déjà placées (cf. chap 13 dia 13)
+
+Rappel BD :
+• Bons types de colonnes
+    o Assure l’introduction de bons types de données
+• Not null éventuels
+    o Empêche les données incomplètes
+• Primary key
+    o Evite la duplication des données
+• Foreign Key
+    o Oblige d’insérer dans une colonne uniquement des valeurs qui existent
+        dans une autre table de la BD
+    o Evite des liens incohérents entre données
+• Checks
+    o Empêche l’introduction de valeurs invalides
+
