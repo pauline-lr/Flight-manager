@@ -20,8 +20,8 @@ CREATE TABLE passenger (
     CONSTRAINT passenger_pk PRIMARY KEY (passport_number),
     CONSTRAINT phone_number UNIQUE (phone_number),
     CONSTRAINT email_address UNIQUE (email_address),
-    CONSTRAINT passport_number_passenger 
-                CHECK (passport_number REGEXP '^\d{9}$'),
+    CONSTRAINT passport_number_check 
+                CHECK (LENGTH(passport_number) == 9),
     CONSTRAINT phone_number_passenger  
                 CHECK(phone_number REGEXP '^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$') ,
     CONSTRAINT email_address_passenger
@@ -39,11 +39,11 @@ CREATE TABLE pilot (
     CONSTRAINT pilot_pk PRIMARY KEY (licence_number),
     CONSTRAINT phone_number UNIQUE (phone_number),
     CONSTRAINT email_address UNIQUE (email_address),
-    CONSTRAINT license_number_pilot
-				CHECK(licence_number REGEXP '^\d{7}$'),
-	CONSTRAINT phone_number_pilot 
+    CONSTRAINT license_number_check
+				CHECK(LENGTH(passport_number) == 7),
+	CONSTRAINT phone_number_check
                 CHECK(phone_number REGEXP '^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$') ,
-    CONSTRAINT email_address_pilot
+    CONSTRAINT email_address_check
                 CHECK(email_address REGEXP '[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+')
 );
 
@@ -52,7 +52,11 @@ CREATE TABLE plane (
     model VARCHAR(7) NOT NULL,
     brand VARCHAR(30) NOT NULL,
     
-    CONSTRAINT plane_pk PRIMARY KEY (plane_id)
+    CONSTRAINT plane_pk PRIMARY KEY (plane_id),
+    CONSTRAINT model_check
+				CHECK(LENGTH(model) >= 2),
+	CONSTRAINT brand_check
+				CHECK(LENGTH(brand) >= 2)
 );
 
 CREATE TABLE airport (
@@ -61,7 +65,10 @@ CREATE TABLE airport (
     country VARCHAR(50) NOT NULL,
 
     CONSTRAINT airport_pk PRIMARY KEY (code),
-    CONSTRAINT code_airport CHECK(code REGEXP '^[A-Z][A-Z][A-Z]$')
+    CONSTRAINT code_check CHECK(code REGEXP '^[A-Z][A-Z][A-Z]$'),
+    CONSTRAINT name_check CHECK(LENGTH(name) >= 2),
+    CONSTRAINT country_check CHECK(LENGTH(country) >= 2)
+
 );
 
 CREATE TABLE gate (
@@ -73,7 +80,8 @@ CREATE TABLE gate (
     CONSTRAINT gate_id UNIQUE (terminal, number, airport),
     CONSTRAINT gate_pk PRIMARY KEY (gate_id),
     CONSTRAINT airport_fk FOREIGN KEY (airport) REFERENCES airport (code),
-    CONSTRAINT terminal_gate CHECK(terminal REGEXP '^[A-Z]$') 
+    CONSTRAINT terminal_gate CHECK(terminal REGEXP '^[A-Z]$'),
+    CONSTRAINT airport_check CHECK(LENGTH(airport) >= 2)
 );
 
 CREATE TABLE flight (
@@ -93,7 +101,6 @@ CREATE TABLE flight (
     CONSTRAINT pilot_fk FOREIGN KEY (pilot) REFERENCES pilot (licence_number),
     CONSTRAINT plane_fk FOREIGN KEY (plane) REFERENCES plane (plane_id),
     CONSTRAINT terminal_gate CHECK(terminal REGEXP '^[A-Z]$'), 
-    CONSTRAINT departure_time_check CHECK(departure_time >= sysdate),
     CONSTRAINT arrival_time_check CHECK(departure_time < arrival_time)
 );
 
