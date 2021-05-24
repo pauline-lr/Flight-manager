@@ -1,21 +1,45 @@
 package view.panel.edit;
 
+import controller.ApplicationController;
 import exception.dataBase.DataBaseConnectionException;
+import model.Flight;
 import view.form.edit.FlightForm;
-import view.panel.button.ButtonsPanel;
-import view.window.MenuWindow;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import javax.swing.*;
 
 public class AddFlightPanel extends JPanel {
+    private JButton validate;
+    private ApplicationController controller;
     private FlightForm flightForm;
 
     public AddFlightPanel() throws SQLException, DataBaseConnectionException {
         this.flightForm = new FlightForm();
+        this.controller = new ApplicationController();
         this.setLayout(new BorderLayout());
         this.add(flightForm, BorderLayout.CENTER);
-        this.add(new ButtonsPanel("Addition", flightForm, "Ajouter"), BorderLayout.SOUTH);
+
+        validate = new JButton("Ajouter");
+        validate.addActionListener(new ValidationListener());
+        this.add(validate);
+    }
+
+    private class ValidationListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent evt) {
+            try {
+                Flight flight = flightForm.getFlight();
+                controller.addFlight(flight);
+                JOptionPane.showMessageDialog(null, "Vol ajouté", "Succès", JOptionPane.INFORMATION_MESSAGE);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            } catch (DataBaseConnectionException throwables) {
+                throwables.printStackTrace();
+                JOptionPane.showMessageDialog(null, throwables.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }
 }
