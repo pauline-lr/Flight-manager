@@ -30,8 +30,8 @@ public class DeleteFlightPanel extends JPanel {
         validateDeletationButton = new JButton("Supprimer");
         validateDeletationButton.addActionListener(new ValidationDeletation());
 
-        this.add(new JScrollPane(table),BorderLayout.CENTER);
-        this.add(validateDeletationButton, BorderLayout.SOUTH);
+        this.add(new JScrollPane(table), BorderLayout.CENTER);
+        this.add(validateDeletationButton, BorderLayout.PAGE_END);
     }
 
     private void setController(ApplicationController controller) {
@@ -40,7 +40,8 @@ public class DeleteFlightPanel extends JPanel {
 
     public static class DeleteFlightMessagePanel extends JPanel {
         private JLabel text;
-        public DeleteFlightMessagePanel(){
+
+        public DeleteFlightMessagePanel() {
             this.setLayout(new GridLayout(15, 1, 3, 3));
 
             text = new JLabel("<html>" +
@@ -54,10 +55,10 @@ public class DeleteFlightPanel extends JPanel {
     private class ValidationDeletation implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent evt) {
-            if(table.getSelectedRow() != -1) {
-                int choice = okcancel("Etes-vous sûr de vouloir supprimer ce vol ? \n Les places réservées seront elles aussi effacées.");
+            if (table.getSelectedRow() != -1) {
+                int choice = getConfirmation("Êtes-vous sûr de vouloir supprimer ce vol ?\nLes réservations seront également supprimées.");
 
-                if(choice == 0){
+                if (choice == 0) {
                     int selectedRow = table.getSelectedRow();
                     try {
                         controller.deleteFlight(flightsTable.getFlight(selectedRow));
@@ -73,8 +74,7 @@ public class DeleteFlightPanel extends JPanel {
         }
     }
 
-    public static int okcancel(String theMessage) {
-        return JOptionPane.showConfirmDialog((Component) null, theMessage,
-                "Alert", JOptionPane.OK_CANCEL_OPTION);
+    public static int getConfirmation(String theMessage) {
+        return JOptionPane.showConfirmDialog((Component) null, theMessage, "Alert", JOptionPane.OK_CANCEL_OPTION);
     }
 }

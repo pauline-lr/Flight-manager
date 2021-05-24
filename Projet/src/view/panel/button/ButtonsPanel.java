@@ -4,6 +4,7 @@ import controller.ApplicationController;
 import exception.dataBase.DataBaseConnectionException;
 import model.Flight;
 import view.form.edit.FlightForm;
+import view.form.edit.ModifyFlightForm;
 import view.panel.edit.AddFlightPanel;
 import view.panel.edit.ModifyFlightPanel;
 import view.panel.home.WelcomePanel;
@@ -19,12 +20,13 @@ public class ButtonsPanel extends JPanel {
     private static MenuWindow menuWindow;
     private String typeAction;
     private FlightForm flightForm;
+    private ModifyFlightForm modifyFlightForm;
     private JButton retour, validation, réinit;
 
 
-    public ButtonsPanel(MenuWindow menuWindow, String typeAction, FlightForm flightForm, String label) {
+    public ButtonsPanel(String typeAction, FlightForm flightForm, String label) {
         setController(new ApplicationController());
-        this.menuWindow = menuWindow;
+        setMenuWindow();
         this.typeAction = typeAction;
         this.flightForm = flightForm;
         this.setLayout(new FlowLayout());
@@ -46,6 +48,9 @@ public class ButtonsPanel extends JPanel {
         this.controller = controller;
     }
 
+    public static void setMenuWindow() {
+        ButtonsPanel.menuWindow = new MenuWindow();
+    }
 
     // bouton retour
     public static class RetourListener implements ActionListener {
@@ -69,8 +74,6 @@ public class ButtonsPanel extends JPanel {
                         controller.addFlight(flight);
                         JOptionPane.showMessageDialog(null, "Vol ajouté", "Succès", JOptionPane.INFORMATION_MESSAGE);
                     } else if (typeAction.equals("Modification")) {
-                        // Modification
-                        //Flight flight = modifyFlight.getFlight()
                         //controller.modifyFlight(flight);
                         JOptionPane.showMessageDialog(null, "Vol modifié", "Succès", JOptionPane.INFORMATION_MESSAGE);
                     }
@@ -103,7 +106,7 @@ public class ButtonsPanel extends JPanel {
             }
         } else if (typeAction.equals("Modification")) {
             try {
-                menuWindow.getContainer().add(new ModifyFlightPanel(menuWindow), BorderLayout.CENTER);
+                menuWindow.getContainer().add(new ModifyFlightPanel(), BorderLayout.CENTER);
             } catch (SQLException | DataBaseConnectionException throwables) {
                 throwables.printStackTrace();
                 JOptionPane.showMessageDialog(null, throwables.getMessage(),

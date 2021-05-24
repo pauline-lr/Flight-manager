@@ -39,6 +39,10 @@ public class ModifyFlightForm extends JPanel {
         this.controller = controller;
     }
 
+    public JComboBox<String> getFlightComboBox() {
+        return flightComboBox;
+    }
+
     private void setFlightForm(FlightForm flightForm) {
         this.flightForm = flightForm;
     }

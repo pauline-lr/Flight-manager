@@ -170,7 +170,7 @@ public class MenuWindow extends JFrame{
         public void actionPerformed(ActionEvent evt){
             frameContainer.removeAll();
             try {
-                frameContainer.add(new ModifyFlightPanel(MenuWindow.this), BorderLayout.CENTER);
+                frameContainer.add(new ModifyFlightPanel(), BorderLayout.CENTER);
             } catch (SQLException | DataBaseConnectionException throwables) {
                 throwables.printStackTrace();
             }
