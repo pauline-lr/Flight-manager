@@ -28,8 +28,6 @@ public class FlightsByPilotSearchPanel extends JPanel {
             this.flightsByPilotSearchForm = new FlightsByPilotSearchForm();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            JOptionPane.showMessageDialog(null, throwables.getMessage( ),
-                    "Erreur", JOptionPane.ERROR_MESSAGE);
         } catch (DataBaseConnectionException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, e.getMessage( ),

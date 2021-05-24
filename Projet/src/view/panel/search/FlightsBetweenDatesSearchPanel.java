@@ -5,9 +5,7 @@ import exception.dataBase.DataBaseAccessException;
 import exception.SearchDateException;
 import model.search.FlightsBetweenDatesSearch;
 import view.form.search.FlightsBetweenDatesSearchForm;
-import view.panel.edit.ModifyFlightPanel;
 import view.panel.list.FlightsBetweenDatesResultPanel;
-import view.window.MenuWindow;
 
 import javax.swing.*;
 import java.awt.*;
