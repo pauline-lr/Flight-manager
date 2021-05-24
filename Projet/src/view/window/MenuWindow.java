@@ -40,11 +40,6 @@ public class MenuWindow extends JFrame{
         initMenuBar();
 
         initAnimation();
-
-        BorderLayout border = new BorderLayout();
-        this.setLayout(border);
-        frameContainer.add(new WelcomePanel(), border.PAGE_START);
-        this.setVisible(true);
     }
 
     public void setController(ApplicationController controller) {
@@ -76,9 +71,10 @@ public class MenuWindow extends JFrame{
 
     public void initAnimation(){
         this.animationPanel = new AnimationPanel();
-        animationPanel.setLayout(new BorderLayout());
-        frameContainer.add(animationPanel, BorderLayout.CENTER);
-        animationPanel.setBounds(0,120,this.getWidth(), 100);
+        frameContainer.add(new WelcomePanel(), BorderLayout.PAGE_START);
+        frameContainer.add(new AnimationPanel(), BorderLayout.CENTER);
+        MenuWindow.this.getContainer().repaint();
+        MenuWindow.this.setVisible(true);
     }
 
     public void initOptionsApplication(){
