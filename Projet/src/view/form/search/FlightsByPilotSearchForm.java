@@ -34,7 +34,7 @@ public class FlightsByPilotSearchForm extends JPanel {
         pilotLabel.setHorizontalAlignment(SwingConstants.LEFT);
         add(pilotLabel);
 
-        pilotComboBox = new JComboBox<>(controller.getAllPilotsForComboBox());
+        pilotComboBox = new JComboBox<>(controller.getAllPilotsToString());
         this.add(pilotComboBox);
     }
 }

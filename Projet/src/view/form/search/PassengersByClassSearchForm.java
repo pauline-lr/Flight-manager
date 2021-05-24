@@ -34,7 +34,7 @@ public class PassengersByClassSearchForm extends JPanel {
         classLabel.setHorizontalAlignment(SwingConstants.LEFT);
         add(classLabel);
 
-        classComboBox = new JComboBox<>(controller.getAllClassesForComboBox());
+        classComboBox = new JComboBox<>(controller.getAllClassesToString());
         this.add(classComboBox);
     }
 }

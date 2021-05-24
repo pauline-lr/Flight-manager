@@ -1,18 +1,13 @@
 package controller;
 
-import business.*;
+import business.FlightManager;
 import exception.*;
-import exception.dataBase.DataBaseAccessException;
-import exception.dataBase.DataBaseCloseException;
-import exception.dataBase.DataBaseConnectionException;
+import exception.dataBase.*;
 import model.*;
-import model.search.FlightsBetweenDatesSearch;
-import model.search.FlightsByPilotSearch;
-import model.search.PassengersByClassSearch;
+import model.search.*;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
+import java.sql.*;
+import java.util.*;
 
 public class ApplicationController {
     private FlightManager flightManager;
@@ -24,6 +19,80 @@ public class ApplicationController {
     private void setFlightManager(FlightManager flightManager) {
         this.flightManager = flightManager;
     }
+
+    //region Get
+    public Flight getFlight(String flightNumber)
+            throws SQLException, DataBaseConnectionException, FlightException.MealDescriptionException, FlightException.NumberFlightException {
+        return flightManager.getFlight(flightNumber);
+    }
+
+    public ArrayList<Flight> getAllFlights()
+            throws SQLException, DataBaseConnectionException, FlightException.MealDescriptionException, FlightException.NumberFlightException {
+        return flightManager.getAllFlights();
+    }
+    //endregion
+
+    //region Get to String
+    public String getPilotToString(String pilotLicenceNumber)
+            throws SQLException, DataBaseConnectionException {
+        return flightManager.getPilotToString(pilotLicenceNumber);
+    }
+
+    public String getPlaneToString(Integer planeID)
+            throws SQLException, DataBaseConnectionException {
+        return flightManager.getPlaneToString(planeID);
+    }
+
+    public String getAirportToString(String gateID)
+            throws SQLException, DataBaseConnectionException {
+        return flightManager.getAirportToString(gateID);
+    }
+
+    public String getTerminalToString(String gateID)
+            throws SQLException, DataBaseConnectionException {
+        return flightManager.getTerminalToString(gateID);
+    }
+
+    public String getGateToString(String gateID)
+            throws SQLException, DataBaseConnectionException {
+        return flightManager.getGateToString(gateID);
+    }
+
+    public String[] getAllFlightsToString()
+            throws SQLException, DataBaseConnectionException {
+        return flightManager.getAllFlightsToString();
+    }
+
+    public String[] getAllPilotsToString()
+            throws SQLException, DataBaseConnectionException {
+        return flightManager.getAllPilotsToString();
+    }
+
+    public String[] getAllPlanesToString()
+            throws SQLException, DataBaseConnectionException {
+        return flightManager.getAllPlanesToString();
+    }
+
+    public String[] getAllClassesToString()
+            throws SQLException, DataBaseConnectionException {
+        return flightManager.getAllClassesToString();
+    }
+
+    public String[] getAllAirportsToString()
+            throws SQLException, DataBaseConnectionException {
+        return flightManager.getAllAirportsToString();
+    }
+
+    public String[] getAllTerminalsOfAnAirportToString(String airportCode)
+            throws SQLException, DataBaseConnectionException {
+        return flightManager.getAllTerminalsOfAnAirportToString(airportCode);
+    }
+
+    public String[] getAllGatesOfAnAirportAndTerminalToString(String airportCode, String terminal)
+            throws SQLException, DataBaseConnectionException {
+        return flightManager.getAllGatesOfAnAirportAndTerminalToString(airportCode, terminal);
+    }
+    //endregion
 
     //region Search
     public ArrayList<FlightsBetweenDatesSearch> getAllFlightsBetweenDates(GregorianCalendar startDate, GregorianCalendar endDate)
@@ -42,97 +111,25 @@ public class ApplicationController {
     }
     //endregion
 
-    //region Get
-    public Flight getFlight(String flightNumber)
-            throws SQLException, DataBaseConnectionException, FlightException.MealDescriptionException, FlightException.NumberFlightException {
-        return flightManager.getFlight(flightNumber);
-    }
-
-    public String getPilotToString(String pilotId)
-            throws SQLException, DataBaseConnectionException {
-        return flightManager.getPilotToString(pilotId);
-    }
-
-    public String getPlaneToString(Integer planeId)
-            throws SQLException, DataBaseConnectionException {
-        return flightManager.getPlaneToString(planeId);
-    }
-
-    public String getAirportToString(String gateId)
-            throws SQLException, DataBaseConnectionException {
-        return flightManager.getAirportToString(gateId);
-    }
-
-    public String getTerminalToString(String gateId)
-            throws SQLException, DataBaseConnectionException {
-        return flightManager.getTerminalToString(gateId);
-    }
-
-    public String getGateToString(String gateId)
-            throws SQLException, DataBaseConnectionException {
-        return flightManager.getGateToString(gateId);
-    }
-
-    public ArrayList<Flight> getAllFlights()
-            throws SQLException, DataBaseConnectionException, FlightException.MealDescriptionException, FlightException.NumberFlightException {
-        return flightManager.getAllFlights();
-    }
-
-    public String[] getAllFlightsForComboBox()
-            throws SQLException, DataBaseConnectionException {
-        return flightManager.getAllFlightsForComboBox();
-    }
-
-    public String[] getAllPilotsForComboBox()
-            throws SQLException, DataBaseConnectionException {
-        return flightManager.getAllPilotsForComboBox();
-    }
-
-    public String[] getAllPlanesForComboBox()
-            throws SQLException, DataBaseConnectionException {
-        return flightManager.getAllPlanesForComboBox();
-    }
-
-    public String[] getAllClassesForComboBox()
-            throws SQLException, DataBaseConnectionException {
-        return flightManager.getAllClassesForComboBox();
-    }
-
-    public String[] getAllAirportsForComboBox()
-            throws SQLException, DataBaseConnectionException {
-        return flightManager.getAllAirportsForComboBox();
-    }
-
-    public String[] getAllTerminalsOfAnAirportForComboBox(String airportId)
-            throws SQLException, DataBaseConnectionException {
-        return flightManager.getAllTerminalsOfAnAirportForComboBox(airportId);
-    }
-
-    public String[] getAllGatesOfAnAirportAndTerminalForComboBox(String airportId, String terminalId)
-            throws SQLException, DataBaseConnectionException {
-        return flightManager.getAllGatesOfAnAirportAndTerminalForComboBox(airportId, terminalId);
-    }
-    //endregion
-
     //region Edit
-    public void addFlight(Flight flightToAdd)
+    public void addFlight(Flight flight)
             throws SQLException, DataBaseConnectionException {
-        flightManager.addFlight(flightToAdd);
+        flightManager.addFlight(flight);
     }
 
-    public void modifyFlight(Flight flightToUpdate, String originalNumber)
+    public void modifyFlight(Flight flight, String originalFlightNumber)
             throws SQLException, DataBaseConnectionException {
-        flightManager.modifyFlight(flightToUpdate, originalNumber);
+        flightManager.modifyFlight(flight, originalFlightNumber);
     }
 
-    public void modifyFlight(Flight flightToUpdate)
+    public void modifyFlight(Flight flight)
             throws SQLException, DataBaseConnectionException {
-        flightManager.modifyFlight(flightToUpdate);
+        flightManager.modifyFlight(flight);
     }
 
-    public void deleteFlight(String flightToDelete)
+    public void deleteFlight(String flightNumber)
             throws SQLException, DataBaseConnectionException {
-        flightManager.deleteFlight(flightToDelete);
+        flightManager.deleteFlight(flightNumber);
     }
     //endregion
 

@@ -29,7 +29,7 @@ public class ModifyFlightForm extends JPanel {
         flightLabel.setHorizontalAlignment(SwingConstants.LEFT);
         this.add(flightLabel);
 
-        flightComboBox = new JComboBox<>(controller.getAllFlightsForComboBox());
+        flightComboBox = new JComboBox<>(controller.getAllFlightsToString());
         updateFormInformation();
         flightComboBox.addItemListener(new flightComboBoxListener());
         this.add(flightComboBox);

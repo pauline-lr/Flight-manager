@@ -2,29 +2,102 @@ package business;
 
 import dataAccess.*;
 import exception.*;
-import exception.dataBase.DataBaseAccessException;
-import exception.dataBase.DataBaseCloseException;
-import exception.dataBase.DataBaseConnectionException;
+import exception.dataBase.*;
 import model.*;
-import model.search.FlightsBetweenDatesSearch;
-import model.search.FlightsByPilotSearch;
-import model.search.PassengersByClassSearch;
+import model.search.*;
 import pattern.DataAccessObjectPattern;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
+import java.sql.*;
+import java.util.*;
 
 public class FlightManager {
     private DataAccessObjectPattern dataAccessObjectPattern;
 
     public FlightManager() {
-        setDao(new AirlineDataBaseAccess());
+        setDataAccessObjectPattern(new AirlineDataBaseAccess());
     }
 
-    private void setDao(DataAccessObjectPattern dataAccessObjectPattern) {
+    private void setDataAccessObjectPattern(DataAccessObjectPattern dataAccessObjectPattern) {
         this.dataAccessObjectPattern = dataAccessObjectPattern;
     }
+
+    //
+    // tâche métier
+    //
+
+    //region Get
+    public Flight getFlight(String flightNumber)
+            throws SQLException, DataBaseConnectionException, FlightException.MealDescriptionException, FlightException.NumberFlightException {
+        return dataAccessObjectPattern.getFlight(flightNumber);
+    }
+
+    public ArrayList<Flight> getAllFlights()
+            throws SQLException, DataBaseConnectionException, FlightException.MealDescriptionException, FlightException.NumberFlightException {
+        return dataAccessObjectPattern.getAllFlights();
+    }
+    //endregion
+
+    //region Get to String
+    public String getPilotToString(String pilotLicenceNumber)
+            throws SQLException, DataBaseConnectionException {
+        return dataAccessObjectPattern.getPilotToString(pilotLicenceNumber);
+    }
+
+    public String getPlaneToString(Integer planeID)
+            throws SQLException, DataBaseConnectionException {
+        return dataAccessObjectPattern.getPlaneToString(planeID);
+    }
+
+    public String getAirportToString(String gateID)
+            throws SQLException, DataBaseConnectionException {
+        return dataAccessObjectPattern.getAirportToString(gateID);
+    }
+
+    public String getTerminalToString(String gateID)
+            throws SQLException, DataBaseConnectionException {
+        return dataAccessObjectPattern.getTerminalToString(gateID);
+    }
+
+    public String getGateToString(String gateID)
+            throws SQLException, DataBaseConnectionException {
+        return dataAccessObjectPattern.getGateToString(gateID);
+    }
+
+    public String[] getAllFlightsToString()
+            throws SQLException, DataBaseConnectionException {
+        return dataAccessObjectPattern.getAllFlightsToString();
+    }
+
+    public String[] getAllPilotsToString()
+            throws SQLException, DataBaseConnectionException {
+        return dataAccessObjectPattern.getAllPilotsToString();
+    }
+
+    public String[] getAllPlanesToString()
+            throws SQLException, DataBaseConnectionException {
+        return dataAccessObjectPattern.getAllPlanesToString();
+    }
+
+    public String[] getAllClassesToString()
+            throws SQLException, DataBaseConnectionException {
+        return dataAccessObjectPattern.getAllClassesToString();
+    }
+
+    public String[] getAllAirportsToString()
+            throws SQLException, DataBaseConnectionException {
+        return dataAccessObjectPattern.getAllAirportsToString();
+    }
+
+    public String[] getAllTerminalsOfAnAirportToString(String airportCode)
+            throws SQLException, DataBaseConnectionException {
+        return dataAccessObjectPattern.getAllTerminalsOfAnAirportToString(airportCode);
+    }
+
+    public String[] getAllGatesOfAnAirportAndTerminalToString(String airportCode, String terminal)
+            throws SQLException, DataBaseConnectionException {
+        return dataAccessObjectPattern.getAllGatesOfAnAirportAndTerminalToString(airportCode, terminal);
+    }
+    //endregion
 
     //region Search
     public ArrayList<FlightsBetweenDatesSearch> getAllFlightsBetweenDates(GregorianCalendar startDate, GregorianCalendar endDate)
@@ -43,97 +116,25 @@ public class FlightManager {
     }
     //endregion
 
-    //region Get
-    public Flight getFlight(String flightNumber)
-            throws SQLException, DataBaseConnectionException, FlightException.MealDescriptionException, FlightException.NumberFlightException {
-        return dataAccessObjectPattern.getFlight(flightNumber);
-    }
-
-    public String getPilotToString(String pilotId)
-            throws SQLException, DataBaseConnectionException {
-        return dataAccessObjectPattern.getPilotToString(pilotId);
-    }
-
-    public String getPlaneToString(Integer planeId)
-            throws SQLException, DataBaseConnectionException {
-        return dataAccessObjectPattern.getPlaneToString(planeId);
-    }
-
-    public String getAirportToString(String gateId)
-            throws SQLException, DataBaseConnectionException {
-        return dataAccessObjectPattern.getAirportToString(gateId);
-    }
-
-    public String getTerminalToString(String gateId)
-            throws SQLException, DataBaseConnectionException {
-        return dataAccessObjectPattern.getTerminalToString(gateId);
-    }
-
-    public String getGateToString(String gateId)
-            throws SQLException, DataBaseConnectionException {
-        return dataAccessObjectPattern.getGateToString(gateId);
-    }
-
-    public ArrayList<Flight> getAllFlights()
-            throws SQLException, DataBaseConnectionException, FlightException.MealDescriptionException, FlightException.NumberFlightException {
-        return dataAccessObjectPattern.getAllFlights();
-    }
-
-    public String[] getAllFlightsForComboBox()
-            throws SQLException, DataBaseConnectionException {
-        return dataAccessObjectPattern.getAllFlightsForComboBox();
-    }
-
-    public String[] getAllPilotsForComboBox()
-            throws SQLException, DataBaseConnectionException {
-        return dataAccessObjectPattern.getAllPilotsForComboBox();
-    }
-
-    public String[] getAllPlanesForComboBox()
-            throws SQLException, DataBaseConnectionException {
-        return dataAccessObjectPattern.getAllPlanesForComboBox();
-    }
-
-    public String[] getAllClassesForComboBox()
-            throws SQLException, DataBaseConnectionException {
-        return dataAccessObjectPattern.getAllClassesForComboBox();
-    }
-
-    public String[] getAllAirportsForComboBox()
-            throws SQLException, DataBaseConnectionException {
-        return dataAccessObjectPattern.getAllAirportsForComboBox();
-    }
-
-    public String[] getAllTerminalsOfAnAirportForComboBox(String airportId)
-            throws SQLException, DataBaseConnectionException {
-        return dataAccessObjectPattern.getAllTerminalsOfAnAirportForComboBox(airportId);
-    }
-
-    public String[] getAllGatesOfAnAirportAndTerminalForComboBox(String airportId, String terminalId)
-            throws SQLException, DataBaseConnectionException {
-        return dataAccessObjectPattern.getAllGatesOfAnAirportAndTerminalForComboBox(airportId, terminalId);
-    }
-    //endregion
-
     //region Edit
-    public void addFlight(Flight flightToAdd)
+    public void addFlight(Flight flight)
             throws SQLException, DataBaseConnectionException {
-        dataAccessObjectPattern.addFlight(flightToAdd);
+        dataAccessObjectPattern.addFlight(flight);
     }
 
-    public void modifyFlight(Flight flightToUpdate, String originalNumber)
+    public void modifyFlight(Flight flight, String originalFlightNumber)
             throws SQLException, DataBaseConnectionException {
-        dataAccessObjectPattern.modifyFlight(flightToUpdate, originalNumber);
+        dataAccessObjectPattern.modifyFlight(flight, originalFlightNumber);
     }
 
-    public void modifyFlight(Flight flightToUpdate)
+    public void modifyFlight(Flight flight)
             throws SQLException, DataBaseConnectionException {
-        dataAccessObjectPattern.modifyFlight(flightToUpdate);
+        dataAccessObjectPattern.modifyFlight(flight);
     }
 
-    public void deleteFlight(String flightToDelete)
+    public void deleteFlight(String flightNumber)
             throws SQLException, DataBaseConnectionException {
-        dataAccessObjectPattern.deleteFlight(flightToDelete);
+        dataAccessObjectPattern.deleteFlight(flightNumber);
     }
     //endregion
 
@@ -143,6 +144,4 @@ public class FlightManager {
         dataAccessObjectPattern.closeConnection();
     }
     //endregion
-
-    // tâche métier
 }

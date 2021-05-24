@@ -1,13 +1,9 @@
 package dataAccess;
 
 import exception.*;
-import exception.dataBase.DataBaseAccessException;
-import exception.dataBase.DataBaseCloseException;
-import exception.dataBase.DataBaseConnectionException;
+import exception.dataBase.*;
 import model.*;
-import model.search.FlightsBetweenDatesSearch;
-import model.search.FlightsByPilotSearch;
-import model.search.PassengersByClassSearch;
+import model.search.*;
 import pattern.DataAccessObjectPattern;
 import tool.Format;
 
@@ -15,6 +11,271 @@ import java.sql.*;
 import java.util.*;
 
 public class AirlineDataBaseAccess implements DataAccessObjectPattern {
+    //region Get
+    public Flight getFlight(String flightNumber)
+            throws SQLException, DataBaseConnectionException, FlightException.MealDescriptionException, FlightException.NumberFlightException {
+        String sqlRequest = "SELECT * FROM flight WHERE number = ?";
+        Flight flight = null;
+
+        PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
+        preparedStatement.setString(1, flightNumber);
+
+        ResultSet data = preparedStatement.executeQuery();
+
+        if (data.next()) {
+            flight = getFlightFromResultSet(data);
+        }
+
+        return flight;
+    }
+
+    public ArrayList<Flight> getAllFlights()
+            throws SQLException, DataBaseConnectionException, FlightException.MealDescriptionException, FlightException.NumberFlightException {
+        ArrayList<Flight> flights = new ArrayList<>();
+        String sqlRequest = "SELECT * FROM flight ORDER BY number";
+
+        Statement statement = SingletonConnection.getInstance().createStatement();
+        ResultSet data = statement.executeQuery(sqlRequest);
+
+        while (data.next()) {
+            flights.add(getFlightFromResultSet(data));
+        }
+
+        return flights;
+    }
+    //endregion
+
+    //region Get to String
+    public String getPilotToString(String pilotLicenceNumber)
+            throws SQLException, DataBaseConnectionException {
+        String pilotToString = null;
+        String sqlRequest = "SELECT licence_number, first_name, last_name FROM pilot WHERE licence_number = ?";
+
+        PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
+        preparedStatement.setString(1, pilotLicenceNumber);
+
+        ResultSet data = preparedStatement.executeQuery();
+
+        if (data.next()) {
+            pilotToString = data.getString("licence_number") + " - " + data.getString("last_name") + " " + data.getString("first_name");
+        }
+
+        return pilotToString;
+    }
+
+    public String getPlaneToString(Integer planeID)
+            throws SQLException, DataBaseConnectionException {
+        String planeToString = null;
+        String sqlRequest = "SELECT plane_id, model, brand FROM plane WHERE plane_id = ?";
+
+        PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
+        preparedStatement.setInt(1, planeID);
+
+        ResultSet data = preparedStatement.executeQuery();
+
+        if (data.next()) {
+            planeToString = data.getInt("plane_id") + " - " + data.getString("brand") + " " + data.getString("model");
+        }
+
+        return planeToString;
+    }
+
+    public String getAirportToString(String gateID)
+            throws SQLException, DataBaseConnectionException {
+        String airportToString = null;
+        String sqlRequest = "SELECT code, name, country FROM gate, airport WHERE airport = code AND gate_id = ?";
+
+        PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
+        preparedStatement.setString(1, gateID);
+
+        ResultSet data = preparedStatement.executeQuery();
+
+        if (data.next()) {
+            airportToString = data.getString("code") + " - " + data.getString("name") + ", " + data.getString("country");
+        }
+
+        return airportToString;
+    }
+
+    public String getTerminalToString(String gateID)
+            throws SQLException, DataBaseConnectionException {
+        String gateToString = null;
+        String sqlRequest = "SELECT terminal FROM gate WHERE gate_id = ?";
+
+        PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
+        preparedStatement.setString(1, gateID);
+
+        ResultSet data = preparedStatement.executeQuery();
+
+        if (data.next()) {
+            gateToString = data.getString("terminal");
+        }
+
+        return gateToString;
+    }
+
+    public String getGateToString(String gateID)
+            throws SQLException, DataBaseConnectionException {
+        String gateToString = null;
+        String sqlRequest = "SELECT number FROM gate WHERE gate_id = ?";
+
+        PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
+        preparedStatement.setString(1, gateID);
+
+        ResultSet data = preparedStatement.executeQuery();
+
+        if (data.next()) {
+            gateToString = Integer.toString(data.getInt("number"));
+        }
+
+        return gateToString;
+    }
+
+    public String[] getAllFlightsToString()
+            throws SQLException, DataBaseConnectionException {
+        ArrayList<String> flights = new ArrayList<>();
+        String sqlRequest = "SELECT " +
+                "fli.number AS flightNumber, " +
+                "fli.departure_time AS departureTime, " +
+                "fli.arrival_time AS arrivalTime, " +
+                "depGat.terminal AS departureTerminal, " +
+                "depGat.number AS departureGate, " +
+                "depAir.code AS departureAirport, " +
+                "arrGat.terminal AS arrivalTerminal, " +
+                "arrGat.number AS arrivalGate, " +
+                "arrAir.code AS arrivalAirport " +
+                "FROM " +
+                "flight fli, " +
+                "gate depGat, " +
+                "airport depAir, " +
+                "gate arrGat, " +
+                "airport arrAir " +
+                "WHERE " +
+                "fli.departure_gate = depGat.gate_id AND " +
+                "depGat.airport = depAir.code AND " +
+                "fli.arrival_gate = arrGat.gate_id AND " +
+                "arrGat.airport = arrAir.code " +
+                "ORDER BY " +
+                "departure_time;";
+
+        Statement statement = SingletonConnection.getInstance().createStatement();
+        ResultSet data = statement.executeQuery(sqlRequest);
+
+        while (data.next()) {
+            GregorianCalendar departureTime = new GregorianCalendar();
+            GregorianCalendar arrivalTime = new GregorianCalendar();
+
+            departureTime.setTime(data.getTimestamp("departureTime"));
+            arrivalTime.setTime(data.getTimestamp("arrivalTime"));
+
+            String departureInformation =
+                    "DÉPART : " + Format.timeFormat(departureTime) + " " + Format.dateFormat(departureTime) + ", " +
+                            data.getString("departureTerminal") + data.getInt("departureGate") + ", " + data.getString("departureAirport");
+            String arrivalInformation =
+                    "ARRIVÉE : " + Format.timeFormat(arrivalTime) + " " + Format.dateFormat(arrivalTime) + ", " +
+                            data.getString("arrivalTerminal") + data.getInt("arrivalGate") + ", " + data.getString("arrivalAirport");
+
+            flights.add(data.getString("flightNumber") + " - " + departureInformation + " - " + arrivalInformation);
+        }
+
+        return flights.toArray(new String[0]);
+    }
+
+    public String[] getAllPilotsToString()
+            throws SQLException, DataBaseConnectionException {
+        ArrayList<String> pilotLicenceNumbers = new ArrayList<>();
+        String sqlRequest = "SELECT * FROM pilot ORDER BY licence_number;";
+
+        Statement statement = SingletonConnection.getInstance().createStatement();
+        ResultSet data = statement.executeQuery(sqlRequest);
+
+        while (data.next()) {
+            pilotLicenceNumbers.add(data.getString("licence_number") + " - " + data.getString("last_name") + " " + data.getString("first_name"));
+        }
+
+        return pilotLicenceNumbers.toArray(new String[0]);
+    }
+
+    public String[] getAllPlanesToString()
+            throws SQLException, DataBaseConnectionException {
+        ArrayList<String> planeIDs = new ArrayList<>();
+        String sqlRequest = "SELECT * FROM plane ORDER BY plane_id;";
+
+        Statement statement = SingletonConnection.getInstance().createStatement();
+        ResultSet data = statement.executeQuery(sqlRequest);
+
+        while (data.next()) {
+            planeIDs.add(data.getString("plane_id") + " - " + data.getString("brand") + " " + data.getString("model"));
+        }
+
+        return planeIDs.toArray(new String[0]);
+    }
+
+    public String[] getAllClassesToString()
+            throws SQLException, DataBaseConnectionException {
+        ArrayList<String> classeNames = new ArrayList<>();
+        String sqlRequest = "SELECT name FROM class ORDER BY class_id DESC;";
+
+        Statement statement = SingletonConnection.getInstance().createStatement();
+        ResultSet data = statement.executeQuery(sqlRequest);
+
+        while (data.next()) {
+            classeNames.add(data.getString("name"));
+        }
+        return classeNames.toArray(new String[0]);
+    }
+
+    public String[] getAllAirportsToString()
+            throws SQLException, DataBaseConnectionException {
+        ArrayList<String> airportCodes = new ArrayList<>();
+        String sqlRequest = "SELECT * FROM airport ORDER BY code;";
+
+        Statement statement = SingletonConnection.getInstance().createStatement();
+        ResultSet data = statement.executeQuery(sqlRequest);
+
+        while (data.next()) {
+            airportCodes.add(data.getString("code") + " - " + data.getString("name") + ", " + data.getString("country"));
+        }
+
+        return airportCodes.toArray(new String[0]);
+    }
+
+    public String[] getAllTerminalsOfAnAirportToString(String airportCode)
+            throws SQLException, DataBaseConnectionException {
+        ArrayList<String> terminalsOfAnAirport = new ArrayList<>();
+        String sqlRequest = "SELECT DISTINCT terminal FROM gate, airport WHERE airport = code AND code = ? ORDER BY terminal;";
+
+        PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
+        preparedStatement.setString(1, airportCode);
+
+        ResultSet data = preparedStatement.executeQuery();
+
+        while (data.next()) {
+            terminalsOfAnAirport.add(data.getString("terminal"));
+        }
+
+        return terminalsOfAnAirport.toArray(new String[0]);
+    }
+
+    public String[] getAllGatesOfAnAirportAndTerminalToString(String airportCode, String terminal)
+            throws SQLException, DataBaseConnectionException {
+        ArrayList<String> gatesOfAnAirportAndTerminal = new ArrayList<>();
+        String sqlRequest = "SELECT number FROM gate, airport WHERE airport = code AND code = ? AND terminal = ? ORDER BY number;";
+
+        PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
+        preparedStatement.setString(1, airportCode);
+        preparedStatement.setString(2, terminal);
+
+        ResultSet data = preparedStatement.executeQuery();
+
+        while (data.next()) {
+            gatesOfAnAirportAndTerminal.add(Integer.toString(data.getInt("number")));
+        }
+
+        return gatesOfAnAirportAndTerminal.toArray(new String[0]);
+    }
+    //endregion
+
     //region Search
     public ArrayList<FlightsBetweenDatesSearch> getAllFlightsBetweenDates(GregorianCalendar startDate, GregorianCalendar endDate)
             throws DataBaseAccessException {
@@ -72,6 +333,7 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
             while (data.next()) {
                 GregorianCalendar flightDepartureTime = new GregorianCalendar();
                 GregorianCalendar flightArrivalTime = new GregorianCalendar();
+
                 flightDepartureTime.setTime(data.getTimestamp("flightDepartureTime"));
                 flightArrivalTime.setTime(data.getTimestamp("flightArrivalTime"));
 
@@ -159,6 +421,7 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
             while (data.next()) {
                 GregorianCalendar flightDepartureTime = new GregorianCalendar();
                 GregorianCalendar flightArrivalTime = new GregorianCalendar();
+
                 flightDepartureTime.setTime(data.getTimestamp("flightDepartureTime"));
                 flightArrivalTime.setTime(data.getTimestamp("flightArrivalTime"));
 
@@ -227,6 +490,7 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
                 "pil.licence_number = ? " +
                 "ORDER BY " +
                 "departure_time;";
+
         try {
             PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
             preparedStatement.setString(1, pilotLicenceNumber);
@@ -236,6 +500,7 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
             while (data.next()) {
                 GregorianCalendar flightDepartureTime = new GregorianCalendar();
                 GregorianCalendar flightArrivalTime = new GregorianCalendar();
+
                 flightDepartureTime.setTime(data.getTimestamp("flightDepartureTime"));
                 flightArrivalTime.setTime(data.getTimestamp("flightArrivalTime"));
 
@@ -267,282 +532,19 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
     }
     //endregion
 
-    //region Get
-    public Flight getFlight(String flightNumber)
-            throws SQLException, DataBaseConnectionException, FlightException.MealDescriptionException, FlightException.NumberFlightException {
-        String sqlRequest = "SELECT * FROM flight WHERE number = ?";
-        Flight flight = null;
-
-        PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
-        preparedStatement.setString(1, flightNumber);
-
-        ResultSet data = preparedStatement.executeQuery();
-
-        if (data.next()) {
-            flight = getFlightFromResultSet(data);
-        }
-
-        return flight;
-    }
-
-    public String getPilotToString(String pilotId)
-            throws SQLException, DataBaseConnectionException {
-        String pilotToString = null;
-        String sqlRequest = "SELECT licence_number, first_name, last_name FROM pilot WHERE licence_number = ?";
-
-        PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
-        preparedStatement.setString(1, pilotId);
-
-        ResultSet data = preparedStatement.executeQuery();
-
-        if (data.next()) {
-            pilotToString = data.getString("licence_number") + " - " + data.getString("last_name") + " " + data.getString("first_name");
-        }
-
-        return pilotToString;
-    }
-
-    public String getPlaneToString(Integer planeId)
-            throws SQLException, DataBaseConnectionException {
-        String planeToString = null;
-        String sqlRequest = "SELECT plane_id, model, brand FROM plane WHERE plane_id = ?";
-
-        PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
-        preparedStatement.setInt(1, planeId);
-
-        ResultSet data = preparedStatement.executeQuery();
-
-        if (data.next()) {
-            planeToString = data.getInt("plane_id") + " - " + data.getString("brand") + " " + data.getString("model");
-        }
-
-        return planeToString;
-    }
-
-    public String getAirportToString(String gateId)
-            throws SQLException, DataBaseConnectionException {
-        String airportToString = null;
-        String sqlRequest = "SELECT code, name, country FROM gate, airport WHERE airport = code AND gate_id = ?";
-
-        PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
-        preparedStatement.setString(1, gateId);
-
-        ResultSet data = preparedStatement.executeQuery();
-
-        if (data.next()) {
-            airportToString = data.getString("code") + " - " + data.getString("name") + ", " + data.getString("country");
-        }
-
-        return airportToString;
-    }
-
-    public String getTerminalToString(String gateId)
-            throws SQLException, DataBaseConnectionException {
-        String gateToString = null;
-        String sqlRequest = "SELECT terminal FROM gate WHERE gate_id = ?";
-
-        PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
-        preparedStatement.setString(1, gateId);
-
-        ResultSet data = preparedStatement.executeQuery();
-
-        if (data.next()) {
-            gateToString = data.getString("terminal");
-        }
-
-        return gateToString;
-    }
-
-    public String getGateToString(String gateId)
-            throws SQLException, DataBaseConnectionException {
-        String gateToString = null;
-        String sqlRequest = "SELECT number FROM gate WHERE gate_id = ?";
-
-        PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
-        preparedStatement.setString(1, gateId);
-
-        ResultSet data = preparedStatement.executeQuery();
-
-        if (data.next()) {
-            gateToString = Integer.toString(data.getInt("number"));
-        }
-
-        return gateToString;
-    }
-
-    public ArrayList<Flight> getAllFlights()
-            throws SQLException, DataBaseConnectionException, FlightException.MealDescriptionException, FlightException.NumberFlightException {
-        ArrayList<Flight> flights = new ArrayList<>();
-        String sqlRequest = "SELECT * FROM flight ORDER BY number";
-
-        Statement statement = SingletonConnection.getInstance().createStatement();
-        ResultSet data = statement.executeQuery(sqlRequest);
-
-        while (data.next()) {
-            flights.add(getFlightFromResultSet(data));
-        }
-
-        return flights;
-    }
-
-    public String[] getAllFlightsForComboBox()
-            throws SQLException, DataBaseConnectionException {
-        ArrayList<String> flights = new ArrayList<>();
-        GregorianCalendar departureTime = new GregorianCalendar();
-        GregorianCalendar arrivalTime = new GregorianCalendar();
-        String sqlRequest = "SELECT " +
-                "fli.number AS flightNumber, " +
-                "fli.departure_time AS departureTime, " +
-                "fli.arrival_time AS arrivalTime, " +
-                "depGat.terminal AS departureTerminal, " +
-                "depGat.number AS departureGate, " +
-                "depAir.code AS departureAirport, " +
-                "arrGat.terminal AS arrivalTerminal, " +
-                "arrGat.number AS arrivalGate, " +
-                "arrAir.code AS arrivalAirport " +
-                "FROM " +
-                "flight fli, " +
-                "gate depGat, " +
-                "airport depAir, " +
-                "gate arrGat, " +
-                "airport arrAir " +
-                "WHERE " +
-                "fli.departure_gate = depGat.gate_id AND " +
-                "depGat.airport = depAir.code AND " +
-                "fli.arrival_gate = arrGat.gate_id AND " +
-                "arrGat.airport = arrAir.code " +
-                "ORDER BY " +
-                "departure_time;";
-
-        Statement statement = SingletonConnection.getInstance().createStatement();
-        ResultSet data = statement.executeQuery(sqlRequest);
-
-        while (data.next()) {
-            departureTime.setTime(data.getTimestamp("departureTime"));
-            arrivalTime.setTime(data.getTimestamp("arrivalTime"));
-
-            String departureInformation =
-                    "DÉPART : " + Format.timeFormat(departureTime) + " " + Format.dateFormat(departureTime) + ", " +
-                            data.getString("departureTerminal") + data.getInt("departureGate") + ", " + data.getString("departureAirport");
-            String arrivalInformation =
-                    "ARRIVÉE : " + Format.timeFormat(arrivalTime) + " " + Format.dateFormat(arrivalTime) + ", " +
-                            data.getString("arrivalTerminal") + data.getInt("arrivalGate") + ", " + data.getString("arrivalAirport");
-
-            flights.add(data.getString("flightNumber") + " - " + departureInformation + " - " + arrivalInformation);
-        }
-
-        return flights.toArray(new String[0]);
-    }
-
-    public String[] getAllPilotsForComboBox()
-            throws SQLException, DataBaseConnectionException {
-        ArrayList<String> pilotLicenceNumbers = new ArrayList<>();
-        String sqlRequest = "SELECT * FROM pilot ORDER BY licence_number";
-
-        Statement statement = SingletonConnection.getInstance().createStatement();
-        ResultSet data = statement.executeQuery(sqlRequest);
-
-        while (data.next()) {
-            pilotLicenceNumbers.add(data.getString("licence_number") + " - " + data.getString("last_name") + " " + data.getString("first_name"));
-        }
-
-        return pilotLicenceNumbers.toArray(new String[0]);
-    }
-
-    public String[] getAllPlanesForComboBox()
-            throws SQLException, DataBaseConnectionException {
-        ArrayList<String> planeIDs = new ArrayList<>();
-        String sqlRequest = "SELECT * FROM plane ORDER BY plane_id";
-
-        Statement statement = SingletonConnection.getInstance().createStatement();
-        ResultSet data = statement.executeQuery(sqlRequest);
-
-        while (data.next()) {
-            planeIDs.add(data.getString("plane_id") + " - " + data.getString("brand") + " " + data.getString("model"));
-        }
-
-        return planeIDs.toArray(new String[0]);
-    }
-
-    public String[] getAllClassesForComboBox()
-            throws SQLException, DataBaseConnectionException {
-        ArrayList<String> classeNames = new ArrayList<>();
-        String sqlRequest = "SELECT name FROM class ORDER BY class_id DESC";
-
-        Statement statement = SingletonConnection.getInstance().createStatement();
-        ResultSet data = statement.executeQuery(sqlRequest);
-
-        while (data.next()) {
-            classeNames.add(data.getString("name"));
-        }
-        return classeNames.toArray(new String[0]);
-    }
-
-    public String[] getAllAirportsForComboBox()
-            throws SQLException, DataBaseConnectionException {
-        ArrayList<String> airportCodes = new ArrayList<>();
-        String sqlRequest = "SELECT * FROM airport ORDER BY code";
-
-        Statement statement = SingletonConnection.getInstance().createStatement();
-        ResultSet data = statement.executeQuery(sqlRequest);
-
-        while (data.next()) {
-            airportCodes.add(data.getString("code") + " - " + data.getString("name") + ", " + data.getString("country"));
-        }
-
-        return airportCodes.toArray(new String[0]);
-    }
-
-    public String[] getAllTerminalsOfAnAirportForComboBox(String airportId)
-            throws SQLException, DataBaseConnectionException {
-        ArrayList<String> terminalsOfAnAirport = new ArrayList<>();
-        String sqlRequest = "SELECT DISTINCT terminal FROM gate, airport WHERE airport = code AND code = ? ORDER BY terminal;";
-
-        PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
-        preparedStatement.setString(1, airportId);
-
-        ResultSet data = preparedStatement.executeQuery();
-
-        while (data.next()) {
-            terminalsOfAnAirport.add(data.getString("terminal"));
-        }
-
-        return terminalsOfAnAirport.toArray(new String[0]);
-    }
-
-    public String[] getAllGatesOfAnAirportAndTerminalForComboBox(String airportId, String terminalId)
-            throws SQLException, DataBaseConnectionException {
-        ArrayList<String> gatesOfAnAirportAndTerminal = new ArrayList<>();
-        String sqlRequest = "SELECT number FROM gate, airport WHERE airport = code AND code = ? AND terminal = ? ORDER BY number;";
-
-        PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
-        preparedStatement.setString(1, airportId);
-        preparedStatement.setString(2, terminalId);
-
-        ResultSet data = preparedStatement.executeQuery();
-
-        while (data.next()) {
-            gatesOfAnAirportAndTerminal.add(Integer.toString(data.getInt("number")));
-        }
-
-        return gatesOfAnAirportAndTerminal.toArray(new String[0]);
-    }
-    //endregion
-
     //region Edit
-    public void addFlight(Flight flightToAdd)
+    public void addFlight(Flight flight)
             throws SQLException, DataBaseConnectionException {
         String sqlRequest = "INSERT INTO flight VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        PreparedStatement preparedStatement = preparedFlightStatement(sqlRequest, flightToAdd);
+        PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
 
-        preparedStatement.executeUpdate();
+        preparedFlightStatement(flight, preparedStatement).executeUpdate();
     }
 
-    public void modifyFlight(Flight flightToUpdate, String originalNumber)
+    public void modifyFlight(Flight flight, String originalFlightNumber)
             throws SQLException, DataBaseConnectionException {
-        String sqlRequest = "UPDATE " +
-                "flight " +
+        String sqlRequest = "UPDATE flight " +
                 "SET " +
                 "number = ?, " +
                 "departure_time = ?, " +
@@ -553,34 +555,32 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
                 "arrival_gate = ?, " +
                 "pilot = ?, " +
                 "plane = ? " +
-                "WHERE " +
-                "number = ?";
+                "WHERE number = ?";
 
-        PreparedStatement preparedStatement = preparedFlightStatement(sqlRequest, flightToUpdate);
-        preparedStatement.setString(10, originalNumber);
+        PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
+        preparedStatement.setString(10, originalFlightNumber);
 
-        preparedStatement.executeUpdate();
+        preparedFlightStatement(flight, preparedStatement).executeUpdate();
     }
 
-    @Override
-    public void modifyFlight(Flight flightToUpdate)
+    public void modifyFlight(Flight flight)
             throws SQLException, DataBaseConnectionException {
-        modifyFlight(flightToUpdate, flightToUpdate.getNumber());
+        modifyFlight(flight, flight.getNumber());
     }
 
-    public void deleteFlight(String flightNumberToDelete)
+    public void deleteFlight(String flightNumber)
             throws SQLException, DataBaseConnectionException {
-        deleteSeatsOfAFlight(flightNumberToDelete);
+        deleteSeatsOfAFlight(flightNumber);
 
         String sqlRequest = "DELETE FROM flight WHERE number = ?";
 
         PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
-        preparedStatement.setString(1, flightNumberToDelete);
+        preparedStatement.setString(1, flightNumber);
 
         preparedStatement.executeUpdate();
     }
 
-    private void deleteSeatsOfAFlight (String flightNumber)
+    private void deleteSeatsOfAFlight(String flightNumber)
             throws SQLException, DataBaseConnectionException {
         String sqlRequest = "DELETE FROM seat WHERE flight = ?";
 
@@ -628,10 +628,8 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
         return flight;
     }
 
-    private PreparedStatement preparedFlightStatement(String sql, Flight flight)
-            throws SQLException, DataBaseConnectionException {
-        PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sql);
-
+    private PreparedStatement preparedFlightStatement(Flight flight, PreparedStatement preparedStatement)
+            throws SQLException {
         preparedStatement.setString(1, flight.getNumber());
         preparedStatement.setTimestamp(2, new java.sql.Timestamp(flight.getDepartureTime().getTimeInMillis()));
         preparedStatement.setTimestamp(3, new java.sql.Timestamp(flight.getArrivalTime().getTimeInMillis()));
