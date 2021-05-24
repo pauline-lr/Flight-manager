@@ -22,9 +22,15 @@ public class AddFlightPanel extends JPanel {
         this.setLayout(new BorderLayout());
         this.add(flightForm, BorderLayout.CENTER);
 
+
+        JPanel buttonPanel = new JPanel();
+        this.add(buttonPanel, BorderLayout.SOUTH);
+
         validate = new JButton("Ajouter");
         validate.addActionListener(new ValidationListener());
-        this.add(validate);
+        buttonPanel.add(validate, BorderLayout.CENTER);
+
+        //this.add(validate, BorderLayout.SOUTH);
     }
 
     private class ValidationListener implements ActionListener {
