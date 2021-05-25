@@ -52,11 +52,13 @@ public class ModifyFlightPanel extends JPanel {
             Flight flight = flightForm.getFlight();
             String originalFlightNumber = modifyFlightForm.getFlightComboBoxID();
             try {
-                controller.modifyFlight(flight, originalFlightNumber);
-                String flightToString = controller.getFlightToString(flight.getNumber());
-                modifyFlightForm.updateFlightComboBox();
-                modifyFlightForm.getFlightComboBox().setSelectedItem(flightToString);
-                JOptionPane.showMessageDialog(null, "Vol modifié", "Succès", JOptionPane.INFORMATION_MESSAGE);
+                if (flight.getNumber().equals(originalFlightNumber) || !flightForm.checkFlightNumberIsExisting()) {
+                    controller.modifyFlight(flight, originalFlightNumber);
+                    String flightToString = controller.getFlightToString(flight.getNumber());
+                    modifyFlightForm.updateFlightComboBox();
+                    modifyFlightForm.getFlightComboBox().setSelectedItem(flightToString);
+                    JOptionPane.showMessageDialog(null, "Vol modifié", "Succès", JOptionPane.INFORMATION_MESSAGE);
+                }
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             } catch (DataBaseConnectionException e) {

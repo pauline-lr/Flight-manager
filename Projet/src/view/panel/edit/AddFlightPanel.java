@@ -42,14 +42,11 @@ public class AddFlightPanel extends JPanel {
     private class ValidationButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent evt) {
-            String flightNumberText = flightForm.getFlightNumberTextField().getText();
             try {
-                if (!controller.flightNumberIsExisting(flightNumberText)) {
+                if (!flightForm.checkFlightNumberIsExisting()) {
                     Flight flight = flightForm.getFlight();
                     controller.addFlight(flight);
                     JOptionPane.showMessageDialog(null, "Vol ajouté", "Succès", JOptionPane.INFORMATION_MESSAGE);
-                } else {
-                    JOptionPane.showMessageDialog(null, "Ce numéro de vol existe déjà.", "Erreur", JOptionPane.ERROR_MESSAGE);
                 }
             } catch (SQLException throwables) {
                 throwables.printStackTrace();

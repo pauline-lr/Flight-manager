@@ -499,4 +499,15 @@ public class FlightForm extends JPanel {
         }
     }
     //endregion
+
+    public Boolean checkFlightNumberIsExisting() throws SQLException, DataBaseConnectionException {
+        String flightNumber = flightNumberTextField.getText();
+        Boolean isFlightNumberExisting = controller.flightNumberIsExisting(flightNumber);
+        if (isFlightNumberExisting) {
+            JOptionPane.showMessageDialog(null, "Le numéro de vol \"" + flightNumber + "\" existe déjà.", "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
+        return isFlightNumberExisting;
+    }
+
+
 }

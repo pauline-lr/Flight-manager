@@ -61,7 +61,7 @@ public class DeleteFlightPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent evt) {
             if (table.getSelectedRow() != -1) {
-                int choice = getConfirmation("Êtes-vous sûr de vouloir supprimer ce vol ?\nLes réservations seront également supprimées.");
+                int choice = getConfirmation("Êtes-vous sûr de vouloir supprimer ce(s) vol(s) ?\nLes réservations liées seront également supprimées.");
 
                 if (choice == 0) {
                     int[] selectedRows = table.getSelectedRows();
