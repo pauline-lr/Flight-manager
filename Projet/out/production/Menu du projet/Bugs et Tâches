@@ -6,14 +6,14 @@ Bugs et Tâches
 - ✅ JSpinner Date a refaire
 - ✅ suppression seat lié a vol
 - ✅ changer string en boolean dans liste flights pour mealOnBoard
-- ✅ [à tester] confirmation et avertir suppression des sieges (reservations)
-- [en cours] faire les exceptions pour meme vol et champs vide dans ajouter
-- ✅ oir pourquoi etirer feneter pour JTable
+- ✅ confirmation et avertir suppression des sieges (reservations)
+- ✅ faire les exceptions pour meme vol et champs vide dans ajouter
+- ✅ voir pourquoi etirer feneter pour JTable
 - ✅ finir modifier vol
 - ✅ finir 3 recherches
 - --->  faire en sorte de pouvoir supprimer plusieurs vols
 - faire tache metier
-- si isMeal = false => mealDescription = null
+- ✅ si isMeal = false => mealDescription = null
 
 A faire en dernier
 - Jeux de tests

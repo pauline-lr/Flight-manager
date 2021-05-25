@@ -81,6 +81,11 @@ public interface DataAccessObjectPattern {
             throws SQLException, DataBaseConnectionException;
     //endregion
 
+    //region Test
+    Boolean flightNumberIsExisting(String flightNumber)
+            throws SQLException, DataBaseConnectionException;
+    //endregion
+
     //region Connection
     void closeConnection()
             throws DataBaseCloseException;

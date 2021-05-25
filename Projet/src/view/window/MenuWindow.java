@@ -64,7 +64,6 @@ public class MenuWindow extends JFrame{
     }
 
     public void initAnimation(){
-        AnimationPanel animationPanel = new AnimationPanel();
         frameContainer.add(new WelcomePanel(), BorderLayout.PAGE_START);
         frameContainer.add(new AnimationPanel(), BorderLayout.CENTER);
         MenuWindow.this.getContainer().repaint();

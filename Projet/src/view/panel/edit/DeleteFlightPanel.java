@@ -64,17 +64,21 @@ public class DeleteFlightPanel extends JPanel {
                 int choice = getConfirmation("Êtes-vous sûr de vouloir supprimer ce vol ?\nLes réservations seront également supprimées.");
 
                 if (choice == 0) {
-                    int selectedRow = table.getSelectedRow();
+                    int[] selectedRows = table.getSelectedRows();
                     try {
-                        controller.deleteFlight(flightsTable.getFlight(selectedRow));
+                        for (int selectedRow : selectedRows) {
+                            controller.deleteFlight(flightsTable.getFlight(selectedRow));
+                        }
+                        for (int i = 0; i < selectedRows.length; i++) {
+                            flightsTable.removeRow(selectedRows[i] - i);
+                        }
                     } catch (SQLException throwables) {
                         throwables.printStackTrace();
                     } catch (DataBaseConnectionException throwables) {
                         throwables.printStackTrace();
                         JOptionPane.showMessageDialog(null, throwables.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                     }
-                    flightsTable.removeRow(selectedRow);
-                    JOptionPane.showMessageDialog(null, "Vol supprimé", "Succès", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Vol(s) supprimé(s)", "Succès", JOptionPane.INFORMATION_MESSAGE);
                 }
             } else { // cancel == 2     exit == -1
                 JOptionPane.showMessageDialog(null, "Veuillez sélectionner une ligne", "Erreur", JOptionPane.ERROR_MESSAGE);

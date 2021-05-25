@@ -40,6 +40,10 @@ public class FlightForm extends JPanel {
         this.currentDate = currentDate;
     }
 
+    public JTextField getFlightNumberTextField() {
+        return flightNumberTextField;
+    }
+
     private void createFlightForm() {
         addFlightNumberField();
         addPilotField();

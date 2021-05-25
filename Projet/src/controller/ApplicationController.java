@@ -134,6 +134,13 @@ public class ApplicationController {
     }
     //endregion
 
+    //region Test
+    public Boolean flightNumberIsExisting(String flightNumber)
+            throws SQLException, DataBaseConnectionException {
+        return flightManager.flightNumberIsExisting(flightNumber);
+    }
+    //endregion
+
     //region Connection
     public void closeConnection()
             throws DataBaseCloseException {

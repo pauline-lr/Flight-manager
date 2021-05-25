@@ -610,6 +610,20 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
     }
     //endregion
 
+    //region Test
+    public Boolean flightNumberIsExisting(String flightNumber)
+            throws SQLException, DataBaseConnectionException {
+        String sqlRequest = "SELECT number FROM flight WHERE number = ?";
+
+        PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
+        preparedStatement.setString(1, flightNumber);
+
+        ResultSet data = preparedStatement.executeQuery();
+
+        return data.next();
+    }
+    //endregion
+
     //region Connection
     public void closeConnection()
             throws DataBaseCloseException {
@@ -671,7 +685,7 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
         preparedStatement.setTimestamp(2, new java.sql.Timestamp(flight.getDepartureTime().getTimeInMillis()));
         preparedStatement.setTimestamp(3, new java.sql.Timestamp(flight.getArrivalTime().getTimeInMillis()));
         preparedStatement.setBoolean(4, flight.getMealOnBoard());
-        if (flight.getMealDescription() == null) {
+        if (flight.getMealDescription() == null || !flight.getMealOnBoard()) {
             preparedStatement.setNull(5, Types.VARCHAR);
         } else {
             preparedStatement.setString(5, flight.getMealDescription());
