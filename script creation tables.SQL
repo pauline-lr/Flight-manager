@@ -89,7 +89,8 @@ CREATE TABLE gate (
     CONSTRAINT gate_id UNIQUE (terminal, number, airport),
     CONSTRAINT gate_pk PRIMARY KEY (gate_id),
     CONSTRAINT airport_fk FOREIGN KEY (airport) REFERENCES airport (code),
-    CONSTRAINT terminal_gate CHECK(terminal REGEXP '^[A-Z]$')
+    CONSTRAINT terminal_gate_check CHECK(terminal REGEXP '^[A-Z]$'),
+    CONSTRAINT number_check CHECK(LENGTH(number) BETWEEN 0 AND 99)
 );
 
 CREATE TABLE flight (
@@ -108,7 +109,8 @@ CREATE TABLE flight (
     CONSTRAINT arrival_gate_fk FOREIGN KEY (arrival_gate) REFERENCES gate (gate_id),
     CONSTRAINT pilot_fk FOREIGN KEY (pilot) REFERENCES pilot (licence_number),
     CONSTRAINT plane_fk FOREIGN KEY (plane) REFERENCES plane (plane_id),
-    CONSTRAINT terminal_gate CHECK(terminal REGEXP '^[A-Z]$'), 
+    CONSTRAINT number_flight_check CHECK(code REGEXP '^[A-Z][A-Z]\d{4}$'),
+    CONSTRAINT departure_time_check CHECK(departure_time >= CURDATE()),
     CONSTRAINT arrival_time_check CHECK(departure_time < arrival_time)
 );
 
@@ -134,7 +136,7 @@ CREATE TABLE seat (
 	CONSTRAINT passenger_fk FOREIGN KEY (passenger) REFERENCES passenger (passport_number),
 	CONSTRAINT flight_fk FOREIGN KEY (flight) REFERENCES flight (number),
 	CONSTRAINT seat_class_fk FOREIGN KEY (seat_class) REFERENCES class (class_id),
- 	CONSTRAINT seat_row_condition CHECK(seat_row BETWEEN 0 AND 99),
+ 	CONSTRAINT seat_row_condition CHECK(seat_row BETWEEN 0 AND 999),
  	CONSTRAINT seat_column_condition CHECK(seat_column REGEXP '^[A-Z]$')
 );
 

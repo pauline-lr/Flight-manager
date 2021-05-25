@@ -3,8 +3,6 @@ package model;
 import exception.NameClassException;
 
 public class Class {
-    private final static int NAME_LENGTH = 20;
-
     private Integer classID;
     private String name;    // Max 20 characters
 
@@ -21,7 +19,7 @@ public class Class {
     }
 
     private void setName(String name) throws NameClassException {
-        if(name.length() <= NAME_LENGTH)
+        if(name.equals("Première") || name.equals("Affaire") ||name.equals("Économique"))
             this.name = name;
         else
             throw new NameClassException(name);

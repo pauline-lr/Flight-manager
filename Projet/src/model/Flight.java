@@ -49,7 +49,7 @@ public class Flight {
     private void setNumber(String number) throws FlightException.NumberFlightException {
             Pattern pattern = Pattern.compile(REGEX_NUMBER);
             Matcher matcher = pattern.matcher(number);
-            if (matcher.find() /*&& ne se trouve pas déjà dans la BD*/) {
+            if (matcher.find()) {
                 this.number = number;
             } else {
                 throw new FlightException.NumberFlightException(number);
