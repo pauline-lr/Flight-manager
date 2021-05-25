@@ -52,9 +52,6 @@ VALUES
 
 INSERT INTO gate
 VALUES
-    ('A13LHR', 'A', 13, 'LHR'),
-    ('B24JFK', 'B', 24, 'JFK'),
-    ('A11LHR', 'A', 11, 'LHR'),
     ('B1BRU', 'B', 1, 'BRU'),
     ('B2BRU', 'B', 2, 'BRU'),
     ('B3BRU', 'B', 3, 'BRU'),
@@ -65,14 +62,39 @@ VALUES
     ('A3BRU', 'A', 3, 'BRU'),
     ('A4BRU', 'A', 4, 'BRU'),
     ('A5BRU', 'A', 5, 'BRU'),
-    ('A6BRU', 'A', 6, 'BRU')
+    ('A6BRU', 'A', 6, 'BRU'),
+    ('B1LHR', 'B', 1, 'LHR'),
+    ('B2LHR', 'B', 2, 'LHR'),
+    ('B3LHR', 'B', 3, 'LHR'),
+    ('A1LHR', 'A', 1, 'LHR'),
+    ('A2LHR', 'A', 2, 'LHR'),
+    ('A3LHR', 'A', 3, 'LHR'),
+    ('A4LHR', 'A', 4, 'LHR'),
+    ('A5LHR', 'A', 5, 'LHR'),
+    ('A6LHR', 'A', 6, 'LHR'),
+    ('A7LHR', 'A', 7, 'LHR'),
+    ('A8LHR', 'A', 8, 'LHR'),
+    ('A1JFK', 'A', 1, 'JFK'),
+    ('A2JFK', 'A', 2, 'JFK'),
+    ('A3JFK', 'A', 3, 'JFK'),
+    ('A4JFK', 'A', 4, 'JFK'),
+    ('B1JFK', 'B', 1, 'JFK'),
+    ('B2JFK', 'B', 2, 'JFK'),
+    ('B3JFK', 'B', 3, 'JFK'),
+    ('B4JFK', 'B', 4, 'JFK'),
+    ('B5JFK', 'B', 5, 'JFK'),
+    ('B6JFK', 'B', 6, 'JFK'),
+    ('B7JFK', 'B', 7, 'JFK'),
+    ('B8JFK', 'B', 8, 'JFK'),
+    ('B9JFK', 'B', 9, 'JFK')
 ;
 
 INSERT INTO flight
 VALUES
-	('SA7346', '2022-07-05 16:48:00', '2022-07-05 17:48:00', true, 'Choux rouge avec des brocolis et une banane en dessert', 'A13LHR', 'B24JFK', 'DRW1563', 1),
-    ('JF4325', '2021-08-05 13:31:00', '2021-08-06 01:34:00', false, null, 'B1BRU', 'A11LHR', 'DBS1562', 3),
-    ('OD1124', '2022-02-05 12:20:00', '2022-02-06 10:54:00', false, null, 'B24JFK', 'A2BRU', 'BTD4596', 5)
+	('SA7346', '2022-07-05 16:48:00', '2022-07-05 17:48:00', true, 'Choux rouge avec des brocolis et une banane en dessert', 'A5LHR', 'B3JFK', 'DRW1563', 1),
+    ('JF4325', '2021-08-05 13:31:00', '2021-08-06 01:34:00', false, null, 'A2JFK', 'A4BRU', 'DBS1562', 3),
+    ('OD1124', '2022-02-05 12:20:00', '2022-02-06 10:54:00', false, null, 'B2BRU', 'B2LHR', 'BTD4596', 5)
+;
 ;
 
 INSERT INTO seat
