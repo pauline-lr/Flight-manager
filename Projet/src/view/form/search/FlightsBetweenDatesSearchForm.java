@@ -1,7 +1,6 @@
 package view.form.search;
 
 import tool.Format;
-import tool.GetID;
 
 import javax.swing.*;
 import java.awt.*;

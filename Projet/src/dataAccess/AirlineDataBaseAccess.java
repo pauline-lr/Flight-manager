@@ -46,6 +46,46 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
     //endregion
 
     //region Get to String
+    public String getFlightToString(String flightNumber)
+            throws SQLException, DataBaseConnectionException {
+        String flight = null;
+        String sqlRequest = "SELECT " +
+                "fli.number AS flightNumber, " +
+                "fli.departure_time AS departureTime, " +
+                "fli.arrival_time AS arrivalTime, " +
+                "depGat.terminal AS departureTerminal, " +
+                "depGat.number AS departureGate, " +
+                "depAir.code AS departureAirport, " +
+                "arrGat.terminal AS arrivalTerminal, " +
+                "arrGat.number AS arrivalGate, " +
+                "arrAir.code AS arrivalAirport " +
+                "FROM " +
+                "flight fli, " +
+                "gate depGat, " +
+                "airport depAir, " +
+                "gate arrGat, " +
+                "airport arrAir " +
+                "WHERE " +
+                "fli.departure_gate = depGat.gate_id AND " +
+                "depGat.airport = depAir.code AND " +
+                "fli.arrival_gate = arrGat.gate_id AND " +
+                "arrGat.airport = arrAir.code AND " +
+                "fli.number = ? " +
+                "ORDER BY " +
+                "departure_time;";
+
+        PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
+        preparedStatement.setString(1, flightNumber);
+
+        ResultSet data = preparedStatement.executeQuery();
+
+        if (data.next()) {
+            flight = getFlightToStringResultSet(data);
+        }
+
+        return flight;
+    }
+
     public String getPilotToString(String pilotLicenceNumber)
             throws SQLException, DataBaseConnectionException {
         String pilotToString = null;
@@ -162,20 +202,8 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
         ResultSet data = statement.executeQuery(sqlRequest);
 
         while (data.next()) {
-            GregorianCalendar departureTime = new GregorianCalendar();
-            GregorianCalendar arrivalTime = new GregorianCalendar();
 
-            departureTime.setTime(data.getTimestamp("departureTime"));
-            arrivalTime.setTime(data.getTimestamp("arrivalTime"));
-
-            String departureInformation =
-                    "DÉPART : " + Format.timeFormat(departureTime) + " " + Format.dateFormat(departureTime) + ", " +
-                            data.getString("departureTerminal") + data.getInt("departureGate") + ", " + data.getString("departureAirport");
-            String arrivalInformation =
-                    "ARRIVÉE : " + Format.timeFormat(arrivalTime) + " " + Format.dateFormat(arrivalTime) + ", " +
-                            data.getString("arrivalTerminal") + data.getInt("arrivalGate") + ", " + data.getString("arrivalAirport");
-
-            flights.add(data.getString("flightNumber") + " - " + departureInformation + " - " + arrivalInformation);
+            flights.add(getFlightToStringResultSet(data));
         }
 
         return flights.toArray(new String[0]);
@@ -544,6 +572,7 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
 
     public void modifyFlight(Flight flight, String originalFlightNumber)
             throws SQLException, DataBaseConnectionException {
+        String CheckRequest = "SET foreign_key_checks = 1;";
         String sqlRequest = "UPDATE flight " +
                 "SET " +
                 "number = ?, " +
@@ -557,32 +586,22 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
                 "plane = ? " +
                 "WHERE number = ?";
 
+        updateSeatsOfAFlight(flight.getNumber(), originalFlightNumber);
+
         PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
         preparedStatement.setString(10, originalFlightNumber);
 
         preparedFlightStatement(flight, preparedStatement).executeUpdate();
-    }
 
-    public void modifyFlight(Flight flight)
-            throws SQLException, DataBaseConnectionException {
-        modifyFlight(flight, flight.getNumber());
+        Statement statement = SingletonConnection.getInstance().createStatement();
+        statement.executeQuery(CheckRequest);
     }
 
     public void deleteFlight(String flightNumber)
             throws SQLException, DataBaseConnectionException {
-        deleteSeatsOfAFlight(flightNumber);
-
         String sqlRequest = "DELETE FROM flight WHERE number = ?";
 
-        PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
-        preparedStatement.setString(1, flightNumber);
-
-        preparedStatement.executeUpdate();
-    }
-
-    private void deleteSeatsOfAFlight(String flightNumber)
-            throws SQLException, DataBaseConnectionException {
-        String sqlRequest = "DELETE FROM seat WHERE flight = ?";
+        deleteSeatsOfAFlight(flightNumber);
 
         PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
         preparedStatement.setString(1, flightNumber);
@@ -628,6 +647,24 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
         return flight;
     }
 
+    private String getFlightToStringResultSet(ResultSet data)
+            throws SQLException {
+        GregorianCalendar departureTime = new GregorianCalendar();
+        GregorianCalendar arrivalTime = new GregorianCalendar();
+
+        departureTime.setTime(data.getTimestamp("departureTime"));
+        arrivalTime.setTime(data.getTimestamp("arrivalTime"));
+
+        String departureInformation =
+                "DÉPART : " + Format.timeFormat(departureTime) + " " + Format.dateFormat(departureTime) + ", " +
+                        data.getString("departureTerminal") + data.getInt("departureGate") + ", " + data.getString("departureAirport");
+        String arrivalInformation =
+                "ARRIVÉE : " + Format.timeFormat(arrivalTime) + " " + Format.dateFormat(arrivalTime) + ", " +
+                        data.getString("arrivalTerminal") + data.getInt("arrivalGate") + ", " + data.getString("arrivalAirport");
+
+        return data.getString("flightNumber") + " - " + departureInformation + " - " + arrivalInformation;
+    }
+
     private PreparedStatement preparedFlightStatement(Flight flight, PreparedStatement preparedStatement)
             throws SQLException {
         preparedStatement.setString(1, flight.getNumber());
@@ -645,6 +682,31 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
         preparedStatement.setInt(9, flight.getNumberPlane());
 
         return preparedStatement;
+    }
+
+    private void updateSeatsOfAFlight(String flightNumber, String originalFlightNumber)
+            throws SQLException, DataBaseConnectionException {
+        String CheckRequest = "SET foreign_key_checks = 0;";
+        String sqlRequest = "UPDATE seat SET flight = ? WHERE flight = ?;";
+
+        Statement statement = SingletonConnection.getInstance().createStatement();
+        statement.executeQuery(CheckRequest);
+
+        PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
+        preparedStatement.setString(1, flightNumber);
+        preparedStatement.setString(2, originalFlightNumber);
+
+        preparedStatement.executeUpdate();
+    }
+
+    private void deleteSeatsOfAFlight(String flightNumber)
+            throws SQLException, DataBaseConnectionException {
+        String sqlRequest = "DELETE FROM seat WHERE flight = ?";
+
+        PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
+        preparedStatement.setString(1, flightNumber);
+
+        preparedStatement.executeUpdate();
     }
     //endregion
 }

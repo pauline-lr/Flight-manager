@@ -53,6 +53,7 @@ public class FlightsBetweenDatesSearchPanel extends JPanel {
                     e.printStackTrace();
                     JOptionPane.showMessageDialog(null,  e.getMessage(), "Erreur liée à la base de données", JOptionPane.ERROR_MESSAGE);
                 }
+                panel.revalidate();
                 panel.repaint();
             } else {
                 try {

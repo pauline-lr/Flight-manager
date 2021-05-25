@@ -51,22 +51,16 @@ public class ModifyFlightPanel extends JPanel {
         public void actionPerformed(ActionEvent evt) {
             Flight flight = flightForm.getFlight();
             String originalFlightNumber = modifyFlightForm.getFlightComboBoxID();
-            if (flight.getNumber().equals(originalFlightNumber)) {
-                try {
-                    controller.modifyFlight(flight);
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
-                } catch (DataBaseConnectionException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                try {
-                    controller.modifyFlight(flight, originalFlightNumber);
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
-                } catch (DataBaseConnectionException e) {
-                    e.printStackTrace();
-                }
+            try {
+                controller.modifyFlight(flight, originalFlightNumber);
+                String flightToString = controller.getFlightToString(flight.getNumber());
+                modifyFlightForm.updateFlightComboBox();
+                modifyFlightForm.getFlightComboBox().setSelectedItem(flightToString);
+                JOptionPane.showMessageDialog(null, "Vol modifié", "Succès", JOptionPane.INFORMATION_MESSAGE);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            } catch (DataBaseConnectionException e) {
+                e.printStackTrace();
             }
         }
     }

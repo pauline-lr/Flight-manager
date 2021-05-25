@@ -55,6 +55,7 @@ public class FlightsByPilotSearchPanel extends JPanel {
             try {
                 flights = controller.getAllFlightsOfAPilot(GetID.getPilotID(pilot));
                 panel.add(new FlightsByPilotResultPanel(flights), BorderLayout.CENTER);
+                panel.revalidate();
                 panel.repaint();
             } catch (DataBaseAccessException e) {
                 e.printStackTrace();

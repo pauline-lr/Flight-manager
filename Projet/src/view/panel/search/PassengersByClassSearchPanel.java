@@ -49,6 +49,7 @@ public class PassengersByClassSearchPanel extends JPanel {
             try {
                 flights = controller.getAllPassengersOfAClass(className);
                 panel.add(new PassengersByClassResultPanel(flights), BorderLayout.CENTER);
+                panel.revalidate();
                 panel.repaint();
             } catch (DataBaseAccessException e) {
                 e.printStackTrace();

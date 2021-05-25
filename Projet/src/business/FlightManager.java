@@ -38,6 +38,11 @@ public class FlightManager {
     //endregion
 
     //region Get to String
+    public String getFlightToString(String flightNumber)
+            throws SQLException, DataBaseConnectionException {
+        return dataAccessObjectPattern.getFlightToString(flightNumber);
+    }
+
     public String getPilotToString(String pilotLicenceNumber)
             throws SQLException, DataBaseConnectionException {
         return dataAccessObjectPattern.getPilotToString(pilotLicenceNumber);
@@ -125,11 +130,6 @@ public class FlightManager {
     public void modifyFlight(Flight flight, String originalFlightNumber)
             throws SQLException, DataBaseConnectionException {
         dataAccessObjectPattern.modifyFlight(flight, originalFlightNumber);
-    }
-
-    public void modifyFlight(Flight flight)
-            throws SQLException, DataBaseConnectionException {
-        dataAccessObjectPattern.modifyFlight(flight);
     }
 
     public void deleteFlight(String flightNumber)

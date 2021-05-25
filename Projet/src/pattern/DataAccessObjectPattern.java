@@ -1,5 +1,6 @@
 package pattern;
 
+import dataAccess.SingletonConnection;
 import exception.*;
 import exception.dataBase.*;
 import model.*;
@@ -18,6 +19,9 @@ public interface DataAccessObjectPattern {
     //endregion
 
     //region Get to String
+    String getFlightToString(String flightNumber)
+            throws SQLException, DataBaseConnectionException;
+
     String getPilotToString(String pilotLicenceNumber)
             throws SQLException, DataBaseConnectionException;
 
@@ -71,9 +75,6 @@ public interface DataAccessObjectPattern {
             throws SQLException, DataBaseConnectionException;
 
     void modifyFlight(Flight flight, String originalFlightNumber)
-            throws SQLException, DataBaseConnectionException;
-
-    void modifyFlight(Flight flight)
             throws SQLException, DataBaseConnectionException;
 
     void deleteFlight(String flightNumber)

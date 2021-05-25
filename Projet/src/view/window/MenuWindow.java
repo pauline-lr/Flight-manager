@@ -1,18 +1,12 @@
 package view.window;
 
 import controller.ApplicationController;
-import exception.dataBase.DataBaseCloseException;
-import exception.dataBase.DataBaseConnectionException;
-import exception.FlightException;
-import view.panel.list.AllFlightsListPanel;
-import view.panel.edit.AddFlightPanel;
-import view.panel.edit.DeleteFlightPanel;
-import view.panel.edit.ModifyFlightPanel;
-import view.panel.search.FlightsBetweenDatesSearchPanel;
-import view.panel.search.FlightsByPilotSearchPanel;
-import view.panel.search.PassengersByClassSearchPanel;
-import view.panel.home.AnimationPanel;
-import view.panel.home.WelcomePanel;
+import exception.dataBase.*;
+import exception.*;
+import view.panel.list.*;
+import view.panel.edit.*;
+import view.panel.search.*;
+import view.panel.home.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,7 +16,6 @@ import java.sql.SQLException;
 public class MenuWindow extends JFrame{
     private ApplicationController controller;
     private Container frameContainer;
-    private AnimationPanel animationPanel;
     private JMenuBar menuBar;
     private JMenu flight, listingFlight, search, application;
     private JMenuItem home, exit;
@@ -34,6 +27,7 @@ public class MenuWindow extends JFrame{
         setController(new ApplicationController());
         setTitle("Gestionnaire de vols");
         setBounds(100,100,600,600);
+        setMinimumSize(new Dimension(450, 500));
         frameContainer = this.getContentPane();
         this.addWindowListener(new ExitButtonListener());
 
@@ -70,7 +64,7 @@ public class MenuWindow extends JFrame{
     }
 
     public void initAnimation(){
-        this.animationPanel = new AnimationPanel();
+        AnimationPanel animationPanel = new AnimationPanel();
         frameContainer.add(new WelcomePanel(), BorderLayout.PAGE_START);
         frameContainer.add(new AnimationPanel(), BorderLayout.CENTER);
         MenuWindow.this.getContainer().repaint();
@@ -128,25 +122,24 @@ public class MenuWindow extends JFrame{
     private class ExitButtonListener extends WindowAdapter {
         @Override
         public void windowClosing(WindowEvent evt){
-            try {
-                controller.closeConnection();
-            } catch (DataBaseCloseException exception) {
-                exception.printStackTrace();
-            }
-            System.exit(0);
+            closeConnection();
         }
     }
 
     private class ExitListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent evt){
-            try {
-                controller.closeConnection();
-            } catch (DataBaseCloseException exception) {
-                exception.printStackTrace();
-            }
-            System.exit(0);
+            closeConnection();
         }
+    }
+
+    private void closeConnection() {
+        try {
+            controller.closeConnection();
+        } catch (DataBaseCloseException exception) {
+            exception.printStackTrace();
+        }
+        System.exit(0);
     }
 
     private class AddFlightListener implements ActionListener {

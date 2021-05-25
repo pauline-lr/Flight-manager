@@ -35,6 +35,17 @@ public class ModifyFlightForm extends JPanel {
         this.add(flightComboBox);
     }
 
+    public JComboBox<String> getFlightComboBox() {
+        return flightComboBox;
+    }
+
+    public void updateFlightComboBox() throws SQLException, DataBaseConnectionException {
+        flightComboBox.removeAllItems();
+        for (String flight : controller.getAllFlightsToString()) {
+            flightComboBox.addItem(flight);
+        }
+    }
+
     public String getFlightComboBoxID() {
         return GetID.getFlightID(flightComboBox);
     }
@@ -50,7 +61,9 @@ public class ModifyFlightForm extends JPanel {
     private class flightComboBoxListener implements ItemListener {
         @Override
         public void itemStateChanged(ItemEvent event) {
-            updateFormInformation();
+            if (event.getStateChange() == ItemEvent.SELECTED) {
+                updateFormInformation();
+            }
         }
     }
 

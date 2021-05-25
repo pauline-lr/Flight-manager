@@ -55,8 +55,8 @@ public class FlightForm extends JPanel {
         try {
             return new Flight(
                     flightNumberTextField.getText(),
-                    Format.getDate(departureDate),
-                    Format.getDate(arrivalDate),
+                    setFullDate(Format.getDate(departureDate), Format.getDate(departureTime)),
+                    setFullDate(Format.getDate(arrivalDate), Format.getDate(arrivalTime)),
                     isMealOnBoardCheckBox.isSelected(),
                     mealDescriptionTextArea.getText(),
                     GetID.getPilotID(pilotComboBox),
@@ -73,6 +73,10 @@ public class FlightForm extends JPanel {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             return null;
         }
+    }
+
+    private GregorianCalendar setFullDate(GregorianCalendar date, GregorianCalendar time) {
+        return new GregorianCalendar(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DAY_OF_MONTH), time.get(Calendar.HOUR_OF_DAY), time.get(Calendar.MINUTE));
     }
 
     //region Fields
@@ -145,7 +149,7 @@ public class FlightForm extends JPanel {
         departureDateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(departureDateLabel);
 
-        departureDate = new JSpinner(new SpinnerDateModel(currentDate, null, null, Calendar.DAY_OF_WEEK));
+        departureDate = new JSpinner(new SpinnerDateModel(currentDate, null, null, Calendar.DATE));
         departureDate.setEditor(new JSpinner.DateEditor(departureDate, "dd/MM/yyyy"));
         this.add(departureDate);
 
@@ -154,7 +158,7 @@ public class FlightForm extends JPanel {
         departureTimeLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(departureTimeLabel);
 
-        departureTime = new JSpinner(new SpinnerDateModel(currentDate, null, null, Calendar.DAY_OF_WEEK));
+        departureTime = new JSpinner(new SpinnerDateModel(currentDate, null, null, Calendar.HOUR_OF_DAY));
         departureTime.setEditor(new JSpinner.DateEditor(departureTime, "HH:mm"));
         this.add(departureTime);
 
@@ -233,7 +237,7 @@ public class FlightForm extends JPanel {
 
 
         // arrivalDate
-        arrivalDate = new JSpinner(new SpinnerDateModel(currentDate, null, null, Calendar.DAY_OF_WEEK));
+        arrivalDate = new JSpinner(new SpinnerDateModel(currentDate, null, null, Calendar.DATE));
         arrivalDate.setEditor(new JSpinner.DateEditor(arrivalDate, "dd/MM/yyyy"));
         this.add(arrivalDate);
 
@@ -242,7 +246,7 @@ public class FlightForm extends JPanel {
         arrivalTimeLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         this.add(arrivalTimeLabel);
 
-        arrivalTime = new JSpinner(new SpinnerDateModel(currentDate, null, null, Calendar.DAY_OF_WEEK));
+        arrivalTime = new JSpinner(new SpinnerDateModel(currentDate, null, null, Calendar.HOUR_OF_DAY));
         arrivalTime.setEditor(new JSpinner.DateEditor(arrivalTime, "HH:mm"));
         this.add(arrivalTime);
 

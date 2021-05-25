@@ -1,6 +1,7 @@
 package controller;
 
 import business.FlightManager;
+import dataAccess.SingletonConnection;
 import exception.*;
 import exception.dataBase.*;
 import model.*;
@@ -33,6 +34,11 @@ public class ApplicationController {
     //endregion
 
     //region Get to String
+    public String getFlightToString(String flightNumber)
+            throws SQLException, DataBaseConnectionException {
+        return flightManager.getFlightToString(flightNumber);
+    }
+
     public String getPilotToString(String pilotLicenceNumber)
             throws SQLException, DataBaseConnectionException {
         return flightManager.getPilotToString(pilotLicenceNumber);
@@ -120,11 +126,6 @@ public class ApplicationController {
     public void modifyFlight(Flight flight, String originalFlightNumber)
             throws SQLException, DataBaseConnectionException {
         flightManager.modifyFlight(flight, originalFlightNumber);
-    }
-
-    public void modifyFlight(Flight flight)
-            throws SQLException, DataBaseConnectionException {
-        flightManager.modifyFlight(flight);
     }
 
     public void deleteFlight(String flightNumber)
