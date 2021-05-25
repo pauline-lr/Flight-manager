@@ -21,7 +21,7 @@ CREATE TABLE passenger (
     CONSTRAINT phone_number UNIQUE (phone_number),
     CONSTRAINT email_address UNIQUE (email_address),
     CONSTRAINT passport_number_check 
-                CHECK (LENGTH(passport_number) == 9),
+                CHECK (LENGTH(passport_number) = 9),
     CONSTRAINT phone_number_passenger  
                 CHECK(phone_number REGEXP '^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$') ,
     CONSTRAINT email_address_passenger
@@ -40,7 +40,7 @@ CREATE TABLE pilot (
     CONSTRAINT phone_number UNIQUE (phone_number),
     CONSTRAINT email_address UNIQUE (email_address),
     CONSTRAINT license_number_check
-				CHECK(LENGTH(passport_number) == 7),
+				CHECK(LENGTH(passport_number) = 7),
 	CONSTRAINT phone_number_check
                 CHECK(phone_number REGEXP '^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$') ,
     CONSTRAINT email_address_check
