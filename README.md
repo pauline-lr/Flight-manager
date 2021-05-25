@@ -7,9 +7,6 @@
 #### id : root
 #### password : LoréaSmith
 
-## GITHUB
-#### https://github.com/pauline-lr/POOA-Projet.git
-
 ## A NOTER 
 #### La tâche métier n'est pas présente 
 #### Par conséquent, les test JUnit pour celle-ci non plus
