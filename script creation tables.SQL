@@ -22,10 +22,16 @@ CREATE TABLE passenger (
     CONSTRAINT email_address UNIQUE (email_address),
     CONSTRAINT passport_number_check 
                 CHECK (LENGTH(passport_number) = 9),
+    CONSTRAINT first_name_check
+				CHECK(LENGTH(first_name) > 0),
+    CONSTRAINT last_name_check
+				CHECK(LENGTH(last_name) > 0),
     CONSTRAINT phone_number_passenger  
                 CHECK(phone_number REGEXP '^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$') ,
     CONSTRAINT email_address_passenger
-                CHECK(email_address REGEXP '[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+')
+                CHECK(email_address REGEXP '[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+'),
+    CONSTRAINT birthdate_check
+                CHECK(birthdate < CURDATE())
 );
 
 CREATE TABLE pilot (
@@ -41,6 +47,10 @@ CREATE TABLE pilot (
     CONSTRAINT email_address UNIQUE (email_address),
     CONSTRAINT license_number_check
 				CHECK(LENGTH(passport_number) = 7),
+    CONSTRAINT first_name_check
+				CHECK(LENGTH(first_name) > 0),
+    CONSTRAINT last_name_check
+				CHECK(LENGTH(last_name) > 0),
 	CONSTRAINT phone_number_check
                 CHECK(phone_number REGEXP '^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$') ,
     CONSTRAINT email_address_check
@@ -68,7 +78,6 @@ CREATE TABLE airport (
     CONSTRAINT code_check CHECK(code REGEXP '^[A-Z][A-Z][A-Z]$'),
     CONSTRAINT name_check CHECK(LENGTH(name) >= 2),
     CONSTRAINT country_check CHECK(LENGTH(country) >= 2)
-
 );
 
 CREATE TABLE gate (
@@ -80,8 +89,7 @@ CREATE TABLE gate (
     CONSTRAINT gate_id UNIQUE (terminal, number, airport),
     CONSTRAINT gate_pk PRIMARY KEY (gate_id),
     CONSTRAINT airport_fk FOREIGN KEY (airport) REFERENCES airport (code),
-    CONSTRAINT terminal_gate CHECK(terminal REGEXP '^[A-Z]$'),
-    CONSTRAINT airport_check CHECK(LENGTH(airport) >= 2)
+    CONSTRAINT terminal_gate CHECK(terminal REGEXP '^[A-Z]$')
 );
 
 CREATE TABLE flight (

@@ -9,7 +9,7 @@ public class Airport {
     private final static String REGEX_CODE = "^[A-Z][A-Z][A-Z]$";
     private final static int LENGTH_NAME = 50;
     private final static int LENGTH_COUNTRY = 50;
-    private final static int LENGTH_MIN = 1;
+    private final static int LENGTH_MIN = 2;
 
     private String code;        // 3 letters
     private String name;        // Max 50 characters

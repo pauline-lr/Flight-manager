@@ -1,6 +1,5 @@
 package model;
 
-import exception.FlightException;
 import exception.PassengerException;
 import exception.PersonException;
 
@@ -12,7 +11,6 @@ public class Passenger extends Person {
 
     private String passportNumber;          // 9 characters
     private GregorianCalendar birthdate;    // JJ/MM/AAAA ( < 1 week before today)
-    private GregorianCalendar currentDate;
 
     //region Constructors
     public Passenger(String firstpassportNumber, String lastpassportNumber, String phoneNumber, String emailAddress, String passportNumber, GregorianCalendar birthdate)
@@ -21,7 +19,6 @@ public class Passenger extends Person {
         super(firstpassportNumber, lastpassportNumber, phoneNumber, emailAddress);
         setPassportNumber(passportNumber);
         setBirthdate(birthdate);
-        currentDate = new GregorianCalendar();
     }
     //endregion
 
@@ -35,8 +32,9 @@ public class Passenger extends Person {
     }
 
     private void setBirthdate(GregorianCalendar birthdate) {
+        GregorianCalendar currentDate = new GregorianCalendar();
         this.birthdate = birthdate;
-        /*
+
         if (birthdate.compareTo(currentDate) < 0) {
             this.birthdate = birthdate;
         } else {
@@ -46,10 +44,6 @@ public class Passenger extends Person {
                 e.printStackTrace();
             }
         }
-         */
     }
-    //endregion
-
-    //region Getters
     //endregion
 }

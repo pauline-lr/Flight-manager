@@ -49,7 +49,6 @@ public class Flight {
     private void setNumber(String number) throws FlightException.NumberFlightException {
             Pattern pattern = Pattern.compile(REGEX_NUMBER);
             Matcher matcher = pattern.matcher(number);
-            // grâce au code regex, pas de test supplémentaire pour le cas où vol est vide
             if (matcher.find() /*&& ne se trouve pas déjà dans la BD*/) {
                 this.number = number;
             } else {

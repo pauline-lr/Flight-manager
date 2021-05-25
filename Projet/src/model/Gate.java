@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 public class Gate {
     private final static String REGEX_TERMINAL = "^[A-Z]$";
-    private final static String REGEX_NUMBER = "^\\d{2}$";
+    private final static String REGEX_NUMBER = "^\\d{1,2}$";
 
     private Integer gateID;
     private Character terminal;     // 1 character

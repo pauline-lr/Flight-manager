@@ -11,7 +11,8 @@ public class PassengerException extends Exception{
         }
 
         public String getMessage( ) {
-            return  "The proposed " + wrongPassportNumber + " value for a paspport number is invalid !";
+            return  "The proposed " + wrongPassportNumber + " value for a paspport number is invalid !"
+                    + "\nExactly 9 characters are needed";
         }
     }
 
@@ -23,7 +24,8 @@ public class PassengerException extends Exception{
         }
 
         public String getMessage( ) {
-            return  "The proposed " + wrongBirthDate + " value for the birth date is invalid !";
+            return  "The proposed " + wrongBirthDate + " value for the birth date is invalid !"
+                    + "\nThe date cannot be later than today";
         }
 
     }
