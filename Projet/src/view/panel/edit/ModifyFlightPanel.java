@@ -3,12 +3,14 @@ package view.panel.edit;
 import controller.ApplicationController;
 import exception.dataBase.*;
 import model.Flight;
+import view.CheckEmptyResult;
 import view.form.edit.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class ModifyFlightPanel extends JPanel {
     private ApplicationController controller;
@@ -20,7 +22,12 @@ public class ModifyFlightPanel extends JPanel {
         setFlightForm(new FlightForm());
         setModifyFlightForm(new ModifyFlightForm(flightForm));
         this.setLayout(new BorderLayout());
-        this.add(modifyFlightForm, BorderLayout.PAGE_START);
+        if (modifyFlightForm.getFlightComboBox().getItemCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Aucun vol à modifier", "Informations", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            this.add(modifyFlightForm, BorderLayout.PAGE_START);
+        }
+
         this.add(flightForm, BorderLayout.CENTER);
         initializeValidationButton();
     }

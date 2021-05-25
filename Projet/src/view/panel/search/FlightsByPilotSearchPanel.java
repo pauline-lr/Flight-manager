@@ -5,6 +5,7 @@ import exception.dataBase.DataBaseAccessException;
 import exception.dataBase.DataBaseConnectionException;
 import model.search.FlightsByPilotSearch;
 import tool.GetID;
+import view.CheckEmptyResult;
 import view.form.search.FlightsByPilotSearchForm;
 import view.panel.list.FlightsByPilotResultPanel;
 
@@ -57,6 +58,7 @@ public class FlightsByPilotSearchPanel extends JPanel {
                 panel.add(new FlightsByPilotResultPanel(flights), BorderLayout.CENTER);
                 panel.revalidate();
                 panel.repaint();
+                CheckEmptyResult.checkResultIsEmpty(flights);
             } catch (DataBaseAccessException e) {
                 e.printStackTrace();
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur liée à la BD", JOptionPane.ERROR_MESSAGE);

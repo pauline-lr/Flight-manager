@@ -4,6 +4,7 @@ import controller.ApplicationController;
 import exception.dataBase.DataBaseAccessException;
 import exception.SearchDateException;
 import model.search.FlightsBetweenDatesSearch;
+import view.CheckEmptyResult;
 import view.form.search.FlightsBetweenDatesSearchForm;
 import view.panel.list.FlightsBetweenDatesResultPanel;
 
@@ -49,12 +50,13 @@ public class FlightsBetweenDatesSearchPanel extends JPanel {
                 try {
                     flights = controller.getAllFlightsBetweenDates(startDate, endDate);
                     panel.add(new FlightsBetweenDatesResultPanel(flights), BorderLayout.CENTER);
+                    panel.revalidate();
+                    panel.repaint();
+                    CheckEmptyResult.checkResultIsEmpty(flights);
                 } catch (DataBaseAccessException e) {
                     e.printStackTrace();
                     JOptionPane.showMessageDialog(null,  e.getMessage(), "Erreur liée à la base de données", JOptionPane.ERROR_MESSAGE);
                 }
-                panel.revalidate();
-                panel.repaint();
             } else {
                 try {
                     throw new SearchDateException();

@@ -3,6 +3,7 @@ package view.panel.edit;
 import controller.ApplicationController;
 import exception.dataBase.DataBaseConnectionException;
 import exception.FlightException;
+import view.CheckEmptyResult;
 import view.table.AllFlightsListTable;
 
 import javax.swing.*;
@@ -30,6 +31,7 @@ public class DeleteFlightPanel extends JPanel {
         validateDeletationButton.addActionListener(new ValidationDeletation());
 
         this.add(new JScrollPane(table), BorderLayout.CENTER);
+        CheckEmptyResult.checkResultIsEmpty(flightsTable.getFlights());
         JPanel buttonPanel = new JPanel();
         this.add(buttonPanel, BorderLayout.SOUTH);
         buttonPanel.add(validateDeletationButton, BorderLayout.CENTER);

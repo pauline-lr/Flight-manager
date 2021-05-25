@@ -5,6 +5,7 @@ import exception.dataBase.DataBaseAccessException;
 import exception.dataBase.DataBaseConnectionException;
 import model.search.PassengersByClassSearch;
 import tool.GetID;
+import view.CheckEmptyResult;
 import view.form.search.PassengersByClassSearchForm;
 import view.panel.list.PassengersByClassResultPanel;
 
@@ -44,13 +45,14 @@ public class PassengersByClassSearchPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent evt) {
             panel.removeAll();
-            ArrayList<PassengersByClassSearch> flights;
+            ArrayList<PassengersByClassSearch> passengers;
             String className = (String) passengersByClassSearchForm.getClassComboBox().getSelectedItem();
             try {
-                flights = controller.getAllPassengersOfAClass(className);
-                panel.add(new PassengersByClassResultPanel(flights), BorderLayout.CENTER);
+                passengers = controller.getAllPassengersOfAClass(className);
+                panel.add(new PassengersByClassResultPanel(passengers), BorderLayout.CENTER);
                 panel.revalidate();
                 panel.repaint();
+                CheckEmptyResult.checkResultIsEmpty(passengers);
             } catch (DataBaseAccessException e) {
                 e.printStackTrace();
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur liée à la BD", JOptionPane.ERROR_MESSAGE);

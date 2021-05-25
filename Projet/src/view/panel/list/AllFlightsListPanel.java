@@ -2,6 +2,7 @@ package view.panel.list;
 
 import exception.dataBase.DataBaseConnectionException;
 import exception.FlightException;
+import view.CheckEmptyResult;
 import view.table.AllFlightsListTable;
 
 import javax.swing.*;
@@ -16,6 +17,6 @@ public class AllFlightsListPanel extends JPanel {
         JTable table = new JTable(flightsTable);
         table.setModel(flightsTable);
         this.add(new JScrollPane(table), BorderLayout.CENTER);
-
+        CheckEmptyResult.checkResultIsEmpty(flightsTable.getFlights());
     }
 }

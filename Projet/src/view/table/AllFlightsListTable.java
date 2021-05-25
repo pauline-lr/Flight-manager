@@ -5,6 +5,7 @@ import exception.dataBase.DataBaseConnectionException;
 import exception.FlightException;
 import model.Flight;
 import tool.Format;
+import view.CheckEmptyResult;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
@@ -36,6 +37,10 @@ public class AllFlightsListTable extends AbstractTableModel {
             JOptionPane.showMessageDialog(null, throwables.getMessage( ),
                     "Erreur", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    public ArrayList<Flight> getFlights() {
+        return flights;
     }
 
     private void setController(ApplicationController controller) {
