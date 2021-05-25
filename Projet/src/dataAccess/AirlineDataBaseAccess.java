@@ -31,11 +31,14 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
 
     public ArrayList<Flight> getAllFlights()
             throws SQLException, DataBaseConnectionException, FlightException.MealDescriptionException, FlightException.NumberFlightException {
+        String sqlRequest = "SELECT * FROM flight WHERE departure_time > ? ORDER BY number";
+        java.sql.Timestamp currentDateSQL = new java.sql.Timestamp(new GregorianCalendar().getTimeInMillis());
         ArrayList<Flight> flights = new ArrayList<>();
-        String sqlRequest = "SELECT * FROM flight ORDER BY number";
 
-        Statement statement = SingletonConnection.getInstance().createStatement();
-        ResultSet data = statement.executeQuery(sqlRequest);
+        PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
+        preparedStatement.setTimestamp(1, currentDateSQL);
+
+        ResultSet data = preparedStatement.executeQuery();
 
         while (data.next()) {
             flights.add(getFlightFromResultSet(data));
@@ -48,7 +51,6 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
     //region Get to String
     public String getFlightToString(String flightNumber)
             throws SQLException, DataBaseConnectionException {
-        String flight = null;
         String sqlRequest = "SELECT " +
                 "fli.number AS flightNumber, " +
                 "fli.departure_time AS departureTime, " +
@@ -73,6 +75,7 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
                 "fli.number = ? " +
                 "ORDER BY " +
                 "departure_time;";
+        String flight = null;
 
         PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
         preparedStatement.setString(1, flightNumber);
@@ -88,8 +91,8 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
 
     public String getPilotToString(String pilotLicenceNumber)
             throws SQLException, DataBaseConnectionException {
-        String pilotToString = null;
         String sqlRequest = "SELECT licence_number, first_name, last_name FROM pilot WHERE licence_number = ?";
+        String pilotToString = null;
 
         PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
         preparedStatement.setString(1, pilotLicenceNumber);
@@ -105,8 +108,8 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
 
     public String getPlaneToString(Integer planeID)
             throws SQLException, DataBaseConnectionException {
-        String planeToString = null;
         String sqlRequest = "SELECT plane_id, model, brand FROM plane WHERE plane_id = ?";
+        String planeToString = null;
 
         PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
         preparedStatement.setInt(1, planeID);
@@ -122,8 +125,8 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
 
     public String getAirportToString(String gateID)
             throws SQLException, DataBaseConnectionException {
-        String airportToString = null;
         String sqlRequest = "SELECT code, name, country FROM gate, airport WHERE airport = code AND gate_id = ?";
+        String airportToString = null;
 
         PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
         preparedStatement.setString(1, gateID);
@@ -139,8 +142,8 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
 
     public String getTerminalToString(String gateID)
             throws SQLException, DataBaseConnectionException {
-        String gateToString = null;
         String sqlRequest = "SELECT terminal FROM gate WHERE gate_id = ?";
+        String gateToString = null;
 
         PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
         preparedStatement.setString(1, gateID);
@@ -156,8 +159,8 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
 
     public String getGateToString(String gateID)
             throws SQLException, DataBaseConnectionException {
-        String gateToString = null;
         String sqlRequest = "SELECT number FROM gate WHERE gate_id = ?";
+        String gateToString = null;
 
         PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
         preparedStatement.setString(1, gateID);
@@ -173,7 +176,6 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
 
     public String[] getAllFlightsToString()
             throws SQLException, DataBaseConnectionException {
-        ArrayList<String> flights = new ArrayList<>();
         String sqlRequest = "SELECT " +
                 "fli.number AS flightNumber, " +
                 "fli.departure_time AS departureTime, " +
@@ -194,12 +196,17 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
                 "fli.departure_gate = depGat.gate_id AND " +
                 "depGat.airport = depAir.code AND " +
                 "fli.arrival_gate = arrGat.gate_id AND " +
-                "arrGat.airport = arrAir.code " +
+                "arrGat.airport = arrAir.code AND " +
+                "fli.departure_time > ?" +
                 "ORDER BY " +
                 "departure_time;";
+        java.sql.Timestamp currentDateSQL = new java.sql.Timestamp(new GregorianCalendar().getTimeInMillis());
+        ArrayList<String> flights = new ArrayList<>();
 
-        Statement statement = SingletonConnection.getInstance().createStatement();
-        ResultSet data = statement.executeQuery(sqlRequest);
+        PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
+        preparedStatement.setTimestamp(1, currentDateSQL);
+
+        ResultSet data = preparedStatement.executeQuery();
 
         while (data.next()) {
 
@@ -211,8 +218,8 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
 
     public String[] getAllPilotsToString()
             throws SQLException, DataBaseConnectionException {
-        ArrayList<String> pilotLicenceNumbers = new ArrayList<>();
         String sqlRequest = "SELECT * FROM pilot ORDER BY licence_number;";
+        ArrayList<String> pilotLicenceNumbers = new ArrayList<>();
 
         Statement statement = SingletonConnection.getInstance().createStatement();
         ResultSet data = statement.executeQuery(sqlRequest);
@@ -226,8 +233,8 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
 
     public String[] getAllPlanesToString()
             throws SQLException, DataBaseConnectionException {
-        ArrayList<String> planeIDs = new ArrayList<>();
         String sqlRequest = "SELECT * FROM plane ORDER BY plane_id;";
+        ArrayList<String> planeIDs = new ArrayList<>();
 
         Statement statement = SingletonConnection.getInstance().createStatement();
         ResultSet data = statement.executeQuery(sqlRequest);
@@ -241,22 +248,22 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
 
     public String[] getAllClassesToString()
             throws SQLException, DataBaseConnectionException {
-        ArrayList<String> classeNames = new ArrayList<>();
         String sqlRequest = "SELECT name FROM class ORDER BY class_id DESC;";
+        ArrayList<String> classNames = new ArrayList<>();
 
         Statement statement = SingletonConnection.getInstance().createStatement();
         ResultSet data = statement.executeQuery(sqlRequest);
 
         while (data.next()) {
-            classeNames.add(data.getString("name"));
+            classNames.add(data.getString("name"));
         }
-        return classeNames.toArray(new String[0]);
+        return classNames.toArray(new String[0]);
     }
 
     public String[] getAllAirportsToString()
             throws SQLException, DataBaseConnectionException {
-        ArrayList<String> airportCodes = new ArrayList<>();
         String sqlRequest = "SELECT * FROM airport ORDER BY code;";
+        ArrayList<String> airportCodes = new ArrayList<>();
 
         Statement statement = SingletonConnection.getInstance().createStatement();
         ResultSet data = statement.executeQuery(sqlRequest);
@@ -270,8 +277,8 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
 
     public String[] getAllTerminalsOfAnAirportToString(String airportCode)
             throws SQLException, DataBaseConnectionException {
-        ArrayList<String> terminalsOfAnAirport = new ArrayList<>();
         String sqlRequest = "SELECT DISTINCT terminal FROM gate, airport WHERE airport = code AND code = ? ORDER BY terminal;";
+        ArrayList<String> terminalsOfAnAirport = new ArrayList<>();
 
         PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
         preparedStatement.setString(1, airportCode);
@@ -287,8 +294,8 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
 
     public String[] getAllGatesOfAnAirportAndTerminalToString(String airportCode, String terminal)
             throws SQLException, DataBaseConnectionException {
-        ArrayList<String> gatesOfAnAirportAndTerminal = new ArrayList<>();
         String sqlRequest = "SELECT number FROM gate, airport WHERE airport = code AND code = ? AND terminal = ? ORDER BY number;";
+        ArrayList<String> gatesOfAnAirportAndTerminal = new ArrayList<>();
 
         PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
         preparedStatement.setString(1, airportCode);
@@ -307,11 +314,6 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
     //region Search
     public ArrayList<FlightsBetweenDatesSearch> getAllFlightsBetweenDates(GregorianCalendar startDate, GregorianCalendar endDate)
             throws DataBaseAccessException {
-        ArrayList<FlightsBetweenDatesSearch> flights = new ArrayList<>();
-        java.sql.Date startDateSQL = new java.sql.Date(startDate.getTimeInMillis());
-        java.sql.Date endDateSQL = new java.sql.Date(endDate.getTimeInMillis());
-        FlightsBetweenDatesSearch flight;
-
         String sqlRequest = "SELECT " +
                 "fli.number AS flightNumber, " +
                 "fli.departure_time AS flightDepartureTime, " +
@@ -350,6 +352,10 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
                 "fli.departure_time BETWEEN ? AND ? " +
                 "ORDER BY " +
                 "fli.departure_time;";
+        java.sql.Date startDateSQL = new java.sql.Date(startDate.getTimeInMillis());
+        java.sql.Date endDateSQL = new java.sql.Date(endDate.getTimeInMillis());
+        ArrayList<FlightsBetweenDatesSearch> flights = new ArrayList<>();
+        FlightsBetweenDatesSearch flight;
 
         try {
             PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
@@ -401,9 +407,6 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
 
     public ArrayList<PassengersByClassSearch> getAllPassengersOfAClass(String className)
             throws DataBaseAccessException {
-        ArrayList<PassengersByClassSearch> passengers = new ArrayList<>();
-        PassengersByClassSearch passenger;
-
         String sqlRequest = "SELECT " +
                 "pas.passport_number AS passengerPassportNumber, " +
                 "pas.first_name AS passengerFirstName, " +
@@ -439,6 +442,8 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
                 "cla.name = ? " +
                 "ORDER BY " +
                 "pas.last_name, pas.first_name;";
+        ArrayList<PassengersByClassSearch> passengers = new ArrayList<>();
+        PassengersByClassSearch passenger;
 
         try {
             PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
@@ -484,9 +489,6 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
 
     public ArrayList<FlightsByPilotSearch> getAllFlightsOfAPilot(String pilotLicenceNumber)
             throws DataBaseAccessException {
-        ArrayList<FlightsByPilotSearch> flights = new ArrayList<>();
-        FlightsByPilotSearch flight;
-
         String sqlRequest = "SELECT " +
                 "fli.number AS flightNumber, " +
                 "fli.departure_time AS flightDepartureTime, " +
@@ -518,6 +520,8 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
                 "pil.licence_number = ? " +
                 "ORDER BY " +
                 "departure_time;";
+        ArrayList<FlightsByPilotSearch> flights = new ArrayList<>();
+        FlightsByPilotSearch flight;
 
         try {
             PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
