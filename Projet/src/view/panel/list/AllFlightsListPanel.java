@@ -10,13 +10,22 @@ import java.awt.*;
 import java.sql.SQLException;
 
 public class AllFlightsListPanel extends JPanel {
+    AllFlightsListTable flightsTable;
+
     public AllFlightsListPanel()
             throws SQLException, DataBaseConnectionException, FlightException.MealDescriptionException, FlightException.NumberFlightException {
-        AllFlightsListTable flightsTable = new AllFlightsListTable();
+        setFlightsTable(new AllFlightsListTable());
         this.setLayout(new BorderLayout());
         JTable table = new JTable(flightsTable);
         table.setModel(flightsTable);
         this.add(new JScrollPane(table), BorderLayout.CENTER);
-        CheckEmptyResult.checkResultIsEmpty(flightsTable.getFlights());
+    }
+
+    public AllFlightsListTable getFlightsTable() {
+        return flightsTable;
+    }
+
+    public void setFlightsTable(AllFlightsListTable flightsTable) {
+        this.flightsTable = flightsTable;
     }
 }

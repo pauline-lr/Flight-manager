@@ -31,7 +31,6 @@ public class DeleteFlightPanel extends JPanel {
         validateDeletationButton.addActionListener(new ValidationDeletation());
 
         this.add(new JScrollPane(table), BorderLayout.CENTER);
-        CheckEmptyResult.checkResultIsEmpty(flightsTable.getFlights());
         JPanel buttonPanel = new JPanel();
         this.add(buttonPanel, BorderLayout.SOUTH);
         buttonPanel.add(validateDeletationButton, BorderLayout.CENTER);
@@ -39,6 +38,10 @@ public class DeleteFlightPanel extends JPanel {
 
     private void setController(ApplicationController controller) {
         this.controller = controller;
+    }
+
+    public AllFlightsListTable getFlightsTable() {
+        return flightsTable;
     }
 
     public void setFlightsTable(AllFlightsListTable flightsTable) {

@@ -22,12 +22,6 @@ public class ModifyFlightPanel extends JPanel {
         setFlightForm(new FlightForm());
         setModifyFlightForm(new ModifyFlightForm(flightForm));
         this.setLayout(new BorderLayout());
-        if (modifyFlightForm.getFlightComboBox().getItemCount() == 0) {
-            JOptionPane.showMessageDialog(null, "Aucun vol à modifier", "Informations", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            this.add(modifyFlightForm, BorderLayout.PAGE_START);
-        }
-
         this.add(flightForm, BorderLayout.CENTER);
         initializeValidationButton();
     }
