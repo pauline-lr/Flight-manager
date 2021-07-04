@@ -1,7 +1,6 @@
 package view.panel.search;
 
 import controller.ApplicationController;
-import exception.dataBase.DataBaseAccessException;
 import exception.SearchDateException;
 import model.search.FlightsBetweenDatesSearch;
 import view.CheckEmptyResult;

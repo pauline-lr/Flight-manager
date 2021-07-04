@@ -1,6 +1,5 @@
 package view.panel.list;
 
-import exception.dataBase.DataBaseAccessException;
 import model.search.FlightsBetweenDatesSearch;
 import view.table.FlightsBetweenDatesResultTable;
 

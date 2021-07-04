@@ -1,7 +1,6 @@
 package view.panel.search;
 
 import controller.ApplicationController;
-import exception.dataBase.DataBaseAccessException;
 import exception.dataBase.DataBaseConnectionException;
 import model.search.FlightsByPilotSearch;
 import tool.GetID;

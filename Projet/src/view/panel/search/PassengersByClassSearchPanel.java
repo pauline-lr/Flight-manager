@@ -1,10 +1,8 @@
 package view.panel.search;
 
 import controller.ApplicationController;
-import exception.dataBase.DataBaseAccessException;
 import exception.dataBase.DataBaseConnectionException;
 import model.search.PassengersByClassSearch;
-import tool.GetID;
 import view.CheckEmptyResult;
 import view.form.search.PassengersByClassSearchForm;
 import view.panel.list.PassengersByClassResultPanel;
