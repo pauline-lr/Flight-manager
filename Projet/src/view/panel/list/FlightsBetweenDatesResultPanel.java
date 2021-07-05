@@ -8,8 +8,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class FlightsBetweenDatesResultPanel extends JPanel {
-    public FlightsBetweenDatesResultPanel(ArrayList<FlightsBetweenDatesSearch> flights)
-            throws DataBaseAccessException {
+    public FlightsBetweenDatesResultPanel(ArrayList<FlightsBetweenDatesSearch> flights) {
         FlightsBetweenDatesResultTable flightsTable = new FlightsBetweenDatesResultTable(flights);
         this.setLayout(new BorderLayout());
         JTable table = new JTable(flightsTable);

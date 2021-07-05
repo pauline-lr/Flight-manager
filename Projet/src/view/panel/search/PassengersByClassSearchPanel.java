@@ -1,6 +1,7 @@
 package view.panel.search;
 
 import controller.ApplicationController;
+import exception.dataBase.AllDataException;
 import exception.dataBase.DataBaseConnectionException;
 import model.search.PassengersByClassSearch;
 import view.CheckEmptyResult;
@@ -11,7 +12,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class PassengersByClassSearchPanel extends JPanel {
@@ -20,7 +20,7 @@ public class PassengersByClassSearchPanel extends JPanel {
     private PassengersByClassSearchForm passengersByClassSearchForm;
     private JButton validation;
 
-    public PassengersByClassSearchPanel() throws SQLException, DataBaseConnectionException {
+    public PassengersByClassSearchPanel() throws DataBaseConnectionException, AllDataException {
         setController(new ApplicationController());
         this.panel = this;
         this.passengersByClassSearchForm = new PassengersByClassSearchForm();
@@ -43,19 +43,22 @@ public class PassengersByClassSearchPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent evt) {
             panel.removeAll();
-            ArrayList<PassengersByClassSearch> passengers;
+            ArrayList<PassengersByClassSearch> passengers = new ArrayList<>();
             String className = (String) passengersByClassSearchForm.getClassComboBox().getSelectedItem();
+
             try {
                 passengers = controller.getAllPassengersOfAClass(className);
-                panel.add(new PassengersByClassResultPanel(passengers), BorderLayout.CENTER);
-                panel.revalidate();
-                panel.repaint();
-                CheckEmptyResult.checkResultIsEmpty(passengers);
-            } catch (DataBaseAccessException e) {
-                e.printStackTrace();
-                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur liée à la BD", JOptionPane.ERROR_MESSAGE);
+            } catch (AllDataException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage( ),
+                        "Erreur", JOptionPane.ERROR_MESSAGE);
+            } catch (DataBaseConnectionException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage( ),
+                        "Erreur", JOptionPane.ERROR_MESSAGE);
             }
-
+            panel.add(new PassengersByClassResultPanel(passengers), BorderLayout.CENTER);
+            panel.revalidate();
+            panel.repaint();
+            CheckEmptyResult.checkResultIsEmpty(passengers);
         }
     }
 }

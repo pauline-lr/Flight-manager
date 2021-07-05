@@ -26,8 +26,8 @@ public class Flight {
 
     //region Constructors
     public Flight(String number, GregorianCalendar departureTime,
-                  GregorianCalendar arrivalTime, Boolean isMealOnBoard, String mealDescription, String pilot, String departureGate, String arrivalGate, Integer plane)
-            throws FlightException.NumberFlightException, FlightException.MealDescriptionException{
+                  GregorianCalendar arrivalTime, Boolean isMealOnBoard, String mealDescription,
+                  String pilot, String departureGate, String arrivalGate, Integer plane) throws FlightException.NumberFlightException {
         setNumber(number);
         setDepartureTime(departureTime);
         setArrivalTime(arrivalTime);
@@ -40,7 +40,7 @@ public class Flight {
     }
     public Flight(String number, GregorianCalendar departureTime,
                   GregorianCalendar arrivalTime, Boolean isMealOnBoard, String pilot, String departureGate, String arrivalGate, Integer plane)
-            throws FlightException.NumberFlightException, FlightException.MealDescriptionException {
+            throws FlightException.NumberFlightException {
         this(number, departureTime, arrivalTime, isMealOnBoard, null, pilot, departureGate, arrivalGate, plane);
     }
     //endregion
@@ -74,7 +74,7 @@ public class Flight {
         } else {
             try {
                 throw new FlightException.ArrivalDateException();
-            } catch (FlightException.ArrivalDateException | DateTimeParseException exception) {
+            } catch (DateTimeParseException | FlightException.ArrivalDateException exception) {
                 exception.printStackTrace();
             }
         }
@@ -82,13 +82,11 @@ public class Flight {
     private void setMealOnBoard(Boolean mealOnBoard) {
         isMealOnBoard = mealOnBoard;
     }
-    public void setMealDescription(String mealDescription) throws FlightException.MealDescriptionException {
+    public void setMealDescription(String mealDescription){
         if (mealDescription != null) {
             if (!(mealDescription.equals(""))) {
                 if (mealDescription.length() <= MEAL_DESCRIPTION_LENTGH) {
                     this.mealDescription = mealDescription;
-                } else {
-                    throw new FlightException.MealDescriptionException();
                 }
             } else {
                 this.mealDescription = null;

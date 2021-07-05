@@ -1,15 +1,14 @@
 package view.table;
 
 import controller.ApplicationController;
+import exception.dataBase.AllDataException;
 import exception.dataBase.DataBaseConnectionException;
 import exception.FlightException;
 import model.Flight;
 import tool.Format;
-import view.CheckEmptyResult;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
-import java.sql.*;
 import java.util.*;
 
 public class AllFlightsListTable extends AbstractTableModel {
@@ -22,12 +21,12 @@ public class AllFlightsListTable extends AbstractTableModel {
         setColumnNames();
         try {
             setFlights(controller.getAllFlights());
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
         } catch (DataBaseConnectionException throwables) {
             throwables.printStackTrace();
-            JOptionPane.showMessageDialog(null, throwables.getMessage( ),
+            JOptionPane.showMessageDialog(null, throwables.getMessage(),
                     "Erreur", JOptionPane.ERROR_MESSAGE);
+        } catch (AllDataException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
         } catch (FlightException.MealDescriptionException throwables) {
             throwables.printStackTrace();
             JOptionPane.showMessageDialog(null, throwables.getMessage( ),
@@ -92,22 +91,21 @@ public class AllFlightsListTable extends AbstractTableModel {
             case 1:
                 try {
                     return controller.getPilotToString(flight.getPilot());
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
                 } catch (DataBaseConnectionException throwables) {
                     throwables.printStackTrace();
                     JOptionPane.showMessageDialog(null, throwables.getMessage( ),
                             "Erreur", JOptionPane.ERROR_MESSAGE);
+                } catch (AllDataException e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
                 }
             case 2:
                 try {
                     return controller.getPlaneToString(flight.getPlane());
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
                 } catch (DataBaseConnectionException throwables) {
                     throwables.printStackTrace();
-                    JOptionPane.showMessageDialog(null, throwables.getMessage( ),
-                            "Erreur", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, throwables.getMessage( ), "Erreur", JOptionPane.ERROR_MESSAGE);
+                } catch (AllDataException e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
                 }
             case 3:
                 return Format.timeFormat(departure);
@@ -116,32 +114,31 @@ public class AllFlightsListTable extends AbstractTableModel {
             case 5:
                 try {
                     return controller.getAirportToString(flight.getDepartureGate());
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
                 } catch (DataBaseConnectionException throwables) {
                     throwables.printStackTrace();
-                    JOptionPane.showMessageDialog(null, throwables.getMessage( ),
-                            "Erreur", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, throwables.getMessage( ), "Erreur", JOptionPane.ERROR_MESSAGE);
+                } catch (AllDataException e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
                 }
             case 6:
                 try {
                     return controller.getTerminalToString(flight.getDepartureGate());
-                }catch (SQLException throwables) {
-                    throwables.printStackTrace();
                 } catch (DataBaseConnectionException throwables) {
                     throwables.printStackTrace();
                     JOptionPane.showMessageDialog(null, throwables.getMessage( ),
                             "Erreur", JOptionPane.ERROR_MESSAGE);
+                } catch (AllDataException e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
                 }
             case 7:
                 try {
                     return controller.getGateToString(flight.getDepartureGate());
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
                 } catch (DataBaseConnectionException throwables) {
                     throwables.printStackTrace();
                     JOptionPane.showMessageDialog(null, throwables.getMessage( ),
                             "Erreur", JOptionPane.ERROR_MESSAGE);
+                } catch (AllDataException e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
                 }
             case 8:
                 return Format.timeFormat(arrival);
@@ -150,32 +147,30 @@ public class AllFlightsListTable extends AbstractTableModel {
             case 10:
                 try {
                     return controller.getAirportToString(flight.getArrivalGate());
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
                 } catch (DataBaseConnectionException throwables) {
                     throwables.printStackTrace();
                     JOptionPane.showMessageDialog(null, throwables.getMessage( ),
                             "Erreur", JOptionPane.ERROR_MESSAGE);
+                } catch (AllDataException e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
                 }
             case 11:
                 try {
                     return controller.getTerminalToString(flight.getArrivalGate());
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
                 } catch (DataBaseConnectionException throwables) {
                     throwables.printStackTrace();
-                    JOptionPane.showMessageDialog(null, throwables.getMessage( ),
-                            "Erreur", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, throwables.getMessage( ), "Erreur", JOptionPane.ERROR_MESSAGE);
+                } catch (AllDataException e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
                 }
             case 12:
                 try {
                     return controller.getGateToString(flight.getArrivalGate());
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
                 } catch (DataBaseConnectionException throwables) {
                     throwables.printStackTrace();
-                    JOptionPane.showMessageDialog(null, throwables.getMessage( ),
-                            "Erreur", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, throwables.getMessage( ), "Erreur", JOptionPane.ERROR_MESSAGE);
+                } catch (AllDataException e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
                 }
             case 13:
                 return flight.getMealOnBoard();

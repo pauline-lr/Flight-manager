@@ -1,20 +1,23 @@
 package view.panel.edit;
 
 import controller.ApplicationController;
-import exception.dataBase.*;
+import exception.FlightException;
+import exception.dataBase.AddDataException;
+import exception.dataBase.AllDataException;
+import exception.dataBase.DataBaseConnectionException;
+import exception.dataBase.ModifyException;
 import model.Flight;
 import view.form.edit.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.sql.*;
 
 public class AddFlightPanel extends JPanel {
     private ApplicationController controller;
     private FlightForm flightForm;
 
-    public AddFlightPanel() throws SQLException, DataBaseConnectionException {
+    public AddFlightPanel() throws DataBaseConnectionException, AllDataException {
         setController(new ApplicationController());
         setFlightForm(new FlightForm());
         this.setLayout(new BorderLayout());
@@ -48,11 +51,14 @@ public class AddFlightPanel extends JPanel {
                     controller.addFlight(flight);
                     JOptionPane.showMessageDialog(null, "Vol ajouté", "Succès", JOptionPane.INFORMATION_MESSAGE);
                 }
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            } catch (DataBaseConnectionException throwables) {
-                throwables.printStackTrace();
-                JOptionPane.showMessageDialog(null, throwables.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+            } catch (DataBaseConnectionException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+            } catch (AddDataException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+            } catch (ModifyException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage( ), "Erreur", JOptionPane.ERROR_MESSAGE);
+            } catch (FlightException.NumberFlightException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
             }
         }
     }

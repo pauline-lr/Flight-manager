@@ -1,23 +1,25 @@
 package view.panel.edit;
 
 import controller.ApplicationController;
-import exception.dataBase.*;
+import exception.FlightException;
+import exception.dataBase.AllDataException;
+import exception.dataBase.DataBaseConnectionException;
+import exception.dataBase.ModifyException;
 import model.Flight;
-import view.CheckEmptyResult;
-import view.form.edit.*;
+import view.form.edit.FlightForm;
+import view.form.edit.ModifyFlightForm;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.sql.*;
-import java.util.ArrayList;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class ModifyFlightPanel extends JPanel {
     private ApplicationController controller;
     private ModifyFlightForm modifyFlightForm;
     private FlightForm flightForm;
 
-    public ModifyFlightPanel() throws SQLException, DataBaseConnectionException {
+    public ModifyFlightPanel() throws DataBaseConnectionException, AllDataException {
         setController(new ApplicationController());
         setFlightForm(new FlightForm());
         setModifyFlightForm(new ModifyFlightForm(flightForm));
@@ -50,20 +52,33 @@ public class ModifyFlightPanel extends JPanel {
     private class ValidationButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent evt) {
-            Flight flight = flightForm.getFlight();
+            Flight flight = null;
+            try {
+                flight = flightForm.getFlight();
+            } catch (FlightException.NumberFlightException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
+            }
             String originalFlightNumber = modifyFlightForm.getFlightComboBoxID();
             try {
                 if (flight.getNumber().equals(originalFlightNumber) || !flightForm.checkFlightNumberIsExisting()) {
                     controller.modifyFlight(flight, originalFlightNumber);
                     String flightToString = controller.getFlightToString(flight.getNumber());
-                    modifyFlightForm.updateFlightComboBox();
+                    try {
+                        modifyFlightForm.updateFlightComboBox();
+                    } catch (DataBaseConnectionException e) {
+                        JOptionPane.showMessageDialog(null, e.getMessage( ), "Erreur", JOptionPane.ERROR_MESSAGE);
+                    } catch (AllDataException e) {
+                        JOptionPane.showMessageDialog(null, e.getMessage( ), "Erreur", JOptionPane.ERROR_MESSAGE);
+                    }
                     modifyFlightForm.getFlightComboBox().setSelectedItem(flightToString);
                     JOptionPane.showMessageDialog(null, "Vol modifié", "Succès", JOptionPane.INFORMATION_MESSAGE);
                 }
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
             } catch (DataBaseConnectionException e) {
-                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, e.getMessage( ), "Erreur", JOptionPane.ERROR_MESSAGE);
+            } catch (ModifyException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage( ), "Erreur", JOptionPane.ERROR_MESSAGE);
+            } catch (AllDataException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage( ), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
         }
     }

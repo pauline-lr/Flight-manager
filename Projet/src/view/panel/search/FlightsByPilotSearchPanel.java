@@ -1,6 +1,7 @@
 package view.panel.search;
 
 import controller.ApplicationController;
+import exception.dataBase.AllDataException;
 import exception.dataBase.DataBaseConnectionException;
 import model.search.FlightsByPilotSearch;
 import tool.GetID;
@@ -12,7 +13,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class FlightsByPilotSearchPanel extends JPanel {
@@ -26,10 +26,10 @@ public class FlightsByPilotSearchPanel extends JPanel {
         this.panel = this;
         try {
             this.flightsByPilotSearchForm = new FlightsByPilotSearchForm();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
         } catch (DataBaseConnectionException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, e.getMessage( ),
+                    "Erreur", JOptionPane.ERROR_MESSAGE);
+        } catch (AllDataException e) {
             JOptionPane.showMessageDialog(null, e.getMessage( ),
                     "Erreur", JOptionPane.ERROR_MESSAGE);
         }
@@ -50,20 +50,19 @@ public class FlightsByPilotSearchPanel extends JPanel {
     private class ValidationListener implements ActionListener {
         public void actionPerformed(ActionEvent evt) {
             panel.removeAll();
-            ArrayList<FlightsByPilotSearch> flights;
+            ArrayList<FlightsByPilotSearch> flights = new ArrayList<>();
             JComboBox pilot = flightsByPilotSearchForm.getPilotComboBox();
             try {
                 flights = controller.getAllFlightsOfAPilot(GetID.getPilotID(pilot));
-                panel.add(new FlightsByPilotResultPanel(flights), BorderLayout.CENTER);
-                panel.revalidate();
-                panel.repaint();
-                CheckEmptyResult.checkResultIsEmpty(flights);
-            } catch (DataBaseAccessException e) {
-                e.printStackTrace();
-                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur liée à la BD", JOptionPane.ERROR_MESSAGE);
+            } catch (AllDataException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
+            } catch (DataBaseConnectionException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
             }
-
-
+            panel.add(new FlightsByPilotResultPanel(flights), BorderLayout.CENTER);
+            panel.revalidate();
+            panel.repaint();
+            CheckEmptyResult.checkResultIsEmpty(flights);
         }
     }
 }

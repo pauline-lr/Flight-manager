@@ -1,19 +1,19 @@
 package view.form.search;
 
 import controller.ApplicationController;
+import exception.dataBase.AllDataException;
 import exception.dataBase.DataBaseConnectionException;
 import tool.Format;
 
 import javax.swing.*;
 import java.awt.*;
-import java.sql.SQLException;
 
 public class PassengersByClassSearchForm extends JPanel {
     private ApplicationController controller;
     private JLabel classLabel;
     private JComboBox<String> classComboBox;
 
-    public PassengersByClassSearchForm() throws SQLException, DataBaseConnectionException {
+    public PassengersByClassSearchForm() throws DataBaseConnectionException, AllDataException {
         setController(new ApplicationController());
         this.setLayout(new GridLayout(14, 2, 5, 5));
 
@@ -28,7 +28,7 @@ public class PassengersByClassSearchForm extends JPanel {
         this.controller = controller;
     }
 
-    public void createPassengersByClassForm() throws SQLException, DataBaseConnectionException {
+    public void createPassengersByClassForm() throws DataBaseConnectionException, AllDataException {
         classLabel = new JLabel("    Choisissez la classe");
         classLabel.setFont(Format.titleFont);
         classLabel.setHorizontalAlignment(SwingConstants.LEFT);

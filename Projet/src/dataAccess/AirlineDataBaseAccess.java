@@ -3,7 +3,9 @@ package dataAccess;
 import exception.*;
 import exception.dataBase.*;
 import model.*;
-import model.search.*;
+import model.search.FlightsBetweenDatesSearch;
+import model.search.FlightsByPilotSearch;
+import model.search.PassengersByClassSearch;
 import pattern.DataAccessObjectPattern;
 import tool.Format;
 
@@ -38,7 +40,6 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
         return flight;
     }
 
-    @Override
     public ArrayList<Flight> getAllFlights()
             throws DataBaseConnectionException, AllDataException, FlightException.MealDescriptionException, FlightException.NumberFlightException {
         ArrayList<Flight> flights = new ArrayList<>();
@@ -108,7 +109,7 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
         }catch (IOException exception){
             throw new AllDataException(exception.getMessage());
         }catch (SQLException exception) {
-            throw new AllDataException(exception.getMessage());
+            throw new DataBaseConnectionException(exception.getMessage());
         }
 
         return flight;
@@ -132,7 +133,7 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
         }catch (IOException exception){
             throw new AllDataException(exception.getMessage());
         }catch (SQLException exception) {
-            throw new AllDataException(exception.getMessage());
+            throw new DataBaseConnectionException(exception.getMessage());
         }
         return pilotToString;
     }
@@ -156,7 +157,7 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
         }catch (IOException exception){
             throw new AllDataException(exception.getMessage());
         }catch (SQLException exception) {
-            throw new AllDataException(exception.getMessage());
+            throw new DataBaseConnectionException(exception.getMessage());
         }
 
         return planeToString;
@@ -181,7 +182,7 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
         }catch (IOException exception){
             throw new AllDataException(exception.getMessage());
         }catch (SQLException exception) {
-            throw new AllDataException(exception.getMessage());
+            throw new DataBaseConnectionException(exception.getMessage());
         }
 
         return airportToString;
@@ -205,7 +206,7 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
         } catch (IOException exception){
             throw new AllDataException(exception.getMessage());
         }catch (SQLException exception) {
-            throw new AllDataException(exception.getMessage());
+            throw new DataBaseConnectionException(exception.getMessage());
         }
 
         return gateToString;
@@ -230,7 +231,7 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
         }catch (IOException exception){
             throw new AllDataException(exception.getMessage());
         }catch (SQLException exception) {
-            throw new AllDataException(exception.getMessage());
+            throw new DataBaseConnectionException(exception.getMessage());
         }
 
         return gateToString;
@@ -784,8 +785,8 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
 
     //region Tools
     private Flight getFlightFromResultSet(ResultSet data)
-            throws FlightException.MealDescriptionException, FlightException.NumberFlightException, DataBaseConnectionException, AllDataException {
-        Flight flight;
+            throws  DataBaseConnectionException, AllDataException {
+        Flight flight = null;
 
         try {
             GregorianCalendar departureTime = new GregorianCalendar();
@@ -814,6 +815,8 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
             throw new DataBaseConnectionException(exception.getMessage());
         }*/ catch (SQLException exception) {
             throw new AllDataException(exception.getMessage());
+        } catch (FlightException.NumberFlightException e) {
+            e.printStackTrace();
         }
 
         return flight;

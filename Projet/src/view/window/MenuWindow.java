@@ -1,19 +1,26 @@
 package view.window;
 
 import controller.ApplicationController;
-import exception.dataBase.*;
-import exception.*;
+import exception.dataBase.AllDataException;
+import exception.dataBase.DataBaseCloseException;
+import exception.dataBase.DataBaseConnectionException;
 import view.CheckEmptyResult;
-import view.panel.list.*;
-import view.panel.edit.*;
-import view.panel.search.*;
-import view.panel.home.*;
+import view.panel.edit.AddFlightPanel;
+import view.panel.edit.DeleteFlightPanel;
+import view.panel.edit.ModifyFlightPanel;
+import view.panel.home.AnimationPanel;
+import view.panel.home.WelcomePanel;
+import view.panel.list.AllFlightsListPanel;
+import view.panel.search.FlightsBetweenDatesSearchPanel;
+import view.panel.search.FlightsByPilotSearchPanel;
+import view.panel.search.PassengersByClassSearchPanel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.sql.SQLException;
-import java.util.ArrayList;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class MenuWindow extends JFrame {
     private ApplicationController controller;
@@ -123,18 +130,26 @@ public class MenuWindow extends JFrame {
     private class ExitButtonListener extends WindowAdapter {
         @Override
         public void windowClosing(WindowEvent evt) {
-            closeConnection();
+            try {
+                closeConnection();
+            } catch (DataBaseConnectionException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 
     private class ExitListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent evt) {
-            closeConnection();
+            try {
+                closeConnection();
+            } catch (DataBaseConnectionException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 
-    private void closeConnection() {
+    private void closeConnection() throws DataBaseConnectionException {
         try {
             controller.closeConnection();
         } catch (DataBaseCloseException exception) {
@@ -149,11 +164,10 @@ public class MenuWindow extends JFrame {
             frameContainer.removeAll();
             try {
                 frameContainer.add(new AddFlightPanel(), BorderLayout.CENTER);
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            } catch (DataBaseConnectionException throwables) {
-                throwables.printStackTrace();
-                JOptionPane.showMessageDialog(null, throwables.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+            } catch (AllDataException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+            } catch (DataBaseConnectionException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
             frameContainer.repaint();
             MenuWindow.this.setVisible(true);
@@ -168,11 +182,10 @@ public class MenuWindow extends JFrame {
                 frameContainer.add(new ModifyFlightPanel(), BorderLayout.CENTER);
                 frameContainer.repaint();
                 MenuWindow.this.setVisible(true);
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            } catch (DataBaseConnectionException throwables) {
-                throwables.printStackTrace();
-                JOptionPane.showMessageDialog(null, throwables.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+            } catch (AllDataException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+            } catch (DataBaseConnectionException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
@@ -195,11 +208,10 @@ public class MenuWindow extends JFrame {
                 frameContainer.add(new PassengersByClassSearchPanel(), BorderLayout.CENTER);
                 frameContainer.repaint();
                 MenuWindow.this.setVisible(true);
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            } catch (DataBaseConnectionException throwables) {
-                throwables.printStackTrace();
-                JOptionPane.showMessageDialog(null, throwables.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+            } catch (DataBaseConnectionException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+            } catch (AllDataException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
@@ -218,24 +230,17 @@ public class MenuWindow extends JFrame {
         @Override
         public void actionPerformed(ActionEvent evt) {
             frameContainer.removeAll();
+
+            AllFlightsListPanel allFlightsListPanel = null;
             try {
-                AllFlightsListPanel allFlightsListPanel = new AllFlightsListPanel();
-                frameContainer.add(allFlightsListPanel, BorderLayout.CENTER);
-                frameContainer.repaint();
-                MenuWindow.this.setVisible(true);
-                CheckEmptyResult.checkResultIsEmpty(allFlightsListPanel.getFlightsTable().getFlights());
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            } catch (DataBaseConnectionException throwables) {
-                throwables.printStackTrace();
-                JOptionPane.showMessageDialog(null, throwables.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-            } catch (FlightException.MealDescriptionException throwables) {
-                throwables.printStackTrace();
-                JOptionPane.showMessageDialog(null, throwables.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-            } catch (FlightException.NumberFlightException throwables) {
-                throwables.printStackTrace();
-                JOptionPane.showMessageDialog(null, throwables.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+                allFlightsListPanel = new AllFlightsListPanel();
+            } catch (DataBaseConnectionException e) {
+                e.printStackTrace();
             }
+            frameContainer.add(allFlightsListPanel, BorderLayout.CENTER);
+            frameContainer.repaint();
+            MenuWindow.this.setVisible(true);
+            CheckEmptyResult.checkResultIsEmpty(allFlightsListPanel.getFlightsTable().getFlights());
         }
     }
 
@@ -249,15 +254,7 @@ public class MenuWindow extends JFrame {
                 frameContainer.repaint();
                 MenuWindow.this.setVisible(true);
                 CheckEmptyResult.checkResultIsEmpty(deleteFlightPanel.getFlightsTable().getFlights());
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
             } catch (DataBaseConnectionException throwables) {
-                throwables.printStackTrace();
-                JOptionPane.showMessageDialog(null, throwables.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-            } catch (FlightException.MealDescriptionException throwables) {
-                throwables.printStackTrace();
-                JOptionPane.showMessageDialog(null, throwables.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-            } catch (FlightException.NumberFlightException throwables) {
                 throwables.printStackTrace();
                 JOptionPane.showMessageDialog(null, throwables.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }

@@ -2,6 +2,7 @@ package view.form.edit;
 
 import controller.ApplicationController;
 import exception.FlightException;
+import exception.dataBase.AllDataException;
 import exception.dataBase.DataBaseConnectionException;
 import model.Flight;
 import tool.Format;
@@ -11,7 +12,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.sql.SQLException;
 
 public class ModifyFlightForm extends JPanel {
     private ApplicationController controller;
@@ -19,7 +19,7 @@ public class ModifyFlightForm extends JPanel {
     private JComboBox<String> flightComboBox;
     private JLabel flightLabel;
 
-    public ModifyFlightForm(FlightForm flightForm) throws SQLException, DataBaseConnectionException {
+    public ModifyFlightForm(FlightForm flightForm) throws DataBaseConnectionException, AllDataException {
         setController(new ApplicationController());
         setFlightForm(flightForm);
         this.setLayout(new GridLayout(2, 1, 3, 3));
@@ -42,7 +42,7 @@ public class ModifyFlightForm extends JPanel {
         return flightComboBox;
     }
 
-    public void updateFlightComboBox() throws SQLException, DataBaseConnectionException {
+    public void updateFlightComboBox() throws DataBaseConnectionException, AllDataException {
         flightComboBox.removeAllItems();
         for (String flight : controller.getAllFlightsToString()) {
             flightComboBox.addItem(flight);
@@ -89,9 +89,9 @@ public class ModifyFlightForm extends JPanel {
             flightForm.setArrivalGateComboBox(flight.getArrivalGate());
             flightForm.setIsMealOnBoardCheckBox(flight.getMealOnBoard());
             flightForm.setMealDescriptionTextArea(flight.getMealDescription());
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
         } catch (DataBaseConnectionException e) {
+            e.printStackTrace();
+        } catch (AllDataException e) {
             e.printStackTrace();
         } catch (FlightException.MealDescriptionException e) {
             e.printStackTrace();

@@ -2,14 +2,13 @@ package view.panel.edit;
 
 import controller.ApplicationController;
 import exception.dataBase.DataBaseConnectionException;
-import exception.FlightException;
-import view.CheckEmptyResult;
+import exception.dataBase.ModifyException;
 import view.table.AllFlightsListTable;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.sql.*;
+
 
 public class DeleteFlightPanel extends JPanel {
     private ApplicationController controller;
@@ -17,7 +16,7 @@ public class DeleteFlightPanel extends JPanel {
     private JTable table;
     private JButton validateDeletationButton;
 
-    public DeleteFlightPanel() throws SQLException, DataBaseConnectionException, FlightException.MealDescriptionException, FlightException.NumberFlightException {
+    public DeleteFlightPanel() throws  DataBaseConnectionException {
         setController(new ApplicationController());
         setFlightsTable(new AllFlightsListTable());
         this.setLayout(new BorderLayout());
@@ -77,11 +76,10 @@ public class DeleteFlightPanel extends JPanel {
                         for (int i = 0; i < selectedRows.length; i++) {
                             flightsTable.removeRow(selectedRows[i] - i);
                         }
-                    } catch (SQLException throwables) {
-                        throwables.printStackTrace();
-                    } catch (DataBaseConnectionException throwables) {
-                        throwables.printStackTrace();
-                        JOptionPane.showMessageDialog(null, throwables.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+                    } catch (ModifyException e) {
+                        JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+                    } catch (DataBaseConnectionException e) {
+                        JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                     }
                     JOptionPane.showMessageDialog(null, "Vol(s) supprimé(s)", "Succès", JOptionPane.INFORMATION_MESSAGE);
                 }
