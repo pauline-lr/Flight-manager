@@ -5,7 +5,7 @@ import exception.dataBase.AllDataException;
 import exception.dataBase.DataBaseConnectionException;
 import model.search.FlightsByPilotSearch;
 import tool.GetID;
-import view.CheckEmptyResult;
+// import view.CheckEmptyResult;
 import view.form.search.FlightsByPilotSearchForm;
 import view.panel.list.FlightsByPilotResultPanel;
 
@@ -27,11 +27,9 @@ public class FlightsByPilotSearchPanel extends JPanel {
         try {
             this.flightsByPilotSearchForm = new FlightsByPilotSearchForm();
         } catch (DataBaseConnectionException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage( ),
-                    "Erreur", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, e.getMessage( ), "Erreur", JOptionPane.ERROR_MESSAGE);
         } catch (AllDataException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage( ),
-                    "Erreur", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, e.getMessage( ), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
         this.setLayout(new BorderLayout());
         this.add(flightsByPilotSearchForm, BorderLayout.PAGE_START);
@@ -62,7 +60,7 @@ public class FlightsByPilotSearchPanel extends JPanel {
             panel.add(new FlightsByPilotResultPanel(flights), BorderLayout.CENTER);
             panel.revalidate();
             panel.repaint();
-            CheckEmptyResult.checkResultIsEmpty(flights);
+            // CheckEmptyResult.checkResultIsEmpty(flights);
         }
     }
 }

@@ -4,7 +4,7 @@ import controller.ApplicationController;
 import exception.dataBase.AllDataException;
 import exception.dataBase.DataBaseConnectionException;
 import model.search.PassengersByClassSearch;
-import view.CheckEmptyResult;
+// import view.CheckEmptyResult;
 import view.form.search.PassengersByClassSearchForm;
 import view.panel.list.PassengersByClassResultPanel;
 
@@ -49,16 +49,14 @@ public class PassengersByClassSearchPanel extends JPanel {
             try {
                 passengers = controller.getAllPassengersOfAClass(className);
             } catch (AllDataException e) {
-                JOptionPane.showMessageDialog(null, e.getMessage( ),
-                        "Erreur", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, e.getMessage( ), "Erreur", JOptionPane.ERROR_MESSAGE);
             } catch (DataBaseConnectionException e) {
-                JOptionPane.showMessageDialog(null, e.getMessage( ),
-                        "Erreur", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, e.getMessage( ), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
             panel.add(new PassengersByClassResultPanel(passengers), BorderLayout.CENTER);
             panel.revalidate();
             panel.repaint();
-            CheckEmptyResult.checkResultIsEmpty(passengers);
+            // CheckEmptyResult.checkResultIsEmpty(passengers);
         }
     }
 }

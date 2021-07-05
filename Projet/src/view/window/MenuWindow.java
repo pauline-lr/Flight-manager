@@ -4,7 +4,7 @@ import controller.ApplicationController;
 import exception.dataBase.AllDataException;
 import exception.dataBase.DataBaseCloseException;
 import exception.dataBase.DataBaseConnectionException;
-import view.CheckEmptyResult;
+// import view.CheckEmptyResult;
 import view.panel.edit.AddFlightPanel;
 import view.panel.edit.DeleteFlightPanel;
 import view.panel.edit.ModifyFlightPanel;
@@ -240,7 +240,7 @@ public class MenuWindow extends JFrame {
             frameContainer.add(allFlightsListPanel, BorderLayout.CENTER);
             frameContainer.repaint();
             MenuWindow.this.setVisible(true);
-            CheckEmptyResult.checkResultIsEmpty(allFlightsListPanel.getFlightsTable().getFlights());
+            // CheckEmptyResult.checkResultIsEmpty(allFlightsListPanel.getFlightsTable().getFlights());
         }
     }
 
@@ -253,7 +253,7 @@ public class MenuWindow extends JFrame {
                 frameContainer.add(deleteFlightPanel, BorderLayout.CENTER);
                 frameContainer.repaint();
                 MenuWindow.this.setVisible(true);
-                CheckEmptyResult.checkResultIsEmpty(deleteFlightPanel.getFlightsTable().getFlights());
+                // CheckEmptyResult.checkResultIsEmpty(deleteFlightPanel.getFlightsTable().getFlights());
             } catch (DataBaseConnectionException throwables) {
                 throwables.printStackTrace();
                 JOptionPane.showMessageDialog(null, throwables.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);

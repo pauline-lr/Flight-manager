@@ -33,7 +33,7 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
             }
         }catch (IOException exception){
             throw new AllDataException(exception.getMessage());
-        }catch (SQLException exception) {
+        } catch (SQLException exception) {
             throw new DataBaseConnectionException(exception.getMessage());
         }
 
