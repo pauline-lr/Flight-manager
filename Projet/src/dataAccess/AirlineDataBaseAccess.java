@@ -22,7 +22,6 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
         try {
             String sqlRequest = "SELECT * FROM flight WHERE number = ?";
 
-
             PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
             preparedStatement.setString(1, flightNumber);
 

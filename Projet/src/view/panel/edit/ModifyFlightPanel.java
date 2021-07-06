@@ -24,6 +24,7 @@ public class ModifyFlightPanel extends JPanel {
         setFlightForm(new FlightForm());
         setModifyFlightForm(new ModifyFlightForm(flightForm));
         this.setLayout(new BorderLayout());
+        this.add(modifyFlightForm, BorderLayout.PAGE_START);
         this.add(flightForm, BorderLayout.CENTER);
         initializeValidationButton();
     }
