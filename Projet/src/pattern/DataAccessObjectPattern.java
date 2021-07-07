@@ -43,7 +43,7 @@ public interface DataAccessObjectPattern {
     String[] getAllPilotsToString()
             throws DataBaseConnectionException, AllDataException;
 
-    String[] getAllPlanesToString()
+    String[] getAllPlanesAvailableToString()
             throws DataBaseConnectionException, AllDataException;
 
     String[] getAllClassesToString()

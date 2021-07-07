@@ -119,7 +119,7 @@ public class FlightForm extends JPanel {
         this.add(planeLabel);
 
         try {
-            planeComboBox = new JComboBox<>(controller.getAllPlanesToString());
+            planeComboBox = new JComboBox<>(controller.getAllPlanesAvailableToString());
         } catch (Exception exception) {
             JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }

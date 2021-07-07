@@ -74,9 +74,9 @@ public class ApplicationController {
         return flightManager.getAllPilotsToString();
     }
 
-    public String[] getAllPlanesToString()
+    public String[] getAllPlanesAvailableToString()
             throws AllDataException,  DataBaseConnectionException {
-        return flightManager.getAllPlanesToString();
+        return flightManager.getAllPlanesAvailableToString();
     }
 
     public String[] getAllClassesToString()

@@ -303,7 +303,7 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
         return pilotLicenceNumbers.toArray(new String[0]);
     }
 
-    public String[] getAllPlanesToString()
+    public String[] getAllPlanesAvailableToString()
             throws DataBaseConnectionException, AllDataException {
         ArrayList<String> planeIDs = new ArrayList<>();
 
