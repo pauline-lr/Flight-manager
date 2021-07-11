@@ -1,6 +1,7 @@
 package model;
 
-import exception.PersonException;
+import exception.NotMatchException;
+import exception.TextLengthException;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -18,7 +19,7 @@ public class Person {
 
     //region Constructors
     public Person(String firstName, String lastName, String phoneNumber, String emailAddress)
-            throws PersonException.FirstNameException, PersonException.LastNameException, PersonException.PhoneNumberException, PersonException.EmailException {
+            throws TextLengthException, NotMatchException {
         setFirstName(firstName);
         setLastName(lastName);
         setPhoneNumber(phoneNumber);
@@ -27,36 +28,36 @@ public class Person {
     //endregion
 
     //region Setters
-    private void setFirstName(String firstName) throws PersonException.FirstNameException {
+    private void setFirstName(String firstName) throws TextLengthException {
         if(!(firstName.isEmpty()) && firstName.length() <= LENGTH_FIRST_NAME)
             this.firstName = firstName;
         else
-            throw new PersonException.FirstNameException(firstName);
+            throw new TextLengthException("Le prénom");
     }
 
-    private void setLastName(String lastName) throws PersonException.LastNameException {
+    private void setLastName(String lastName) throws TextLengthException {
         if(!(firstName.isEmpty()) && lastName.length() <= LENGTH_LAST_NAME)
             this.lastName = lastName;
         else
-            throw new PersonException.LastNameException(lastName);
+            throw new TextLengthException("Le nom de famille");
     }
 
-    private void setPhoneNumber(String phoneNumber) throws PersonException.PhoneNumberException {
+    private void setPhoneNumber(String phoneNumber) throws NotMatchException {
         Pattern r = Pattern.compile(REGEX_PHONE_NUMBER);
         Matcher m = r.matcher(phoneNumber);
         if (m.find())
             this.phoneNumber = phoneNumber;
         else
-            throw new PersonException.PhoneNumberException(phoneNumber);
+            throw new NotMatchException("Le numéro de téléphone");
     }
 
-    private void setEmailAddress(String emailAddress) throws PersonException.EmailException {
+    private void setEmailAddress(String emailAddress) throws NotMatchException {
         Pattern r = Pattern.compile(REGEX_EMAIL);
         Matcher m = r.matcher(emailAddress);
         if (m.find())
             this.emailAddress = emailAddress;
         else
-            throw new PersonException.EmailException(emailAddress);
+            throw new NotMatchException("L'adresse mail");
     }
     //endregion
 

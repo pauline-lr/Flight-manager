@@ -1,6 +1,6 @@
 package model;
 
-import exception.PlaneException;
+import exception.TextLengthException;
 
 public class Plane {
     private final static int MODEL_LENGTH_MIN = 2;
@@ -14,7 +14,7 @@ public class Plane {
 
     //region Constructors
     public Plane(Integer planeId,String model, String brand)
-            throws PlaneException.BrandException, PlaneException.ModelException {
+            throws TextLengthException {
         setPlaneId(planeId);
         setModel(model);
         setBrand(brand);
@@ -27,18 +27,21 @@ public class Plane {
     }
 
     private void setModel(String model)
-            throws PlaneException.ModelException {
-        if(model.length() >= MODEL_LENGTH_MIN && model.length() <= MODEL_LENGTH_MAX)
-            this.model = model;
-        else
-            throw new PlaneException.ModelException(model);
+            throws TextLengthException {
+        if(model.length() < MODEL_LENGTH_MIN)
+            throw new TextLengthException("Le nom du modèle de l'avion est trop court. Minimum " + MODEL_LENGTH_MIN + "caractères");
+        else if (model.length() > MODEL_LENGTH_MAX)
+            throw new TextLengthException("Le nom du modèle de l'avion est long court. Maximum " + MODEL_LENGTH_MAX + "caractères");
+        this.model = model;
+
     }
     private void setBrand(String brand)
-            throws PlaneException.BrandException {
-        if(brand.length() >= BRAND_LENGTH_MIN && brand.length() <= BRAND_LENGTH_MAX)
-            this.brand = brand;
-        else
-            throw new PlaneException.BrandException(brand);
+            throws TextLengthException {
+        if(brand.length() < BRAND_LENGTH_MIN)
+            throw new TextLengthException("Le nom du la marque de l'avion est trop court. Minimum " + BRAND_LENGTH_MIN + "caractères");
+        else if (brand.length() > BRAND_LENGTH_MAX)
+            throw new TextLengthException("Le nom de la marque de l'avion est long court. Maximum " + BRAND_LENGTH_MAX + "caractères");
+        this.brand = brand;
     }
     //endregion
 

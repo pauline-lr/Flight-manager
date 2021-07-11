@@ -1,9 +1,9 @@
 package view.table;
 
 import controller.ApplicationController;
+import exception.FlightException;
 import exception.dataBase.AllDataException;
 import exception.dataBase.DataBaseConnectionException;
-import exception.FlightException;
 import model.Flight;
 import tool.Format;
 
@@ -21,20 +21,12 @@ public class AllFlightsListTable extends AbstractTableModel {
         setColumnNames();
         try {
             setFlights(controller.getAllFlights());
-        } catch (DataBaseConnectionException throwables) {
-            throwables.printStackTrace();
-            JOptionPane.showMessageDialog(null, throwables.getMessage(),
-                    "Erreur", JOptionPane.ERROR_MESSAGE);
-        } catch (AllDataException e) {
+        }  catch (AllDataException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
-        } catch (FlightException.MealDescriptionException throwables) {
-            throwables.printStackTrace();
-            JOptionPane.showMessageDialog(null, throwables.getMessage( ),
-                    "Erreur", JOptionPane.ERROR_MESSAGE);
-        } catch (FlightException.NumberFlightException throwables) {
-            throwables.printStackTrace();
-            JOptionPane.showMessageDialog(null, throwables.getMessage( ),
-                    "Erreur", JOptionPane.ERROR_MESSAGE);
+        } catch (FlightException.NumberFlightException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
+        } catch (DataBaseConnectionException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }
 

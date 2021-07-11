@@ -16,7 +16,7 @@ import java.util.*;
 public class AirlineDataBaseAccess implements DataAccessObjectPattern {
     //region Get
     public Flight getFlight(String flightNumber)
-            throws DataBaseConnectionException, AllDataException, FlightException.MealDescriptionException, FlightException.NumberFlightException {
+            throws DataBaseConnectionException, AllDataException, FlightException.NumberFlightException {
         Flight flight = null;
 
         try {
@@ -816,8 +816,6 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
             throw new DataBaseConnectionException(exception.getMessage());
         }*/ catch (SQLException exception) {
             throw new AllDataException(exception.getMessage());
-        } catch (FlightException.NumberFlightException e) {
-            e.printStackTrace();
         }
 
         return flight;

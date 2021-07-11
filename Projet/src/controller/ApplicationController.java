@@ -23,12 +23,12 @@ public class ApplicationController {
 
     //region Get
     public Flight getFlight(String flightNumber)
-            throws AllDataException, DataBaseConnectionException, FlightException.MealDescriptionException, FlightException.NumberFlightException {
+            throws AllDataException, DataBaseConnectionException, FlightException.NumberFlightException {
         return flightManager.getFlight(flightNumber);
     }
 
     public ArrayList<Flight> getAllFlights()
-            throws  AllDataException, DataBaseConnectionException, FlightException.MealDescriptionException, FlightException.NumberFlightException {
+            throws  AllDataException, DataBaseConnectionException, FlightException.NumberFlightException {
         return flightManager.getAllFlights();
     }
     //endregion

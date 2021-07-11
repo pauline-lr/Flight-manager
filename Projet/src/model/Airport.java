@@ -1,6 +1,7 @@
 package model;
 
-import exception.AiportException;
+import exception.NotMatchException;
+import exception.TextLengthException;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -17,7 +18,7 @@ public class Airport {
 
     //region Constructors
     public Airport(String code, String name, String country)
-            throws AiportException.CodeException, AiportException.NameAirportException, AiportException.CountryException {
+            throws TextLengthException, NotMatchException {
         setCode(code);
         setName(name);
         setCountry(country);
@@ -25,27 +26,31 @@ public class Airport {
     //endregion
 
     //region Setters
-    private void setCode(String code) throws AiportException.CodeException {
+    private void setCode(String code) throws NotMatchException {
         Pattern r = Pattern.compile(REGEX_CODE);
         Matcher m = r.matcher(code);
-        if (m.find())
+        if (!m.find())
+            throw new NotMatchException("Le code de l'aéroport", "3 lettres majuscules");
+        else
             this.code = code;
-        else
-            throw new AiportException.CodeException(code);
     }
 
-    private void setName(String name) throws AiportException.NameAirportException {
-        if(name.length() >= LENGTH_MIN && name.length() <= LENGTH_NAME)
+    private void setName(String name) throws  TextLengthException {
+        if(name.length() < LENGTH_MIN)
+            throw new TextLengthException("Le nom de l'aéroport est trop court.\n Minimum " + LENGTH_MIN + " caractères.");
+        else if(name.length() > LENGTH_NAME)
+            throw new TextLengthException("Le nom de l'aéroport est trop long.\n Maximum " + LENGTH_NAME + " caractères.");
+        else
             this.name = name;
-        else
-            throw new AiportException.NameAirportException(name);
     }
 
-    private void setCountry(String country) throws AiportException.CountryException {
-        if(country.length() >= LENGTH_MIN && country.length() <= LENGTH_COUNTRY)
-            this.country = country;
+    private void setCountry(String country) throws TextLengthException {
+        if(name.length() < LENGTH_MIN)
+            throw new TextLengthException("Le nom du pays est trop court.\n Minimum " + LENGTH_MIN + " caractères.");
+        else if(name.length() > LENGTH_NAME)
+            throw new TextLengthException("Le nom du pays est trop long.\n Maximum " + LENGTH_NAME + " caractères.");
         else
-            throw new AiportException.CountryException(country);
+            this.country = country;
     }
     //endregion
 }

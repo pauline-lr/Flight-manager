@@ -1,6 +1,6 @@
 package model;
 
-import exception.FlightException;
+import exception.NotMatchException;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -16,7 +16,7 @@ public class Gate {
 
     //region Constructors
     public Gate(Integer gateID, Character terminal, Integer number, String airport)
-            throws FlightException.TerminalException, FlightException.NumberGateException {
+            throws NotMatchException {
         setGateID(gateID);
         setTerminal(terminal);
         setNumber(number);
@@ -25,37 +25,28 @@ public class Gate {
     //endregion
 
     //region Setters
-
-
     public void setGateID(Integer gateID) {
         this.gateID = gateID;
     }
 
-    public void setTerminal(Character terminal) throws FlightException.TerminalException {
+    public void setTerminal(Character terminal) throws NotMatchException {
         Pattern r = Pattern.compile(REGEX_TERMINAL);
         Matcher m = r.matcher(String.valueOf(terminal));
-        if (m.find())
-            this.terminal = terminal;
+        if (!m.find())
+            throw new NotMatchException("Le terminal", "une lettre majuscule");
         else
-            throw new FlightException.TerminalException(terminal);
+            this.terminal = terminal;
     }
-    public void setNumber(Integer number) throws FlightException.NumberGateException {
+    public void setNumber(Integer number) throws NotMatchException {
         Pattern r = Pattern.compile(REGEX_NUMBER);
         Matcher m = r.matcher(String.valueOf(number));
-        if (m.find())
-            this.number = number;
+        if (!m.find())
+            throw new NotMatchException("Le numéro de porte", "2 chiffres");
         else
-            throw new FlightException.NumberGateException(number);
+            this.number = number;
     }
     public void setAirport(String airport) {
         this.airport = airport;
-    }
-    //endregion
-
-
-    //region Getters
-    public String getAirport() {
-        return airport;
     }
     //endregion
 }

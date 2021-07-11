@@ -1,9 +1,9 @@
 package model;
 
-import exception.PassengerException;
-import exception.PersonException;
+import exception.BirthDateException;
+import exception.NotMatchException;
+import exception.TextLengthException;
 
-import java.time.format.DateTimeParseException;
 import java.util.GregorianCalendar;
 
 public class Passenger extends Person {
@@ -14,8 +14,7 @@ public class Passenger extends Person {
 
     //region Constructors
     public Passenger(String firstpassportNumber, String lastpassportNumber, String phoneNumber, String emailAddress, String passportNumber, GregorianCalendar birthdate)
-            throws PassengerException.PassportNumberException, PersonException.PhoneNumberException,
-                    PersonException.FirstNameException, PersonException.LastNameException, PersonException.EmailException {
+            throws TextLengthException, BirthDateException, NotMatchException {
         super(firstpassportNumber, lastpassportNumber, phoneNumber, emailAddress);
         setPassportNumber(passportNumber);
         setBirthdate(birthdate);
@@ -23,26 +22,22 @@ public class Passenger extends Person {
     //endregion
 
     //region Setters
-    private void setPassportNumber(String passportNumber) throws PassengerException.PassportNumberException {
-        if (passportNumber.length() == PASSPORT_LENGTH) {
-            this.passportNumber = passportNumber;
+    private void setPassportNumber(String passportNumber) throws TextLengthException {
+        if (!(passportNumber.length() == PASSPORT_LENGTH)) {
+            throw new TextLengthException("Le numéro du passeport doit contenir exactement " + PASSPORT_LENGTH + " caractères");
         } else {
-            throw new PassengerException.PassportNumberException(passportNumber);
+            this.passportNumber= passportNumber;
         }
     }
 
-    private void setBirthdate(GregorianCalendar birthdate) {
+    private void setBirthdate(GregorianCalendar birthdate) throws BirthDateException {
         GregorianCalendar currentDate = new GregorianCalendar();
         this.birthdate = birthdate;
 
         if (birthdate.compareTo(currentDate) < 0) {
             this.birthdate = birthdate;
         } else {
-            try {
-                throw new PassengerException.BirthDateException(birthdate);
-            } catch (PassengerException.BirthDateException | DateTimeParseException e) {
-                e.printStackTrace();
-            }
+            throw new BirthDateException(birthdate);
         }
     }
     //endregion

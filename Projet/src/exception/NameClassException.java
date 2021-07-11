@@ -8,6 +8,6 @@ public class NameClassException extends Exception{
     }
 
     public String getMessage( ) {
-        return  "The proposed " + wrongName + " value for a name of a airport is invalid !";
+        return  "Le nom des classes ne peut être que \"Première\", \"Economique\" et \"Affaire\"";
     }
 }

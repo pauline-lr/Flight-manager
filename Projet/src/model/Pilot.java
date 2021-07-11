@@ -1,7 +1,7 @@
 package model;
 
-import exception.PersonException;
-import exception.PilotException;
+import exception.NotMatchException;
+import exception.TextLengthException;
 
 import java.util.GregorianCalendar;
 import java.util.regex.Matcher;
@@ -16,8 +16,7 @@ public class Pilot extends Person {
 
     //region Constructors
     public Pilot(String firstName, String lastName, String phoneNumber, String emailAddress, String licenceNumber, GregorianCalendar flyingTime)
-            throws PersonException.PhoneNumberException, PersonException.FirstNameException, PersonException.LastNameException,
-            PersonException.EmailException, PilotException.LicenceNumberException, PilotException.FlyingFlightException {
+            throws NotMatchException, TextLengthException {
         super(firstName, lastName, phoneNumber, emailAddress);
         setLicenceNumber(licenceNumber);
         setFlyingTime(flyingTime);
@@ -25,20 +24,20 @@ public class Pilot extends Person {
     //endregion
 
     //region Setters
-    private void setLicenceNumber(String licenceNumber) throws PilotException.LicenceNumberException {
+    private void setLicenceNumber(String licenceNumber) throws TextLengthException  {
         if(licenceNumber.length() == LICENCE_LENGTH)
             this.licenceNumber = licenceNumber;
         else
-            throw new PilotException.LicenceNumberException(licenceNumber);
+            throw new TextLengthException("Le numéro de licence doit contenir exactement " + LICENCE_LENGTH + " caractères");
     }
 
-    private void setFlyingTime(GregorianCalendar flyingTime) throws PilotException.FlyingFlightException {
+    private void setFlyingTime(GregorianCalendar flyingTime) throws NotMatchException {
         Pattern r = Pattern.compile(REGEX_HEURE_FORMAT);
         Matcher m = r.matcher((CharSequence) flyingTime);
         if (m.find())
             this.flyingTime = flyingTime;
         else
-            throw new PilotException.FlyingFlightException(flyingTime);
+            throw new NotMatchException("Le format de l'heure", "HH:MM");
     }
     //endregion
 

@@ -1,6 +1,6 @@
 package model;
 
-import exception.SeatException;
+import exception.NotMatchException;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -18,7 +18,7 @@ public class Seat {
 
     //region Constructors
     public Seat(Integer seatRow, Character seatColumn, Boolean isOnWindowSide, String passenger, String flight, Integer seatClass)
-            throws SeatException.SeatRowException, SeatException.SeatColumnException {
+            throws NotMatchException {
         setSeatRow(seatRow);
         setSeatColumn(seatColumn);
         setOnWindowSide(isOnWindowSide);
@@ -28,29 +28,29 @@ public class Seat {
     }
 
     public Seat(Integer seatRow, Character seatColumn, Boolean isOnWindowSide, String flight, Integer seatClass)
-            throws SeatException.SeatRowException, SeatException.SeatColumnException {
+            throws NotMatchException {
         this(seatRow, seatColumn, isOnWindowSide, null, flight, seatClass);
     }
     //endregion
 
     //region Setters
-    private void setSeatRow(Integer seatRow) throws SeatException.SeatRowException {
+    private void setSeatRow(Integer seatRow) throws  NotMatchException {
         Pattern pattern = Pattern.compile(REGEX_SEAT_ROW);
         Matcher matcher = pattern.matcher(Integer.toString(seatRow));
         if (matcher.find()) {
             this.seatRow = seatRow;
         } else {
-            throw new SeatException.SeatRowException(seatRow);
+            throw new NotMatchException("Le numéro de ligne d'une place", "suite de 3 chiffres");
         }
     }
 
-    private void setSeatColumn(Character seatColumn) throws SeatException.SeatColumnException {
+    private void setSeatColumn(Character seatColumn) throws NotMatchException {
         Pattern pattern = Pattern.compile(REGEX_SEAT_COLUMN);
         Matcher matcher = pattern.matcher(Character.toString(seatColumn));
         if (matcher.find()) {
             this.seatColumn = seatColumn;
         } else {
-            throw new SeatException.SeatColumnException(seatColumn);
+            throw new NotMatchException("Le numéro de colonne d'une place", "1 lettre majuscule");
         }
     }
 

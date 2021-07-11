@@ -2,6 +2,8 @@ package view.panel.edit;
 
 import controller.ApplicationController;
 import exception.FlightException;
+import exception.NotMatchException;
+import exception.TextLengthException;
 import exception.dataBase.AllDataException;
 import exception.dataBase.DataBaseConnectionException;
 import exception.dataBase.ModifyException;
@@ -57,6 +59,12 @@ public class ModifyFlightPanel extends JPanel {
             try {
                 flight = flightForm.getFlight();
             } catch (FlightException.NumberFlightException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
+            } catch (FlightException.DepartureDateException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
+            } catch (NotMatchException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
+            } catch (TextLengthException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
             }
             String originalFlightNumber = modifyFlightForm.getFlightComboBoxID();

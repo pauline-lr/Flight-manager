@@ -1,6 +1,8 @@
 package model;
 
 import exception.FlightException;
+import exception.NotMatchException;
+import exception.TextLengthException;
 
 import java.time.format.DateTimeParseException;
 import java.util.GregorianCalendar;
@@ -27,7 +29,8 @@ public class Flight {
     //region Constructors
     public Flight(String number, GregorianCalendar departureTime,
                   GregorianCalendar arrivalTime, Boolean isMealOnBoard, String mealDescription,
-                  String pilot, String departureGate, String arrivalGate, Integer plane) throws FlightException.NumberFlightException {
+                  String pilot, String departureGate, String arrivalGate, Integer plane)
+            throws  NotMatchException, TextLengthException {
         setNumber(number);
         setDepartureTime(departureTime);
         setArrivalTime(arrivalTime);
@@ -40,20 +43,20 @@ public class Flight {
     }
     public Flight(String number, GregorianCalendar departureTime,
                   GregorianCalendar arrivalTime, Boolean isMealOnBoard, String pilot, String departureGate, String arrivalGate, Integer plane)
-            throws FlightException.NumberFlightException {
+            throws NotMatchException, TextLengthException {
         this(number, departureTime, arrivalTime, isMealOnBoard, null, pilot, departureGate, arrivalGate, plane);
     }
     //endregion
 
     //region Setters
-    private void setNumber(String number) throws FlightException.NumberFlightException {
-            Pattern pattern = Pattern.compile(REGEX_NUMBER);
-            Matcher matcher = pattern.matcher(number);
-            if (matcher.find()) {
-                this.number = number;
-            } else {
-                throw new FlightException.NumberFlightException(number);
-            }
+    private void setNumber(String number) throws NotMatchException {
+        Pattern pattern = Pattern.compile(REGEX_NUMBER);
+        Matcher matcher = pattern.matcher(number);
+        if (!matcher.find()) {
+            throw new NotMatchException("Le numéro de vol " + number, "2 lettres majuscules et 4 chiffres");
+        } else {
+            this.number = number;
+        }
     }
 
     private void setDepartureTime(GregorianCalendar departureTime) {
@@ -82,11 +85,13 @@ public class Flight {
     private void setMealOnBoard(Boolean mealOnBoard) {
         isMealOnBoard = mealOnBoard;
     }
-    public void setMealDescription(String mealDescription){
+    public void setMealDescription(String mealDescription) throws TextLengthException {
         if (mealDescription != null) {
             if (!(mealDescription.equals(""))) {
                 if (mealDescription.length() <= MEAL_DESCRIPTION_LENTGH) {
                     this.mealDescription = mealDescription;
+                }else{
+                    throw new TextLengthException("La description du repas est trop longue. Maximum " + MEAL_DESCRIPTION_LENTGH + " caractères.");
                 }
             } else {
                 this.mealDescription = null;

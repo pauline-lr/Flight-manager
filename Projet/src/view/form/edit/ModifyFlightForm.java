@@ -90,13 +90,11 @@ public class ModifyFlightForm extends JPanel {
             flightForm.setIsMealOnBoardCheckBox(flight.getMealOnBoard());
             flightForm.setMealDescriptionTextArea(flight.getMealDescription());
         } catch (DataBaseConnectionException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         } catch (AllDataException e) {
-            e.printStackTrace();
-        } catch (FlightException.MealDescriptionException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         } catch (FlightException.NumberFlightException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

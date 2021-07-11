@@ -2,6 +2,8 @@ package view.panel.edit;
 
 import controller.ApplicationController;
 import exception.FlightException;
+import exception.NotMatchException;
+import exception.TextLengthException;
 import exception.dataBase.AddDataException;
 import exception.dataBase.AllDataException;
 import exception.dataBase.DataBaseConnectionException;
@@ -46,7 +48,7 @@ public class AddFlightPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent evt) {
             try {
-                if (!flightForm.checkFlightNumberIsExisting()) {
+                if (!flightForm.checkFlightNumberIsExisting() && flightForm.getFlight() != null) {
                     Flight flight = flightForm.getFlight();
                     controller.addFlight(flight);
                     JOptionPane.showMessageDialog(null, "Vol ajouté", "Succès", JOptionPane.INFORMATION_MESSAGE);
@@ -59,6 +61,12 @@ public class AddFlightPanel extends JPanel {
                 JOptionPane.showMessageDialog(null, e.getMessage( ), "Erreur", JOptionPane.ERROR_MESSAGE);
             } catch (FlightException.NumberFlightException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
+            } catch (FlightException.DepartureDateException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+            } catch (TextLengthException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+            } catch (NotMatchException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
         }
     }

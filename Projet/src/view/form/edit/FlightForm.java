@@ -2,6 +2,8 @@ package view.form.edit;
 
 import controller.ApplicationController;
 import exception.FlightException;
+import exception.NotMatchException;
+import exception.TextLengthException;
 import exception.dataBase.AllDataException;
 import exception.dataBase.DataBaseConnectionException;
 import exception.dataBase.ModifyException;
@@ -16,8 +18,12 @@ import java.awt.event.ItemListener;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class FlightForm extends JPanel {
+    private final static String REGEX_NUMBER = "^[A-Z][A-Z]\\d{4}$";
+
     private ApplicationController controller;
     private Date currentDate;
     private JTextField flightNumberTextField;
@@ -45,10 +51,6 @@ public class FlightForm extends JPanel {
         this.currentDate = currentDate;
     }
 
-    public JTextField getFlightNumberTextField() {
-        return flightNumberTextField;
-    }
-
     private void createFlightForm() throws AllDataException, DataBaseConnectionException {
         addFlightNumberField();
         addPilotField();
@@ -60,13 +62,13 @@ public class FlightForm extends JPanel {
         addMealOnBoardField();
     }
 
-    public Flight getFlight() throws FlightException.NumberFlightException {
+    public Flight getFlight() throws NotMatchException, TextLengthException, FlightException.NumberFlightException, FlightException.DepartureDateException {
         return new Flight(
-            flightNumberTextField.getText(),
-            setFullDate(Format.getDate(departureDate), Format.getDate(departureTime)),
-            setFullDate(Format.getDate(arrivalDate), Format.getDate(arrivalTime)),
+            getFlightNumberTextField().getText(),
+            getDeparture(),
+            getArrival(),
             isMealOnBoardCheckBox.isSelected(),
-            mealDescriptionTextArea.getText(),
+            getMealDescriptionTextArea(),
             GetID.getPilotID(pilotComboBox),
             GetID.getGateID(departureAirportComboBox, departureTerminalComboBox, departureGateComboBox),
             GetID.getGateID(arrivalAirportComboBox, arrivalTerminalComboBox, arrivalGateComboBox),
@@ -501,5 +503,37 @@ public class FlightForm extends JPanel {
         return isFlightNumberExisting;
     }
 
+    public JTextField getFlightNumberTextField() throws FlightException.NumberFlightException {
+        String number = flightNumberTextField.getText();
+        Pattern pattern = Pattern.compile(REGEX_NUMBER);
+        Matcher matcher = pattern.matcher(number);
+        if (matcher.find()) {
+            return flightNumberTextField;
+        } else {
+            throw new FlightException.NumberFlightException(number);
+        }
+    }
 
+    public String getMealDescriptionTextArea() throws TextLengthException {
+        String mealDescriptionText = mealDescriptionTextArea.getText();
+        if(mealDescriptionText.length() > 400)
+            throw new TextLengthException("La description du repas est trop longue. Maximum 400 caractères.");
+        if (mealDescriptionText.equals(""))
+            mealDescriptionText = null;
+        return mealDescriptionText;
+    }
+
+    public GregorianCalendar getDeparture() throws FlightException.DepartureDateException {
+        GregorianCalendar departureDateGC = setFullDate(Format.getDate(departureDate), Format.getDate(departureTime));
+        if(departureDateGC.compareTo(new GregorianCalendar()) < 0)
+            throw new FlightException.DepartureDateException();
+        return departureDateGC;
+    }
+
+    public GregorianCalendar getArrival() throws FlightException.DepartureDateException {
+        GregorianCalendar arrivalDateGC = setFullDate(Format.getDate(arrivalDate), Format.getDate(arrivalTime));
+        if(arrivalDateGC.compareTo(getDeparture()) > 0)
+            throw new FlightException.DepartureDateException();
+        return arrivalDateGC;
+    }
 }
