@@ -55,41 +55,32 @@ public class ModifyFlightPanel extends JPanel {
     private class ValidationButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent evt) {
-            Flight flight = null;
             try {
-                flight = flightForm.getFlight();
-            } catch (FlightException.NumberFlightException e) {
-                JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
-            } catch (FlightException.DepartureDateException e) {
-                JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
-            } catch (NotMatchException e) {
-                JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
-            } catch (TextLengthException e) {
-                JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
-            }
-            String originalFlightNumber = modifyFlightForm.getFlightComboBoxID();
-            try {
-                if (flight.getNumber().equals(originalFlightNumber) || !flightForm.checkFlightNumberIsExisting()) {
-                    controller.modifyFlight(flight, originalFlightNumber);
-                    String flightToString = controller.getFlightToString(flight.getNumber());
-                    try {
-                        modifyFlightForm.updateFlightComboBox();
-                    } catch (DataBaseConnectionException e) {
-                        JOptionPane.showMessageDialog(null, e.getMessage( ), "Erreur", JOptionPane.ERROR_MESSAGE);
-                    } catch (AllDataException e) {
-                        JOptionPane.showMessageDialog(null, e.getMessage( ), "Erreur", JOptionPane.ERROR_MESSAGE);
+                if (flightForm.getFlight() != null) {
+                    Flight flight = flightForm.getFlight();
+                    String originalFlightNumber = modifyFlightForm.getFlightComboBoxID();
+                    if (flight.getNumber().equals(originalFlightNumber) || !flightForm.checkFlightNumberIsExisting()) {
+                        controller.modifyFlight(flight, originalFlightNumber);
+                        String flightToString = controller.getFlightToString(flight.getNumber());
+                        modifyFlightForm.getFlightComboBox().setSelectedItem(flightToString);
+                        JOptionPane.showMessageDialog(null, "Vol modifié", "Succès", JOptionPane.INFORMATION_MESSAGE);
                     }
-                    modifyFlightForm.getFlightComboBox().setSelectedItem(flightToString);
-                    JOptionPane.showMessageDialog(null, "Vol modifié", "Succès", JOptionPane.INFORMATION_MESSAGE);
                 }
+            } catch (NotMatchException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+            } catch (TextLengthException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+            } catch (FlightException.NumberFlightException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+            } catch (FlightException.DepartureDateException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             } catch (DataBaseConnectionException e) {
-                JOptionPane.showMessageDialog(null, e.getMessage( ), "Erreur", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             } catch (ModifyException e) {
-                JOptionPane.showMessageDialog(null, e.getMessage( ), "Erreur", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             } catch (AllDataException e) {
-                JOptionPane.showMessageDialog(null, e.getMessage( ), "Erreur", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
 }
-
