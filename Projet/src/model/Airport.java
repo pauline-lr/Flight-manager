@@ -45,9 +45,9 @@ public class Airport {
     }
 
     private void setCountry(String country) throws TextLengthException {
-        if(name.length() < LENGTH_MIN)
+        if(country.length() < LENGTH_MIN)
             throw new TextLengthException("Le nom du pays est trop court.\n Minimum " + LENGTH_MIN + " caractères.");
-        else if(name.length() > LENGTH_NAME)
+        else if(country.length() > LENGTH_COUNTRY)
             throw new TextLengthException("Le nom du pays est trop long.\n Maximum " + LENGTH_NAME + " caractères.");
         else
             this.country = country;
