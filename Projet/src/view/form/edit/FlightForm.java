@@ -212,7 +212,7 @@ public class FlightForm extends JPanel {
         this.add(departureGateComboBox);
     }
 
-    private void addArrivalMomentField() throws DataBaseConnectionException, AllDataException {
+    private void addArrivalMomentField() {
         // arrival
         JLabel arrivalLabel = new JLabel("    Arrivée");
         arrivalLabel.setFont(Format.titleFont);

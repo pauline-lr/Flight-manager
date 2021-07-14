@@ -680,7 +680,6 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
     //region Edit
     public void addFlight(Flight flight)
             throws AddDataException, DataBaseConnectionException {
-
         try {
             Connection connection = SingletonConnection.getInstance();
             String sqlRequest = "INSERT INTO flight VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -786,8 +785,8 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
 
     //region Tools
     private Flight getFlightFromResultSet(ResultSet data)
-            throws  DataBaseConnectionException, AllDataException {
-        Flight flight = null;
+            throws AllDataException {
+        Flight flight;
 
         try {
             GregorianCalendar departureTime = new GregorianCalendar();
@@ -812,9 +811,7 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
             if (!data.wasNull()) {
                 flight.setMealDescription(mealDescription);
             }
-        }/*catch (IOException exception) {
-            throw new DataBaseConnectionException(exception.getMessage());
-        }*/ catch (SQLException exception) {
+        } catch (SQLException | NotMatchException | TextLengthException exception) {
             throw new AllDataException(exception.getMessage());
         }
 
@@ -822,7 +819,7 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
     }
 
     private String getFlightToStringResultSet(ResultSet data)
-            throws DataBaseConnectionException, AllDataException {
+            throws AllDataException {
         try {
             GregorianCalendar departureTime = new GregorianCalendar();
             GregorianCalendar arrivalTime = new GregorianCalendar();
@@ -839,15 +836,13 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
 
             return data.getString("flightNumber") + " - " + departureInformation + " - " + arrivalInformation;
 
-        }/*catch (IOException exception) {
-            throw new DataBaseConnectionException(exception.getMessage());
-        } */catch (SQLException exception) {
+        } catch (SQLException exception) {
             throw new AllDataException(exception.getMessage());
         }
     }
 
     private PreparedStatement preparedFlightStatement(Flight flight, PreparedStatement preparedStatement)
-            throws DataBaseConnectionException, AllDataException {
+            throws AllDataException {
         try {
             preparedStatement.setString(1, flight.getNumber());
             preparedStatement.setTimestamp(2, new java.sql.Timestamp(flight.getDepartureTime().getTimeInMillis()));
@@ -862,9 +857,7 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
             preparedStatement.setString(7, flight.getArrivalGate());
             preparedStatement.setString(8, flight.getPilot());
             preparedStatement.setInt(9, flight.getNumberPlane());
-        }/*catch (IOException exception) {
-            throw new DataBaseConnectionException(exception.getMessage());
-        }*/ catch (SQLException exception) {
+        } catch (SQLException exception) {
             throw new AllDataException(exception.getMessage());
         }
 
@@ -885,7 +878,7 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
             preparedStatement.setString(2, originalFlightNumber);
 
             preparedStatement.executeUpdate();
-        }catch (IOException exception) {
+        } catch (IOException exception) {
             throw new DataBaseConnectionException(exception.getMessage());
         } catch (SQLException exception) {
             throw new AllDataException(exception.getMessage());
@@ -901,7 +894,7 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
             preparedStatement.setString(1, flightNumber);
 
             preparedStatement.executeUpdate();
-        }catch (IOException exception) {
+        } catch (IOException exception) {
             throw new DataBaseConnectionException(exception.getMessage());
         } catch (SQLException exception) {
             throw new AllDataException(exception.getMessage());
