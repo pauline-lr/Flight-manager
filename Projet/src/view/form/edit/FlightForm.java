@@ -91,14 +91,6 @@ public class FlightForm extends JPanel {
         flightNumberTextField.setHorizontalAlignment(SwingConstants.LEFT);
         this.add(flightNumberTextField);
 
-        String number = flightNumberTextField.getText();
-        Pattern pattern = Pattern.compile(REGEX_NUMBER);
-        Matcher matcher = pattern.matcher(number);
-        if (!matcher.find()) {
-            JOptionPane.showMessageDialog(null, "Le numéro de vol : " + number + " ne correspond pas à la structure requise : \n" +
-                    "2 lettres majuscules et 4 chiffres.", "Erreur", JOptionPane.ERROR_MESSAGE);
-        }
-
         addEmptyField();
         addEmptyField();
         addEmptyField();
