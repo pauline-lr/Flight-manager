@@ -216,7 +216,6 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
         try {
             String sqlRequest = "SELECT number FROM gate WHERE gate_id = ?";
 
-
             PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
             preparedStatement.setString(1, gateID);
 
@@ -303,7 +302,34 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
         return pilotLicenceNumbers.toArray(new String[0]);
     }
 
-    public String[] getAllPlanesAvailableToString()
+    public String[] getAllAvailablePilotsToString()
+            throws DataBaseConnectionException, AllDataException {
+        ArrayList<String> pilotLicenceNumbers = new ArrayList<>();
+
+        try {
+            String sqlRequest =
+                    "SELECT * FROM pilot " +
+                    "WHERE licence_number NOT IN " +
+                    "(SELECT pilot FROM flight " +
+                    "WHERE sysdate() BETWEEN departure_time AND arrival_time) " +
+                    "ORDER BY licence_number;";
+
+            Statement statement = SingletonConnection.getInstance().createStatement();
+            ResultSet data = statement.executeQuery(sqlRequest);
+
+            while (data.next()) {
+                pilotLicenceNumbers.add(data.getString("licence_number") + " - " + data.getString("last_name") + " " + data.getString("first_name"));
+            }
+        } catch (IOException exception){
+            throw new AllDataException(exception.getMessage());
+        } catch (SQLException exception) {
+            throw new DataBaseConnectionException(exception.getMessage());
+        }
+
+        return pilotLicenceNumbers.toArray(new String[0]);
+    }
+
+    public String[] getAllAvailablePlanesToString()
             throws DataBaseConnectionException, AllDataException {
         ArrayList<String> planeIDs = new ArrayList<>();
 
@@ -683,7 +709,6 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
         try {
             Connection connection = SingletonConnection.getInstance();
             String sqlRequest = "INSERT INTO flight VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
 
             PreparedStatement preparedStatement = connection.prepareStatement(sqlRequest);
 

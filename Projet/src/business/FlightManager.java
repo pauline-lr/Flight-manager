@@ -78,9 +78,14 @@ public class FlightManager {
         return dataAccessObjectPattern.getAllPilotsToString();
     }
 
-    public String[] getAllPlanesAvailableToString()
+    public String[] getAllAvailablePilotsToString()
             throws  DataBaseConnectionException, AllDataException {
-        return dataAccessObjectPattern.getAllPlanesAvailableToString();
+        return dataAccessObjectPattern.getAllAvailablePilotsToString();
+    }
+
+    public String[] getAllAvailablePlanesToString()
+            throws  DataBaseConnectionException, AllDataException {
+        return dataAccessObjectPattern.getAllAvailablePlanesToString();
     }
 
     public String[] getAllClassesToString()
