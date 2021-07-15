@@ -48,10 +48,15 @@ public class AddFlightPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent evt) {
             try {
-                if (!flightForm.checkFlightNumberIsExisting() && flightForm.getFlight() != null) {
-                    Flight flight = flightForm.getFlight();
-                    controller.addFlight(flight);
-                    JOptionPane.showMessageDialog(null, "Vol ajouté", "Succès", JOptionPane.INFORMATION_MESSAGE);
+                boolean flightNull = flightForm.getFlight() == null;
+                if(!flightNull){
+                    if (!flightForm.checkFlightNumberIsExisting()) {
+                        Flight flight = flightForm.getFlight();
+                        controller.addFlight(flight);
+                        JOptionPane.showMessageDialog(null, "Vol ajouté", "Succès", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(null, "Il n'y a pas de vol à ajouter", "Erreur", JOptionPane.ERROR_MESSAGE);
                 }
             } catch (DataBaseConnectionException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
