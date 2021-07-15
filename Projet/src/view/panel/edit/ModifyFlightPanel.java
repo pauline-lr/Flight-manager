@@ -62,6 +62,7 @@ public class ModifyFlightPanel extends JPanel {
                     if (flight.getNumber().equals(originalFlightNumber) || !flightForm.checkFlightNumberIsExisting()) {
                         controller.modifyFlight(flight, originalFlightNumber);
                         String flightToString = controller.getFlightToString(flight.getNumber());
+                        modifyFlightForm.updateFlightComboBox();
                         modifyFlightForm.getFlightComboBox().setSelectedItem(flightToString);
                         JOptionPane.showMessageDialog(null, "Vol modifié", "Succès", JOptionPane.INFORMATION_MESSAGE);
                     }
