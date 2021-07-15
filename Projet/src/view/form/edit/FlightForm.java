@@ -527,7 +527,7 @@ public class FlightForm extends JPanel {
 
     public GregorianCalendar getDeparture() throws FlightException.DepartureDateException {
         GregorianCalendar departureDateGC = setFullDate(Format.getDate(departureDate), Format.getDate(departureTime));
-        if(departureDateGC.compareTo(new GregorianCalendar()) > 0)
+        if(departureDateGC.compareTo(new GregorianCalendar()) < 0)
             throw new FlightException.DepartureDateException();
         return departureDateGC;
     }
