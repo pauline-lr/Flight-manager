@@ -11,7 +11,7 @@ import java.awt.*;
 public class FlightsByPilotSearchForm extends JPanel {
     private ApplicationController controller;
     private JLabel pilotLabel;
-    private JComboBox<String> pilotComboBox;
+    private JComboBox pilotComboBox;
 
     public FlightsByPilotSearchForm() throws DataBaseConnectionException, AllDataException {
         setController(new ApplicationController());
@@ -20,7 +20,7 @@ public class FlightsByPilotSearchForm extends JPanel {
         createFlightsByPilotForm();
     }
 
-    public JComboBox<String> getPilotComboBox() {
+    public JComboBox getPilotComboBox() {
         return pilotComboBox;
     }
 
@@ -34,7 +34,7 @@ public class FlightsByPilotSearchForm extends JPanel {
         pilotLabel.setHorizontalAlignment(SwingConstants.LEFT);
         add(pilotLabel);
 
-        pilotComboBox = new JComboBox<>(controller.getAllPilotsToString());
+        pilotComboBox = new JComboBox(controller.getAllPilotsToString().toArray());
         this.add(pilotComboBox);
     }
 }

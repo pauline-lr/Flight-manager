@@ -69,7 +69,7 @@ public class ApplicationController {
         return flightManager.getAllFlightsToString();
     }
 
-    public String[] getAllPilotsToString()
+    public ArrayList<String> getAllPilotsToString()
             throws AllDataException,  DataBaseConnectionException {
         return flightManager.getAllPilotsToString();
     }

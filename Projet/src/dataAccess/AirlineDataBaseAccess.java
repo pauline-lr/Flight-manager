@@ -280,7 +280,7 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
         return flights.toArray(new String[0]);
     }
 
-    public String[] getAllPilotsToString()
+    public ArrayList<String> getAllPilotsToString()
             throws DataBaseConnectionException, AllDataException {
         ArrayList<String> pilotLicenceNumbers = new ArrayList<>();
 
@@ -299,8 +299,53 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
             throw new DataBaseConnectionException(exception.getMessage());
         }
 
-        return pilotLicenceNumbers.toArray(new String[0]);
+        return pilotLicenceNumbers;
     }
+
+
+    public ArrayList<String> getLastPilotFlightArrivingAt(GregorianCalendar date, String airportID) throws AllDataException, DataBaseConnectionException {
+        ArrayList<String> pilotList = new ArrayList<>();
+
+        try {
+            String sqlRequest =
+                    "SELECT " +
+                    "pil.licence_number AS pilotLicenceNumber, " +
+                    "pil.last_name AS pilotLastName, " +
+                    "pil.first_name AS pilotFirstName, " +
+                    "max(fli.arrival_time) AS arrivalTime " +
+                    "FROM " +
+                    "pilot pil, " +
+                    "flight fli, " +
+                    "gate gat, " +
+                    "airport air " +
+                    "WHERE " +
+                    "fli.pilot = pil.licence_number AND " +
+                    "fli.arrival_gate = gat.gate_id AND " +
+                    "gat.airport = air.code AND " +
+                    "fli.arrival_time <= ? AND " +
+                    "air.code = ? " +
+                    "GROUP BY pilot";
+
+            java.sql.Timestamp dateSQL = new java.sql.Timestamp(date.getTimeInMillis());
+            PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
+            preparedStatement.setTimestamp(1, dateSQL);
+            preparedStatement.setString(2, airportID);
+
+            ResultSet data = preparedStatement.executeQuery();
+
+            while (data.next()) {
+                pilotList.add(data.getString("pilotLicenceNumber") + " - " + data.getString("pilotLastName") + " " + data.getString("pilotFirstName"));
+            }
+
+        } catch (IOException exception){
+            throw new AllDataException(exception.getMessage());
+        } catch (SQLException exception) {
+            throw new DataBaseConnectionException(exception.getMessage());
+        }
+
+        return pilotList;
+    }
+
 
     public String[] getAllAvailablePilotsToString()
             throws DataBaseConnectionException, AllDataException {

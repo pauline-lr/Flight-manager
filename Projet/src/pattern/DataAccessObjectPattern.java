@@ -40,8 +40,11 @@ public interface DataAccessObjectPattern {
     String[] getAllFlightsToString()
             throws DataBaseConnectionException, AllDataException;
 
-    String[] getAllPilotsToString()
+    ArrayList<String> getAllPilotsToString()
             throws DataBaseConnectionException, AllDataException;
+
+    ArrayList<String> getLastPilotFlightArrivingAt(GregorianCalendar date, String airportID)
+            throws AllDataException, DataBaseConnectionException;
 
     String[] getAllAvailablePilotsToString()
             throws DataBaseConnectionException, AllDataException;

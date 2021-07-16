@@ -21,9 +21,18 @@ public class FlightManager {
         this.dataAccessObjectPattern = dataAccessObjectPattern;
     }
 
-    //
     // tâche métier
-    //
+
+    public String[] getPilotsInOrder(GregorianCalendar date, String airportID) throws DataBaseConnectionException, AllDataException {
+        ArrayList<String> onLocationPilots = getLastPilotFlightArrivingAt(date, airportID);
+        ArrayList<String> allPilots = getAllPilotsToString();
+
+        for (String pilot: onLocationPilots) {
+
+        }
+
+        return onLocationPilots.toArray(new String[0]);
+    }
 
     //region Get
     public Flight getFlight(String flightNumber)
@@ -73,9 +82,14 @@ public class FlightManager {
         return dataAccessObjectPattern.getAllFlightsToString();
     }
 
-    public String[] getAllPilotsToString()
+    public ArrayList<String> getAllPilotsToString()
             throws  DataBaseConnectionException, AllDataException {
         return dataAccessObjectPattern.getAllPilotsToString();
+    }
+
+    public ArrayList<String> getLastPilotFlightArrivingAt(GregorianCalendar date, String airportID)
+            throws  DataBaseConnectionException, AllDataException {
+        return dataAccessObjectPattern.getLastPilotFlightArrivingAt(date, airportID);
     }
 
     public String[] getAllAvailablePilotsToString()
