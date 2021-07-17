@@ -33,12 +33,11 @@ public class FlightForm extends JPanel {
     private JComboBox<String> pilotComboBox, planeComboBox,
             departureAirportComboBox, departureTerminalComboBox, departureGateComboBox,
             arrivalAirportComboBox, arrivalTerminalComboBox, arrivalGateComboBox;
-    private GridLayout grid;
 
     public FlightForm() throws AllDataException, DataBaseConnectionException {
         setController(new ApplicationController());
         setCurrentDate(new Date());
-        grid = new GridLayout(15, 5);
+        GridLayout grid = new GridLayout(15, 5);
         createFlightForm();
         setLayout(grid);
     }
