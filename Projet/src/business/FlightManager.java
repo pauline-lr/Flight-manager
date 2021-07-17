@@ -23,15 +23,21 @@ public class FlightManager {
 
     // tâche métier
 
-    public String[] getPilotsInOrder(GregorianCalendar date, String airportID) throws DataBaseConnectionException, AllDataException {
+    public ArrayList<String> getPilotsInOrder(GregorianCalendar date, String airportID) throws DataBaseConnectionException, AllDataException {
         ArrayList<String> onLocationPilots = getLastPilotFlightArrivingAt(date, airportID);
         ArrayList<String> allPilots = getAllPilotsToString();
 
         for (String pilot: onLocationPilots) {
-
+            if (allPilots.contains(pilot)) {
+                int fromIndex = allPilots.indexOf(pilot);
+                int atIndex = onLocationPilots.indexOf(pilot);
+                String item = allPilots.get(fromIndex);
+                allPilots.remove(pilot);
+                allPilots.add(atIndex, item);
+            }
         }
 
-        return onLocationPilots.toArray(new String[0]);
+        return onLocationPilots;
     }
 
     //region Get
