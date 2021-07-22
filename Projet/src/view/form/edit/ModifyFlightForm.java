@@ -24,7 +24,7 @@ public class ModifyFlightForm extends JPanel {
         this.setLayout(new GridLayout(3, 1, 3, 3));
 
         JLabel titleLabel = new JLabel("Modifier un vol");
-        titleLabel.setFont(Format.titleFont);
+        titleLabel.setFont(Format.bigTitleFont);
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
         this.add(titleLabel);
 

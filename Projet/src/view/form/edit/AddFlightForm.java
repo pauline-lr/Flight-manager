@@ -7,7 +7,7 @@ import javax.swing.*;
 public class AddFlightForm extends JPanel {
     public AddFlightForm() {
         JLabel addFlightLabel = new JLabel("Ajouter un vol");
-        addFlightLabel.setFont(Format.titleFont);
+        addFlightLabel.setFont(Format.bigTitleFont);
         addFlightLabel.setHorizontalAlignment(SwingConstants.CENTER);
         this.add(addFlightLabel);
     }

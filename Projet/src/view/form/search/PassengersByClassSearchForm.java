@@ -29,11 +29,12 @@ public class PassengersByClassSearchForm extends JPanel {
 
     public void createPassengersByClassForm() throws DataBaseConnectionException, AllDataException {
         JLabel titleLabel = new JLabel("Rechercher les passagers d'une classe");
-        titleLabel.setFont(Format.titleFont);
+        titleLabel.setFont(Format.bigTitleFont);
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
         this.add(titleLabel);
 
         JLabel classLabel = new JLabel("    Choisissez la classe");
+        classLabel.setFont(Format.titleFont);
         classLabel.setHorizontalAlignment(SwingConstants.LEFT);
         add(classLabel);
 

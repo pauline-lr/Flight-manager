@@ -37,11 +37,12 @@ public class FlightsBetweenDatesSearchForm extends JPanel {
 
     void createFlightsBetweenDatesForm(){
         JLabel titleLabel = new JLabel("Rechercher les vols entre deux dates");
-        titleLabel.setFont(Format.titleFont);
+        titleLabel.setFont(Format.bigTitleFont);
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
         this.add(titleLabel);
 
         JLabel start = new JLabel("    Choisissez la date de début");
+        start.setFont(Format.titleFont);
         start.setHorizontalAlignment(SwingConstants.LEFT);
         this.add(start);
 
@@ -50,6 +51,7 @@ public class FlightsBetweenDatesSearchForm extends JPanel {
         this.add(startDate);
 
         JLabel end = new JLabel("    Choisissez la date de fin");
+        end.setFont(Format.titleFont);
         end.setHorizontalAlignment(SwingConstants.LEFT);
         this.add(end);
 

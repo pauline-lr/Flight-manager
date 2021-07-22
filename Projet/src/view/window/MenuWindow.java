@@ -25,18 +25,13 @@ import java.awt.event.WindowEvent;
 public class MenuWindow extends JFrame {
     private ApplicationController controller;
     private Container frameContainer;
-    private JMenuBar menuBar;
     private JMenu flight, listingFlight, search, application;
-    private JMenuItem home, exit;
-    private JMenuItem addFlight, modifyFlight, deleteFlight;
-    private JMenuItem listingFlightItem;
-    private JMenuItem dateFlight, seatReservation, searchPilot;
 
     public MenuWindow() {
         setController(new ApplicationController());
         setTitle("Gestionnaire de vols");
         setBounds(100, 100, 600, 600);
-        setMinimumSize(new Dimension(450, 600));
+        setMinimumSize(new Dimension(500, 650));
         frameContainer = this.getContentPane();
         this.addWindowListener(new ExitButtonListener());
 
@@ -50,7 +45,7 @@ public class MenuWindow extends JFrame {
     }
 
     public void initMenuBar() {
-        menuBar = new JMenuBar();
+        JMenuBar menuBar = new JMenuBar();
         setJMenuBar(menuBar);
 
         flight = new JMenu("Editer");
@@ -80,45 +75,45 @@ public class MenuWindow extends JFrame {
     }
 
     public void initOptionsApplication() {
-        home = new JMenuItem("Accueil");
+        JMenuItem home = new JMenuItem("Accueil");
         home.addActionListener(new HomeListener());
         application.add(home);
 
-        exit = new JMenuItem("Quitter");
+        JMenuItem exit = new JMenuItem("Quitter");
         exit.addActionListener(new ExitListener());
         application.add(exit);
     }
 
     public void initOptionsFlight() {
-        addFlight = new JMenuItem("Ajouter un vol");
+        JMenuItem addFlight = new JMenuItem("Ajouter un vol");
         addFlight.addActionListener(new AddFlightListener());
         flight.add(addFlight);
 
-        modifyFlight = new JMenuItem("Modifier un vol");
+        JMenuItem modifyFlight = new JMenuItem("Modifier un vol");
         modifyFlight.addActionListener(new ModifyFlightListener());
         flight.add(modifyFlight);
 
-        deleteFlight = new JMenuItem("Supprimer un vol");
+        JMenuItem deleteFlight = new JMenuItem("Supprimer un vol");
         deleteFlight.addActionListener(new DeleteFlightListener());
         flight.add(deleteFlight);
     }
 
     public void initListing() {
-        listingFlightItem = new JMenuItem("Vols à venir");
+        JMenuItem listingFlightItem = new JMenuItem("Vols à venir");
         listingFlightItem.addActionListener(new ListingFlightListener());
         listingFlight.add(listingFlightItem);
     }
 
     public void initOptionsSearch() {
-        dateFlight = new JMenuItem("Vols entre deux dates");
+        JMenuItem dateFlight = new JMenuItem("Vols entre deux dates");
         dateFlight.addActionListener(new DateFlightListener());
         search.add(dateFlight);
 
-        seatReservation = new JMenuItem("Passagers d'une classe");
+        JMenuItem seatReservation = new JMenuItem("Passagers d'une classe");
         seatReservation.addActionListener(new SeatReservationListener());
         search.add(seatReservation);
 
-        searchPilot = new JMenuItem("Vols d'un pilote");
+        JMenuItem searchPilot = new JMenuItem("Vols d'un pilote");
         searchPilot.addActionListener(new SearchPilotFlightListener());
         search.add(searchPilot);
     }

@@ -29,11 +29,12 @@ public class FlightsByPilotSearchForm extends JPanel {
 
     public void createFlightsByPilotForm() throws DataBaseConnectionException, AllDataException {
         JLabel titleLabel = new JLabel("Rechercher les vols d'un pilote");
-        titleLabel.setFont(Format.titleFont);
+        titleLabel.setFont(Format.bigTitleFont);
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
         this.add(titleLabel);
 
         JLabel pilotLabel = new JLabel("    Choisissez le pilote");
+        pilotLabel.setFont(Format.titleFont);
         pilotLabel.setHorizontalAlignment(SwingConstants.LEFT);
         this.add(pilotLabel);
 
