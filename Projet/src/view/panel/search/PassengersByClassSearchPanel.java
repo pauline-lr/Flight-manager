@@ -4,7 +4,7 @@ import controller.ApplicationController;
 import exception.dataBase.AllDataException;
 import exception.dataBase.DataBaseConnectionException;
 import model.search.PassengersByClassSearch;
-// import view.CheckEmptyResult;
+import view.CheckEmptyResult;
 import view.form.search.PassengersByClassSearchForm;
 import view.panel.list.PassengersByClassResultPanel;
 
@@ -18,7 +18,6 @@ public class PassengersByClassSearchPanel extends JPanel {
     private ApplicationController controller;
     private PassengersByClassSearchPanel panel;
     private PassengersByClassSearchForm passengersByClassSearchForm;
-    private JButton validation;
 
     public PassengersByClassSearchPanel() throws DataBaseConnectionException, AllDataException {
         setController(new ApplicationController());
@@ -28,7 +27,7 @@ public class PassengersByClassSearchPanel extends JPanel {
         this.add(passengersByClassSearchForm, BorderLayout.PAGE_START);
 
         JPanel buttonPanel = new JPanel();
-        validation = new JButton("Rechercher");
+        JButton validation = new JButton("Rechercher");
         validation.addActionListener(new ValidationListener());
         this.add(buttonPanel, BorderLayout.SOUTH);
         buttonPanel.add(validation, BorderLayout.CENTER);
@@ -56,7 +55,7 @@ public class PassengersByClassSearchPanel extends JPanel {
             panel.add(new PassengersByClassResultPanel(passengers), BorderLayout.CENTER);
             panel.revalidate();
             panel.repaint();
-            // CheckEmptyResult.checkResultIsEmpty(passengers);
+            CheckEmptyResult.checkResultIsEmpty(passengers);
         }
     }
 }

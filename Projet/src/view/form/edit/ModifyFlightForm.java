@@ -16,20 +16,25 @@ import java.awt.event.ItemListener;
 public class ModifyFlightForm extends JPanel {
     private ApplicationController controller;
     private FlightForm flightForm;
-    private JComboBox<String> flightComboBox;
-    private JLabel flightLabel;
+    private JComboBox<Object> flightComboBox;
 
     public ModifyFlightForm(FlightForm flightForm) throws DataBaseConnectionException, AllDataException {
         setController(new ApplicationController());
         setFlightForm(flightForm);
-        this.setLayout(new GridLayout(2, 1, 3, 3));
+        this.setLayout(new GridLayout(3, 1, 3, 3));
 
-        flightLabel = new JLabel("    Vol à modifier");
+        JLabel titleLabel = new JLabel("Modifier un vol");
+        titleLabel.setFont(Format.titleFont);
+        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        this.add(titleLabel);
+
+        JLabel flightLabel = new JLabel("    Vol à modifier");
         flightLabel.setFont(Format.titleFont);
         flightLabel.setHorizontalAlignment(SwingConstants.LEFT);
         this.add(flightLabel);
-        if (controller.getAllFlightsToString().length > 0) {
-            flightComboBox = new JComboBox<>(controller.getAllFlightsToString());
+
+        if (!controller.getAllFlightsToString().isEmpty()) {
+            flightComboBox = new JComboBox<>(controller.getAllFlightsToString().toArray());
             updateFormInformation();
             flightComboBox.addItemListener(new flightComboBoxListener());
         } else {
@@ -38,7 +43,7 @@ public class ModifyFlightForm extends JPanel {
         this.add(flightComboBox);
     }
 
-    public JComboBox<String> getFlightComboBox() {
+    public JComboBox<Object> getFlightComboBox() {
         return flightComboBox;
     }
 

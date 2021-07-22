@@ -233,7 +233,7 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
         return gateToString;
     }
 
-    public String[] getAllFlightsToString()
+    public ArrayList<String> getAllFlightsToString()
             throws AllDataException, DataBaseConnectionException {
         ArrayList<String> flights = new ArrayList<>();
 
@@ -272,12 +272,14 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
             while (data.next()) {
                 flights.add(getFlightToStringResultSet(data));
             }
+
         } catch (IOException exception){
             throw new AllDataException(exception.getMessage());
         } catch (SQLException exception) {
             throw new DataBaseConnectionException(exception.getMessage());
         }
-        return flights.toArray(new String[0]);
+
+        return flights;
     }
 
     public ArrayList<String> getAllPilotsToString()
@@ -303,7 +305,8 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
     }
 
 
-    public ArrayList<String> getLastPilotFlightArrivingAt(GregorianCalendar date, String airportID) throws AllDataException, DataBaseConnectionException {
+    public ArrayList<String> getLastPilotFlightArrivingAt(GregorianCalendar date, String airportID)
+            throws AllDataException, DataBaseConnectionException {
         ArrayList<String> pilotList = new ArrayList<>();
 
         try {
@@ -347,7 +350,7 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
     }
 
 
-    public String[] getAllAvailablePilotsToString()
+    public ArrayList<String> getAllAvailablePilotsToString()
             throws DataBaseConnectionException, AllDataException {
         ArrayList<String> pilotLicenceNumbers = new ArrayList<>();
 
@@ -365,16 +368,17 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
             while (data.next()) {
                 pilotLicenceNumbers.add(data.getString("licence_number") + " - " + data.getString("last_name") + " " + data.getString("first_name"));
             }
+
         } catch (IOException exception){
             throw new AllDataException(exception.getMessage());
         } catch (SQLException exception) {
             throw new DataBaseConnectionException(exception.getMessage());
         }
 
-        return pilotLicenceNumbers.toArray(new String[0]);
+        return pilotLicenceNumbers;
     }
 
-    public String[] getAllAvailablePlanesToString()
+    public ArrayList<String> getAllAvailablePlanesToString()
             throws DataBaseConnectionException, AllDataException {
         ArrayList<String> planeIDs = new ArrayList<>();
 
@@ -398,10 +402,10 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
             throw new DataBaseConnectionException(exception.getMessage());
         }
 
-        return planeIDs.toArray(new String[0]);
+        return planeIDs;
     }
 
-    public String[] getAllClassesToString()
+    public ArrayList<String> getAllClassesToString()
             throws DataBaseConnectionException, AllDataException {
         ArrayList<String> classNames = new ArrayList<>();
 
@@ -419,10 +423,10 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
         } catch (SQLException exception) {
             throw new DataBaseConnectionException(exception.getMessage());
         }
-        return classNames.toArray(new String[0]);
+        return classNames;
     }
 
-    public String[] getAllAirportsToString()
+    public ArrayList<String> getAllAirportsToString()
             throws DataBaseConnectionException, AllDataException {
         ArrayList<String> airportCodes = new ArrayList<>();
 
@@ -441,10 +445,10 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
             throw new DataBaseConnectionException(exception.getMessage());
         }
 
-        return airportCodes.toArray(new String[0]);
+        return airportCodes;
     }
 
-    public String[] getAllTerminalsOfAnAirportToString(String airportCode)
+    public ArrayList<String> getAllTerminalsOfAnAirportToString(String airportCode)
             throws DataBaseConnectionException, AllDataException {
         ArrayList<String> terminalsOfAnAirport = new ArrayList<>();
 
@@ -466,10 +470,10 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
             throw new DataBaseConnectionException(exception.getMessage());
         }
 
-        return terminalsOfAnAirport.toArray(new String[0]);
+        return terminalsOfAnAirport;
     }
 
-    public String[] getAllGatesOfAnAirportAndTerminalToString(String airportCode, String terminal)
+    public ArrayList<String> getAllGatesOfAnAirportAndTerminalToString(String airportCode, String terminal)
             throws DataBaseConnectionException, AllDataException {
         ArrayList<String> gatesOfAnAirportAndTerminal = new ArrayList<>();
 
@@ -491,7 +495,7 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
             throw new DataBaseConnectionException(exception.getMessage());
         }
 
-        return gatesOfAnAirportAndTerminal.toArray(new String[0]);
+        return gatesOfAnAirportAndTerminal;
     }
     //endregion
 

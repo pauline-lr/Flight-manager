@@ -10,17 +10,16 @@ import java.awt.*;
 
 public class PassengersByClassSearchForm extends JPanel {
     private ApplicationController controller;
-    private JLabel classLabel;
-    private JComboBox<String> classComboBox;
+    private JComboBox<Object> classComboBox;
 
     public PassengersByClassSearchForm() throws DataBaseConnectionException, AllDataException {
         setController(new ApplicationController());
-        this.setLayout(new GridLayout(14, 2, 5, 5));
+        this.setLayout(new GridLayout(4, 2));
 
         createPassengersByClassForm();
     }
 
-    public JComboBox<String> getClassComboBox() {
+    public JComboBox<Object> getClassComboBox() {
         return classComboBox;
     }
 
@@ -29,12 +28,16 @@ public class PassengersByClassSearchForm extends JPanel {
     }
 
     public void createPassengersByClassForm() throws DataBaseConnectionException, AllDataException {
-        classLabel = new JLabel("    Choisissez la classe");
-        classLabel.setFont(Format.titleFont);
+        JLabel titleLabel = new JLabel("Rechercher les passagers d'une classe");
+        titleLabel.setFont(Format.titleFont);
+        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        this.add(titleLabel);
+
+        JLabel classLabel = new JLabel("    Choisissez la classe");
         classLabel.setHorizontalAlignment(SwingConstants.LEFT);
         add(classLabel);
 
-        classComboBox = new JComboBox<>(controller.getAllClassesToString());
+        classComboBox = new JComboBox<>(controller.getAllClassesToString().toArray());
         this.add(classComboBox);
     }
 }

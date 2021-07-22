@@ -4,7 +4,7 @@ import controller.ApplicationController;
 import exception.dataBase.AllDataException;
 import exception.dataBase.DataBaseCloseException;
 import exception.dataBase.DataBaseConnectionException;
-// import view.CheckEmptyResult;
+import view.CheckEmptyResult;
 import view.panel.edit.AddFlightPanel;
 import view.panel.edit.DeleteFlightPanel;
 import view.panel.edit.ModifyFlightPanel;
@@ -36,7 +36,7 @@ public class MenuWindow extends JFrame {
         setController(new ApplicationController());
         setTitle("Gestionnaire de vols");
         setBounds(100, 100, 600, 600);
-        setMinimumSize(new Dimension(450, 500));
+        setMinimumSize(new Dimension(450, 600));
         frameContainer = this.getContentPane();
         this.addWindowListener(new ExitButtonListener());
 
@@ -237,10 +237,11 @@ public class MenuWindow extends JFrame {
             } catch (DataBaseConnectionException e) {
                 e.printStackTrace();
             }
+            assert allFlightsListPanel != null;
             frameContainer.add(allFlightsListPanel, BorderLayout.CENTER);
             frameContainer.repaint();
             MenuWindow.this.setVisible(true);
-            // CheckEmptyResult.checkResultIsEmpty(allFlightsListPanel.getFlightsTable().getFlights());
+            CheckEmptyResult.checkResultIsEmpty(allFlightsListPanel.getFlightsTable().getFlights());
         }
     }
 
@@ -253,7 +254,7 @@ public class MenuWindow extends JFrame {
                 frameContainer.add(deleteFlightPanel, BorderLayout.CENTER);
                 frameContainer.repaint();
                 MenuWindow.this.setVisible(true);
-                // CheckEmptyResult.checkResultIsEmpty(deleteFlightPanel.getFlightsTable().getFlights());
+                CheckEmptyResult.checkResultIsEmpty(deleteFlightPanel.getFlightsTable().getFlights());
             } catch (DataBaseConnectionException throwables) {
                 throwables.printStackTrace();
                 JOptionPane.showMessageDialog(null, throwables.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);

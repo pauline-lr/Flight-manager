@@ -10,17 +10,16 @@ import java.awt.*;
 
 public class FlightsByPilotSearchForm extends JPanel {
     private ApplicationController controller;
-    private JLabel pilotLabel;
-    private JComboBox pilotComboBox;
+    private JComboBox<Object> pilotComboBox;
 
     public FlightsByPilotSearchForm() throws DataBaseConnectionException, AllDataException {
         setController(new ApplicationController());
-        this.setLayout(new GridLayout(14, 2, 5, 5));
+        this.setLayout(new GridLayout(4, 2));
 
         createFlightsByPilotForm();
     }
 
-    public JComboBox getPilotComboBox() {
+    public JComboBox<Object> getPilotComboBox() {
         return pilotComboBox;
     }
 
@@ -29,12 +28,16 @@ public class FlightsByPilotSearchForm extends JPanel {
     }
 
     public void createFlightsByPilotForm() throws DataBaseConnectionException, AllDataException {
-        pilotLabel = new JLabel("    Choisissez le pilote");
-        pilotLabel.setFont(Format.titleFont);
-        pilotLabel.setHorizontalAlignment(SwingConstants.LEFT);
-        add(pilotLabel);
+        JLabel titleLabel = new JLabel("Rechercher les vols d'un pilote");
+        titleLabel.setFont(Format.titleFont);
+        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        this.add(titleLabel);
 
-        pilotComboBox = new JComboBox(controller.getAllPilotsToString().toArray());
+        JLabel pilotLabel = new JLabel("    Choisissez le pilote");
+        pilotLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        this.add(pilotLabel);
+
+        pilotComboBox = new JComboBox<>(controller.getAllPilotsToString().toArray());
         this.add(pilotComboBox);
     }
 }

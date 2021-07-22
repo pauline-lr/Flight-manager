@@ -1,20 +1,14 @@
 package view.panel.edit;
 
 import controller.ApplicationController;
-import exception.FlightException;
-import exception.NotMatchException;
-import exception.TextLengthException;
-import exception.dataBase.AllDataException;
-import exception.dataBase.DataBaseConnectionException;
-import exception.dataBase.ModifyException;
+import exception.*;
+import exception.dataBase.*;
 import model.Flight;
-import view.form.edit.FlightForm;
-import view.form.edit.ModifyFlightForm;
+import view.form.edit.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
 public class ModifyFlightPanel extends JPanel {
     private ApplicationController controller;
@@ -25,6 +19,7 @@ public class ModifyFlightPanel extends JPanel {
         setController(new ApplicationController());
         setFlightForm(new FlightForm());
         setModifyFlightForm(new ModifyFlightForm(flightForm));
+
         this.setLayout(new BorderLayout());
         this.add(modifyFlightForm, BorderLayout.PAGE_START);
         this.add(flightForm, BorderLayout.CENTER);
@@ -56,8 +51,7 @@ public class ModifyFlightPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent evt) {
             try {
-                boolean flightNull = flightForm.getFlight() == null;
-                if (flightNull) {
+                if (flightForm.getFlight() == null) {
                     Flight flight = flightForm.getFlight();
                     String originalFlightNumber = modifyFlightForm.getFlightComboBoxID();
                     if (flight.getNumber().equals(originalFlightNumber) || !flightForm.checkFlightNumberIsExisting()) {

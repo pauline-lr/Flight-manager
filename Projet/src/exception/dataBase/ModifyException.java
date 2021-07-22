@@ -9,6 +9,6 @@ public class ModifyException extends Exception{
 
     @Override
     public String getMessage() {
-        return "Erreur lors de la modification : \n" + message;
+        return "Erreur lors de la modification :\n" + message;
     }
 }

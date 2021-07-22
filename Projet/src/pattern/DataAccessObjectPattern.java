@@ -37,7 +37,7 @@ public interface DataAccessObjectPattern {
     String getGateToString(String gateID)
             throws DataBaseConnectionException, AllDataException;
 
-    String[] getAllFlightsToString()
+    ArrayList<String> getAllFlightsToString()
             throws DataBaseConnectionException, AllDataException;
 
     ArrayList<String> getAllPilotsToString()
@@ -46,22 +46,22 @@ public interface DataAccessObjectPattern {
     ArrayList<String> getLastPilotFlightArrivingAt(GregorianCalendar date, String airportID)
             throws AllDataException, DataBaseConnectionException;
 
-    String[] getAllAvailablePilotsToString()
+    ArrayList<String> getAllAvailablePilotsToString()
             throws DataBaseConnectionException, AllDataException;
 
-    String[] getAllAvailablePlanesToString()
+    ArrayList<String> getAllAvailablePlanesToString()
             throws DataBaseConnectionException, AllDataException;
 
-    String[] getAllClassesToString()
+    ArrayList<String> getAllClassesToString()
             throws DataBaseConnectionException, AllDataException;
 
-    String[] getAllAirportsToString()
+    ArrayList<String> getAllAirportsToString()
             throws DataBaseConnectionException, AllDataException;
 
-    String[] getAllTerminalsOfAnAirportToString(String airportCode)
+    ArrayList<String> getAllTerminalsOfAnAirportToString(String airportCode)
             throws DataBaseConnectionException, AllDataException;
 
-    String[] getAllGatesOfAnAirportAndTerminalToString(String airportCode, String terminal)
+    ArrayList<String> getAllGatesOfAnAirportAndTerminalToString(String airportCode, String terminal)
             throws DataBaseConnectionException, AllDataException;
     //endregion
 

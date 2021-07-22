@@ -18,7 +18,7 @@ public class FlightsBetweenDatesSearchForm extends JPanel {
 
     public FlightsBetweenDatesSearchForm(){
         setCurrentDate(new Date());
-        this.setLayout(new GridLayout(2, 4));
+        this.setLayout(new GridLayout(6, 1));
 
         createFlightsBetweenDatesForm();
     }
@@ -36,16 +36,21 @@ public class FlightsBetweenDatesSearchForm extends JPanel {
     }
 
     void createFlightsBetweenDatesForm(){
-        JLabel start = new JLabel("Date de début : ");
-        start.setHorizontalAlignment(SwingConstants.RIGHT);
+        JLabel titleLabel = new JLabel("Rechercher les vols entre deux dates");
+        titleLabel.setFont(Format.titleFont);
+        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        this.add(titleLabel);
+
+        JLabel start = new JLabel("    Choisissez la date de début");
+        start.setHorizontalAlignment(SwingConstants.LEFT);
         this.add(start);
 
         startDate = new JSpinner(new SpinnerDateModel(currentDate, null, null, Calendar.DAY_OF_WEEK));
         startDate.setEditor(new JSpinner.DateEditor(startDate, "dd/MM/yyyy"));
         this.add(startDate);
 
-        JLabel end = new JLabel("Date de fin : ");
-        end.setHorizontalAlignment(SwingConstants.RIGHT);
+        JLabel end = new JLabel("    Choisissez la date de fin");
+        end.setHorizontalAlignment(SwingConstants.LEFT);
         this.add(end);
 
         endDate = new JSpinner(new SpinnerDateModel(currentDate, null, null, Calendar.DAY_OF_WEEK));

@@ -23,6 +23,7 @@ public class AddFlightPanel extends JPanel {
         setController(new ApplicationController());
         setFlightForm(new FlightForm());
         this.setLayout(new BorderLayout());
+        this.add(new AddFlightForm(), BorderLayout.PAGE_START);
         this.add(flightForm, BorderLayout.CENTER);
         initializeValidationButton();
     }
@@ -48,14 +49,13 @@ public class AddFlightPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent evt) {
             try {
-                boolean flightNull = flightForm.getFlight() == null;
-                if(!flightNull){
+                if (!(flightForm.getFlight() == null)) {
                     if (!flightForm.checkFlightNumberIsExisting()) {
                         Flight flight = flightForm.getFlight();
                         controller.addFlight(flight);
                         JOptionPane.showMessageDialog(null, "Vol ajouté", "Succès", JOptionPane.INFORMATION_MESSAGE);
                     }
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(null, "Il n'y a pas de vol à ajouter", "Erreur", JOptionPane.ERROR_MESSAGE);
                 }
             } catch (DataBaseConnectionException e) {

@@ -21,6 +21,11 @@ public class ApplicationController {
         this.flightManager = flightManager;
     }
 
+    public ArrayList<String> getPilotsInOrder(GregorianCalendar date, String airportID)
+            throws DataBaseConnectionException, AllDataException {
+        return flightManager.getPilotsInOrder(date, airportID);
+    }
+
     //region Get
     public Flight getFlight(String flightNumber)
             throws AllDataException, DataBaseConnectionException, FlightException.NumberFlightException {
@@ -64,7 +69,7 @@ public class ApplicationController {
         return flightManager.getGateToString(gateID);
     }
 
-    public String[] getAllFlightsToString()
+    public ArrayList<String> getAllFlightsToString()
             throws AllDataException,  DataBaseConnectionException {
         return flightManager.getAllFlightsToString();
     }
@@ -74,32 +79,32 @@ public class ApplicationController {
         return flightManager.getAllPilotsToString();
     }
 
-    public String[] getAllAvailablePilotsToString()
+    public ArrayList<String> getAllAvailablePilotsToString()
             throws AllDataException,  DataBaseConnectionException {
         return flightManager.getAllAvailablePilotsToString();
     }
 
-    public String[] getAllAvailablePlanesToString()
+    public ArrayList<String> getAllAvailablePlanesToString()
             throws AllDataException,  DataBaseConnectionException {
         return flightManager.getAllAvailablePlanesToString();
     }
 
-    public String[] getAllClassesToString()
+    public ArrayList<String> getAllClassesToString()
             throws AllDataException,  DataBaseConnectionException {
         return flightManager.getAllClassesToString();
     }
 
-    public String[] getAllAirportsToString()
+    public ArrayList<String> getAllAirportsToString()
             throws AllDataException,  DataBaseConnectionException {
         return flightManager.getAllAirportsToString();
     }
 
-    public String[] getAllTerminalsOfAnAirportToString(String airportCode)
+    public ArrayList<String> getAllTerminalsOfAnAirportToString(String airportCode)
             throws AllDataException,   DataBaseConnectionException {
         return flightManager.getAllTerminalsOfAnAirportToString(airportCode);
     }
 
-    public String[] getAllGatesOfAnAirportAndTerminalToString(String airportCode, String terminal)
+    public ArrayList<String> getAllGatesOfAnAirportAndTerminalToString(String airportCode, String terminal)
             throws AllDataException,  DataBaseConnectionException {
         return flightManager.getAllGatesOfAnAirportAndTerminalToString(airportCode, terminal);
     }

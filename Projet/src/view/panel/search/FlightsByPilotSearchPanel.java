@@ -5,7 +5,7 @@ import exception.dataBase.AllDataException;
 import exception.dataBase.DataBaseConnectionException;
 import model.search.FlightsByPilotSearch;
 import tool.GetID;
-// import view.CheckEmptyResult;
+import view.CheckEmptyResult;
 import view.form.search.FlightsByPilotSearchForm;
 import view.panel.list.FlightsByPilotResultPanel;
 
@@ -19,7 +19,6 @@ public class FlightsByPilotSearchPanel extends JPanel {
     private ApplicationController controller;
     private FlightsByPilotSearchPanel panel;
     private FlightsByPilotSearchForm flightsByPilotSearchForm;
-    private JButton validation;
 
     public FlightsByPilotSearchPanel()  {
         setController(new ApplicationController());
@@ -35,7 +34,7 @@ public class FlightsByPilotSearchPanel extends JPanel {
         this.add(flightsByPilotSearchForm, BorderLayout.PAGE_START);
 
         JPanel buttonPanel = new JPanel();
-        validation = new JButton("Rechercher");
+        JButton validation = new JButton("Rechercher");
         validation.addActionListener(new ValidationListener());
         this.add(buttonPanel, BorderLayout.SOUTH);
         buttonPanel.add(validation, BorderLayout.CENTER);
@@ -49,7 +48,7 @@ public class FlightsByPilotSearchPanel extends JPanel {
         public void actionPerformed(ActionEvent evt) {
             panel.removeAll();
             ArrayList<FlightsByPilotSearch> flights = new ArrayList<>();
-            JComboBox pilot = flightsByPilotSearchForm.getPilotComboBox();
+            JComboBox<Object> pilot = flightsByPilotSearchForm.getPilotComboBox();
             try {
                 flights = controller.getAllFlightsOfAPilot(GetID.getPilotID(pilot));
             } catch (AllDataException e) {
@@ -60,7 +59,7 @@ public class FlightsByPilotSearchPanel extends JPanel {
             panel.add(new FlightsByPilotResultPanel(flights), BorderLayout.CENTER);
             panel.revalidate();
             panel.repaint();
-            // CheckEmptyResult.checkResultIsEmpty(flights);
+            CheckEmptyResult.checkResultIsEmpty(flights);
         }
     }
 }

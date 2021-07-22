@@ -9,12 +9,11 @@ public class AnimationPanel extends JPanel {
     public static final int POS_INIT_X = -10;
     public static final int POS_INIT_Y = 0;
 
-    private ImageIcon planeIcon;
-    private Image planeImg;
+    private final Image planeImg;
     private int x;
 
     public AnimationPanel() {
-        planeIcon = new ImageIcon("src/resources/plane.png");
+        ImageIcon planeIcon = new ImageIcon("src/resources/plane.png");
         planeImg = planeIcon.getImage();
 
         new ThreadMovement(this).start();

@@ -9,12 +9,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-
 public class DeleteFlightPanel extends JPanel {
     private ApplicationController controller;
     private AllFlightsListTable flightsTable;
     private JTable table;
-    private JButton validateDeletationButton;
 
     public DeleteFlightPanel() throws  DataBaseConnectionException {
         setController(new ApplicationController());
@@ -26,34 +24,33 @@ public class DeleteFlightPanel extends JPanel {
         table.setModel(flightsTable);
         table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
-        validateDeletationButton = new JButton("Supprimer");
-        validateDeletationButton.addActionListener(new ValidationDeletation());
+        JButton validateDeletionButton = new JButton("Supprimer");
+        validateDeletionButton.addActionListener(new ValidationDeletion());
 
         this.add(new JScrollPane(table), BorderLayout.CENTER);
         JPanel buttonPanel = new JPanel();
         this.add(buttonPanel, BorderLayout.SOUTH);
-        buttonPanel.add(validateDeletationButton, BorderLayout.CENTER);
+        buttonPanel.add(validateDeletionButton, BorderLayout.CENTER);
     }
 
     private void setController(ApplicationController controller) {
         this.controller = controller;
     }
 
-    public AllFlightsListTable getFlightsTable() {
-        return flightsTable;
-    }
-
     public void setFlightsTable(AllFlightsListTable flightsTable) {
         this.flightsTable = flightsTable;
     }
 
+    public AllFlightsListTable getFlightsTable() {
+        return flightsTable;
+    }
+
     public static class DeleteFlightMessagePanel extends JPanel {
-        private JLabel text;
 
         public DeleteFlightMessagePanel() {
             this.setLayout(new GridLayout(15, 1, 3, 3));
 
-            text = new JLabel("<html>" +
+            JLabel text = new JLabel("<html>" +
                     "<center>Sélectionnez le(s) vol(s) à supprimer</center>" +
                     "</html>");
             this.setLayout(new FlowLayout());
@@ -61,7 +58,7 @@ public class DeleteFlightPanel extends JPanel {
         }
     }
 
-    private class ValidationDeletation implements ActionListener {
+    private class ValidationDeletion implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent evt) {
             if (table.getSelectedRow() != -1) {
@@ -90,6 +87,6 @@ public class DeleteFlightPanel extends JPanel {
     }
 
     public static int getConfirmation(String theMessage) {
-        return JOptionPane.showConfirmDialog((Component) null, theMessage, "Alert", JOptionPane.OK_CANCEL_OPTION);
+        return JOptionPane.showConfirmDialog(null, theMessage, "Alert", JOptionPane.OK_CANCEL_OPTION);
     }
 }
