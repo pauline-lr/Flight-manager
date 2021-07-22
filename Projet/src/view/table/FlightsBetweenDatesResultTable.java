@@ -52,36 +52,22 @@ public class FlightsBetweenDatesResultTable extends AbstractTableModel {
         FlightsBetweenDatesSearch flight = flights.get(row);
         GregorianCalendar departure = flight.getFlightDepartureTime();
         GregorianCalendar arrival = flight.getFlightArrivalTime();
-        switch (column) {
-            case 0:
-                return flight.getFlightNumber();
-            case 1:
-                return flight.getPilotLicenceNumber() + " - " + flight.getPilotLastName() + " - " + flight.getPilotFirstName();
-            case 2:
-                return flight.getPlaneId() + " - " + flight.getPlaneBrand() + " - " + flight.getPlaneModel();
-            case 3:
-                return Format.timeFormat(departure);
-            case 4:
-                return Format.dateFormat(departure);
-            case 5:
-                return flight.getDepartureAirportCode() + " - " + flight.getDepartureAirportName() + ", " + flight.getDepartureAirportCountry();
-            case 6:
-                return flight.getDepartureGateTerminal();
-            case 7:
-                return flight.getDepartureGateNumber();
-            case 8:
-                return Format.timeFormat(arrival);
-            case 9:
-                return Format.dateFormat(arrival);
-            case 10:
-                return flight.getArrivalAirportCode() + " - " + flight.getArrivalAirportName() + ", " + flight.getArrivalAirportCountry();
-            case 11:
-                return flight.getArrivalGateTerminal();
-            case 12:
-                return flight.getArrivalGateNumber();
-            default:
-                return null;
-        }
+        return switch (column) {
+            case 0 -> flight.getFlightNumber();
+            case 1 -> flight.getPilotLicenceNumber() + " - " + flight.getPilotLastName() + " - " + flight.getPilotFirstName();
+            case 2 -> flight.getPlaneId() + " - " + flight.getPlaneBrand() + " - " + flight.getPlaneModel();
+            case 3 -> Format.timeFormat(departure);
+            case 4 -> Format.dateFormat(departure);
+            case 5 -> flight.getDepartureAirportCode() + " - " + flight.getDepartureAirportName() + ", " + flight.getDepartureAirportCountry();
+            case 6 -> flight.getDepartureGateTerminal();
+            case 7 -> flight.getDepartureGateNumber();
+            case 8 -> Format.timeFormat(arrival);
+            case 9 -> Format.dateFormat(arrival);
+            case 10 -> flight.getArrivalAirportCode() + " - " + flight.getArrivalAirportName() + ", " + flight.getArrivalAirportCountry();
+            case 11 -> flight.getArrivalGateTerminal();
+            case 12 -> flight.getArrivalGateNumber();
+            default -> null;
+        };
     }
 
     public Class getColumnClass(int column) {

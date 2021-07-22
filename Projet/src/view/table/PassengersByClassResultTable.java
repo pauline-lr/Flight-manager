@@ -48,32 +48,20 @@ public class PassengersByClassResultTable extends AbstractTableModel {
 
     public Object getValueAt(int row, int column){
         PassengersByClassSearch flight = flights.get(row);
-        switch(column){
-            case 0:
-                return flight.getPassengerPassportNumber();
-            case 1:
-                return flight.getPassengerLastName();
-            case 2:
-                return flight.getPassengerFirstName();
-            case 3:
-                return flight.getSeatRow() + flight.getSeatColumn();
-            case 4:
-                return flight.getFlightNumber();
-            case 5:
-                return Format.timeFormat(flight.getFlightDepartureTime());
-            case 6:
-                return Format.dateFormat(flight.getFlightDepartureTime());
-            case 7:
-                return flight.getDepartureAirportCode() + " - " + flight.getDepartureAirportName() + ", " + flight.getDepartureAirportCountry();
-            case 8:
-                return Format.timeFormat(flight.getFlightArrivalTime());
-            case 9:
-                return Format.dateFormat(flight.getFlightArrivalTime());
-            case 10:
-                return flight.getArrivalAirportCode() + " - " + flight.getArrivalAirportName() + ", " + flight.getArrivalAirportCountry();
-            default:
-                return null;
-        }
+        return switch (column) {
+            case 0 -> flight.getPassengerPassportNumber();
+            case 1 -> flight.getPassengerLastName();
+            case 2 -> flight.getPassengerFirstName();
+            case 3 -> flight.getSeatRow() + flight.getSeatColumn();
+            case 4 -> flight.getFlightNumber();
+            case 5 -> Format.timeFormat(flight.getFlightDepartureTime());
+            case 6 -> Format.dateFormat(flight.getFlightDepartureTime());
+            case 7 -> flight.getDepartureAirportCode() + " - " + flight.getDepartureAirportName() + ", " + flight.getDepartureAirportCountry();
+            case 8 -> Format.timeFormat(flight.getFlightArrivalTime());
+            case 9 -> Format.dateFormat(flight.getFlightArrivalTime());
+            case 10 -> flight.getArrivalAirportCode() + " - " + flight.getArrivalAirportName() + ", " + flight.getArrivalAirportCountry();
+            default -> null;
+        };
     }
 
     public Class getColumnClass(int column){

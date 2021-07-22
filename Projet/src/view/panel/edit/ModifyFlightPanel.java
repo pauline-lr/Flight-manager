@@ -51,8 +51,8 @@ public class ModifyFlightPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent evt) {
             try {
+                Flight flight = flightForm.getFlight();
                 if (flightForm.getFlight() == null) {
-                    Flight flight = flightForm.getFlight();
                     String originalFlightNumber = modifyFlightForm.getFlightComboBoxID();
                     if (flight.getNumber().equals(originalFlightNumber) || !flightForm.checkFlightNumberIsExisting()) {
                         controller.modifyFlight(flight, originalFlightNumber);
@@ -61,7 +61,7 @@ public class ModifyFlightPanel extends JPanel {
                         modifyFlightForm.getFlightComboBox().setSelectedItem(flightToString);
                         JOptionPane.showMessageDialog(null, "Vol modifié", "Succès", JOptionPane.INFORMATION_MESSAGE);
                     }
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(null, "Il n'y a pas de vol à modifier", "Erreur", JOptionPane.ERROR_MESSAGE);
                 }
             } catch (NotMatchException e) {

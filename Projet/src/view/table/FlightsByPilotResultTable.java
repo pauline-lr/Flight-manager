@@ -45,26 +45,17 @@ public class FlightsByPilotResultTable extends AbstractTableModel {
 
     public Object getValueAt(int row, int column){
         FlightsByPilotSearch flight = flights.get(row);
-        switch(column){
-            case 0:
-                return flight.getFlightNumber();
-            case 1:
-                return flight.getPlaneId().toString() + " - " + flight.getPlaneBrand() + " " + flight.getPlaneModel();
-            case 2:
-                return Format.timeFormat(flight.getFlightDepartureTime());
-            case 3:
-                return Format.dateFormat(flight.getFlightDepartureTime());
-            case 4:
-                return flight.getDepartureAirportCode() + " - " + flight.getDepartureAirportName() + ", " + flight.getDepartureAirportCountry();
-            case 5:
-                return Format.timeFormat(flight.getFlightArrivalTime());
-            case 6:
-                return Format.dateFormat(flight.getFlightArrivalTime());
-            case 7:
-                return flight.getArrivalAirportCode() + " - " + flight.getArrivalAirportName() + ", " + flight.getArrivalAirportCountry();
-            default:
-                return null;
-        }
+        return switch (column) {
+            case 0 -> flight.getFlightNumber();
+            case 1 -> flight.getPlaneId().toString() + " - " + flight.getPlaneBrand() + " " + flight.getPlaneModel();
+            case 2 -> Format.timeFormat(flight.getFlightDepartureTime());
+            case 3 -> Format.dateFormat(flight.getFlightDepartureTime());
+            case 4 -> flight.getDepartureAirportCode() + " - " + flight.getDepartureAirportName() + ", " + flight.getDepartureAirportCountry();
+            case 5 -> Format.timeFormat(flight.getFlightArrivalTime());
+            case 6 -> Format.dateFormat(flight.getFlightArrivalTime());
+            case 7 -> flight.getArrivalAirportCode() + " - " + flight.getArrivalAirportName() + ", " + flight.getArrivalAirportCountry();
+            default -> null;
+        };
     }
 
     public Class getColumnClass(int col){
