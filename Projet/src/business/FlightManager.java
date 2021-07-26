@@ -23,19 +23,16 @@ public class FlightManager {
 
     public ArrayList<String> getPilotsInOrder(GregorianCalendar date, String airportID) throws DataBaseConnectionException, AllDataException {
         ArrayList<String> onLocationPilots = getLastPilotFlightArrivingAt(date, airportID);
-        ArrayList<String> allPilots = getAllPilotsToString();
+        ArrayList<String> allPilots = getAllAvailablePilotsToString(date);
+        ArrayList<String> newCollection = new ArrayList<>(onLocationPilots);
 
         for (String pilot: onLocationPilots) {
-            if (allPilots.contains(pilot)) {
-                int fromIndex = allPilots.indexOf(pilot);
-                int atIndex = onLocationPilots.indexOf(pilot);
-                String item = allPilots.get(fromIndex);
-                allPilots.remove(pilot);
-                allPilots.add(atIndex, item);
-            }
+            allPilots.removeIf(pilot::equals);
         }
 
-        return onLocationPilots;
+        newCollection.addAll(allPilots);
+
+        return newCollection;
     }
 
     //region Get
