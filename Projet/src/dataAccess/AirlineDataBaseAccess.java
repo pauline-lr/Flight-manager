@@ -350,20 +350,22 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
     }
 
 
-    public ArrayList<String> getAllAvailablePilotsToString()
+    public ArrayList<String> getAllAvailablePilotsToString(GregorianCalendar date)
             throws DataBaseConnectionException, AllDataException {
         ArrayList<String> pilotLicenceNumbers = new ArrayList<>();
 
         try {
             String sqlRequest =
-                    "SELECT * FROM pilot " +
-                    "WHERE licence_number NOT IN " +
+                "SELECT * FROM pilot " +
+                "WHERE licence_number NOT IN " +
                     "(SELECT pilot FROM flight " +
-                    "WHERE sysdate() BETWEEN departure_time AND arrival_time) " +
-                    "ORDER BY licence_number;";
+                    "WHERE ? BETWEEN departure_time AND arrival_time) " +
+                "ORDER BY licence_number;";
 
-            Statement statement = SingletonConnection.getInstance().createStatement();
-            ResultSet data = statement.executeQuery(sqlRequest);
+            java.sql.Timestamp dateSQL = new java.sql.Timestamp(date.getTimeInMillis());
+            PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
+            preparedStatement.setTimestamp(1, dateSQL);
+            ResultSet data = preparedStatement.executeQuery();
 
             while (data.next()) {
                 pilotLicenceNumbers.add(data.getString("licence_number") + " - " + data.getString("last_name") + " " + data.getString("first_name"));
@@ -378,20 +380,22 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
         return pilotLicenceNumbers;
     }
 
-    public ArrayList<String> getAllAvailablePlanesToString()
+    public ArrayList<String> getAllAvailablePlanesToString(GregorianCalendar date)
             throws DataBaseConnectionException, AllDataException {
         ArrayList<String> planeIDs = new ArrayList<>();
 
         try {
             String sqlRequest =
-                    "SELECT * FROM plane " +
-                    "WHERE plane_id NOT IN " +
-                        "(SELECT plane FROM flight " +
-                        "WHERE sysdate() BETWEEN departure_time AND arrival_time) " +
-                    "ORDER BY plane_id;";
+                "SELECT * FROM plane " +
+                "WHERE plane_id NOT IN " +
+                    "(SELECT plane FROM flight " +
+                    "WHERE ? BETWEEN departure_time AND arrival_time) " +
+                "ORDER BY plane_id;";
 
-            Statement statement = SingletonConnection.getInstance().createStatement();
-            ResultSet data = statement.executeQuery(sqlRequest);
+            java.sql.Timestamp dateSQL = new java.sql.Timestamp(date.getTimeInMillis());
+            PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
+            preparedStatement.setTimestamp(1, dateSQL);
+            ResultSet data = preparedStatement.executeQuery();
 
             while (data.next()) {
                 planeIDs.add(data.getString("plane_id") + " - " + data.getString("brand") + " " + data.getString("model"));

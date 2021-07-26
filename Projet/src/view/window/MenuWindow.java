@@ -31,7 +31,7 @@ public class MenuWindow extends JFrame {
         setController(new ApplicationController());
         setTitle("Gestionnaire de vols");
         setBounds(100, 100, 600, 600);
-        setMinimumSize(new Dimension(500, 650));
+        setMinimumSize(new Dimension(650, 650));
         frameContainer = this.getContentPane();
         this.addWindowListener(new ExitButtonListener());
 

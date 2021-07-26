@@ -65,8 +65,8 @@ public class FlightForm extends JPanel {
     public Flight getFlight() throws NotMatchException, TextLengthException, FlightException.NumberFlightException, FlightException.DepartureDateException {
         return new Flight(
             getFlightNumberTextField().getText(),
-            getDeparture(),
-            getArrival(),
+            checkDepartureMoment(),
+            checkArrivalMoment(),
             isMealOnBoardCheckBox.isSelected(),
             getMealDescriptionTextArea(),
             GetID.getPilotID(pilotComboBox),
@@ -96,54 +96,6 @@ public class FlightForm extends JPanel {
         flightNumberTextField = new JTextField();
         flightNumberTextField.setHorizontalAlignment(SwingConstants.LEFT);
         this.add(flightNumberTextField);
-
-        addEmptyField();
-        addEmptyField();
-        addEmptyField();
-    }
-
-    private void addPilotField() {
-        JLabel pilotLabel = new JLabel("    Pilote");
-        pilotLabel.setFont(Format.titleFont);
-        pilotLabel.setHorizontalAlignment(SwingConstants.LEFT);
-        this.add(pilotLabel);
-
-        addEmptyField();
-        addEmptyField();
-        addEmptyField();
-        addEmptyField();
-        addEmptyField();
-
-        try {
-            pilotComboBox = new JComboBox<>(controller.getAllAvailablePilotsToString().toArray());
-        } catch (Exception exception) {
-            JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-        }
-        this.add(pilotComboBox);
-
-        addEmptyField();
-        addEmptyField();
-        addEmptyField();
-    }
-
-    private void addPlaneField() {
-        JLabel planeLabel = new JLabel("    Avion");
-        planeLabel.setFont(Format.titleFont);
-        planeLabel.setHorizontalAlignment(SwingConstants.LEFT);
-        this.add(planeLabel);
-
-        addEmptyField();
-        addEmptyField();
-        addEmptyField();
-        addEmptyField();
-        addEmptyField();
-
-        try {
-            planeComboBox = new JComboBox<>(controller.getAllAvailablePlanesToString().toArray());
-        } catch (Exception exception) {
-            JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-        }
-        this.add(planeComboBox);
 
         addEmptyField();
         addEmptyField();
@@ -296,6 +248,54 @@ public class FlightForm extends JPanel {
         this.add(arrivalGateComboBox);
     }
 
+    private void addPilotField() {
+        JLabel pilotLabel = new JLabel("    Pilote");
+        pilotLabel.setFont(Format.titleFont);
+        pilotLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        this.add(pilotLabel);
+
+        addEmptyField();
+        addEmptyField();
+        addEmptyField();
+        addEmptyField();
+        addEmptyField();
+
+        try {
+            pilotComboBox = new JComboBox<>(controller.getAllAvailablePilotsToString(getDepartureMoment()).toArray());
+        } catch (Exception exception) {
+            JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
+        this.add(pilotComboBox);
+
+        addEmptyField();
+        addEmptyField();
+        addEmptyField();
+    }
+
+    private void addPlaneField() {
+        JLabel planeLabel = new JLabel("    Avion");
+        planeLabel.setFont(Format.titleFont);
+        planeLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        this.add(planeLabel);
+
+        addEmptyField();
+        addEmptyField();
+        addEmptyField();
+        addEmptyField();
+        addEmptyField();
+
+        try {
+            planeComboBox = new JComboBox<>(controller.getAllAvailablePlanesToString(getDepartureMoment()).toArray());
+        } catch (Exception exception) {
+            JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
+        this.add(planeComboBox);
+
+        addEmptyField();
+        addEmptyField();
+        addEmptyField();
+    }
+
     private void addMealOnBoardField()  {
         JLabel mealLabel = new JLabel("    Repas");
         mealLabel.setFont(Format.titleFont);
@@ -401,16 +401,38 @@ public class FlightForm extends JPanel {
     //endregion
 
     //region Listeners
+    private class departureMomentComboBoxListener implements ItemListener {
+        @Override
+        public void itemStateChanged(ItemEvent event) {
+            ArrayList<String> updatedPilotComboBox = new ArrayList<>();
+            ArrayList<String> updatedPlaneComboBox = new ArrayList<>();
+            try {
+                updatedPilotComboBox = controller.getPilotsInOrder(getDepartureMoment(), GetID.getAirportID(departureAirportComboBox));
+            } catch (AllDataException e) {
+                e.printStackTrace();
+            } catch (DataBaseConnectionException e) {
+                e.printStackTrace();
+            }
+            try {
+                updatedPlaneComboBox = controller.getAllAvailablePlanesToString(getDepartureMoment());
+            } catch (AllDataException e) {
+                e.printStackTrace();
+            } catch (DataBaseConnectionException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     private class departureAirportComboBoxListener implements ItemListener {
         @Override
         public void itemStateChanged(ItemEvent event) {
             ArrayList<String> updatedTerminalsOfAnAirportForComboBox = new ArrayList<>();
+            ArrayList<String> updatedGatesOfAnAirportAndTerminalForComboBox = new ArrayList<>();
             try {
                 updatedTerminalsOfAnAirportForComboBox = controller.getAllTerminalsOfAnAirportToString(GetID.getAirportID(departureAirportComboBox));
             } catch (AllDataException | DataBaseConnectionException exception) {
                 JOptionPane.showMessageDialog(null, exception.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
             }
-            ArrayList<String> updatedGatesOfAnAirportAndTerminalForComboBox = new ArrayList<>();
             try {
                 updatedGatesOfAnAirportAndTerminalForComboBox = controller.getAllGatesOfAnAirportAndTerminalToString(GetID.getAirportID(departureAirportComboBox), (String) departureTerminalComboBox.getSelectedItem());
             } catch (AllDataException e) {
@@ -455,6 +477,7 @@ public class FlightForm extends JPanel {
         @Override
         public void itemStateChanged(ItemEvent event) {
             ArrayList<String> updatedTerminalsOfAnAirportForComboBox = new ArrayList<>();
+            ArrayList<String> updatedGatesOfAnAirportAndTerminalForComboBox = new ArrayList<>();
             try {
                 updatedTerminalsOfAnAirportForComboBox = controller.getAllTerminalsOfAnAirportToString(GetID.getAirportID(arrivalAirportComboBox));
             } catch (AllDataException e) {
@@ -462,7 +485,6 @@ public class FlightForm extends JPanel {
             } catch (DataBaseConnectionException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
             }
-            ArrayList<String> updatedGatesOfAnAirportAndTerminalForComboBox = new ArrayList<>();
             try {
                 updatedGatesOfAnAirportAndTerminalForComboBox = controller.getAllGatesOfAnAirportAndTerminalToString(GetID.getAirportID(arrivalAirportComboBox), (String) arrivalTerminalComboBox.getSelectedItem());
             } catch (AllDataException e) {
@@ -542,17 +564,27 @@ public class FlightForm extends JPanel {
         return mealDescriptionText;
     }
 
-    public GregorianCalendar getDeparture() throws FlightException.DepartureDateException {
-        GregorianCalendar departureDateGC = setFullDate(Format.getDate(departureDate), Format.getDate(departureTime));
-        if(departureDateGC.compareTo(new GregorianCalendar()) < 0)
+    private GregorianCalendar getDepartureMoment() {
+        return setFullDate(Format.getDate(departureDate), Format.getDate(departureTime));
+    }
+
+    private GregorianCalendar getArrivalMoment() {
+        return setFullDate(Format.getDate(arrivalDate), Format.getDate(arrivalTime));
+    }
+
+    public GregorianCalendar checkDepartureMoment() throws FlightException.DepartureDateException {
+        GregorianCalendar departureDateGC = getDepartureMoment();
+        if (departureDateGC.compareTo(new GregorianCalendar()) < 0) {
             throw new FlightException.DepartureDateException();
+        }
         return departureDateGC;
     }
 
-    public GregorianCalendar getArrival() throws FlightException.DepartureDateException {
-        GregorianCalendar arrivalDateGC = setFullDate(Format.getDate(arrivalDate), Format.getDate(arrivalTime));
-        if(arrivalDateGC.compareTo(getDeparture()) < 0)
+    public GregorianCalendar checkArrivalMoment() throws FlightException.DepartureDateException {
+        GregorianCalendar arrivalDateGC = getArrivalMoment();
+        if (arrivalDateGC.compareTo(checkDepartureMoment()) < 0) {
             throw new FlightException.DepartureDateException();
+        }
         return arrivalDateGC;
     }
 }

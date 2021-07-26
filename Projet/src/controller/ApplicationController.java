@@ -79,14 +79,14 @@ public class ApplicationController {
         return flightManager.getAllPilotsToString();
     }
 
-    public ArrayList<String> getAllAvailablePilotsToString()
+    public ArrayList<String> getAllAvailablePilotsToString(GregorianCalendar date)
             throws AllDataException,  DataBaseConnectionException {
-        return flightManager.getAllAvailablePilotsToString();
+        return flightManager.getAllAvailablePilotsToString(date);
     }
 
-    public ArrayList<String> getAllAvailablePlanesToString()
+    public ArrayList<String> getAllAvailablePlanesToString(GregorianCalendar date)
             throws AllDataException,  DataBaseConnectionException {
-        return flightManager.getAllAvailablePlanesToString();
+        return flightManager.getAllAvailablePlanesToString(date);
     }
 
     public ArrayList<String> getAllClassesToString()

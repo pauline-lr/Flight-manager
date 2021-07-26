@@ -96,14 +96,14 @@ public class FlightManager {
         return dataAccessObjectPattern.getLastPilotFlightArrivingAt(date, airportID);
     }
 
-    public ArrayList<String> getAllAvailablePilotsToString()
+    public ArrayList<String> getAllAvailablePilotsToString(GregorianCalendar date)
             throws  DataBaseConnectionException, AllDataException {
-        return dataAccessObjectPattern.getAllAvailablePilotsToString();
+        return dataAccessObjectPattern.getAllAvailablePilotsToString(date);
     }
 
-    public ArrayList<String> getAllAvailablePlanesToString()
+    public ArrayList<String> getAllAvailablePlanesToString(GregorianCalendar date)
             throws  DataBaseConnectionException, AllDataException {
-        return dataAccessObjectPattern.getAllAvailablePlanesToString();
+        return dataAccessObjectPattern.getAllAvailablePlanesToString(date);
     }
 
     public ArrayList<String> getAllClassesToString()
