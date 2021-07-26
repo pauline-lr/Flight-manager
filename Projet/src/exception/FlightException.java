@@ -13,7 +13,7 @@ public class FlightException extends Exception {
                 return "Le numéro du vol est vide (champs obligatoire)";
             } else {
                 return "Le numéro de vol \"" + wrongNumberFlight + "\" ne correspond pas à la structure requise.\n" +
-                        "Un numéro de vol se compose de 2 lettres majuscules et de 4 chiffres.";
+                        "Un numéro de vol se compose de 2 lettres majuscules suivient par 4 chiffres.";
             }
         }
     }

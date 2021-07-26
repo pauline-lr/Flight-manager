@@ -87,6 +87,7 @@ public class FlightForm extends JPanel {
         JLabel flightNumberLabel = new JLabel("    Numéro");
         flightNumberLabel.setFont(Format.titleFont);
         flightNumberLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        flightNumberLabel.setToolTipText("Un numéro de vol se compose de 2 lettres majuscules suivient par 4 chiffres");
         this.add(flightNumberLabel);
 
         addEmptyField();
@@ -97,6 +98,7 @@ public class FlightForm extends JPanel {
 
         flightNumberTextField = new JTextField();
         flightNumberTextField.setHorizontalAlignment(SwingConstants.LEFT);
+        flightNumberTextField.setToolTipText("Un numéro de vol se compose de 2 lettres majuscules suivient par 4 chiffres");
         this.add(flightNumberTextField);
 
         addEmptyField();
@@ -449,7 +451,7 @@ public class FlightForm extends JPanel {
                 JOptionPane.showMessageDialog(null, exception.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
             }
             try {
-                updatedGatesOfAnAirportAndTerminalForComboBox = controller.getAllGatesOfAnAirportAndTerminalToString(GetID.getAirportID(departureAirportComboBox), (String) departureTerminalComboBox.getSelectedItem());
+                updatedGatesOfAnAirportAndTerminalForComboBox = controller.getAllGatesOfAnAirportAndTerminalToString(GetID.getAirportID(arrivalAirportComboBox), (String) departureTerminalComboBox.getSelectedItem());
             } catch (AllDataException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
             } catch (DataBaseConnectionException e) {
