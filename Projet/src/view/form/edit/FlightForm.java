@@ -267,7 +267,7 @@ public class FlightForm extends JPanel {
         addEmptyField();
 
         try {
-            pilotComboBox = new JComboBox<>(controller.getAllAvailablePilotsToString(getDepartureMoment()).toArray());
+            pilotComboBox = new JComboBox<>(controller.getPilotsInOrder(getDepartureMoment(), GetID.getAirportID(departureAirportComboBox)).toArray());
         } catch (Exception exception) {
             JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }

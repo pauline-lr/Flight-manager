@@ -95,7 +95,6 @@ VALUES
     ('JF4325', '2021-08-05 13:31:00', '2021-08-06 01:34:00', false, null, 'A2JFK', 'A4BRU', 'DBS1562', 3),
     ('OD1124', '2022-02-05 12:20:00', '2022-02-06 10:54:00', false, null, 'B2BRU', 'B2LHR', 'BTD4596', 5)
 ;
-;
 
 INSERT INTO seat
 VALUES

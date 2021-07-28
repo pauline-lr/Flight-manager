@@ -312,10 +312,36 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
         try {
             String sqlRequest =
                     "SELECT " +
+                    "pilot.licence_number AS pilotLicenceNumber, " +
+                    "pilot.last_name AS pilotLastName, " +
+                    "pilot.first_name AS pilotFirstName " +
+                    "FROM pilot, flight, gate " +
+                    "WHERE " +
+                    "flight.pilot = pilot.licence_number AND " +
+                    "flight.arrival_gate = gate.gate_id AND " +
+                    "flight.arrival_time = ANY (" +
+                        "SELECT max(flight.arrival_time) AS maxArrivalTime " +
+                        "FROM flight " +
+                        "WHERE " +
+                        "flight.arrival_time <= ? AND " +
+                        "flight.pilot IN (SELECT licence_number FROM pilot)" +
+                        "GROUP BY flight.pilot " +
+                    ") AND " +
+                    "flight.pilot = ANY (" +
+                        "SELECT flight.pilot AS pilotFlight " +
+                        "FROM flight " +
+                        "WHERE " +
+                        "flight.arrival_time <= ? AND " +
+                        "flight.pilot IN (SELECT licence_number FROM pilot) " +
+                        "GROUP BY flight.pilot " +
+                        "HAVING max(flight.arrival_time) " +
+                    ") AND " +
+                    "gate.airport = ?";
+                    /*
+                    "SELECT DISTINCT " +
                     "pil.licence_number AS pilotLicenceNumber, " +
                     "pil.last_name AS pilotLastName, " +
-                    "pil.first_name AS pilotFirstName, " +
-                    "max(fli.arrival_time) AS arrivalTime " +
+                    "pil.first_name AS pilotFirstName " +
                     "FROM " +
                     "pilot pil, " +
                     "flight fli, " +
@@ -327,12 +353,15 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
                     "gat.airport = air.code AND " +
                     "fli.arrival_time <= ? AND " +
                     "air.code = ? " +
-                    "GROUP BY pilot";
+                    "GROUP BY pilot " +
+                    "HAVING max(fli.arrival_time)";
+                    */
 
             java.sql.Timestamp dateSQL = new java.sql.Timestamp(date.getTimeInMillis());
             PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
             preparedStatement.setTimestamp(1, dateSQL);
-            preparedStatement.setString(2, airportID);
+            preparedStatement.setTimestamp(2, dateSQL);
+            preparedStatement.setString(3, airportID);
 
             ResultSet data = preparedStatement.executeQuery();
 
