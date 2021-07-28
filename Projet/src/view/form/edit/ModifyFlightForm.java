@@ -33,13 +33,9 @@ public class ModifyFlightForm extends JPanel {
         flightLabel.setHorizontalAlignment(SwingConstants.LEFT);
         this.add(flightLabel);
 
-        if (!controller.getAllFlightsToString().isEmpty()) {
-            flightComboBox = new JComboBox<>(controller.getAllFlightsToString().toArray());
-            updateFormInformation();
-            flightComboBox.addItemListener(new flightComboBoxListener());
-        } else {
-            JOptionPane.showMessageDialog(null, "Aucun vol à modifier", "Informations", JOptionPane.INFORMATION_MESSAGE);
-        }
+        flightComboBox = new JComboBox<>(controller.getAllFlightsToString().toArray());
+        updateFormInformation();
+        flightComboBox.addItemListener(new flightComboBoxListener());
         this.add(flightComboBox);
     }
 

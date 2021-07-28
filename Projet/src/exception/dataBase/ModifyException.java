@@ -3,7 +3,7 @@ package exception.dataBase;
 public class ModifyException extends Exception{
     private String message;
 
-    public ModifyException( String message){
+    public ModifyException(String message){
         this.message = message;
     }
 
