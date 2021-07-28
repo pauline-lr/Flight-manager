@@ -65,17 +65,21 @@ public class FlightForm extends JPanel {
     }
 
     public Flight getFlight() throws NotMatchException, TextLengthException, FlightException.NumberFlightException, FlightException.DepartureDateException {
-        return new Flight(
-            getFlightNumberTextField().getText(),
-            checkDepartureMoment(),
-            checkArrivalMoment(),
-            isMealOnBoardCheckBox.isSelected(),
-            getMealDescriptionTextArea(),
-            GetID.getPilotID(pilotComboBox),
-            GetID.getGateID(departureAirportComboBox, departureTerminalComboBox, departureGateComboBox),
-            GetID.getGateID(arrivalAirportComboBox, arrivalTerminalComboBox, arrivalGateComboBox),
-            GetID.getPlaneID(planeComboBox)
-        );
+        if (getFlightNumberTextField() != null){
+            return new Flight(
+                    getFlightNumberTextField().getText(),
+                    checkDepartureMoment(),
+                    checkArrivalMoment(),
+                    isMealOnBoardCheckBox.isSelected(),
+                    getMealDescriptionTextArea(),
+                    GetID.getPilotID(pilotComboBox),
+                    GetID.getGateID(departureAirportComboBox, departureTerminalComboBox, departureGateComboBox),
+                    GetID.getGateID(arrivalAirportComboBox, arrivalTerminalComboBox, arrivalGateComboBox),
+                    GetID.getPlaneID(planeComboBox)
+            );
+        }else{
+            return null;
+        }
     }
 
     private GregorianCalendar setFullDate(GregorianCalendar date, GregorianCalendar time) {
