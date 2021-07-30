@@ -323,7 +323,7 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
                         "SELECT max(flight.arrival_time) AS maxArrivalTime " +
                         "FROM flight " +
                         "WHERE " +
-                        "flight.arrival_time <= ? AND " +
+                        "flight.arrival_time < ? AND " +
                         "flight.pilot IN (SELECT licence_number FROM pilot)" +
                         "GROUP BY flight.pilot " +
                     ") AND " +
@@ -331,31 +331,12 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
                         "SELECT flight.pilot AS pilotFlight " +
                         "FROM flight " +
                         "WHERE " +
-                        "flight.arrival_time <= ? AND " +
+                        "flight.arrival_time < ? AND " +
                         "flight.pilot IN (SELECT licence_number FROM pilot) " +
                         "GROUP BY flight.pilot " +
                         "HAVING max(flight.arrival_time) " +
                     ") AND " +
                     "gate.airport = ?";
-                    /*
-                    "SELECT DISTINCT " +
-                    "pil.licence_number AS pilotLicenceNumber, " +
-                    "pil.last_name AS pilotLastName, " +
-                    "pil.first_name AS pilotFirstName " +
-                    "FROM " +
-                    "pilot pil, " +
-                    "flight fli, " +
-                    "gate gat, " +
-                    "airport air " +
-                    "WHERE " +
-                    "fli.pilot = pil.licence_number AND " +
-                    "fli.arrival_gate = gat.gate_id AND " +
-                    "gat.airport = air.code AND " +
-                    "fli.arrival_time <= ? AND " +
-                    "air.code = ? " +
-                    "GROUP BY pilot " +
-                    "HAVING max(fli.arrival_time)";
-                    */
 
             java.sql.Timestamp dateSQL = new java.sql.Timestamp(date.getTimeInMillis());
             PreparedStatement preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlRequest);
