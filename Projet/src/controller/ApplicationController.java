@@ -23,7 +23,7 @@ public class ApplicationController {
 
     public ArrayList<String> getPilotsInOrder(GregorianCalendar date, String airportID)
             throws DataBaseConnectionException, AllDataException {
-        return flightManager.getPilotsInOrder(date, airportID);
+        return flightManager.getPilotsInOrder(flightManager.getOnLocationPilots(date, airportID), flightManager.getAllPilots(date));
     }
 
     //region Get

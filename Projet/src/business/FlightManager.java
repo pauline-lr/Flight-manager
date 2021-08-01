@@ -21,7 +21,7 @@ public class FlightManager {
         this.dataAccessObjectPattern = dataAccessObjectPattern;
     }
 
-    public ArrayList<String> getPilotsInOrder(GregorianCalendar date, String airportID) throws DataBaseConnectionException, AllDataException {
+   /* public ArrayList<String> getPilotsInOrder(GregorianCalendar date, String airportID) throws DataBaseConnectionException, AllDataException {
         ArrayList<String> onLocationPilots = getLastPilotFlightArrivingAt(date, airportID);
         ArrayList<String> allPilots = getAllAvailablePilotsToString(date);
         ArrayList<String> newCollection = new ArrayList<>(onLocationPilots);
@@ -33,7 +33,35 @@ public class FlightManager {
         newCollection.addAll(allPilots);
 
         return newCollection;
+    }*/
+
+    public ArrayList<String> getOnLocationPilots(GregorianCalendar date, String airportID) throws DataBaseConnectionException, AllDataException {
+        ArrayList<String> onLocationPilots = getLastPilotFlightArrivingAt(date, airportID);
+        return onLocationPilots;
     }
+
+    public ArrayList<String> getAllPilots(GregorianCalendar date) throws DataBaseConnectionException, AllDataException {
+        ArrayList<String> allPilots = getAllAvailablePilotsToString(date);
+        return allPilots;
+    }
+
+   public ArrayList<String> getPilotsInOrder(ArrayList<String> onLocationPilots, ArrayList<String> allPilots)  {
+       ArrayList<String> newCollection = new ArrayList<>(onLocationPilots);
+
+       for (String pilot: onLocationPilots) {
+           allPilots.removeIf(pilot::equals);
+       }
+
+       newCollection.addAll(allPilots);
+
+       return newCollection;
+   }
+
+   /*dans application controller devient :
+   * public ArrayList<String> getPilotsInOrder(GregorianCalendar date, String airportID)
+            throws DataBaseConnectionException, AllDataException {
+        return flightManager.getPilotsInOrder(flightManager.getOnLocationPilots(date, airportID), flightManager.getAllPilots(date));
+    }*/
 
     //region Get
     public Flight getFlight(String flightNumber)
