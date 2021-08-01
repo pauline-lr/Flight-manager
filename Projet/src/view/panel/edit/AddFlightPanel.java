@@ -49,7 +49,7 @@ public class AddFlightPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent evt) {
             try {
-                if (!((flightForm.getFlight()) == null) && !(flightForm.checkFlightNumberIsExisting())) {
+                if ((flightForm.getFlight() != null) && !(flightForm.checkFlightNumberIsExisting())) {
                         Flight flight = flightForm.getFlight();
                         controller.addFlight(flight);
                         JOptionPane.showMessageDialog(null, "Vol ajouté", "Succès", JOptionPane.INFORMATION_MESSAGE);
