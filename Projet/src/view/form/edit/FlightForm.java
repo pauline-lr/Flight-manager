@@ -417,20 +417,18 @@ public class FlightForm extends JPanel {
             ArrayList<String> updatedPilotForComboBox = new ArrayList<>();
             ArrayList<String> updatedPlaneForComboBox = new ArrayList<>();
             try {
-                ///////      ICI
                 updatedPilotForComboBox = controller.getPilotsInOrder(getDepartureMoment(), GetID.getAirportID(departureAirportComboBox));
-            } catch (DataBaseConnectionException dataBaseConnectionException) {
-                dataBaseConnectionException.printStackTrace();
-            } catch (AllDataException allDataException) {
-                allDataException.printStackTrace();
+            } catch (DataBaseConnectionException exception) {
+                JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+            } catch (AllDataException exception) {
+                JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
             try {
-                ///////      ICI
                 updatedPlaneForComboBox = controller.getAllAvailablePlanesToString(getDepartureMoment());
-            } catch (AllDataException e) {
-                e.printStackTrace();
-            } catch (DataBaseConnectionException e) {
-                e.printStackTrace();
+            } catch (AllDataException exception) {
+                JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+            } catch (DataBaseConnectionException exception) {
+                JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
             pilotComboBox.removeAllItems();
             planeComboBox.removeAllItems();
@@ -462,12 +460,11 @@ public class FlightForm extends JPanel {
                 JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
             }
             try {
-                //////     ICI
                 updatedPilotForComboBox = controller.getPilotsInOrder(getDepartureMoment(), GetID.getAirportID(departureAirportComboBox));
             } catch (AllDataException e) {
-                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             } catch (DataBaseConnectionException e) {
-                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
             departureTerminalComboBox.removeAllItems();
             departureGateComboBox.removeAllItems();

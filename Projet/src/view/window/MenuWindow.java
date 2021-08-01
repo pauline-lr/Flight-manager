@@ -148,7 +148,7 @@ public class MenuWindow extends JFrame {
         try {
             controller.closeConnection();
         } catch (DataBaseCloseException exception) {
-            exception.printStackTrace();
+            JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
         System.exit(0);
     }
@@ -230,7 +230,7 @@ public class MenuWindow extends JFrame {
             try {
                 allFlightsListPanel = new AllFlightsListPanel();
             } catch (DataBaseConnectionException e) {
-                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
             assert allFlightsListPanel != null;
             frameContainer.add(allFlightsListPanel, BorderLayout.CENTER);
@@ -251,7 +251,6 @@ public class MenuWindow extends JFrame {
                 MenuWindow.this.setVisible(true);
                 CheckEmptyResult.checkResultIsEmpty(deleteFlightPanel.getFlightsTable().getFlights());
             } catch (DataBaseConnectionException throwables) {
-                throwables.printStackTrace();
                 JOptionPane.showMessageDialog(null, throwables.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
         }
