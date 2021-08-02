@@ -3,6 +3,7 @@ package business;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -23,6 +24,7 @@ class FlightManagerTest {
     public void setUp() {
         flightManager =  new FlightManager();
 
+        pilotIDTest1 = "BTD4596";
         pilotIDTest2 = "DBS1562";
         pilotIDTest3 = "LCR1632";
         pilotIDTest4 = "PRT5595";
