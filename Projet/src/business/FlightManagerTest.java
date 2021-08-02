@@ -23,7 +23,6 @@ class FlightManagerTest {
     public void setUp() {
         flightManager =  new FlightManager();
 
-        pilotIDTest1 = "BTD4596";
         pilotIDTest2 = "DBS1562";
         pilotIDTest3 = "LCR1632";
         pilotIDTest4 = "PRT5595";
@@ -35,7 +34,7 @@ class FlightManagerTest {
 
     @Test
     public void getPilotsInOrder(){
-        assertArrayEquals((new ArrayList<>(Arrays.asList(pilotIDTest1, pilotIDTest3, pilotIDTest5, pilotIDTest2, pilotIDTest4)).toArray()),
-                flightManager.getPilotsInOrder(onLocationPilots, allPilots).toArray());
+        String []exceptedValue = {pilotIDTest1, pilotIDTest3, pilotIDTest5, pilotIDTest2, pilotIDTest4};
+        assertArrayEquals(exceptedValue, flightManager.getPilotsInOrder(onLocationPilots, allPilots).toArray());
     }
 }
