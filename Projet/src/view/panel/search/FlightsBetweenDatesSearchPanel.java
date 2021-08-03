@@ -20,6 +20,7 @@ public class FlightsBetweenDatesSearchPanel extends JPanel {
     private ApplicationController controller;
     private FlightsBetweenDatesSearchPanel panel;
     private FlightsBetweenDatesSearchForm flightsBetweenDatesSearchForm;
+    private JButton validation;
 
     public FlightsBetweenDatesSearchPanel() {
         setController(new ApplicationController());
@@ -29,11 +30,10 @@ public class FlightsBetweenDatesSearchPanel extends JPanel {
         this.add(flightsBetweenDatesSearchForm, BorderLayout.PAGE_START);
 
         JPanel buttonPanel = new JPanel();
-        JButton validation = new JButton("Rechercher");
+        validation = new JButton("Rechercher");
         validation.addActionListener(new ValidationListener());
         this.add(buttonPanel, BorderLayout.SOUTH);
         buttonPanel.add(validation, BorderLayout.CENTER);
-
     }
 
     private void setController(ApplicationController controller) {
@@ -52,7 +52,7 @@ public class FlightsBetweenDatesSearchPanel extends JPanel {
                     panel.add(new FlightsBetweenDatesResultPanel(flights), BorderLayout.CENTER);
                     panel.revalidate();
                     panel.repaint();
-                    CheckEmptyResult.checkResultIsEmpty(flights);
+                    CheckEmptyResult.checkResultIsEmpty(flights, validation);
                 } catch (DataBaseConnectionException e) {
                     JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
                 } catch (AllDataException e) {

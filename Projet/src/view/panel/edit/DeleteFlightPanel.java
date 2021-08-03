@@ -1,6 +1,8 @@
 package view.panel.edit;
 
 import controller.ApplicationController;
+import exception.FlightException;
+import exception.dataBase.AllDataException;
 import exception.dataBase.DataBaseConnectionException;
 import exception.dataBase.ModifyException;
 import view.table.AllFlightsListTable;
@@ -13,8 +15,9 @@ public class DeleteFlightPanel extends JPanel {
     private ApplicationController controller;
     private AllFlightsListTable flightsTable;
     private JTable table;
+    private JButton validateDeletionButton;
 
-    public DeleteFlightPanel() throws  DataBaseConnectionException {
+    public DeleteFlightPanel() throws DataBaseConnectionException {
         setController(new ApplicationController());
         setFlightsTable(new AllFlightsListTable());
         this.setLayout(new BorderLayout());
@@ -24,7 +27,7 @@ public class DeleteFlightPanel extends JPanel {
         table.setModel(flightsTable);
         table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
-        JButton validateDeletionButton = new JButton("Supprimer");
+        validateDeletionButton = new JButton("Supprimer");
         validateDeletionButton.addActionListener(new ValidationDeletion());
 
         this.add(new JScrollPane(table), BorderLayout.CENTER);
@@ -43,6 +46,10 @@ public class DeleteFlightPanel extends JPanel {
 
     public AllFlightsListTable getFlightsTable() {
         return flightsTable;
+    }
+
+    public JButton getValidateDeletionButton() {
+        return validateDeletionButton;
     }
 
     public static class DeleteFlightMessagePanel extends JPanel {
@@ -77,6 +84,19 @@ public class DeleteFlightPanel extends JPanel {
                         JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                     } catch (DataBaseConnectionException e) {
                         JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+                    }
+
+                    // ICIIIIII
+                    try {
+                        if (controller.getAllFlights().isEmpty()) {
+                            validateDeletionButton.setEnabled(false);
+                        }
+                    } catch (AllDataException e) {
+                        e.printStackTrace();
+                    } catch (DataBaseConnectionException e) {
+                        e.printStackTrace();
+                    } catch (FlightException.NumberFlightException e) {
+                        e.printStackTrace();
                     }
                     JOptionPane.showMessageDialog(null, "Vol(s) supprimé(s)", "Succès", JOptionPane.INFORMATION_MESSAGE);
                 }

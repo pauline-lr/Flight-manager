@@ -7,6 +7,7 @@ import exception.dataBase.DataBaseConnectionException;
 import model.Flight;
 import tool.Format;
 import tool.GetID;
+import view.CheckEmptyResult;
 
 import javax.swing.*;
 import java.awt.*;
@@ -62,40 +63,49 @@ public class ModifyFlightForm extends JPanel {
         this.flightForm = flightForm;
     }
 
+    // ICIIIII
     private class flightComboBoxListener implements ItemListener {
         @Override
         public void itemStateChanged(ItemEvent event) {
             if (event.getStateChange() == ItemEvent.SELECTED) {
-                updateFormInformation();
+                try {
+                    updateFormInformation();
+                } catch (DataBaseConnectionException e) {
+                    e.printStackTrace();
+                } catch (AllDataException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
 
-    private void updateFormInformation() {
-        String flightNumber = getFlightComboBoxID();
-        try {
-            Flight flight = controller.getFlight(flightNumber);
-            flightForm.setFlightNumberComboBox(flight.getNumber());
-            flightForm.setPilotComboBox(flight.getPilot());
-            flightForm.setPlaneComboBox(flight.getNumberPlane());
-            flightForm.setDepartureDate(flight.getDepartureTime());
-            flightForm.setDepartureTime(flight.getDepartureTime());
-            flightForm.setArrivalDate(flight.getArrivalTime());
-            flightForm.setArrivalTime(flight.getArrivalTime());
-            flightForm.setDepartureAirportComboBox(flight.getDepartureGate());
-            flightForm.setDepartureTerminalComboBox(flight.getDepartureGate());
-            flightForm.setDepartureGateComboBox(flight.getDepartureGate());
-            flightForm.setArrivalAirportComboBox(flight.getArrivalGate());
-            flightForm.setArrivalTerminalComboBox(flight.getArrivalGate());
-            flightForm.setArrivalGateComboBox(flight.getArrivalGate());
-            flightForm.setIsMealOnBoardCheckBox(flight.getMealOnBoard());
-            flightForm.setMealDescriptionTextArea(flight.getMealDescription());
-        } catch (DataBaseConnectionException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-        } catch (AllDataException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-        } catch (FlightException.NumberFlightException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+    private void updateFormInformation() throws DataBaseConnectionException, AllDataException {
+        if (!(controller.getAllFlightsToString().isEmpty())) {
+            String flightNumber = getFlightComboBoxID();
+            try {
+                Flight flight = controller.getFlight(flightNumber);
+                flightForm.setFlightNumberComboBox(flight.getNumber());
+                flightForm.setPilotComboBox(flight.getPilot());
+                flightForm.setPlaneComboBox(flight.getNumberPlane());
+                flightForm.setDepartureDate(flight.getDepartureTime());
+                flightForm.setDepartureTime(flight.getDepartureTime());
+                flightForm.setArrivalDate(flight.getArrivalTime());
+                flightForm.setArrivalTime(flight.getArrivalTime());
+                flightForm.setDepartureAirportComboBox(flight.getDepartureGate());
+                flightForm.setDepartureTerminalComboBox(flight.getDepartureGate());
+                flightForm.setDepartureGateComboBox(flight.getDepartureGate());
+                flightForm.setArrivalAirportComboBox(flight.getArrivalGate());
+                flightForm.setArrivalTerminalComboBox(flight.getArrivalGate());
+                flightForm.setArrivalGateComboBox(flight.getArrivalGate());
+                flightForm.setIsMealOnBoardCheckBox(flight.getMealOnBoard());
+                flightForm.setMealDescriptionTextArea(flight.getMealDescription());
+            } catch (DataBaseConnectionException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+            } catch (AllDataException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+            } catch (FlightException.NumberFlightException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 }

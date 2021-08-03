@@ -174,9 +174,11 @@ public class MenuWindow extends JFrame {
         public void actionPerformed(ActionEvent evt) {
             frameContainer.removeAll();
             try {
-                frameContainer.add(new ModifyFlightPanel(), BorderLayout.CENTER);
+                ModifyFlightPanel modifyFlightPanel = new ModifyFlightPanel();
+                frameContainer.add(modifyFlightPanel, BorderLayout.CENTER);
                 frameContainer.repaint();
                 MenuWindow.this.setVisible(true);
+                CheckEmptyResult.checkResultIsEmpty(controller.getAllFlightsToString(), modifyFlightPanel.getValidationButton());
             } catch (AllDataException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             } catch (DataBaseConnectionException e) {
@@ -236,7 +238,7 @@ public class MenuWindow extends JFrame {
             frameContainer.add(allFlightsListPanel, BorderLayout.CENTER);
             frameContainer.repaint();
             MenuWindow.this.setVisible(true);
-            CheckEmptyResult.checkResultIsEmpty(allFlightsListPanel.getFlightsTable().getFlights());
+            CheckEmptyResult.checkResultIsEmpty(allFlightsListPanel.getFlightsTable().getFlights(), null);
         }
     }
 
@@ -249,7 +251,7 @@ public class MenuWindow extends JFrame {
                 frameContainer.add(deleteFlightPanel, BorderLayout.CENTER);
                 frameContainer.repaint();
                 MenuWindow.this.setVisible(true);
-                CheckEmptyResult.checkResultIsEmpty(deleteFlightPanel.getFlightsTable().getFlights());
+                CheckEmptyResult.checkResultIsEmpty(deleteFlightPanel.getFlightsTable().getFlights(), deleteFlightPanel.getValidateDeletionButton());
             } catch (DataBaseConnectionException throwables) {
                 JOptionPane.showMessageDialog(null, throwables.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }

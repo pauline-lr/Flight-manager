@@ -65,7 +65,7 @@ public class FlightForm extends JPanel {
     }
 
     public Flight getFlight() throws NotMatchException, TextLengthException, FlightException.NumberFlightException, FlightException.DepartureDateException {
-        if (getFlightNumberTextField() != null){
+        if (getFlightNumberTextField() != null) {
             return new Flight(
                     getFlightNumberTextField().getText(),
                     checkDepartureMoment(),
@@ -77,7 +77,7 @@ public class FlightForm extends JPanel {
                     GetID.getGateID(arrivalAirportComboBox, arrivalTerminalComboBox, arrivalGateComboBox),
                     GetID.getPlaneID(planeComboBox)
             );
-        }else{
+        } else {
             return null;
         }
     }
@@ -130,7 +130,6 @@ public class FlightForm extends JPanel {
 
         departureDate = new JSpinner(new SpinnerDateModel(currentDate, null, null, Calendar.DATE));
         departureDate.setEditor(new JSpinner.DateEditor(departureDate, "dd/MM/yyyy"));
-        departureDate.addChangeListener(new departureMomentComboBoxListener());
         this.add(departureDate);
 
         // departureTime
@@ -140,7 +139,6 @@ public class FlightForm extends JPanel {
 
         departureTime = new JSpinner(new SpinnerDateModel(currentDate, null, null, Calendar.HOUR_OF_DAY));
         departureTime.setEditor(new JSpinner.DateEditor(departureTime, "HH:mm"));
-        departureTime.addChangeListener(new departureMomentComboBoxListener());
         this.add(departureTime);
 
         addEmptyField();
@@ -306,7 +304,7 @@ public class FlightForm extends JPanel {
         addEmptyField();
     }
 
-    private void addMealOnBoardField()  {
+    private void addMealOnBoardField() {
         JLabel mealLabel = new JLabel("    Repas");
         mealLabel.setFont(Format.titleFont);
         mealLabel.setHorizontalAlignment(SwingConstants.LEFT);
@@ -348,15 +346,35 @@ public class FlightForm extends JPanel {
     //endregion
 
     //region Set
+    public JComboBox<Object> getDepartureAirportComboBox() {
+        return departureAirportComboBox;
+    }
+
+    public JComboBox<Object> getPilotComboBox() {
+        return pilotComboBox;
+    }
+
+    public JComboBox<Object> getPlaneComboBox() {
+        return planeComboBox;
+    }
+
+    public JSpinner getDepartureDate() {
+        return departureDate;
+    }
+
+    public JSpinner getDepartureTime() {
+        return departureTime;
+    }
+
     public void setFlightNumberComboBox(String flightNumber) {
         flightNumberTextField.setText(flightNumber);
     }
 
-    public void setPilotComboBox(String pilotID) throws DataBaseConnectionException, AllDataException  {
+    public void setPilotComboBox(String pilotID) throws DataBaseConnectionException, AllDataException {
         pilotComboBox.setSelectedItem(controller.getPilotToString(pilotID));
     }
 
-    public void setPlaneComboBox(Integer planeID) throws DataBaseConnectionException, AllDataException   {
+    public void setPlaneComboBox(Integer planeID) throws DataBaseConnectionException, AllDataException {
         planeComboBox.setSelectedItem(controller.getPlaneToString(planeID));
     }
 
@@ -404,63 +422,24 @@ public class FlightForm extends JPanel {
         isMealOnBoardCheckBox.setSelected(isMealOnBoard);
     }
 
-    public void setMealDescriptionTextArea(String textArea)  {
+    public void setMealDescriptionTextArea(String textArea) {
         mealDescriptionTextArea.setText(textArea);
     }
-
     //endregion
 
     //region Listeners
-    private class departureMomentComboBoxListener implements ChangeListener {
-        @Override
-        public void stateChanged(ChangeEvent event) {
-            ArrayList<String> updatedPilotForComboBox = new ArrayList<>();
-            ArrayList<String> updatedPlaneForComboBox = new ArrayList<>();
-            try {
-                updatedPilotForComboBox = controller.getPilotsInOrder(getDepartureMoment(), GetID.getAirportID(departureAirportComboBox));
-            } catch (DataBaseConnectionException exception) {
-                JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-            } catch (AllDataException exception) {
-                JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-            }
-            try {
-                updatedPlaneForComboBox = controller.getAllAvailablePlanesToString(getDepartureMoment());
-            } catch (AllDataException exception) {
-                JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-            } catch (DataBaseConnectionException exception) {
-                JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-            }
-            pilotComboBox.removeAllItems();
-            planeComboBox.removeAllItems();
-            for (String pilot : updatedPilotForComboBox) {
-                pilotComboBox.addItem(pilot);
-            }
-            for (String plane : updatedPlaneForComboBox) {
-                planeComboBox.addItem(plane);
-            }
-        }
-    }
-
     private class departureAirportComboBoxListener implements ItemListener {
         @Override
         public void itemStateChanged(ItemEvent event) {
             ArrayList<String> updatedTerminalsOfAnAirportForComboBox = new ArrayList<>();
             ArrayList<String> updatedGatesOfAnAirportAndTerminalForComboBox = new ArrayList<>();
-            ArrayList<String> updatedPilotForComboBox = new ArrayList<>();
             try {
                 updatedTerminalsOfAnAirportForComboBox = controller.getAllTerminalsOfAnAirportToString(GetID.getAirportID(departureAirportComboBox));
             } catch (AllDataException | DataBaseConnectionException exception) {
-                JOptionPane.showMessageDialog(null, exception.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
             try {
                 updatedGatesOfAnAirportAndTerminalForComboBox = controller.getAllGatesOfAnAirportAndTerminalToString(GetID.getAirportID(arrivalAirportComboBox), (String) departureTerminalComboBox.getSelectedItem());
-            } catch (AllDataException e) {
-                JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
-            } catch (DataBaseConnectionException e) {
-                JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
-            }
-            try {
-                updatedPilotForComboBox = controller.getPilotsInOrder(getDepartureMoment(), GetID.getAirportID(departureAirportComboBox));
             } catch (AllDataException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             } catch (DataBaseConnectionException e) {
@@ -468,16 +447,12 @@ public class FlightForm extends JPanel {
             }
             departureTerminalComboBox.removeAllItems();
             departureGateComboBox.removeAllItems();
-            pilotComboBox.removeAllItems();
             if (event.getStateChange() == ItemEvent.SELECTED) {
                 for (String terminal : updatedTerminalsOfAnAirportForComboBox) {
                     departureTerminalComboBox.addItem(terminal);
                 }
                 for (String gate : updatedGatesOfAnAirportAndTerminalForComboBox) {
                     departureGateComboBox.addItem(gate);
-                }
-                for (String pilot : updatedPilotForComboBox) {
-                    pilotComboBox.addItem(pilot);
                 }
             }
         }
@@ -490,16 +465,16 @@ public class FlightForm extends JPanel {
             try {
                 updatedGatesOfAnAirportAndTerminalForComboBox = controller.getAllGatesOfAnAirportAndTerminalToString(GetID.getAirportID(departureAirportComboBox), (String) departureTerminalComboBox.getSelectedItem());
             } catch (AllDataException e) {
-                JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             } catch (DataBaseConnectionException e) {
-                JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
             departureGateComboBox.removeAllItems();
-                if (event.getStateChange() == ItemEvent.SELECTED) {
-                    for (String gate : updatedGatesOfAnAirportAndTerminalForComboBox) {
-                        departureGateComboBox.addItem(gate);
-                    }
+            if (event.getStateChange() == ItemEvent.SELECTED) {
+                for (String gate : updatedGatesOfAnAirportAndTerminalForComboBox) {
+                    departureGateComboBox.addItem(gate);
                 }
+            }
         }
     }
 
@@ -511,16 +486,16 @@ public class FlightForm extends JPanel {
             try {
                 updatedTerminalsOfAnAirportForComboBox = controller.getAllTerminalsOfAnAirportToString(GetID.getAirportID(arrivalAirportComboBox));
             } catch (AllDataException e) {
-                JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             } catch (DataBaseConnectionException e) {
-                JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
             try {
                 updatedGatesOfAnAirportAndTerminalForComboBox = controller.getAllGatesOfAnAirportAndTerminalToString(GetID.getAirportID(arrivalAirportComboBox), (String) arrivalTerminalComboBox.getSelectedItem());
             } catch (AllDataException e) {
-                JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             } catch (DataBaseConnectionException e) {
-                JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
             arrivalTerminalComboBox.removeAllItems();
             arrivalGateComboBox.removeAllItems();
@@ -542,9 +517,9 @@ public class FlightForm extends JPanel {
             try {
                 updatedGatesOfAnAirportAndTerminalForComboBox = controller.getAllGatesOfAnAirportAndTerminalToString(GetID.getAirportID(arrivalAirportComboBox), (String) arrivalTerminalComboBox.getSelectedItem());
             } catch (AllDataException e) {
-                JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             } catch (DataBaseConnectionException e) {
-                JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
             arrivalGateComboBox.removeAllItems();
             if (event.getStateChange() == ItemEvent.SELECTED) {
@@ -558,6 +533,7 @@ public class FlightForm extends JPanel {
     private class MealOnBoardListener implements ItemListener {
         @Override
         public void itemStateChanged(ItemEvent itemEvent) {
+            mealDescriptionTextArea.setText(null);
             mealDescriptionTextArea.setEnabled(itemEvent.getStateChange() == ItemEvent.SELECTED);
         }
     }
@@ -572,7 +548,7 @@ public class FlightForm extends JPanel {
         return isFlightNumberExisting;
     }
 
-    public JTextField getFlightNumberTextField()  {
+    public JTextField getFlightNumberTextField() {
         String number = flightNumberTextField.getText();
         Pattern pattern = Pattern.compile(REGEX_NUMBER);
         Matcher matcher = pattern.matcher(number);
@@ -592,14 +568,14 @@ public class FlightForm extends JPanel {
 
     public String getMealDescriptionTextArea() throws TextLengthException {
         String mealDescriptionText = mealDescriptionTextArea.getText();
-        if(mealDescriptionText.length() > 400)
+        if (mealDescriptionText.length() > 400)
             throw new TextLengthException("La description du repas est trop longue. Maximum 400 caractères.");
         if (mealDescriptionText.equals(""))
             mealDescriptionText = null;
         return mealDescriptionText;
     }
 
-    private GregorianCalendar getDepartureMoment() {
+    public GregorianCalendar getDepartureMoment() {
         return setFullDate(Format.getDate(departureDate), Format.getDate(departureTime));
     }
 

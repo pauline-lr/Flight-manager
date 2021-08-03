@@ -14,6 +14,7 @@ public class ModifyFlightPanel extends JPanel {
     private ApplicationController controller;
     private ModifyFlightForm modifyFlightForm;
     private FlightForm flightForm;
+    private JButton validationButton;
 
     public ModifyFlightPanel() throws DataBaseConnectionException, AllDataException {
         setController(new ApplicationController());
@@ -38,9 +39,13 @@ public class ModifyFlightPanel extends JPanel {
         this.flightForm = flightForm;
     }
 
+    public JButton getValidationButton() {
+        return validationButton;
+    }
+
     private void initializeValidationButton() {
         JPanel buttonPanel = new JPanel();
-        JButton validationButton = new JButton("Modifier");
+        validationButton = new JButton("Modifier");
 
         validationButton.addActionListener(new ValidationButtonListener());
         buttonPanel.add(validationButton, BorderLayout.CENTER);
@@ -52,7 +57,7 @@ public class ModifyFlightPanel extends JPanel {
         public void actionPerformed(ActionEvent evt) {
             try {
                 Flight flight = flightForm.getFlight();
-                if (flightForm.getFlight() == null) {
+                if (flightForm.getFlight() != null) {
                     String originalFlightNumber = modifyFlightForm.getFlightComboBoxID();
                     if (flight.getNumber().equals(originalFlightNumber) || !flightForm.checkFlightNumberIsExisting()) {
                         controller.modifyFlight(flight, originalFlightNumber);

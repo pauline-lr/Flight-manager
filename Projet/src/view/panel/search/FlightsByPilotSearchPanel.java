@@ -19,6 +19,7 @@ public class FlightsByPilotSearchPanel extends JPanel {
     private ApplicationController controller;
     private FlightsByPilotSearchPanel panel;
     private FlightsByPilotSearchForm flightsByPilotSearchForm;
+    private JButton validation;
 
     public FlightsByPilotSearchPanel()  {
         setController(new ApplicationController());
@@ -34,7 +35,7 @@ public class FlightsByPilotSearchPanel extends JPanel {
         this.add(flightsByPilotSearchForm, BorderLayout.PAGE_START);
 
         JPanel buttonPanel = new JPanel();
-        JButton validation = new JButton("Rechercher");
+        validation = new JButton("Rechercher");
         validation.addActionListener(new ValidationListener());
         this.add(buttonPanel, BorderLayout.SOUTH);
         buttonPanel.add(validation, BorderLayout.CENTER);
@@ -59,7 +60,7 @@ public class FlightsByPilotSearchPanel extends JPanel {
             panel.add(new FlightsByPilotResultPanel(flights), BorderLayout.CENTER);
             panel.revalidate();
             panel.repaint();
-            CheckEmptyResult.checkResultIsEmpty(flights);
+            CheckEmptyResult.checkResultIsEmpty(flights, validation);
         }
     }
 }

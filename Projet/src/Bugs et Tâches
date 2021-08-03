@@ -1,9 +1,5 @@
 Bugs et Tâches
 
-- test DB vide
-- mettre listener sur repas
-- test null pointer
-
 A faire en dernier
 - Jeux de tests
     pour des valeurs ne pouvant contenir que des intervales, tester 5 valeur
@@ -30,7 +26,7 @@ A faire en dernier
 
     o Champ obligatoire non rempli
         Champs obligatoires pour flight form :
-            -✅ Numéro
+            - ✅ Numéro
             (Pour le reste, il y a des valeurs par défaut)
     o Valeur numérique contenant des caractères
             Seulement possible pour numéro vol car le reste JComBox ou JSpinner
