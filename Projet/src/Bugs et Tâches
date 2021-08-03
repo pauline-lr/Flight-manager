@@ -3,6 +3,7 @@ Bugs et Tâches
 - test DB vide
 - mettre listener sur repas
 - test null pointer
+- idée d'ajout de test : si un pilot ne se trouve pas dans allpilots, il ne peut pas se trouver dans onlocationpilot
 
 A faire en dernier
 - Jeux de tests
