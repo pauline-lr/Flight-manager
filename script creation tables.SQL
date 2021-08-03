@@ -1,14 +1,3 @@
--- DROP TABLE seat;
--- DROP TABLE class;
--- DROP TABLE flight;
--- DROP TABLE passenger;
--- DROP TABLE pilot;
--- DROP TABLE gate;
--- DROP TABLE airport;
--- DROP TABLE plane;
-
-#AirlineDataBase
-
 CREATE TABLE passenger (
     passport_number CHAR(9),
     first_name VARCHAR(30) NOT NULL,
