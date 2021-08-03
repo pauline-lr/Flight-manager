@@ -579,8 +579,13 @@ public class FlightForm extends JPanel {
         if (matcher.find()) {
             return flightNumberTextField;
         } else {
-            JOptionPane.showMessageDialog(null, "Le numéro de vol : " + number + " ne correspond pas à la structure requise : \n" +
-                    "2 lettres majuscules et 4 chiffres.", "Erreur", JOptionPane.ERROR_MESSAGE);
+            if (number.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Le numéro de vol ne peut pas être vide.", "Erreur", JOptionPane.ERROR_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Le numéro de vol : " + number + " ne correspond pas à la structure requise : \n" +
+                        "2 lettres majuscules et 4 chiffres.", "Erreur", JOptionPane.ERROR_MESSAGE);
+            }
+
         }
         return null;
     }
