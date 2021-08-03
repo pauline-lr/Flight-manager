@@ -4,7 +4,7 @@ Bugs et Tâches
 - mettre listener sur repas
 - test null pointer
 - idée d'ajout de test : si un pilot ne se trouve pas dans allpilots, il ne peut pas se trouver dans onlocationpilot
-
+    actuellement, le test junit réussi quand c'est le cas
 A faire en dernier
 - Jeux de tests
     pour des valeurs ne pouvant contenir que des intervales, tester 5 valeur
