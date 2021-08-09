@@ -552,14 +552,14 @@ public class FlightForm extends JPanel {
         Matcher matcher = pattern.matcher(number);
         if (matcher.find()) {
             return flightNumberTextField;
-        } else {
+        } /*else {
             if (number.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Le numéro de vol ne peut pas être vide.", "Erreur", JOptionPane.ERROR_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(null, "Le numéro de vol : " + number + " ne correspond pas à la structure requise : \n" +
                         "2 lettres majuscules et 4 chiffres.", "Erreur", JOptionPane.ERROR_MESSAGE);
             }
-        }
+        }*/
         return null;
     }
 
