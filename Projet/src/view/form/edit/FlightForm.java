@@ -433,15 +433,11 @@ public class FlightForm extends JPanel {
             ArrayList<String> updatedGatesOfAnAirportAndTerminalForComboBox = new ArrayList<>();
             try {
                 updatedTerminalsOfAnAirportForComboBox = controller.getAllTerminalsOfAnAirportToString(GetID.getAirportID(departureAirportComboBox));
-            } catch (AllDataException | DataBaseConnectionException exception) {
-                JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-            }
-            try {
                 updatedGatesOfAnAirportAndTerminalForComboBox = controller.getAllGatesOfAnAirportAndTerminalToString(GetID.getAirportID(arrivalAirportComboBox), (String) departureTerminalComboBox.getSelectedItem());
-            } catch (AllDataException e) {
-                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-            } catch (DataBaseConnectionException e) {
-                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+            } catch (AllDataException exception) {
+                JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+            } catch (DataBaseConnectionException exception) {
+                JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
             departureTerminalComboBox.removeAllItems();
             departureGateComboBox.removeAllItems();
@@ -483,18 +479,13 @@ public class FlightForm extends JPanel {
             ArrayList<String> updatedGatesOfAnAirportAndTerminalForComboBox = new ArrayList<>();
             try {
                 updatedTerminalsOfAnAirportForComboBox = controller.getAllTerminalsOfAnAirportToString(GetID.getAirportID(arrivalAirportComboBox));
-            } catch (AllDataException e) {
-                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-            } catch (DataBaseConnectionException e) {
-                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-            }
-            try {
                 updatedGatesOfAnAirportAndTerminalForComboBox = controller.getAllGatesOfAnAirportAndTerminalToString(GetID.getAirportID(arrivalAirportComboBox), (String) arrivalTerminalComboBox.getSelectedItem());
             } catch (AllDataException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             } catch (DataBaseConnectionException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
+
             arrivalTerminalComboBox.removeAllItems();
             arrivalGateComboBox.removeAllItems();
             if (event.getStateChange() == ItemEvent.SELECTED) {
@@ -546,13 +537,16 @@ public class FlightForm extends JPanel {
         return isFlightNumberExisting;
     }
 
-    public JTextField getFlightNumberTextField() {
+    public JTextField getFlightNumberTextField() throws FlightException.NumberFlightException {
         String number = flightNumberTextField.getText();
         Pattern pattern = Pattern.compile(REGEX_NUMBER);
         Matcher matcher = pattern.matcher(number);
         if (matcher.find()) {
             return flightNumberTextField;
-        } /*else {
+        }else{
+            throw new FlightException.NumberFlightException(number);
+        }
+        /*else {
             if (number.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Le numéro de vol ne peut pas être vide.", "Erreur", JOptionPane.ERROR_MESSAGE);
             } else {
@@ -560,7 +554,6 @@ public class FlightForm extends JPanel {
                         "2 lettres majuscules et 4 chiffres.", "Erreur", JOptionPane.ERROR_MESSAGE);
             }
         }*/
-        return null;
     }
 
     public String getMealDescriptionTextArea() throws TextLengthException {
