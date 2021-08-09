@@ -12,8 +12,6 @@ import tool.Format;
 import tool.GetID;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -64,7 +62,7 @@ public class FlightForm extends JPanel {
         addMealOnBoardField();
     }
 
-    public Flight getFlight() throws NotMatchException, TextLengthException, FlightException.NumberFlightException, FlightException.DepartureDateException {
+    public Flight getFlight() throws NotMatchException, TextLengthException, FlightException.NumberFlightException, FlightException.DepartureDateException, FlightException.ArrivalDateException {
         if (getFlightNumberTextField() != null) {
             return new Flight(
                     getFlightNumberTextField().getText(),
@@ -561,7 +559,6 @@ public class FlightForm extends JPanel {
                 JOptionPane.showMessageDialog(null, "Le numéro de vol : " + number + " ne correspond pas à la structure requise : \n" +
                         "2 lettres majuscules et 4 chiffres.", "Erreur", JOptionPane.ERROR_MESSAGE);
             }
-
         }
         return null;
     }
@@ -591,11 +588,17 @@ public class FlightForm extends JPanel {
         return departureDateGC;
     }
 
-    public GregorianCalendar checkArrivalMoment() throws FlightException.DepartureDateException {
+    public GregorianCalendar checkArrivalMoment() throws FlightException.ArrivalDateException, FlightException.DepartureDateException {
         GregorianCalendar arrivalDateGC = getArrivalMoment();
-        if (arrivalDateGC.compareTo(checkDepartureMoment()) < 0) {
+
+        if(checkDepartureMoment() == null){
             throw new FlightException.DepartureDateException();
+        }else {
+            if (arrivalDateGC.compareTo(checkDepartureMoment()) < 0) {
+                throw new FlightException.ArrivalDateException();
+            }
         }
+
         return arrivalDateGC;
     }
 }

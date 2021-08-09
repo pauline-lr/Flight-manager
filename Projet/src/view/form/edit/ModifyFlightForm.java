@@ -63,7 +63,6 @@ public class ModifyFlightForm extends JPanel {
         this.flightForm = flightForm;
     }
 
-    // ICIIIII
     private class flightComboBoxListener implements ItemListener {
         @Override
         public void itemStateChanged(ItemEvent event) {
@@ -71,9 +70,9 @@ public class ModifyFlightForm extends JPanel {
                 try {
                     updateFormInformation();
                 } catch (DataBaseConnectionException e) {
-                    e.printStackTrace();
+                    JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                 } catch (AllDataException e) {
-                    e.printStackTrace();
+                    JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                 }
             }
         }
