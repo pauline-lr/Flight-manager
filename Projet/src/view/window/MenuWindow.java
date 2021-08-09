@@ -1,6 +1,7 @@
 package view.window;
 
 import controller.ApplicationController;
+import exception.FlightException;
 import exception.dataBase.AllDataException;
 import exception.dataBase.DataBaseCloseException;
 import exception.dataBase.DataBaseConnectionException;
@@ -182,6 +183,8 @@ public class MenuWindow extends JFrame {
             } catch (AllDataException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             } catch (DataBaseConnectionException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+            } catch (FlightException.NumberFlightException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
         }

@@ -19,7 +19,7 @@ public class ModifyFlightForm extends JPanel {
     private FlightForm flightForm;
     private JComboBox<Object> flightComboBox;
 
-    public ModifyFlightForm(FlightForm flightForm) throws DataBaseConnectionException, AllDataException {
+    public ModifyFlightForm(FlightForm flightForm) throws DataBaseConnectionException, AllDataException, FlightException.NumberFlightException {
         setController(new ApplicationController());
         setFlightForm(flightForm);
         this.setLayout(new GridLayout(3, 1, 3, 3));
@@ -69,42 +69,38 @@ public class ModifyFlightForm extends JPanel {
             if (event.getStateChange() == ItemEvent.SELECTED) {
                 try {
                     updateFormInformation();
-                } catch (DataBaseConnectionException e) {
-                    JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-                } catch (AllDataException e) {
+                } catch (DataBaseConnectionException exception) {
+                    JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+                } catch (AllDataException exception) {
+                    JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+                } catch (FlightException.NumberFlightException e) {
                     JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                 }
             }
         }
     }
 
-    private void updateFormInformation() throws DataBaseConnectionException, AllDataException {
+    private void updateFormInformation() throws DataBaseConnectionException, AllDataException, FlightException.NumberFlightException {
         if (!(controller.getAllFlightsToString().isEmpty())) {
             String flightNumber = getFlightComboBoxID();
-            try {
-                Flight flight = controller.getFlight(flightNumber);
-                flightForm.setFlightNumberComboBox(flight.getNumber());
-                flightForm.setPilotComboBox(flight.getPilot());
-                flightForm.setPlaneComboBox(flight.getNumberPlane());
-                flightForm.setDepartureDate(flight.getDepartureTime());
-                flightForm.setDepartureTime(flight.getDepartureTime());
-                flightForm.setArrivalDate(flight.getArrivalTime());
-                flightForm.setArrivalTime(flight.getArrivalTime());
-                flightForm.setDepartureAirportComboBox(flight.getDepartureGate());
-                flightForm.setDepartureTerminalComboBox(flight.getDepartureGate());
-                flightForm.setDepartureGateComboBox(flight.getDepartureGate());
-                flightForm.setArrivalAirportComboBox(flight.getArrivalGate());
-                flightForm.setArrivalTerminalComboBox(flight.getArrivalGate());
-                flightForm.setArrivalGateComboBox(flight.getArrivalGate());
-                flightForm.setIsMealOnBoardCheckBox(flight.getMealOnBoard());
-                flightForm.setMealDescriptionTextArea(flight.getMealDescription());
-            } catch (DataBaseConnectionException e) {
-                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-            } catch (AllDataException e) {
-                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-            } catch (FlightException.NumberFlightException e) {
-                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-            }
+
+            Flight flight = controller.getFlight(flightNumber);
+            flightForm.setFlightNumberComboBox(flight.getNumber());
+            flightForm.setPilotComboBox(flight.getPilot());
+            flightForm.setPlaneComboBox(flight.getNumberPlane());
+            flightForm.setDepartureDate(flight.getDepartureTime());
+            flightForm.setDepartureTime(flight.getDepartureTime());
+            flightForm.setArrivalDate(flight.getArrivalTime());
+            flightForm.setArrivalTime(flight.getArrivalTime());
+            flightForm.setDepartureAirportComboBox(flight.getDepartureGate());
+            flightForm.setDepartureTerminalComboBox(flight.getDepartureGate());
+            flightForm.setDepartureGateComboBox(flight.getDepartureGate());
+            flightForm.setArrivalAirportComboBox(flight.getArrivalGate());
+            flightForm.setArrivalTerminalComboBox(flight.getArrivalGate());
+            flightForm.setArrivalGateComboBox(flight.getArrivalGate());
+            flightForm.setIsMealOnBoardCheckBox(flight.getMealOnBoard());
+            flightForm.setMealDescriptionTextArea(flight.getMealDescription());
+
         }
     }
 }
