@@ -86,17 +86,16 @@ public class DeleteFlightPanel extends JPanel {
                         JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                     }
 
-                    // ICIIIIII
                     try {
                         if (controller.getAllFlights().isEmpty()) {
                             validateDeletionButton.setEnabled(false);
                         }
                     } catch (AllDataException e) {
-                        e.printStackTrace();
+                        JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                     } catch (DataBaseConnectionException e) {
-                        e.printStackTrace();
+                        JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                     } catch (FlightException.NumberFlightException e) {
-                        e.printStackTrace();
+                        JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                     }
                     JOptionPane.showMessageDialog(null, "Vol(s) supprimé(s)", "Succès", JOptionPane.INFORMATION_MESSAGE);
                 }
