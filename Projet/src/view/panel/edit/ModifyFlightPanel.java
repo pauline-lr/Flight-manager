@@ -2,7 +2,6 @@ package view.panel.edit;
 
 import controller.ApplicationController;
 import exception.*;
-import exception.dataBase.*;
 import model.Flight;
 import view.form.edit.*;
 
@@ -16,7 +15,7 @@ public class ModifyFlightPanel extends JPanel {
     private FlightForm flightForm;
     private JButton validationButton;
 
-    public ModifyFlightPanel() throws DataBaseConnectionException, AllDataException, FlightException.NumberFlightException {
+    public ModifyFlightPanel() throws ConnectionException, RetrievalException, FlightException.NumberFlightException {
         setController(new ApplicationController());
         setFlightForm(new FlightForm());
         setModifyFlightForm(new ModifyFlightForm(flightForm));
@@ -73,11 +72,11 @@ public class ModifyFlightPanel extends JPanel {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             } catch (FlightException.DepartureDateException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-            } catch (DataBaseConnectionException e) {
+            } catch (ConnectionException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             } catch (ModifyException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-            } catch (AllDataException e) {
+            } catch (RetrievalException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             } catch (FlightException.ArrivalDateException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);

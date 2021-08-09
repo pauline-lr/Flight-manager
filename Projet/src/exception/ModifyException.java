@@ -1,4 +1,4 @@
-package exception.dataBase;
+package exception;
 
 public class ModifyException extends Exception{
     private String message;

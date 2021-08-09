@@ -1,9 +1,9 @@
-package exception.dataBase;
+package exception;
 
-public class AllDataException extends Exception{
+public class RetrievalException extends Exception{
     private String exceptionMessage;
 
-    public AllDataException(String exceptionMessage) {
+    public RetrievalException(String exceptionMessage) {
         this.exceptionMessage = exceptionMessage;
     }
 

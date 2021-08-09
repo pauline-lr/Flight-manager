@@ -1,9 +1,9 @@
-package exception.dataBase;
+package exception;
 
-public class DataBaseConnectionException extends Exception {
+public class ConnectionException extends Exception {
     private String exceptionMessage;
 
-    public DataBaseConnectionException(String exceptionMessage) {
+    public ConnectionException(String exceptionMessage) {
         this.exceptionMessage = exceptionMessage;
     }
 

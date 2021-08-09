@@ -2,12 +2,11 @@ package view.form.edit;
 
 import controller.ApplicationController;
 import exception.FlightException;
-import exception.dataBase.AllDataException;
-import exception.dataBase.DataBaseConnectionException;
+import exception.RetrievalException;
+import exception.ConnectionException;
 import model.Flight;
 import tool.Format;
 import tool.GetID;
-import view.CheckEmptyResult;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,7 +18,7 @@ public class ModifyFlightForm extends JPanel {
     private FlightForm flightForm;
     private JComboBox<Object> flightComboBox;
 
-    public ModifyFlightForm(FlightForm flightForm) throws DataBaseConnectionException, AllDataException, FlightException.NumberFlightException {
+    public ModifyFlightForm(FlightForm flightForm) throws ConnectionException, RetrievalException, FlightException.NumberFlightException {
         setController(new ApplicationController());
         setFlightForm(flightForm);
         this.setLayout(new GridLayout(3, 1, 3, 3));
@@ -44,7 +43,7 @@ public class ModifyFlightForm extends JPanel {
         return flightComboBox;
     }
 
-    public void updateFlightComboBox() throws DataBaseConnectionException, AllDataException {
+    public void updateFlightComboBox() throws ConnectionException, RetrievalException {
         flightComboBox.removeAllItems();
         for (String flight : controller.getAllFlightsToString()) {
             flightComboBox.addItem(flight);
@@ -69,9 +68,9 @@ public class ModifyFlightForm extends JPanel {
             if (event.getStateChange() == ItemEvent.SELECTED) {
                 try {
                     updateFormInformation();
-                } catch (DataBaseConnectionException exception) {
+                } catch (ConnectionException exception) {
                     JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-                } catch (AllDataException exception) {
+                } catch (RetrievalException exception) {
                     JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                 } catch (FlightException.NumberFlightException e) {
                     JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
@@ -80,7 +79,7 @@ public class ModifyFlightForm extends JPanel {
         }
     }
 
-    private void updateFormInformation() throws DataBaseConnectionException, AllDataException, FlightException.NumberFlightException {
+    private void updateFormInformation() throws ConnectionException, RetrievalException, FlightException.NumberFlightException {
         if (!(controller.getAllFlightsToString().isEmpty())) {
             String flightNumber = getFlightComboBoxID();
 

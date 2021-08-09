@@ -1,7 +1,6 @@
 package pattern;
 
 import exception.*;
-import exception.dataBase.*;
 import model.*;
 import model.search.FlightsBetweenDatesSearch;
 import model.search.FlightsByPilotSearch;
@@ -12,88 +11,88 @@ import java.util.*;
 public interface DataAccessObjectPattern {
     //region Get
     Flight getFlight(String flightNumber)
-            throws DataBaseConnectionException,  FlightException.NumberFlightException, AllDataException;
+            throws ConnectionException,  FlightException.NumberFlightException, RetrievalException;
 
     ArrayList<Flight> getAllFlights()
-            throws DataBaseConnectionException, FlightException.NumberFlightException, AllDataException;
+            throws ConnectionException, FlightException.NumberFlightException, RetrievalException;
     //endregion
 
     //region Get to String
     String getFlightToString(String flightNumber)
-            throws  DataBaseConnectionException, AllDataException;
+            throws ConnectionException, RetrievalException;
 
     String getPilotToString(String pilotLicenceNumber)
-            throws DataBaseConnectionException, AllDataException;
+            throws ConnectionException, RetrievalException;
 
     String getPlaneToString(Integer planeID)
-            throws DataBaseConnectionException, AllDataException;
+            throws ConnectionException, RetrievalException;
 
     String getAirportToString(String gateID)
-            throws DataBaseConnectionException, AllDataException;
+            throws ConnectionException, RetrievalException;
 
     String getTerminalToString(String gateID)
-            throws DataBaseConnectionException, AllDataException;
+            throws ConnectionException, RetrievalException;
 
     String getGateToString(String gateID)
-            throws DataBaseConnectionException, AllDataException;
+            throws ConnectionException, RetrievalException;
 
     ArrayList<String> getAllFlightsToString()
-            throws DataBaseConnectionException, AllDataException;
+            throws ConnectionException, RetrievalException;
 
     ArrayList<String> getAllPilotsToString()
-            throws DataBaseConnectionException, AllDataException;
+            throws ConnectionException, RetrievalException;
 
     ArrayList<String> getLastPilotFlightArrivingAt(GregorianCalendar date, String airportID)
-            throws AllDataException, DataBaseConnectionException;
+            throws RetrievalException, ConnectionException;
 
     ArrayList<String> getAllAvailablePilotsToString(GregorianCalendar date)
-            throws DataBaseConnectionException, AllDataException;
+            throws ConnectionException, RetrievalException;
 
     ArrayList<String> getAllAvailablePlanesToString(GregorianCalendar date)
-            throws DataBaseConnectionException, AllDataException;
+            throws ConnectionException, RetrievalException;
 
     ArrayList<String> getAllClassesToString()
-            throws DataBaseConnectionException, AllDataException;
+            throws ConnectionException, RetrievalException;
 
     ArrayList<String> getAllAirportsToString()
-            throws DataBaseConnectionException, AllDataException;
+            throws ConnectionException, RetrievalException;
 
     ArrayList<String> getAllTerminalsOfAnAirportToString(String airportCode)
-            throws DataBaseConnectionException, AllDataException;
+            throws ConnectionException, RetrievalException;
 
     ArrayList<String> getAllGatesOfAnAirportAndTerminalToString(String airportCode, String terminal)
-            throws DataBaseConnectionException, AllDataException;
+            throws ConnectionException, RetrievalException;
     //endregion
 
     //region Search
     ArrayList<FlightsBetweenDatesSearch> getAllFlightsBetweenDates(GregorianCalendar startDate, GregorianCalendar endDate)
-            throws AllDataException, DataBaseConnectionException;
+            throws RetrievalException, ConnectionException;
 
     ArrayList<PassengersByClassSearch> getAllPassengersOfAClass(String className)
-            throws AllDataException, DataBaseConnectionException;
+            throws RetrievalException, ConnectionException;
 
     ArrayList<FlightsByPilotSearch> getAllFlightsOfAPilot(String pilotLicenceNumber)
-            throws AllDataException, DataBaseConnectionException;
+            throws RetrievalException, ConnectionException;
     //endregion
 
     //region Edit
     void addFlight(Flight flight)
-            throws DataBaseConnectionException, AddDataException, AllDataException;
+            throws ConnectionException, AddException, RetrievalException;
 
     void modifyFlight(Flight flight, String originalFlightNumber)
-            throws DataBaseConnectionException, ModifyException;
+            throws ConnectionException, ModifyException;
 
     void deleteFlight(String flightNumber)
-            throws  DataBaseConnectionException, ModifyException, AllDataException;
+            throws ConnectionException, ModifyException, RetrievalException;
     //endregion
 
     //region Test
     Boolean flightNumberIsExisting(String flightNumber)
-            throws  DataBaseConnectionException, ModifyException;
+            throws ConnectionException, ModifyException;
     //endregion
 
     //region Connection
     void closeConnection()
-            throws DataBaseCloseException, DataBaseConnectionException;
+            throws CloseException, ConnectionException;
     //endregion
 }

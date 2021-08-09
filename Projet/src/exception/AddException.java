@@ -1,9 +1,9 @@
-package exception.dataBase;
+package exception;
 
-public class AddDataException extends Exception{
+public class AddException extends Exception{
     private String message;
 
-    public AddDataException(String message) {
+    public AddException(String message) {
         this.message = message;
     }
 

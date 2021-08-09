@@ -2,7 +2,6 @@ package business;
 
 import dataAccess.*;
 import exception.*;
-import exception.dataBase.*;
 import model.*;
 import model.search.FlightsBetweenDatesSearch;
 import model.search.FlightsByPilotSearch;
@@ -35,12 +34,12 @@ public class FlightManager {
         return newCollection;
     }*/
 
-    public ArrayList<String> getOnLocationPilots(GregorianCalendar date, String airportID) throws DataBaseConnectionException, AllDataException {
+    public ArrayList<String> getOnLocationPilots(GregorianCalendar date, String airportID) throws ConnectionException, RetrievalException {
         ArrayList<String> onLocationPilots = getLastPilotFlightArrivingAt(date, airportID);
         return onLocationPilots;
     }
 
-    public ArrayList<String> getAllPilots(GregorianCalendar date) throws DataBaseConnectionException, AllDataException {
+    public ArrayList<String> getAllPilots(GregorianCalendar date) throws ConnectionException, RetrievalException {
         ArrayList<String> allPilots = getAllAvailablePilotsToString(date);
         return allPilots;
     }
@@ -65,137 +64,137 @@ public class FlightManager {
 
     //region Get
     public Flight getFlight(String flightNumber)
-            throws DataBaseConnectionException, FlightException.NumberFlightException, AllDataException {
+            throws ConnectionException, FlightException.NumberFlightException, RetrievalException {
         return dataAccessObjectPattern.getFlight(flightNumber);
     }
 
     public ArrayList<Flight> getAllFlights()
-            throws  DataBaseConnectionException, AllDataException {
+            throws ConnectionException, RetrievalException {
         return dataAccessObjectPattern.getAllFlights();
     }
     //endregion
 
     //region Get to String
     public String getFlightToString(String flightNumber)
-            throws  DataBaseConnectionException, AllDataException {
+            throws ConnectionException, RetrievalException {
         return dataAccessObjectPattern.getFlightToString(flightNumber);
     }
 
     public String getPilotToString(String pilotLicenceNumber)
-            throws  DataBaseConnectionException, AllDataException {
+            throws ConnectionException, RetrievalException {
         return dataAccessObjectPattern.getPilotToString(pilotLicenceNumber);
     }
 
     public String getPlaneToString(Integer planeID)
-            throws  DataBaseConnectionException, AllDataException {
+            throws ConnectionException, RetrievalException {
         return dataAccessObjectPattern.getPlaneToString(planeID);
     }
 
     public String getAirportToString(String gateID)
-            throws  DataBaseConnectionException, AllDataException {
+            throws ConnectionException, RetrievalException {
         return dataAccessObjectPattern.getAirportToString(gateID);
     }
 
     public String getTerminalToString(String gateID)
-            throws  DataBaseConnectionException, AllDataException {
+            throws ConnectionException, RetrievalException {
         return dataAccessObjectPattern.getTerminalToString(gateID);
     }
 
     public String getGateToString(String gateID)
-            throws  DataBaseConnectionException, AllDataException {
+            throws ConnectionException, RetrievalException {
         return dataAccessObjectPattern.getGateToString(gateID);
     }
 
     public ArrayList<String> getAllFlightsToString()
-            throws  DataBaseConnectionException, AllDataException {
+            throws ConnectionException, RetrievalException {
         return dataAccessObjectPattern.getAllFlightsToString();
     }
 
     public ArrayList<String> getAllPilotsToString()
-            throws  DataBaseConnectionException, AllDataException {
+            throws ConnectionException, RetrievalException {
         return dataAccessObjectPattern.getAllPilotsToString();
     }
 
     public ArrayList<String> getLastPilotFlightArrivingAt(GregorianCalendar date, String airportID)
-            throws  DataBaseConnectionException, AllDataException {
+            throws ConnectionException, RetrievalException {
         return dataAccessObjectPattern.getLastPilotFlightArrivingAt(date, airportID);
     }
 
     public ArrayList<String> getAllAvailablePilotsToString(GregorianCalendar date)
-            throws  DataBaseConnectionException, AllDataException {
+            throws ConnectionException, RetrievalException {
         return dataAccessObjectPattern.getAllAvailablePilotsToString(date);
     }
 
     public ArrayList<String> getAllAvailablePlanesToString(GregorianCalendar date)
-            throws  DataBaseConnectionException, AllDataException {
+            throws ConnectionException, RetrievalException {
         return dataAccessObjectPattern.getAllAvailablePlanesToString(date);
     }
 
     public ArrayList<String> getAllClassesToString()
-            throws  DataBaseConnectionException, AllDataException {
+            throws ConnectionException, RetrievalException {
         return dataAccessObjectPattern.getAllClassesToString();
     }
 
     public ArrayList<String> getAllAirportsToString()
-            throws  DataBaseConnectionException, AllDataException {
+            throws ConnectionException, RetrievalException {
         return dataAccessObjectPattern.getAllAirportsToString();
     }
 
     public ArrayList<String> getAllTerminalsOfAnAirportToString(String airportCode)
-            throws  DataBaseConnectionException, AllDataException {
+            throws ConnectionException, RetrievalException {
         return dataAccessObjectPattern.getAllTerminalsOfAnAirportToString(airportCode);
     }
 
     public ArrayList<String> getAllGatesOfAnAirportAndTerminalToString(String airportCode, String terminal)
-            throws  DataBaseConnectionException, AllDataException {
+            throws ConnectionException, RetrievalException {
         return dataAccessObjectPattern.getAllGatesOfAnAirportAndTerminalToString(airportCode, terminal);
     }
     //endregion
 
     //region Search
     public ArrayList<FlightsBetweenDatesSearch> getAllFlightsBetweenDates(GregorianCalendar startDate, GregorianCalendar endDate)
-            throws AllDataException, DataBaseConnectionException {
+            throws RetrievalException, ConnectionException {
         return dataAccessObjectPattern.getAllFlightsBetweenDates(startDate, endDate);
     }
 
     public ArrayList<PassengersByClassSearch> getAllPassengersOfAClass(String className)
-            throws AllDataException, DataBaseConnectionException {
+            throws RetrievalException, ConnectionException {
         return dataAccessObjectPattern.getAllPassengersOfAClass(className);
     }
 
     public ArrayList<FlightsByPilotSearch> getAllFlightsOfAPilot(String pilotLicenceNumber)
-            throws AllDataException, DataBaseConnectionException {
+            throws RetrievalException, ConnectionException {
         return dataAccessObjectPattern.getAllFlightsOfAPilot(pilotLicenceNumber);
     }
     //endregion
 
     //region Edit
     public void addFlight(Flight flight)
-            throws AddDataException,  DataBaseConnectionException {
+            throws AddException, ConnectionException {
         dataAccessObjectPattern.addFlight(flight);
     }
 
     public void modifyFlight(Flight flight, String originalFlightNumber)
-            throws ModifyException, DataBaseConnectionException {
+            throws ModifyException, ConnectionException {
         dataAccessObjectPattern.modifyFlight(flight, originalFlightNumber);
     }
 
     public void deleteFlight(String flightNumber)
-            throws DataBaseConnectionException, ModifyException {
+            throws ConnectionException, ModifyException {
         dataAccessObjectPattern.deleteFlight(flightNumber);
     }
     //endregion
 
     //region Test
     public Boolean flightNumberIsExisting(String flightNumber)
-            throws DataBaseConnectionException, ModifyException {
+            throws ConnectionException, ModifyException {
         return dataAccessObjectPattern.flightNumberIsExisting(flightNumber);
     }
     //endregion
 
     //region Connection
     public void closeConnection()
-            throws DataBaseCloseException, DataBaseConnectionException {
+            throws CloseException, ConnectionException {
         dataAccessObjectPattern.closeConnection();
     }
     //endregion

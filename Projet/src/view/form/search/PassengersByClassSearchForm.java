@@ -1,8 +1,8 @@
 package view.form.search;
 
 import controller.ApplicationController;
-import exception.dataBase.AllDataException;
-import exception.dataBase.DataBaseConnectionException;
+import exception.RetrievalException;
+import exception.ConnectionException;
 import tool.Format;
 
 import javax.swing.*;
@@ -12,7 +12,7 @@ public class PassengersByClassSearchForm extends JPanel {
     private ApplicationController controller;
     private JComboBox<Object> classComboBox;
 
-    public PassengersByClassSearchForm() throws DataBaseConnectionException, AllDataException {
+    public PassengersByClassSearchForm() throws ConnectionException, RetrievalException {
         setController(new ApplicationController());
         this.setLayout(new GridLayout(4, 2));
 
@@ -27,7 +27,7 @@ public class PassengersByClassSearchForm extends JPanel {
         this.controller = controller;
     }
 
-    public void createPassengersByClassForm() throws DataBaseConnectionException, AllDataException {
+    public void createPassengersByClassForm() throws ConnectionException, RetrievalException {
         JLabel titleLabel = new JLabel("Rechercher les passagers d'une classe");
         titleLabel.setFont(Format.bigTitleFont);
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);

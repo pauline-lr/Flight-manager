@@ -1,6 +1,6 @@
 package view.panel.list;
 
-import exception.dataBase.DataBaseConnectionException;
+import exception.ConnectionException;
 import view.table.AllFlightsListTable;
 
 import javax.swing.*;
@@ -10,7 +10,7 @@ public class AllFlightsListPanel extends JPanel {
     AllFlightsListTable flightsTable;
 
     public AllFlightsListPanel()
-            throws DataBaseConnectionException {
+            throws ConnectionException {
         setFlightsTable(new AllFlightsListTable());
         this.setLayout(new BorderLayout());
         JTable table = new JTable(flightsTable);

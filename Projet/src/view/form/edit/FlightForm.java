@@ -4,9 +4,9 @@ import controller.ApplicationController;
 import exception.FlightException;
 import exception.NotMatchException;
 import exception.TextLengthException;
-import exception.dataBase.AllDataException;
-import exception.dataBase.DataBaseConnectionException;
-import exception.dataBase.ModifyException;
+import exception.RetrievalException;
+import exception.ConnectionException;
+import exception.ModifyException;
 import model.Flight;
 import tool.Format;
 import tool.GetID;
@@ -35,7 +35,7 @@ public class FlightForm extends JPanel {
             departureAirportComboBox, departureTerminalComboBox, departureGateComboBox,
             arrivalAirportComboBox, arrivalTerminalComboBox, arrivalGateComboBox;
 
-    public FlightForm() throws AllDataException, DataBaseConnectionException {
+    public FlightForm() throws RetrievalException, ConnectionException {
         setController(new ApplicationController());
         setCurrentDate(new Date());
         GridLayout grid = new GridLayout(18, 5);
@@ -51,7 +51,7 @@ public class FlightForm extends JPanel {
         this.currentDate = currentDate;
     }
 
-    private void createFlightForm() throws AllDataException, DataBaseConnectionException {
+    private void createFlightForm() throws RetrievalException, ConnectionException {
         addFlightNumberField();
         addDepartureMomentField();
         addDepartureLocationField();
@@ -142,7 +142,7 @@ public class FlightForm extends JPanel {
         addEmptyField();
     }
 
-    private void addDepartureLocationField() throws DataBaseConnectionException, AllDataException {
+    private void addDepartureLocationField() throws ConnectionException, RetrievalException {
         // departureAirport
         JLabel departureAirportLabel = new JLabel("Aéroport : ");
         departureAirportLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -216,7 +216,7 @@ public class FlightForm extends JPanel {
         addEmptyField();
     }
 
-    private void addArrivalLocationField() throws DataBaseConnectionException, AllDataException {
+    private void addArrivalLocationField() throws ConnectionException, RetrievalException {
         // arrivalAirport
         JLabel arrivalAirportLabel = new JLabel("Aéroport : ");
         arrivalAirportLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -368,11 +368,11 @@ public class FlightForm extends JPanel {
         flightNumberTextField.setText(flightNumber);
     }
 
-    public void setPilotComboBox(String pilotID) throws DataBaseConnectionException, AllDataException {
+    public void setPilotComboBox(String pilotID) throws ConnectionException, RetrievalException {
         pilotComboBox.setSelectedItem(controller.getPilotToString(pilotID));
     }
 
-    public void setPlaneComboBox(Integer planeID) throws DataBaseConnectionException, AllDataException {
+    public void setPlaneComboBox(Integer planeID) throws ConnectionException, RetrievalException {
         planeComboBox.setSelectedItem(controller.getPlaneToString(planeID));
     }
 
@@ -392,27 +392,27 @@ public class FlightForm extends JPanel {
         arrivalTime.setValue(time.getTime());
     }
 
-    public void setDepartureAirportComboBox(String gateID) throws DataBaseConnectionException, AllDataException {
+    public void setDepartureAirportComboBox(String gateID) throws ConnectionException, RetrievalException {
         departureAirportComboBox.setSelectedItem(controller.getAirportToString(gateID));
     }
 
-    public void setDepartureTerminalComboBox(String gateID) throws DataBaseConnectionException, AllDataException {
+    public void setDepartureTerminalComboBox(String gateID) throws ConnectionException, RetrievalException {
         departureTerminalComboBox.setSelectedItem(controller.getTerminalToString(gateID));
     }
 
-    public void setDepartureGateComboBox(String gateID) throws DataBaseConnectionException, AllDataException {
+    public void setDepartureGateComboBox(String gateID) throws ConnectionException, RetrievalException {
         departureGateComboBox.setSelectedItem(controller.getGateToString(gateID));
     }
 
-    public void setArrivalAirportComboBox(String gateID) throws DataBaseConnectionException, AllDataException {
+    public void setArrivalAirportComboBox(String gateID) throws ConnectionException, RetrievalException {
         arrivalAirportComboBox.setSelectedItem(controller.getAirportToString(gateID));
     }
 
-    public void setArrivalTerminalComboBox(String gateID) throws DataBaseConnectionException, AllDataException {
+    public void setArrivalTerminalComboBox(String gateID) throws ConnectionException, RetrievalException {
         arrivalTerminalComboBox.setSelectedItem(controller.getTerminalToString(gateID));
     }
 
-    public void setArrivalGateComboBox(String gateID) throws DataBaseConnectionException, AllDataException {
+    public void setArrivalGateComboBox(String gateID) throws ConnectionException, RetrievalException {
         arrivalGateComboBox.setSelectedItem(controller.getGateToString(gateID));
     }
 
@@ -434,9 +434,9 @@ public class FlightForm extends JPanel {
             try {
                 updatedTerminalsOfAnAirportForComboBox = controller.getAllTerminalsOfAnAirportToString(GetID.getAirportID(departureAirportComboBox));
                 updatedGatesOfAnAirportAndTerminalForComboBox = controller.getAllGatesOfAnAirportAndTerminalToString(GetID.getAirportID(arrivalAirportComboBox), (String) departureTerminalComboBox.getSelectedItem());
-            } catch (AllDataException exception) {
+            } catch (RetrievalException exception) {
                 JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-            } catch (DataBaseConnectionException exception) {
+            } catch (ConnectionException exception) {
                 JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
             departureTerminalComboBox.removeAllItems();
@@ -458,9 +458,9 @@ public class FlightForm extends JPanel {
             ArrayList<String> updatedGatesOfAnAirportAndTerminalForComboBox = new ArrayList<>();
             try {
                 updatedGatesOfAnAirportAndTerminalForComboBox = controller.getAllGatesOfAnAirportAndTerminalToString(GetID.getAirportID(departureAirportComboBox), (String) departureTerminalComboBox.getSelectedItem());
-            } catch (AllDataException e) {
+            } catch (RetrievalException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-            } catch (DataBaseConnectionException e) {
+            } catch (ConnectionException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
             departureGateComboBox.removeAllItems();
@@ -480,9 +480,9 @@ public class FlightForm extends JPanel {
             try {
                 updatedTerminalsOfAnAirportForComboBox = controller.getAllTerminalsOfAnAirportToString(GetID.getAirportID(arrivalAirportComboBox));
                 updatedGatesOfAnAirportAndTerminalForComboBox = controller.getAllGatesOfAnAirportAndTerminalToString(GetID.getAirportID(arrivalAirportComboBox), (String) arrivalTerminalComboBox.getSelectedItem());
-            } catch (AllDataException e) {
+            } catch (RetrievalException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-            } catch (DataBaseConnectionException e) {
+            } catch (ConnectionException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
 
@@ -505,9 +505,9 @@ public class FlightForm extends JPanel {
             ArrayList<String> updatedGatesOfAnAirportAndTerminalForComboBox = new ArrayList<>();
             try {
                 updatedGatesOfAnAirportAndTerminalForComboBox = controller.getAllGatesOfAnAirportAndTerminalToString(GetID.getAirportID(arrivalAirportComboBox), (String) arrivalTerminalComboBox.getSelectedItem());
-            } catch (AllDataException e) {
+            } catch (RetrievalException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-            } catch (DataBaseConnectionException e) {
+            } catch (ConnectionException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
             arrivalGateComboBox.removeAllItems();
@@ -528,7 +528,7 @@ public class FlightForm extends JPanel {
     }
     //endregion
 
-    public Boolean checkFlightNumberIsExisting() throws DataBaseConnectionException, ModifyException {
+    public Boolean checkFlightNumberIsExisting() throws ConnectionException, ModifyException {
         String flightNumber = flightNumberTextField.getText();
         Boolean isFlightNumberExisting = controller.flightNumberIsExisting(flightNumber);
         if (isFlightNumberExisting) {

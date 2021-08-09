@@ -2,8 +2,8 @@ package view.table;
 
 import controller.ApplicationController;
 import exception.FlightException;
-import exception.dataBase.AllDataException;
-import exception.dataBase.DataBaseConnectionException;
+import exception.RetrievalException;
+import exception.ConnectionException;
 import model.Flight;
 import tool.Format;
 
@@ -21,11 +21,11 @@ public class AllFlightsListTable extends AbstractTableModel {
         setColumnNames();
         try {
             setFlights(controller.getAllFlights());
-        }  catch (AllDataException e) {
+        }  catch (RetrievalException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
         } catch (FlightException.NumberFlightException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
-        } catch (DataBaseConnectionException e) {
+        } catch (ConnectionException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -83,17 +83,17 @@ public class AllFlightsListTable extends AbstractTableModel {
             case 1:
                 try {
                     return controller.getPilotToString(flight.getPilot());
-                } catch (DataBaseConnectionException throwables) {
+                } catch (ConnectionException throwables) {
                     JOptionPane.showMessageDialog(null, throwables.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-                } catch (AllDataException e) {
+                } catch (RetrievalException e) {
                     JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
                 }
             case 2:
                 try {
                     return controller.getPlaneToString(flight.getPlane());
-                } catch (DataBaseConnectionException throwables) {
+                } catch (ConnectionException throwables) {
                     JOptionPane.showMessageDialog(null, throwables.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-                } catch (AllDataException e) {
+                } catch (RetrievalException e) {
                     JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
                 }
             case 3:
@@ -103,26 +103,26 @@ public class AllFlightsListTable extends AbstractTableModel {
             case 5:
                 try {
                     return controller.getAirportToString(flight.getDepartureGate());
-                } catch (DataBaseConnectionException throwables) {
+                } catch (ConnectionException throwables) {
                     JOptionPane.showMessageDialog(null, throwables.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-                } catch (AllDataException e) {
+                } catch (RetrievalException e) {
                     JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
                 }
             case 6:
                 try {
                     return controller.getTerminalToString(flight.getDepartureGate());
-                } catch (DataBaseConnectionException throwables) {
+                } catch (ConnectionException throwables) {
                     JOptionPane.showMessageDialog(null, throwables.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-                } catch (AllDataException e) {
+                } catch (RetrievalException e) {
                     JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
                 }
             case 7:
                 try {
                     return controller.getGateToString(flight.getDepartureGate());
-                } catch (DataBaseConnectionException throwables) {
+                } catch (ConnectionException throwables) {
                     JOptionPane.showMessageDialog(null, throwables.getMessage(),
                             "Erreur", JOptionPane.ERROR_MESSAGE);
-                } catch (AllDataException e) {
+                } catch (RetrievalException e) {
                     JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
                 }
             case 8:
@@ -132,25 +132,25 @@ public class AllFlightsListTable extends AbstractTableModel {
             case 10:
                 try {
                     return controller.getAirportToString(flight.getArrivalGate());
-                } catch (DataBaseConnectionException throwables) {
+                } catch (ConnectionException throwables) {
                     JOptionPane.showMessageDialog(null, throwables.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-                } catch (AllDataException e) {
+                } catch (RetrievalException e) {
                     JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
                 }
             case 11:
                 try {
                     return controller.getTerminalToString(flight.getArrivalGate());
-                } catch (DataBaseConnectionException throwables) {
+                } catch (ConnectionException throwables) {
                     JOptionPane.showMessageDialog(null, throwables.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-                } catch (AllDataException e) {
+                } catch (RetrievalException e) {
                     JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
                 }
             case 12:
                 try {
                     return controller.getGateToString(flight.getArrivalGate());
-                } catch (DataBaseConnectionException throwables) {
+                } catch (ConnectionException throwables) {
                     JOptionPane.showMessageDialog(null, throwables.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-                } catch (AllDataException e) {
+                } catch (RetrievalException e) {
                     JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
                 }
             case 13:

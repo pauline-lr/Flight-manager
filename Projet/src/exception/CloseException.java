@@ -1,9 +1,9 @@
-package exception.dataBase;
+package exception;
 
-public class DataBaseCloseException extends Exception{
+public class CloseException extends Exception{
     private String message;
 
-    public DataBaseCloseException(String message) {
+    public CloseException(String message) {
         this.message = message;
     }
 

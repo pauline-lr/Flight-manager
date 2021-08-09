@@ -4,10 +4,10 @@ import controller.ApplicationController;
 import exception.FlightException;
 import exception.NotMatchException;
 import exception.TextLengthException;
-import exception.dataBase.AddDataException;
-import exception.dataBase.AllDataException;
-import exception.dataBase.DataBaseConnectionException;
-import exception.dataBase.ModifyException;
+import exception.AddException;
+import exception.RetrievalException;
+import exception.ConnectionException;
+import exception.ModifyException;
 import model.Flight;
 import tool.GetID;
 import view.form.edit.*;
@@ -23,7 +23,7 @@ public class AddFlightPanel extends JPanel {
     private ApplicationController controller;
     private FlightForm flightForm;
 
-    public AddFlightPanel() throws DataBaseConnectionException, AllDataException {
+    public AddFlightPanel() throws ConnectionException, RetrievalException {
         setController(new ApplicationController());
         setFlightForm(new FlightForm());
         this.setLayout(new BorderLayout());
@@ -61,9 +61,9 @@ public class AddFlightPanel extends JPanel {
                         controller.addFlight(flight);
                         JOptionPane.showMessageDialog(null, "Vol ajouté", "Succès", JOptionPane.INFORMATION_MESSAGE);
                 }
-            } catch (DataBaseConnectionException e) {
+            } catch (ConnectionException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-            } catch (AddDataException e) {
+            } catch (AddException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             } catch (ModifyException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage( ), "Erreur", JOptionPane.ERROR_MESSAGE);
@@ -88,16 +88,16 @@ public class AddFlightPanel extends JPanel {
             ArrayList<String> updatedPlaneForComboBox = new ArrayList<>();
             try {
                 updatedPilotForComboBox = controller.getPilotsInOrder(flightForm.getDepartureMoment(), GetID.getAirportID(flightForm.getDepartureAirportComboBox()));
-            } catch (DataBaseConnectionException exception) {
+            } catch (ConnectionException exception) {
                 JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-            } catch (AllDataException exception) {
+            } catch (RetrievalException exception) {
                 JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
             try {
                 updatedPlaneForComboBox = controller.getAllAvailablePlanesToString(flightForm.getDepartureMoment());
-            } catch (AllDataException exception) {
+            } catch (RetrievalException exception) {
                 JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-            } catch (DataBaseConnectionException exception) {
+            } catch (ConnectionException exception) {
                 JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
             flightForm.getPilotComboBox().removeAllItems();
@@ -117,9 +117,9 @@ public class AddFlightPanel extends JPanel {
             ArrayList<String> updatedPilotForComboBox = new ArrayList<>();
             try {
                 updatedPilotForComboBox = controller.getPilotsInOrder(flightForm.getDepartureMoment(), GetID.getAirportID(flightForm.getDepartureAirportComboBox()));
-            } catch (AllDataException e) {
+            } catch (RetrievalException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-            } catch (DataBaseConnectionException e) {
+            } catch (ConnectionException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
             flightForm.getPilotComboBox().removeAllItems();

@@ -2,8 +2,8 @@ package view.panel.search;
 
 import controller.ApplicationController;
 import exception.SearchDateException;
-import exception.dataBase.AllDataException;
-import exception.dataBase.DataBaseConnectionException;
+import exception.RetrievalException;
+import exception.ConnectionException;
 import model.search.FlightsBetweenDatesSearch;
 import view.CheckEmptyResult;
 import view.form.search.FlightsBetweenDatesSearchForm;
@@ -53,9 +53,9 @@ public class FlightsBetweenDatesSearchPanel extends JPanel {
                     panel.revalidate();
                     panel.repaint();
                     CheckEmptyResult.checkResultIsEmpty(flights, validation);
-                } catch (DataBaseConnectionException e) {
+                } catch (ConnectionException e) {
                     JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
-                } catch (AllDataException e) {
+                } catch (RetrievalException e) {
                     JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
                 }
             } else {

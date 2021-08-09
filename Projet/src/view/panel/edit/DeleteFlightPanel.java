@@ -2,9 +2,9 @@ package view.panel.edit;
 
 import controller.ApplicationController;
 import exception.FlightException;
-import exception.dataBase.AllDataException;
-import exception.dataBase.DataBaseConnectionException;
-import exception.dataBase.ModifyException;
+import exception.RetrievalException;
+import exception.ConnectionException;
+import exception.ModifyException;
 import view.table.AllFlightsListTable;
 
 import javax.swing.*;
@@ -17,7 +17,7 @@ public class DeleteFlightPanel extends JPanel {
     private JTable table;
     private JButton validateDeletionButton;
 
-    public DeleteFlightPanel() throws DataBaseConnectionException {
+    public DeleteFlightPanel() throws ConnectionException {
         setController(new ApplicationController());
         setFlightsTable(new AllFlightsListTable());
         this.setLayout(new BorderLayout());
@@ -82,7 +82,7 @@ public class DeleteFlightPanel extends JPanel {
                         }
                     } catch (ModifyException e) {
                         JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-                    } catch (DataBaseConnectionException e) {
+                    } catch (ConnectionException e) {
                         JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                     }
 
@@ -90,9 +90,9 @@ public class DeleteFlightPanel extends JPanel {
                         if (controller.getAllFlights().isEmpty()) {
                             validateDeletionButton.setEnabled(false);
                         }
-                    } catch (AllDataException e) {
+                    } catch (RetrievalException e) {
                         JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-                    } catch (DataBaseConnectionException e) {
+                    } catch (ConnectionException e) {
                         JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                     } catch (FlightException.NumberFlightException e) {
                         JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);

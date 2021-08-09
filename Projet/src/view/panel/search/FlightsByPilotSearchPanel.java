@@ -1,8 +1,8 @@
 package view.panel.search;
 
 import controller.ApplicationController;
-import exception.dataBase.AllDataException;
-import exception.dataBase.DataBaseConnectionException;
+import exception.RetrievalException;
+import exception.ConnectionException;
 import model.search.FlightsByPilotSearch;
 import tool.GetID;
 import view.CheckEmptyResult;
@@ -26,9 +26,9 @@ public class FlightsByPilotSearchPanel extends JPanel {
         this.panel = this;
         try {
             this.flightsByPilotSearchForm = new FlightsByPilotSearchForm();
-        } catch (DataBaseConnectionException e) {
+        } catch (ConnectionException e) {
             JOptionPane.showMessageDialog(null, e.getMessage( ), "Erreur", JOptionPane.ERROR_MESSAGE);
-        } catch (AllDataException e) {
+        } catch (RetrievalException e) {
             JOptionPane.showMessageDialog(null, e.getMessage( ), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
         this.setLayout(new BorderLayout());
@@ -52,9 +52,9 @@ public class FlightsByPilotSearchPanel extends JPanel {
             JComboBox<Object> pilot = flightsByPilotSearchForm.getPilotComboBox();
             try {
                 flights = controller.getAllFlightsOfAPilot(GetID.getPilotID(pilot));
-            } catch (AllDataException e) {
+            } catch (RetrievalException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
-            } catch (DataBaseConnectionException e) {
+            } catch (ConnectionException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
             }
             panel.add(new FlightsByPilotResultPanel(flights), BorderLayout.CENTER);

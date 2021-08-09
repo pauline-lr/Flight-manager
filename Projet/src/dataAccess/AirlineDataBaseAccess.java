@@ -1,7 +1,6 @@
 package dataAccess;
 
 import exception.*;
-import exception.dataBase.*;
 import model.*;
 import model.search.FlightsBetweenDatesSearch;
 import model.search.FlightsByPilotSearch;
@@ -16,7 +15,7 @@ import java.util.*;
 public class AirlineDataBaseAccess implements DataAccessObjectPattern {
     //region Get
     public Flight getFlight(String flightNumber)
-            throws DataBaseConnectionException, AllDataException, FlightException.NumberFlightException {
+            throws ConnectionException, RetrievalException, FlightException.NumberFlightException {
         Flight flight = null;
 
         try {
@@ -31,16 +30,16 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
                 flight = getFlightFromResultSet(data);
             }
         }catch (IOException exception){
-            throw new AllDataException(exception.getMessage());
+            throw new RetrievalException(exception.getMessage());
         } catch (SQLException exception) {
-            throw new DataBaseConnectionException(exception.getMessage());
+            throw new ConnectionException(exception.getMessage());
         }
 
         return flight;
     }
 
     public ArrayList<Flight> getAllFlights()
-            throws DataBaseConnectionException, AllDataException {
+            throws ConnectionException, RetrievalException {
         ArrayList<Flight> flights = new ArrayList<>();
 
         try {
@@ -56,9 +55,9 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
                 flights.add(getFlightFromResultSet(data));
             }
         } catch (IOException exception) {
-            throw new AllDataException(exception.getMessage());
+            throw new RetrievalException(exception.getMessage());
         } catch (SQLException exception) {
-            throw new DataBaseConnectionException(exception.getMessage());
+            throw new ConnectionException(exception.getMessage());
         }
 
         return flights;
@@ -67,7 +66,7 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
 
     //region Get to String
     public String getFlightToString(String flightNumber)
-            throws DataBaseConnectionException, AllDataException {
+            throws ConnectionException, RetrievalException {
         String flight = null;
 
         try {
@@ -106,16 +105,16 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
                 flight = getFlightToStringResultSet(data);
             }
         } catch (IOException exception){
-            throw new AllDataException(exception.getMessage());
+            throw new RetrievalException(exception.getMessage());
         } catch (SQLException exception) {
-            throw new DataBaseConnectionException(exception.getMessage());
+            throw new ConnectionException(exception.getMessage());
         }
 
         return flight;
     }
 
     public String getPilotToString(String pilotLicenceNumber)
-            throws DataBaseConnectionException, AllDataException {
+            throws ConnectionException, RetrievalException {
         String pilotToString = null;
 
         try {
@@ -130,15 +129,15 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
                 pilotToString = data.getString("licence_number") + " - " + data.getString("last_name") + " " + data.getString("first_name");
             }
         }catch (IOException exception){
-            throw new AllDataException(exception.getMessage());
+            throw new RetrievalException(exception.getMessage());
         }catch (SQLException exception) {
-            throw new DataBaseConnectionException(exception.getMessage());
+            throw new ConnectionException(exception.getMessage());
         }
         return pilotToString;
     }
 
     public String getPlaneToString(Integer planeID)
-            throws DataBaseConnectionException, AllDataException {
+            throws ConnectionException, RetrievalException {
         String planeToString = null;
 
         try {
@@ -153,16 +152,16 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
                 planeToString = data.getInt("plane_id") + " - " + data.getString("brand") + " " + data.getString("model");
             }
         } catch (IOException exception) {
-            throw new AllDataException(exception.getMessage());
+            throw new RetrievalException(exception.getMessage());
         } catch (SQLException exception) {
-            throw new DataBaseConnectionException(exception.getMessage());
+            throw new ConnectionException(exception.getMessage());
         }
 
         return planeToString;
     }
 
     public String getAirportToString(String gateID)
-            throws DataBaseConnectionException, AllDataException {
+            throws ConnectionException, RetrievalException {
         String airportToString = null;
 
         try {
@@ -177,16 +176,16 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
                 airportToString = data.getString("code") + " - " + data.getString("name") + ", " + data.getString("country");
             }
         } catch (IOException exception){
-            throw new AllDataException(exception.getMessage());
+            throw new RetrievalException(exception.getMessage());
         } catch (SQLException exception) {
-            throw new DataBaseConnectionException(exception.getMessage());
+            throw new ConnectionException(exception.getMessage());
         }
 
         return airportToString;
     }
 
     public String getTerminalToString(String gateID)
-            throws DataBaseConnectionException, AllDataException {
+            throws ConnectionException, RetrievalException {
         String gateToString = null;
 
         try {
@@ -201,16 +200,16 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
                 gateToString = data.getString("terminal");
             }
         } catch (IOException exception){
-            throw new AllDataException(exception.getMessage());
+            throw new RetrievalException(exception.getMessage());
         }catch (SQLException exception) {
-            throw new DataBaseConnectionException(exception.getMessage());
+            throw new ConnectionException(exception.getMessage());
         }
 
         return gateToString;
     }
 
     public String getGateToString(String gateID)
-            throws DataBaseConnectionException, AllDataException {
+            throws ConnectionException, RetrievalException {
         String gateToString = null;
 
         try {
@@ -225,16 +224,16 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
                 gateToString = Integer.toString(data.getInt("number"));
             }
         }catch (IOException exception){
-            throw new AllDataException(exception.getMessage());
+            throw new RetrievalException(exception.getMessage());
         }catch (SQLException exception) {
-            throw new DataBaseConnectionException(exception.getMessage());
+            throw new ConnectionException(exception.getMessage());
         }
 
         return gateToString;
     }
 
     public ArrayList<String> getAllFlightsToString()
-            throws AllDataException, DataBaseConnectionException {
+            throws RetrievalException, ConnectionException {
         ArrayList<String> flights = new ArrayList<>();
 
         try {
@@ -274,16 +273,16 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
             }
 
         } catch (IOException exception){
-            throw new AllDataException(exception.getMessage());
+            throw new RetrievalException(exception.getMessage());
         } catch (SQLException exception) {
-            throw new DataBaseConnectionException(exception.getMessage());
+            throw new ConnectionException(exception.getMessage());
         }
 
         return flights;
     }
 
     public ArrayList<String> getAllPilotsToString()
-            throws DataBaseConnectionException, AllDataException {
+            throws ConnectionException, RetrievalException {
         ArrayList<String> pilotLicenceNumbers = new ArrayList<>();
 
         try {
@@ -296,9 +295,9 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
                 pilotLicenceNumbers.add(data.getString("licence_number") + " - " + data.getString("last_name") + " " + data.getString("first_name"));
             }
         } catch (IOException exception){
-            throw new AllDataException(exception.getMessage());
+            throw new RetrievalException(exception.getMessage());
         } catch (SQLException exception) {
-            throw new DataBaseConnectionException(exception.getMessage());
+            throw new ConnectionException(exception.getMessage());
         }
 
         return pilotLicenceNumbers;
@@ -306,7 +305,7 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
 
 
     public ArrayList<String> getLastPilotFlightArrivingAt(GregorianCalendar date, String airportID)
-            throws AllDataException, DataBaseConnectionException {
+            throws RetrievalException, ConnectionException {
         ArrayList<String> pilotList = new ArrayList<>();
 
         try {
@@ -351,9 +350,9 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
             }
 
         } catch (IOException exception){
-            throw new AllDataException(exception.getMessage());
+            throw new RetrievalException(exception.getMessage());
         } catch (SQLException exception) {
-            throw new DataBaseConnectionException(exception.getMessage());
+            throw new ConnectionException(exception.getMessage());
         }
 
         return pilotList;
@@ -361,7 +360,7 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
 
 
     public ArrayList<String> getAllAvailablePilotsToString(GregorianCalendar date)
-            throws DataBaseConnectionException, AllDataException {
+            throws ConnectionException, RetrievalException {
         ArrayList<String> pilotLicenceNumbers = new ArrayList<>();
 
         try {
@@ -382,16 +381,16 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
             }
 
         } catch (IOException exception){
-            throw new AllDataException(exception.getMessage());
+            throw new RetrievalException(exception.getMessage());
         } catch (SQLException exception) {
-            throw new DataBaseConnectionException(exception.getMessage());
+            throw new ConnectionException(exception.getMessage());
         }
 
         return pilotLicenceNumbers;
     }
 
     public ArrayList<String> getAllAvailablePlanesToString(GregorianCalendar date)
-            throws DataBaseConnectionException, AllDataException {
+            throws ConnectionException, RetrievalException {
         ArrayList<String> planeIDs = new ArrayList<>();
 
         try {
@@ -411,16 +410,16 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
                 planeIDs.add(data.getString("plane_id") + " - " + data.getString("brand") + " " + data.getString("model"));
             }
         } catch (IOException exception){
-            throw new AllDataException(exception.getMessage());
+            throw new RetrievalException(exception.getMessage());
         } catch (SQLException exception) {
-            throw new DataBaseConnectionException(exception.getMessage());
+            throw new ConnectionException(exception.getMessage());
         }
 
         return planeIDs;
     }
 
     public ArrayList<String> getAllClassesToString()
-            throws DataBaseConnectionException, AllDataException {
+            throws ConnectionException, RetrievalException {
         ArrayList<String> classNames = new ArrayList<>();
 
         try {
@@ -433,15 +432,15 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
                 classNames.add(data.getString("name"));
             }
         } catch (IOException exception){
-            throw new AllDataException(exception.getMessage());
+            throw new RetrievalException(exception.getMessage());
         } catch (SQLException exception) {
-            throw new DataBaseConnectionException(exception.getMessage());
+            throw new ConnectionException(exception.getMessage());
         }
         return classNames;
     }
 
     public ArrayList<String> getAllAirportsToString()
-            throws DataBaseConnectionException, AllDataException {
+            throws ConnectionException, RetrievalException {
         ArrayList<String> airportCodes = new ArrayList<>();
 
         try {
@@ -454,16 +453,16 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
                 airportCodes.add(data.getString("code") + " - " + data.getString("name") + ", " + data.getString("country"));
             }
         } catch (IOException exception){
-            throw new AllDataException(exception.getMessage());
+            throw new RetrievalException(exception.getMessage());
         } catch (SQLException exception) {
-            throw new DataBaseConnectionException(exception.getMessage());
+            throw new ConnectionException(exception.getMessage());
         }
 
         return airportCodes;
     }
 
     public ArrayList<String> getAllTerminalsOfAnAirportToString(String airportCode)
-            throws DataBaseConnectionException, AllDataException {
+            throws ConnectionException, RetrievalException {
         ArrayList<String> terminalsOfAnAirport = new ArrayList<>();
 
         try {
@@ -479,16 +478,16 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
             }
 
         } catch (IOException exception){
-            throw new AllDataException(exception.getMessage());
+            throw new RetrievalException(exception.getMessage());
         } catch (SQLException exception) {
-            throw new DataBaseConnectionException(exception.getMessage());
+            throw new ConnectionException(exception.getMessage());
         }
 
         return terminalsOfAnAirport;
     }
 
     public ArrayList<String> getAllGatesOfAnAirportAndTerminalToString(String airportCode, String terminal)
-            throws DataBaseConnectionException, AllDataException {
+            throws ConnectionException, RetrievalException {
         ArrayList<String> gatesOfAnAirportAndTerminal = new ArrayList<>();
 
         try {
@@ -504,9 +503,9 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
                 gatesOfAnAirportAndTerminal.add(Integer.toString(data.getInt("number")));
             }
         } catch (IOException exception){
-            throw new AllDataException(exception.getMessage());
+            throw new RetrievalException(exception.getMessage());
         } catch (SQLException exception) {
-            throw new DataBaseConnectionException(exception.getMessage());
+            throw new ConnectionException(exception.getMessage());
         }
 
         return gatesOfAnAirportAndTerminal;
@@ -515,7 +514,7 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
 
     //region Search
     public ArrayList<FlightsBetweenDatesSearch> getAllFlightsBetweenDates(GregorianCalendar startDate, GregorianCalendar endDate)
-            throws AllDataException, DataBaseConnectionException {
+            throws RetrievalException, ConnectionException {
         ArrayList<FlightsBetweenDatesSearch> flights = new ArrayList<>();
 
         try {
@@ -599,16 +598,16 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
             }
 
         } catch (IOException exception){
-            throw new AllDataException(exception.getMessage());
+            throw new RetrievalException(exception.getMessage());
         } catch (SQLException exception) {
-            throw new DataBaseConnectionException(exception.getMessage());
+            throw new ConnectionException(exception.getMessage());
         }
 
         return flights;
     }
 
     public ArrayList<PassengersByClassSearch> getAllPassengersOfAClass(String className)
-            throws AllDataException, DataBaseConnectionException {
+            throws RetrievalException, ConnectionException {
         ArrayList<PassengersByClassSearch> passengers = new ArrayList<>();
 
         try{
@@ -680,16 +679,16 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
                 passengers.add(passenger);
             }
         } catch (IOException exception){
-            throw new AllDataException(exception.getMessage());
+            throw new RetrievalException(exception.getMessage());
         } catch (SQLException exception) {
-            throw new DataBaseConnectionException(exception.getMessage());
+            throw new ConnectionException(exception.getMessage());
         }
 
         return passengers;
     }
 
     public ArrayList<FlightsByPilotSearch> getAllFlightsOfAPilot(String pilotLicenceNumber)
-            throws AllDataException, DataBaseConnectionException {
+            throws RetrievalException, ConnectionException {
         ArrayList<FlightsByPilotSearch> flights = new ArrayList<>();
 
         try {
@@ -757,9 +756,9 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
             }
 
         }catch (IOException exception){
-            throw new AllDataException(exception.getMessage());
+            throw new RetrievalException(exception.getMessage());
         }catch (SQLException exception) {
-            throw new DataBaseConnectionException(exception.getMessage());
+            throw new ConnectionException(exception.getMessage());
         }
 
         return flights;
@@ -768,7 +767,7 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
 
     //region Edit
     public void addFlight(Flight flight)
-            throws AddDataException, DataBaseConnectionException {
+            throws AddException, ConnectionException {
         try {
             Connection connection = SingletonConnection.getInstance();
             String sqlRequest = "INSERT INTO flight VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -777,14 +776,14 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
 
             preparedFlightStatement(flight, preparedStatement).executeUpdate();
         } catch (IOException exception) {
-            throw new DataBaseConnectionException(exception.getMessage());
-        } catch (SQLException | AllDataException exception) {
-            throw new AddDataException(exception.getMessage());
+            throw new ConnectionException(exception.getMessage());
+        } catch (SQLException | RetrievalException exception) {
+            throw new AddException(exception.getMessage());
         }
     }
 
     public void modifyFlight(Flight flight, String originalFlightNumber)
-            throws DataBaseConnectionException, ModifyException {
+            throws ConnectionException, ModifyException {
         try {
             String CheckRequest = "SET foreign_key_checks = 1;";
             String sqlRequest = "UPDATE flight " +
@@ -810,14 +809,14 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
             Statement statement = SingletonConnection.getInstance().createStatement();
             statement.executeQuery(CheckRequest);
         } catch (IOException exception) {
-            throw new DataBaseConnectionException(exception.getMessage());
-        } catch (SQLException | AllDataException exception) {
+            throw new ConnectionException(exception.getMessage());
+        } catch (SQLException | RetrievalException exception) {
             throw new ModifyException(exception.getMessage());
         }
     }
 
     public void deleteFlight(String flightNumber)
-            throws DataBaseConnectionException, ModifyException {
+            throws ConnectionException, ModifyException {
         try {
             String sqlRequest = "DELETE FROM flight WHERE number = ?";
 
@@ -828,8 +827,8 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
 
             preparedStatement.executeUpdate();
         } catch (IOException exception) {
-            throw new DataBaseConnectionException(exception.getMessage());
-        } catch (SQLException | AllDataException exception) {
+            throw new ConnectionException(exception.getMessage());
+        } catch (SQLException | RetrievalException exception) {
             throw new ModifyException(exception.getMessage());
         }
     }
@@ -837,7 +836,7 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
 
     //region Test
     public Boolean flightNumberIsExisting(String flightNumber)
-            throws DataBaseConnectionException, ModifyException {
+            throws ConnectionException, ModifyException {
         Boolean dataNext;
         try {
             String sqlRequest = "SELECT number FROM flight WHERE number = ?";
@@ -848,7 +847,7 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
             ResultSet data = preparedStatement.executeQuery();
             dataNext = data.next();
         } catch (IOException exception) {
-            throw new DataBaseConnectionException(exception.getMessage());
+            throw new ConnectionException(exception.getMessage());
         } catch (SQLException exception) {
             throw new ModifyException(exception.getMessage());
         }
@@ -859,13 +858,13 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
 
     //region Connection
     public void closeConnection()
-            throws DataBaseCloseException, DataBaseConnectionException {
+            throws CloseException, ConnectionException {
         try{
             SingletonConnection.closeConnection();
         } catch (SQLException exception) {
-            throw new DataBaseCloseException(exception.getMessage());
+            throw new CloseException(exception.getMessage());
         } catch (IOException exception) {
-            throw new DataBaseConnectionException(exception.getMessage());
+            throw new ConnectionException(exception.getMessage());
         }
     }
     //endregion
@@ -873,7 +872,7 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
 
     //region Tools
     private Flight getFlightFromResultSet(ResultSet data)
-            throws AllDataException {
+            throws RetrievalException {
         Flight flight;
 
         try {
@@ -900,14 +899,14 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
                 flight.setMealDescription(mealDescription);
             }
         } catch (SQLException | NotMatchException | TextLengthException exception) {
-            throw new AllDataException(exception.getMessage());
+            throw new RetrievalException(exception.getMessage());
         }
 
         return flight;
     }
 
     private String getFlightToStringResultSet(ResultSet data)
-            throws AllDataException {
+            throws RetrievalException {
         try {
             GregorianCalendar departureTime = new GregorianCalendar();
             GregorianCalendar arrivalTime = new GregorianCalendar();
@@ -925,12 +924,12 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
             return data.getString("flightNumber") + " - " + departureInformation + " - " + arrivalInformation;
 
         } catch (SQLException exception) {
-            throw new AllDataException(exception.getMessage());
+            throw new RetrievalException(exception.getMessage());
         }
     }
 
     private PreparedStatement preparedFlightStatement(Flight flight, PreparedStatement preparedStatement)
-            throws AllDataException {
+            throws RetrievalException {
         try {
             preparedStatement.setString(1, flight.getNumber());
             preparedStatement.setTimestamp(2, new java.sql.Timestamp(flight.getDepartureTime().getTimeInMillis()));
@@ -946,14 +945,14 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
             preparedStatement.setString(8, flight.getPilot());
             preparedStatement.setInt(9, flight.getNumberPlane());
         } catch (SQLException exception) {
-            throw new AllDataException(exception.getMessage());
+            throw new RetrievalException(exception.getMessage());
         }
 
         return preparedStatement;
     }
 
     private void updateSeatsOfAFlight(String flightNumber, String originalFlightNumber)
-            throws DataBaseConnectionException, AllDataException {
+            throws ConnectionException, RetrievalException {
         try {
             String CheckRequest = "SET foreign_key_checks = 0;";
             String sqlRequest = "UPDATE seat SET flight = ? WHERE flight = ?;";
@@ -967,14 +966,14 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
 
             preparedStatement.executeUpdate();
         } catch (IOException exception) {
-            throw new DataBaseConnectionException(exception.getMessage());
+            throw new ConnectionException(exception.getMessage());
         } catch (SQLException exception) {
-            throw new AllDataException(exception.getMessage());
+            throw new RetrievalException(exception.getMessage());
         }
     }
 
     private void deleteSeatsOfAFlight(String flightNumber)
-            throws DataBaseConnectionException, AllDataException {
+            throws ConnectionException, RetrievalException {
         try {
             String sqlRequest = "DELETE FROM seat WHERE flight = ?";
 
@@ -983,9 +982,9 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
 
             preparedStatement.executeUpdate();
         } catch (IOException exception) {
-            throw new DataBaseConnectionException(exception.getMessage());
+            throw new ConnectionException(exception.getMessage());
         } catch (SQLException exception) {
-            throw new AllDataException(exception.getMessage());
+            throw new RetrievalException(exception.getMessage());
         }
     }
     //endregion
