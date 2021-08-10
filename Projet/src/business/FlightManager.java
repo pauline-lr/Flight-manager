@@ -64,12 +64,12 @@ public class FlightManager {
 
     //region Get
     public Flight getFlight(String flightNumber)
-            throws ConnectionException, FlightException.NumberFlightException, RetrievalException {
+            throws ConnectionException, FlightException.NumberFlightException, RetrievalException, FlightException.DepartureDateException, FlightException.ArrivalDateException {
         return dataAccessObjectPattern.getFlight(flightNumber);
     }
 
     public ArrayList<Flight> getAllFlights()
-            throws ConnectionException, RetrievalException {
+            throws ConnectionException, RetrievalException, FlightException.DepartureDateException, FlightException.ArrivalDateException {
         return dataAccessObjectPattern.getAllFlights();
     }
     //endregion

@@ -11,10 +11,10 @@ import java.util.*;
 public interface DataAccessObjectPattern {
     //region Get
     Flight getFlight(String flightNumber)
-            throws ConnectionException,  FlightException.NumberFlightException, RetrievalException;
+            throws ConnectionException, FlightException.NumberFlightException, RetrievalException, FlightException.DepartureDateException, FlightException.ArrivalDateException;
 
     ArrayList<Flight> getAllFlights()
-            throws ConnectionException, FlightException.NumberFlightException, RetrievalException;
+            throws ConnectionException, FlightException.NumberFlightException, RetrievalException, FlightException.DepartureDateException, FlightException.ArrivalDateException;
     //endregion
 
     //region Get to String

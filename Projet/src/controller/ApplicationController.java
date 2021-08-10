@@ -27,12 +27,12 @@ public class ApplicationController {
 
     //region Get
     public Flight getFlight(String flightNumber)
-            throws RetrievalException, ConnectionException, FlightException.NumberFlightException {
+            throws RetrievalException, ConnectionException, FlightException.NumberFlightException, FlightException.DepartureDateException, FlightException.ArrivalDateException {
         return flightManager.getFlight(flightNumber);
     }
 
     public ArrayList<Flight> getAllFlights()
-            throws RetrievalException, ConnectionException, FlightException.NumberFlightException {
+            throws RetrievalException, ConnectionException, FlightException.NumberFlightException, FlightException.DepartureDateException, FlightException.ArrivalDateException {
         return flightManager.getAllFlights();
     }
     //endregion

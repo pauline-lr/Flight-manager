@@ -18,7 +18,7 @@ public class ModifyFlightForm extends JPanel {
     private FlightForm flightForm;
     private JComboBox<Object> flightComboBox;
 
-    public ModifyFlightForm(FlightForm flightForm) throws ConnectionException, RetrievalException, FlightException.NumberFlightException {
+    public ModifyFlightForm(FlightForm flightForm) throws ConnectionException, RetrievalException, FlightException.NumberFlightException, FlightException.DepartureDateException, FlightException.ArrivalDateException {
         setController(new ApplicationController());
         setFlightForm(flightForm);
         this.setLayout(new GridLayout(3, 1, 3, 3));
@@ -74,12 +74,16 @@ public class ModifyFlightForm extends JPanel {
                     JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                 } catch (FlightException.NumberFlightException e) {
                     JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+                } catch (FlightException.DepartureDateException e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+                } catch (FlightException.ArrivalDateException e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                 }
             }
         }
     }
 
-    private void updateFormInformation() throws ConnectionException, RetrievalException, FlightException.NumberFlightException {
+    private void updateFormInformation() throws ConnectionException, RetrievalException, FlightException.NumberFlightException, FlightException.DepartureDateException, FlightException.ArrivalDateException {
         if (!(controller.getAllFlightsToString().isEmpty())) {
             String flightNumber = getFlightComboBoxID();
 

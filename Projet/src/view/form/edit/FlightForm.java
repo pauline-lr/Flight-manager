@@ -543,7 +543,7 @@ public class FlightForm extends JPanel {
         Matcher matcher = pattern.matcher(number);
         if (matcher.find()) {
             return flightNumberTextField;
-        }else{
+        } else {
             throw new FlightException.NumberFlightException(number);
         }
         /*else {
@@ -583,15 +583,9 @@ public class FlightForm extends JPanel {
 
     public GregorianCalendar checkArrivalMoment() throws FlightException.ArrivalDateException, FlightException.DepartureDateException {
         GregorianCalendar arrivalDateGC = getArrivalMoment();
-
-        if(checkDepartureMoment() == null){
-            throw new FlightException.DepartureDateException();
-        }else {
-            if (arrivalDateGC.compareTo(checkDepartureMoment()) < 0) {
-                throw new FlightException.ArrivalDateException();
-            }
+        if (arrivalDateGC.compareTo(checkDepartureMoment()) <= 0) {
+            throw new FlightException.ArrivalDateException();
         }
-
         return arrivalDateGC;
     }
 }

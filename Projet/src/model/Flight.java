@@ -30,7 +30,7 @@ public class Flight {
     public Flight(String number, GregorianCalendar departureTime,
                   GregorianCalendar arrivalTime, Boolean isMealOnBoard, String mealDescription,
                   String pilot, String departureGate, String arrivalGate, Integer plane)
-            throws  NotMatchException, TextLengthException {
+            throws NotMatchException, TextLengthException, FlightException.DepartureDateException, FlightException.ArrivalDateException {
         setNumber(number);
         setDepartureTime(departureTime);
         setArrivalTime(arrivalTime);
@@ -41,9 +41,10 @@ public class Flight {
         setArrivalGate(arrivalGate);
         setPlane(plane);
     }
+
     public Flight(String number, GregorianCalendar departureTime,
                   GregorianCalendar arrivalTime, Boolean isMealOnBoard, String pilot, String departureGate, String arrivalGate, Integer plane)
-            throws NotMatchException, TextLengthException {
+            throws NotMatchException, TextLengthException, FlightException.DepartureDateException, FlightException.ArrivalDateException {
         this(number, departureTime, arrivalTime, isMealOnBoard, null, pilot, departureGate, arrivalGate, plane);
     }
     //endregion
@@ -59,38 +60,32 @@ public class Flight {
         }
     }
 
-    private void setDepartureTime(GregorianCalendar departureTime) {
-        GregorianCalendar currentDate = new GregorianCalendar();
-        if (departureTime.compareTo(currentDate) >= 0) {
+    private void setDepartureTime(GregorianCalendar departureTime) throws FlightException.DepartureDateException {
+        if (departureTime.compareTo(new GregorianCalendar()) >= 0) {
             this.departureTime = departureTime;
         } else {
-            try {
-                throw new FlightException.DepartureDateException();
-            } catch (FlightException.DepartureDateException | DateTimeParseException exception) {
-                exception.printStackTrace();
-            }
+            throw new FlightException.DepartureDateException();
         }
     }
-    private void setArrivalTime(GregorianCalendar arrivalTime) {
+
+    private void setArrivalTime(GregorianCalendar arrivalTime) throws FlightException.ArrivalDateException {
         if (arrivalTime.compareTo(departureTime) > 0) {
             this.arrivalTime = arrivalTime;
         } else {
-            try {
-                throw new FlightException.ArrivalDateException();
-            } catch (DateTimeParseException | FlightException.ArrivalDateException exception) {
-                exception.printStackTrace();
-            }
+            throw new FlightException.ArrivalDateException();
         }
     }
+
     private void setMealOnBoard(Boolean mealOnBoard) {
         isMealOnBoard = mealOnBoard;
     }
+
     public void setMealDescription(String mealDescription) throws TextLengthException {
         if (mealDescription != null) {
             if (!(mealDescription.equals(""))) {
                 if (mealDescription.length() <= MEAL_DESCRIPTION_LENTGH) {
                     this.mealDescription = mealDescription;
-                }else{
+                } else {
                     throw new TextLengthException("La description du repas est trop longue. Maximum " + MEAL_DESCRIPTION_LENTGH + " caractères.");
                 }
             } else {
@@ -98,15 +93,19 @@ public class Flight {
             }
         }
     }
+
     private void setPilot(String pilot) {
         this.pilot = pilot;
     }
+
     private void setDepartureGate(String departureGate) {
         this.departureGate = departureGate;
     }
+
     private void setArrivalGate(String arrivalGate) {
         this.arrivalGate = arrivalGate;
     }
+
     private void setPlane(Integer plane) {
         this.plane = plane;
     }
@@ -116,45 +115,41 @@ public class Flight {
     public String getNumber() {
         return number;
     }
+
     public GregorianCalendar getDepartureTime() {
         return departureTime;
     }
+
     public GregorianCalendar getArrivalTime() {
         return arrivalTime;
     }
+
     public Boolean getMealOnBoard() {
         return isMealOnBoard;
     }
+
     public String getMealDescription() {
         return mealDescription;
     }
+
     public String getPilot() {
         return pilot;
     }
+
     public String getDepartureGate() {
         return departureGate;
     }
+
     public String getArrivalGate() {
         return arrivalGate;
     }
-    public Integer getNumberPlane(){
+
+    public Integer getNumberPlane() {
         return plane;
     }
+
     public Integer getPlane() {
         return plane;
     }
     //endregion
-
-    @Override
-    public String toString() {
-        return "number = " + number + '\n' +
-                "departureTime = " + departureTime.getTime() + '\n' +
-                "arrivalTime = " + arrivalTime.getTime() + '\n' +
-                "isMealOnBoard = " + isMealOnBoard + '\n' +
-                "mealDescription = " + mealDescription + '\n' +
-                "pilot = " + pilot + '\n' +
-                "departureGate = " + departureGate + '\n' +
-                "arrivalGate = " + arrivalGate + '\n' +
-                "plane = " + plane + '\n';
-    }
 }

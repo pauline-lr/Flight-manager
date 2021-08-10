@@ -27,6 +27,10 @@ public class AllFlightsListTable extends AbstractTableModel {
             JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
         } catch (ConnectionException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
+        } catch (FlightException.DepartureDateException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
+        } catch (FlightException.ArrivalDateException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(),"Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }
 

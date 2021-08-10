@@ -15,7 +15,7 @@ import java.util.*;
 public class AirlineDataBaseAccess implements DataAccessObjectPattern {
     //region Get
     public Flight getFlight(String flightNumber)
-            throws ConnectionException, RetrievalException, FlightException.NumberFlightException {
+            throws ConnectionException, RetrievalException, FlightException.NumberFlightException, FlightException.DepartureDateException, FlightException.ArrivalDateException {
         Flight flight = null;
 
         try {
@@ -39,7 +39,7 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
     }
 
     public ArrayList<Flight> getAllFlights()
-            throws ConnectionException, RetrievalException {
+            throws ConnectionException, RetrievalException, FlightException.DepartureDateException, FlightException.ArrivalDateException {
         ArrayList<Flight> flights = new ArrayList<>();
 
         try {
@@ -872,7 +872,7 @@ public class AirlineDataBaseAccess implements DataAccessObjectPattern {
 
     //region Tools
     private Flight getFlightFromResultSet(ResultSet data)
-            throws RetrievalException {
+            throws RetrievalException, FlightException.DepartureDateException, FlightException.ArrivalDateException {
         Flight flight;
 
         try {

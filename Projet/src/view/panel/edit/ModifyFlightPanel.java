@@ -15,7 +15,7 @@ public class ModifyFlightPanel extends JPanel {
     private FlightForm flightForm;
     private JButton validationButton;
 
-    public ModifyFlightPanel() throws ConnectionException, RetrievalException, FlightException.NumberFlightException {
+    public ModifyFlightPanel() throws ConnectionException, RetrievalException, FlightException.NumberFlightException, FlightException.DepartureDateException, FlightException.ArrivalDateException {
         setController(new ApplicationController());
         setFlightForm(new FlightForm());
         setModifyFlightForm(new ModifyFlightForm(flightForm));
