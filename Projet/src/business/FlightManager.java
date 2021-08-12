@@ -20,20 +20,6 @@ public class FlightManager {
         this.dataAccessObjectPattern = dataAccessObjectPattern;
     }
 
-   /* public ArrayList<String> getPilotsInOrder(GregorianCalendar date, String airportID) throws DataBaseConnectionException, AllDataException {
-        ArrayList<String> onLocationPilots = getLastPilotFlightArrivingAt(date, airportID);
-        ArrayList<String> allPilots = getAllAvailablePilotsToString(date);
-        ArrayList<String> newCollection = new ArrayList<>(onLocationPilots);
-
-        for (String pilot: onLocationPilots) {
-            allPilots.removeIf(pilot::equals);
-        }
-
-        newCollection.addAll(allPilots);
-
-        return newCollection;
-    }*/
-
     public ArrayList<String> getOnLocationPilots(GregorianCalendar date, String airportID) throws ConnectionException, RetrievalException {
         ArrayList<String> onLocationPilots = getLastPilotFlightArrivingAt(date, airportID);
         return onLocationPilots;
@@ -55,12 +41,6 @@ public class FlightManager {
 
        return newCollection;
    }
-
-   /*dans application controller devient :
-   * public ArrayList<String> getPilotsInOrder(GregorianCalendar date, String airportID)
-            throws DataBaseConnectionException, AllDataException {
-        return flightManager.getPilotsInOrder(flightManager.getOnLocationPilots(date, airportID), flightManager.getAllPilots(date));
-    }*/
 
     //region Get
     public Flight getFlight(String flightNumber)

@@ -8,6 +8,7 @@ public class NameClassException extends Exception{
     }
 
     public String getMessage( ) {
-        return  "Le nom des classes ne peut être que \"Première\", \"Economique\" et \"Affaire\"";
+        return  "Le nom des classes ne peut être que \"Première\", \"Economique\" et \"Affaire\"\n"
+                + "\"" + wrongName + "\" n'est pas accepté";
     }
 }

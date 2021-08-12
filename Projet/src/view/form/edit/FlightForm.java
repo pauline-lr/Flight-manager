@@ -546,14 +546,6 @@ public class FlightForm extends JPanel {
         } else {
             throw new FlightException.NumberFlightException(number);
         }
-        /*else {
-            if (number.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Le numéro de vol ne peut pas être vide.", "Erreur", JOptionPane.ERROR_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(null, "Le numéro de vol : " + number + " ne correspond pas à la structure requise : \n" +
-                        "2 lettres majuscules et 4 chiffres.", "Erreur", JOptionPane.ERROR_MESSAGE);
-            }
-        }*/
     }
 
     public String getMealDescriptionTextArea() throws TextLengthException {

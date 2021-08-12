@@ -9,6 +9,6 @@ public class CloseException extends Exception{
 
     @Override
     public String getMessage(){
-        return "Nos serveur ne répondent pas.\nVeuillez réessayer plus tard.";
+        return "Nos serveur ne répondent pas.\nVeuillez réessayer plus tard.\n" + message;
     }
 }
