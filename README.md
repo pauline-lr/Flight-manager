@@ -6,7 +6,3 @@
 ## Identifiant de la BD 
 #### id : root
 #### password : LoréaSmith
-
-## A NOTER 
-#### La tâche métier n'est pas présente 
-#### Par conséquent, les test JUnit pour celle-ci non plus
